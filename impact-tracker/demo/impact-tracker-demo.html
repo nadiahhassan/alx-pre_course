@@ -1,0 +1,1172 @@
+<title>Impact Tracker Preview</title>
+<style>
+:root{
+  --page:#f9f9f7;--surface:#fcfcfb;--surface-2:#f0efec;--ink:#0b0b0b;--ink-2:#52514e;--muted:#6f6d68;
+  --line:#e1e0d9;--line-strong:#c3c2b7;--accent:#2a78d6;--accent-ink:#1c5cab;--accent-soft:#cde2fb;
+  --good:#0ca30c;--good-ink:#006300;--warning:#fab219;--warning-ink:#8a5a00;--critical:#d03b3b;--critical-ink:#a32626;
+  --band:rgba(11,11,11,.06);--shadow:0 12px 40px rgba(0,0,0,.18);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --page:#0d0d0d;--surface:#1a1a19;--surface-2:#262624;--ink:#fff;--ink-2:#c3c2b7;--muted:#9a988f;
+  --line:#2c2c2a;--line-strong:#454541;--accent:#3987e5;--accent-ink:#86b6ef;--accent-soft:#184f95;
+  --good:#0ca30c;--good-ink:#3cc23c;--warning:#fab219;--warning-ink:#fab219;--critical:#d03b3b;--critical-ink:#e66767;--band:rgba(255,255,255,.07);--shadow:0 12px 40px rgba(0,0,0,.6)}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --page:#0d0d0d;--surface:#1a1a19;--surface-2:#262624;--ink:#fff;--ink-2:#c3c2b7;--muted:#9a988f;
+  --line:#2c2c2a;--line-strong:#454541;--accent:#3987e5;--accent-ink:#86b6ef;--accent-soft:#184f95;
+  --good:#0ca30c;--good-ink:#3cc23c;--warning:#fab219;--warning-ink:#fab219;--critical:#d03b3b;--critical-ink:#e66767;--band:rgba(255,255,255,.07);--shadow:0 12px 40px rgba(0,0,0,.6)}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tab-nums,.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px}
+.preview-bar{background:var(--ink);color:var(--surface);font-size:13px}
+.preview-bar .wrap{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding-block:8px}
+.preview-bar button{background:transparent;border:1px solid color-mix(in srgb,var(--surface) 40%,transparent);color:var(--surface);border-radius:6px;padding:2px 10px;cursor:pointer}
+header.app{background:var(--surface);border-bottom:1px solid var(--line)}
+header.app .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;padding-block:12px}
+.brand{font-weight:650;letter-spacing:-.01em}
+.nav{display:flex;gap:4px}
+.nav a,.linkbtn{padding:4px 8px;border-radius:6px;color:var(--ink-2);text-decoration:none;cursor:pointer;background:none;border:0}
+.nav a:hover,.linkbtn:hover{background:var(--surface-2);color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);font-weight:550}
+.who{margin-left:auto;color:var(--ink-2);font-size:13px}
+main{padding-block:24px 64px}
+h1{font-size:24px;letter-spacing:-.015em;margin:0;text-wrap:balance}
+h2{font-size:18px;margin:0;letter-spacing:-.01em}
+h3{font-size:15px;margin:0;font-weight:560}
+p{margin:0}
+.sub{color:var(--ink-2);font-size:13px}
+.muted{color:var(--muted)}
+.xs{font-size:12px}
+.stack{display:flex;flex-direction:column;gap:24px}
+.stack-sm{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.between{justify-content:space-between}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.pad{padding:16px}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr))}
+.g3c{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:7px;padding:7px 12px;font-size:13px;font-weight:550;cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-ink)}
+.btn.small{padding:3px 8px;font-size:12px}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);overflow-x:auto;margin-block:16px 24px}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px;margin-bottom:-1px;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{border-color:var(--accent);color:var(--ink);font-weight:560}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line-strong);border-radius:8px;padding:2px;background:var(--surface)}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:6px;color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.label{font-size:12px;color:var(--muted)}
+.big{font-size:28px;font-weight:650;letter-spacing:-.02em;line-height:1.15}
+.bigger{font-size:32px;font-weight:650;letter-spacing:-.02em;line-height:1.1}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:560;white-space:nowrap}
+.status.lg{font-size:16px}
+.status.green{color:var(--good-ink)}.status.amber{color:var(--warning-ink)}.status.red{color:var(--critical-ink)}.status.none{color:var(--muted)}
+.conf{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12px;color:var(--ink-2)}
+.bars{display:inline-flex;align-items:flex-end;gap:1px}.bars i{display:block;width:2px;border-radius:1px;background:var(--line-strong)}.bars i.on{background:var(--ink-2)}
+.chip{display:inline-block;border-radius:5px;padding:1px 6px;font-size:12px;background:var(--surface-2);color:var(--ink-2)}
+.chip.ai{background:color-mix(in srgb,var(--accent-soft) 45%,transparent);color:var(--accent-ink);border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);font-weight:560}
+.chip.key{background:color-mix(in srgb,var(--accent-soft) 60%,transparent);color:var(--accent-ink)}
+.progress{position:relative;height:8px;border-radius:99px;background:color-mix(in srgb,var(--accent-soft) 60%,transparent)}
+.progress>b{display:block;height:8px;border-radius:99px;background:var(--accent)}
+.progress>s{position:absolute;top:-4px;width:2px;height:16px;border-radius:2px;background:var(--ink)}
+.track{height:6px;border-radius:99px;background:var(--surface-2)}.track>b{display:block;height:6px;border-radius:99px;background:var(--ink-2)}
+.section-h{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:12px}
+.alert{border:1px solid color-mix(in srgb,var(--warning) 60%,transparent);background:color-mix(in srgb,var(--warning) 12%,transparent);border-radius:10px;padding:14px 16px}
+.risk{border:1px solid color-mix(in srgb,var(--warning) 50%,transparent);background:color-mix(in srgb,var(--warning) 10%,transparent);border-radius:7px;padding:6px 8px;font-size:12px}
+.toc{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-top:12px}
+.toc li{list-style:none;background:var(--surface-2);border-radius:7px;padding:10px 12px;font-size:12px}
+.toc ol{padding:0;margin:0}
+.eyebrow{font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{font-weight:500;text-align:left;color:var(--muted);font-size:12px}
+td,th{padding:8px 14px;vertical-align:top}
+tbody tr+tr td,tbody tr+tr th{border-top:1px solid var(--line)}
+thead tr{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+.lvl-row td{background:var(--surface-2);padding:5px 14px}
+svg.chart{display:block;width:100%;height:auto;overflow:visible}
+svg.chart text{fill:var(--muted);font-size:11px}
+.dot{cursor:pointer}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:12px;box-shadow:var(--shadow)}
+.legend-n{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:var(--band);font-size:10px;font-weight:650;color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line)}
+.drawer{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.3);display:flex;justify-content:flex-end}
+.drawer aside{width:min(100%,520px);height:100%;overflow-y:auto;background:var(--surface);padding:24px 16px 24px 24px;box-shadow:var(--shadow)}
+blockquote{margin:0;border-left:2px solid var(--line-strong);padding-left:12px;line-height:1.55}
+.ev+.ev{border-top:1px solid var(--line);padding-top:20px;margin-top:20px}
+.gridtbl{border-collapse:separate;border-spacing:0}
+.gridtbl th,.gridtbl td{border-bottom:1px solid var(--line);padding:0}
+.gridtbl thead th{padding:8px;text-align:right;position:sticky;top:0;background:var(--surface)}
+.gridtbl thead th:first-child{text-align:left;left:0;z-index:2}
+.gridtbl tbody th{position:sticky;left:0;background:var(--surface);z-index:1;border-right:1px solid var(--line);padding:6px 12px;min-width:230px;font-weight:400;color:var(--ink);font-size:14px}
+.gridtbl input{width:100%;min-width:84px;height:36px;border:0;background:transparent;text-align:right;padding:0 8px}
+.gridtbl input:focus{outline:2px solid var(--accent);outline-offset:-2px;background:color-mix(in srgb,var(--accent-soft) 30%,transparent)}
+.gridtbl input.est{font-style:italic}
+.gridtbl input.bad{outline:2px solid var(--critical);outline-offset:-2px}
+.gridtbl td.st{padding:0 12px;white-space:nowrap}
+.gridtbl .lvl th{background:var(--surface-2);font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding:4px 12px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 14px;border-radius:8px;font-size:13px;z-index:70}
+.gantt{position:relative;height:20px;border-radius:5px;background:var(--surface-2);flex:1}
+.gantt b{position:absolute;top:0;height:20px;border-radius:5px;background:var(--accent)}
+.snapbanner{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;border:1px solid var(--line-strong);background:var(--surface-2);border-radius:10px;padding:12px 16px}
+.snapbanner .tag{background:var(--ink);color:var(--surface);border-radius:5px;padding:1px 7px;font-size:12px;font-weight:560}
+.masonry{columns:2 340px;column-gap:16px}.masonry>*{break-inside:avoid;margin-bottom:16px}
+@media (max-width:640px){.who{display:none}.big{font-size:24px}.bigger{font-size:28px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:13px;font-weight:560}
+.hint{font-size:12px;color:var(--muted)}.hint:empty{display:none}
+.err{font-size:12px;color:var(--critical-ink)}
+.input{width:100%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:7px;padding:8px 10px;font-size:14px}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.input.invalid{border-color:var(--critical)}
+textarea.input{resize:vertical;line-height:1.45}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--ink)}
+.btn.danger,.btn.ghost.danger{background:var(--critical);border-color:var(--critical);color:#fff}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.toc-row{display:grid;gap:8px;grid-template-columns:minmax(0,11rem) 1fr}
+@media (max-width:640px){.toc-row{grid-template-columns:1fr}}
+.who select{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:6px;padding:3px 6px;margin-left:6px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;background:var(--surface-2);padding:1px 4px;border-radius:4px}
+</style>
+<div class="preview-bar"><div class="wrap"><strong>Demo</strong><span>Impact Tracker with an example project. Everything works; your changes are saved in your browser only. Demo date: 23 Sept 2026.</span><button type="button" data-reset>Reset example data</button></div></div>
+<header class="app"><div class="wrap"><span class="brand">Impact Tracker</span><nav class="nav" aria-label="Main"><a href="#portfolio" data-go="portfolio">Portfolio</a><a href="#library" data-go="library">Parameter library</a></nav><label class="who">Signed in as<select id="f-user"><option>Amira Okafor</option><option>Tom Reeves</option><option>Priya Shah</option></select></label></div></header>
+<main class="wrap" id="app"></main>
+<script>const ORIGINAL = {"project":{"name":"Local News Resilience Programme","description":"A 12-month programme helping independent local news organisations build digital audiences and sustainable revenue through training, a shared digital toolkit and small grants.","owner":"Amira Okafor","start":"2026-03-01","end":"2027-02-28","budget":450000,"region":"North of England","status":"active","toc":{"inputs":"£450k grant fund; 3 programme staff; trainer network of 12 working journalists; shared analytics and CMS toolkit.","activities":"Monthly training cohorts on audience development and revenue; toolkit onboarding and support; small grants for pilots; peer-learning roadshow.","outputs":"300 journalists trained; 40 newsrooms onboarded to the toolkit; 30 newsrooms using audience analytics every week.","outcomes":"Newsrooms grow digital audiences, add new revenue streams, and staff apply new skills; local readers trust their local news more.","impact":"More local news organisations are financially sustainable, so communities keep access to reliable local reporting."}},"params":[{"id":"p0","name":"Grant funding disbursed","definition":"Grant payments released to participating newsrooms.","level":"input","unit":"£","measureType":"cumulative","direction":"increase","baseline":0,"target":450000,"targetDate":null,"frequency":"monthly","dataSource":"Finance system","isKey":false,"lead":null,"entries":[{"date":"2026-04-01","value":30000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":25000,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":35000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":30000,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":25000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":35000,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p1","name":"Training sessions delivered","definition":"Live training sessions (online or in person) of at least 90 minutes.","level":"activity","unit":"sessions","measureType":"cumulative","direction":"increase","baseline":0,"target":48,"targetDate":null,"frequency":"monthly","dataSource":"Training calendar","isKey":false,"lead":null,"entries":[{"date":"2026-04-01","value":4,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":5,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":4,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p2","name":"Newsrooms onboarded to digital toolkit","definition":"Newsrooms with an active toolkit account and a completed onboarding call.","level":"activity","unit":"newsrooms","measureType":"cumulative","direction":"increase","baseline":0,"target":40,"targetDate":null,"frequency":"monthly","dataSource":"Toolkit CRM","isKey":false,"lead":null,"entries":[{"date":"2026-04-01","value":3,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":6,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":5,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":"lib1"},{"id":"p3","name":"Journalists trained","definition":"Unique journalists completing at least one full training session.","level":"output","unit":"people","measureType":"cumulative","direction":"increase","baseline":0,"target":300,"targetDate":null,"frequency":"monthly","dataSource":"Attendance registers","isKey":true,"lead":"p7","entries":[{"date":"2026-04-01","value":18,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":22,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":30,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":28,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":24,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":26,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":"lib2"},{"id":"p4","name":"Newsrooms using analytics weekly","definition":"Newsrooms that logged into the analytics dashboard in at least 3 of the last 4 weeks.","level":"output","unit":"newsrooms","measureType":"point","direction":"increase","baseline":0,"target":30,"targetDate":null,"frequency":"monthly","dataSource":"Toolkit usage logs","isKey":false,"lead":"p5","entries":[{"date":"2026-04-01","value":2,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":8,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":10,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":11,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":12,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p5","name":"Average monthly digital audience per newsroom","definition":"Median monthly unique visitors across participating newsrooms' websites.","level":"outcome","unit":"unique visitors","measureType":"point","direction":"increase","baseline":12000,"target":18000,"targetDate":null,"frequency":"monthly","dataSource":"Web analytics (shared toolkit)","isKey":true,"lead":null,"entries":[{"date":"2026-04-01","value":12100,"confidence":"estimated","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":12400,"confidence":"estimated","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":12900,"confidence":"estimated","note":"Jump partly from the YouTube series driving traffic to partner sites.","by":"Amira Okafor"},{"date":"2026-07-01","value":13100,"confidence":"estimated","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":13300,"confidence":"estimated","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":13500,"confidence":"estimated","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p6","name":"Newsrooms with a new revenue stream","definition":"Share of participating newsrooms that launched a revenue stream (memberships, events, sponsorship) since joining.","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":15,"target":50,"targetDate":null,"frequency":"monthly","dataSource":"Monthly check-in form","isKey":false,"lead":"p9","entries":[{"date":"2026-04-01","value":15,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":18,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":22,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":26,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":30,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":33,"confidence":"self-reported","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p7","name":"Trainees applying new skills","definition":"Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":0,"target":70,"targetDate":null,"frequency":"quarterly","dataSource":"Follow-up survey","isKey":false,"lead":null,"entries":[{"date":"2026-06-01","value":58,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":64,"confidence":"self-reported","note":"","by":"Tom Reeves"}],"libraryId":"lib3"},{"id":"p8","name":"Reader trust score","definition":"Mean answer to 'How much do you trust this outlet?' on a 1-10 scale, across participating newsrooms' reader surveys.","level":"outcome","unit":"score (1-10)","measureType":"point","direction":"increase","baseline":6.2,"target":7,"targetDate":null,"frequency":"quarterly","dataSource":"Reader survey","isKey":false,"lead":null,"entries":[{"date":"2026-06-01","value":6.4,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":6.5,"confidence":"self-reported","note":"","by":"Tom Reeves"}],"libraryId":"lib0"},{"id":"p9","name":"Financially sustainable newsrooms","definition":"Participating newsrooms whose revenue covers operating costs for 3 consecutive months.","level":"impact","unit":"newsrooms","measureType":"point","direction":"increase","baseline":8,"target":20,"targetDate":null,"frequency":"quarterly","dataSource":"Financial returns (modelled from partial data)","isKey":true,"lead":null,"entries":[{"date":"2026-04-01","value":8,"confidence":"modelled","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":10,"confidence":"modelled","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":11,"confidence":"modelled","note":"Modelled from 14 of 22 newsrooms' returns; remainder due in October.","by":"Tom Reeves"}],"libraryId":null}],"campaigns":[{"name":"Local News Matters (YouTube series)","channel":"youtube","start":"2026-04-15","end":"2026-06-30","spend":12000,"tag":"utm_campaign=lnm_youtube_2026","notes":"Six short documentaries on local newsrooms, each linking to the featured outlet.","metrics":[{"date":"2026-04-01","metric":"clicks","value":1400},{"date":"2026-04-01","metric":"impressions","value":85000},{"date":"2026-04-01","metric":"sign-ups","value":90},{"date":"2026-04-01","metric":"views","value":21000},{"date":"2026-05-01","metric":"clicks","value":3100},{"date":"2026-05-01","metric":"impressions","value":160000},{"date":"2026-05-01","metric":"sign-ups","value":240},{"date":"2026-05-01","metric":"views","value":46000},{"date":"2026-06-01","metric":"clicks","value":2700},{"date":"2026-06-01","metric":"impressions","value":140000},{"date":"2026-06-01","metric":"sign-ups","value":210},{"date":"2026-06-01","metric":"views","value":39000}]},{"name":"Toolkit launch email series","channel":"email","start":"2026-05-01","end":"2026-05-31","spend":1500,"tag":"utm_campaign=toolkit_launch","notes":"Four-email sequence to 2,300 local editors and publishers.","metrics":[{"date":"2026-05-01","metric":"clicks","value":620},{"date":"2026-05-01","metric":"opens","value":3900},{"date":"2026-05-01","metric":"sent","value":9200},{"date":"2026-05-01","metric":"sign-ups","value":41}]},{"name":"Newsroom Futures roadshow","channel":"events","start":"2026-07-01","end":"2026-08-31","spend":18000,"tag":"EVT-NF26","notes":"Five regional half-day events with peer case studies and toolkit demos.","metrics":[{"date":"2026-07-01","metric":"attendees","value":140},{"date":"2026-07-01","metric":"sign-ups","value":18},{"date":"2026-08-01","metric":"attendees","value":165},{"date":"2026-08-01","metric":"sign-ups","value":23}]}],"evidence":[{"type":"quote","title":"Publisher on sustainability","body":"We're closer, but one big advertiser leaving would still put us back in the red. The grant bought us time to diversify.","source":"Publisher, Morecambe Bay News","url":"","date":"2026-09-15","param":"p9","tags":"sustainability,risk","origin":"human","approved":false},{"type":"survey","title":"Theme: memberships are the most common new revenue stream","body":"Across 38 check-in responses, memberships (14) and local events (9) were the most-cited new revenue streams. Sentiment is mostly positive, with concern about sustaining member numbers after launch.","source":"AI theme coding of monthly check-in forms","url":"","date":"2026-09-12","param":"p6","tags":"revenue,theme","origin":"ai","approved":false},{"type":"survey","title":"Follow-up survey, cohort 1-3 (n=112)","body":"64% say they used a technique from training in the last month. Most cited: headline testing (41%), newsletter segmentation (29%), audience surveys (18%).","source":"Follow-up survey, September","url":"","date":"2026-09-10","param":"p7","tags":"skills,survey","origin":"human","approved":false},{"type":"quote","title":"Reader survey comment","body":"They actually come to the meetings now and explain what the decisions mean for us. That's why I read them.","source":"Reader, Hebden Bridge","url":"","date":"2026-09-02","param":"p8","tags":"trust,readers","origin":"human","approved":false},{"type":"case-study","title":"Tyneside Tribune launches a membership scheme","body":"After the revenue cohort, the Tribune launched a £4/month membership with a members-only newsletter. 310 members joined in the first six weeks, covering one part-time reporter.","source":"Programme case study","url":"","date":"2026-08-05","param":"p6","tags":"revenue,membership","origin":"human","approved":false},{"type":"link","title":"Regional press coverage of the roadshow","body":"Article on the Newsroom Futures roadshow and the programme's aims.","source":"Regional business press","url":"https://example.org/press/newsroom-futures","date":"2026-07-22","param":null,"tags":"press","origin":"human","approved":false},{"type":"quote","title":"Trainee on newsletter skills","body":"I rebuilt our newsletter the week after the session. Open rates went from 22% to 38%.","source":"Reporter, Wharfedale Weekly","url":"","date":"2026-06-30","param":"p7","tags":"skills,newsletter","origin":"human","approved":false},{"type":"quote","title":"Editor on the analytics dashboard","body":"For the first time we can see which stories people actually finish. We've moved our council coverage to the morning slot and it's our most-read section now.","source":"Editor, Calder Valley Voice","url":"","date":"2026-06-18","param":"p5","tags":"analytics,audience","origin":"human","approved":false}],"library":[{"id":"lib0","name":"Audience trust score","definition":"Mean answer to 'How much do you trust this outlet?' on a 1-10 scale.","level":"outcome","unit":"score (1-10)","direction":"increase","measureType":"point","frequency":"quarterly","dataSource":"Reader survey"},{"id":"lib1","name":"Organisations onboarded","definition":"Organisations with an active account and a completed onboarding call.","level":"activity","unit":"organisations","direction":"increase","measureType":"cumulative","frequency":"monthly","dataSource":"CRM"},{"id":"lib2","name":"People trained","definition":"Unique people completing at least one full training session.","level":"output","unit":"people","direction":"increase","measureType":"cumulative","frequency":"monthly","dataSource":"Attendance registers"},{"id":"lib3","name":"Trainees applying new skills","definition":"Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.","level":"outcome","unit":"%","direction":"increase","measureType":"point","frequency":"quarterly","dataSource":"Follow-up survey"}]};</script>
+<script>
+// Impact Tracker demo. A complete in-browser version of the app: every
+// screen and form works on the example data, with the same status rules as
+// the real app (src/lib/status.ts). Each visitor's changes are kept in their
+// own browser only.
+
+const TODAY = "2026-09-23"; // demo date, so the example data reads as "now"
+const STORE_KEY = "impact-tracker-demo-v1";
+const THRESH = { green: 0.9, amber: 0.7 };
+const LEVELS = ["input", "activity", "output", "outcome", "impact"];
+const LEVEL_LABELS = { input: "Inputs", activity: "Activities", output: "Outputs", outcome: "Outcomes", impact: "Impact" };
+const LEVEL_ONE = { input: "Input", activity: "Activity", output: "Output", outcome: "Outcome", impact: "Impact" };
+const VIEWS = {
+  lead: ["Project lead", "Full detail: every metric, campaign overlays and evidence."],
+  leadership: ["Leadership", "Summary: overall status, risks and key metrics."],
+  comms: ["Comms & policy", "Headline figures and stories for external use."],
+  marketing: ["Marketing", "Campaign performance alongside outcomes."],
+};
+const CHANNELS = { youtube: "YouTube", social: "Social", email: "Email", events: "Events", "paid-search": "Paid search", press: "Press", other: "Other" };
+const CONF = ["measured", "self-reported", "estimated", "modelled"];
+const FREQ = ["weekly", "monthly", "quarterly", "annually", "ad-hoc"];
+const PSTATUS = ["planning", "active", "paused", "completed"];
+const ETYPES = { quote: "Quote", survey: "Survey response or result", "case-study": "Case study", link: "Link" };
+const USERS = ["Amira Okafor", "Tom Reeves", "Priya Shah"];
+const STATUS = {
+  green: ["On track", "green", '<circle cx="6" cy="6" r="5" fill="var(--good)"/>'],
+  amber: ["Behind", "amber", '<path d="M6 1 L11 10.5 L1 10.5 Z" fill="var(--warning)"/>'],
+  red: ["Off track", "red", '<rect x="1.5" y="1.5" width="9" height="9" rx="1" fill="var(--critical)"/>'],
+  "no-data": ["No data", "none", '<circle cx="6" cy="6" r="4.5" fill="none" stroke="var(--muted)" stroke-width="1.5"/>'],
+  "not-started": ["Not started", "none", '<circle cx="6" cy="6" r="4.5" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2 2"/>'],
+};
+
+// ---------- helpers ----------
+const ms = (s) => Date.parse(s + "T00:00:00Z");
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
+const uid = (p) => p + Math.random().toString(36).slice(2, 9);
+const nf = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 });
+const nfc = new Intl.NumberFormat("en-GB", { notation: "compact", maximumFractionDigits: 1 });
+function num(n, o = {}) {
+  if (n === null || n === undefined || Number.isNaN(n)) return "–";
+  if (o.compact && Math.abs(n) >= 10000) return nfc.format(n);
+  if (o.round) return new Intl.NumberFormat("en-GB", { maximumFractionDigits: Math.abs(n) >= 100 ? 0 : Math.abs(n) >= 10 ? 1 : 2 }).format(n);
+  return nf.format(n);
+}
+const sym = (c) => ({ GBP: "£", EUR: "€", USD: "$" })[c] || c;
+function val(n, unit, o = {}) {
+  const v = num(n, o);
+  if (v === "–") return v;
+  if (unit === "£" || unit === "$" || unit === "€") return unit + v;
+  if (unit === "%") return v + "%";
+  return unit ? `${v} ${unit}` : v;
+}
+const pct = (f, d = 0) => (f === null || f === undefined || Number.isNaN(f) ? "–" : (f * 100).toFixed(d) + "%");
+const date = (s) => (s ? new Date(ms(s)).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) : "–");
+const month = (t) => new Date(t).toLocaleDateString("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" });
+const iso = (t) => new Date(t).toISOString().slice(0, 10);
+function parseDate(s) {
+  const t = String(s || "").trim();
+  let m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(t);
+  let y, mo, d;
+  if (m) [y, mo, d] = [+m[1], +m[2], +m[3]];
+  else if ((m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(t))) [y, mo, d] = [+m[3], +m[2], +m[1]];
+  else return null;
+  const dt = new Date(Date.UTC(y, mo - 1, d));
+  return dt.getUTCFullYear() === y && dt.getUTCMonth() === mo - 1 && dt.getUTCDate() === d ? iso(dt) : null;
+}
+const parseNum = (s) => {
+  const t = String(s ?? "").trim().replace(/[,£$€%\s]/g, "");
+  if (t === "") return null;
+  return Number.isFinite(+t) ? +t : NaN;
+};
+const normMetric = (s) => String(s).trim().toLowerCase().replace(/[\s_]+/g, "-");
+function parseCsv(text) {
+  const rows = [];
+  let row = [], cell = "", q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+      else if (c === '"') q = false;
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === ",") { row.push(cell); cell = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(cell); cell = "";
+      if (row.some((x) => x.trim() !== "")) rows.push(row);
+      row = [];
+    } else cell += c;
+  }
+  row.push(cell);
+  if (row.some((x) => x.trim() !== "")) rows.push(row);
+  return rows;
+}
+
+// ---------- store ----------
+function freeze(P, label, asOf, by, frozenOn) {
+  const t = ms(asOf);
+  return {
+    id: uid("s"), label, asOf, by, frozenOn,
+    data: structuredClone({
+      ...P,
+      snapshots: [],
+      params: P.params.filter((p) => !p.archived).map((p) => ({ ...p, entries: p.entries.filter((e) => ms(e.date) <= t) })),
+      campaigns: P.campaigns.filter((c) => ms(c.start) <= t).map((c) => ({ ...c, metrics: c.metrics.filter((m) => ms(m.date) <= t) })),
+      evidence: P.evidence.filter((e) => ms(e.date) <= t && (e.origin !== "ai" || e.approved)),
+    }),
+  };
+}
+function initialStore() {
+  const d = structuredClone(ORIGINAL);
+  const p = d.project;
+  const P = {
+    id: "lnrp", name: p.name, description: p.description, owner: p.owner, start: p.start, end: p.end, budget: p.budget, currency: "GBP",
+    region: p.region, status: p.status, toc: p.toc, archived: false,
+    params: d.params.map((x) => ({ ...x, archived: false })),
+    campaigns: d.campaigns.map((c) => ({ ...c, id: uid("c") })),
+    evidence: d.evidence.map((e) => ({ ...e, id: uid("e") })),
+    snapshots: [],
+    extraCols: [],
+  };
+  P.snapshots.push(freeze(P, "Q2 2026 as reported to the board", "2026-06-30", "Amira Okafor", "2026-07-03"));
+  return { v: 1, projects: [P], library: d.library, user: "Amira Okafor" };
+}
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem(STORE_KEY));
+    if (s && s.v === 1 && Array.isArray(s.projects)) return s;
+  } catch {}
+  return initialStore();
+}
+let S = load();
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch {}
+}
+
+const ui = { page: "portfolio", pid: null, id: null, view: "lead", snapView: "leadership", showArchived: false, evFilter: "", draft: null, csv: null, ccsv: null };
+const P = () => S.projects.find((p) => p.id === ui.pid);
+
+// ---------- status logic (same rules as src/lib/status.ts) ----------
+function series(p, asOf) {
+  let run = p.baseline;
+  return p.entries
+    .filter((e) => ms(e.date) <= ms(asOf))
+    .sort((a, b) => ms(a.date) - ms(b.date))
+    .map((e) => { run += e.value; return { ...e, level: p.measureType === "cumulative" ? run : e.value }; });
+}
+function progressOf(p, cur) {
+  const span = p.target - p.baseline;
+  if (span === 0) return (p.direction === "decrease" ? cur <= p.target : cur >= p.target) ? 1 : 0;
+  return (cur - p.baseline) / span;
+}
+function expectedOf(start, target, at) {
+  const total = ms(target) - ms(start);
+  if (total <= 0) return 1;
+  return Math.min(1, Math.max(0, (ms(at) - ms(start)) / total));
+}
+function rag(prog, exp) {
+  if (prog >= 1) return "green";
+  if (exp <= 0) return prog >= 0 ? "green" : "red";
+  const r = prog / exp;
+  return r >= THRESH.green ? "green" : r >= THRESH.amber ? "amber" : "red";
+}
+function evaluate(proj, asOf) {
+  const order = (p) => LEVELS.indexOf(p.level);
+  const metrics = proj.params.filter((p) => !p.archived).sort((a, b) => order(a) - order(b)).map((p) => {
+    const s = series(p, asOf);
+    const last = s[s.length - 1];
+    const targetDate = p.targetDate || proj.end;
+    const m = { ...p, targetDate, series: s, status: ms(asOf) < ms(proj.start) ? "not-started" : "no-data", current: null, progress: null, expected: null, latestDate: last?.date ?? null, latestConf: last?.confidence ?? null };
+    if (last) {
+      m.current = last.level;
+      m.progress = progressOf(p, m.current);
+      m.expected = expectedOf(proj.start, targetDate, last.date);
+      m.status = rag(m.progress, m.expected);
+    }
+    m.mix = {};
+    s.forEach((e) => (m.mix[e.confidence] = (m.mix[e.confidence] || 0) + 1));
+    return m;
+  });
+  const byId = Object.fromEntries(metrics.map((m) => [m.id, m]));
+  metrics.forEach((m) => (m.riskFrom = []));
+  metrics.forEach((m) => { if (m.lead && byId[m.lead] && (m.status === "amber" || m.status === "red")) byId[m.lead].riskFrom.push(m.name); });
+  const counts = { green: 0, amber: 0, red: 0, "no-data": 0, "not-started": 0 };
+  metrics.forEach((m) => counts[m.status]++);
+  const pool = metrics.some((m) => m.isKey) ? metrics.filter((m) => m.isKey) : metrics;
+  const st = pool.map((m) => m.status);
+  const overall = st.includes("red") ? "red" : st.includes("amber") ? "amber" : st.includes("green") ? "green" : "no-data";
+  const campaigns = [...proj.campaigns]
+    .filter((c) => ms(c.start) <= ms(asOf))
+    .sort((a, b) => ms(a.start) - ms(b.start))
+    .map((c, i) => campaignSummary(c, asOf, i + 1));
+  return { proj, asOf, metrics, counts, overall, campaigns, elapsed: expectedOf(proj.start, proj.end, asOf) };
+}
+function campaignSummary(c, asOf, n) {
+  const totals = {};
+  c.metrics.filter((m) => ms(m.date) <= ms(asOf)).forEach((m) => (totals[m.metric] = (totals[m.metric] || 0) + m.value));
+  return { ...c, n, totals, ctr: totals.clicks && totals.impressions ? totals.clicks / totals.impressions : null, cps: c.spend && totals["sign-ups"] ? c.spend / totals["sign-ups"] : null };
+}
+const visible = (e, safe) => !safe || e.origin !== "ai" || e.approved;
+
+// ---------- small components ----------
+function status(s, lg) {
+  const [label, cls, icon] = STATUS[s];
+  return `<span class="status ${cls}${lg ? " lg" : ""}"><svg width="${lg ? 14 : 12}" height="${lg ? 14 : 12}" viewBox="0 0 12 12" aria-hidden="true">${icon}</svg>${label}</span>`;
+}
+function conf(c) {
+  if (!c) return "";
+  const n = { measured: 4, "self-reported": 3, estimated: 2, modelled: 2 }[c] || 1;
+  return `<span class="conf" title="Latest value is ${c}"><span class="bars">${[1, 2, 3, 4].map((i) => `<i class="${i <= n ? "on" : ""}" style="height:${3 + i * 2}px"></i>`).join("")}</span>${cap(c)}</span>`;
+}
+const progress = (p, e) =>
+  `<div class="progress"><b style="width:${Math.max(0, Math.min(1, p ?? 0)) * 100}%"></b>${e === null ? "" : `<s style="left:calc(${Math.min(1, e) * 100}% - 1px)" title="Expected at the latest update"></s>`}</div>`;
+const expAt = (m) => (m.expected === null ? null : m.baseline + (m.target - m.baseline) * m.expected);
+const empty = (title, body = "") => `<div class="card pad" style="text-align:center;padding-block:40px"><p style="font-weight:560">${title}</p>${body ? `<p class="sub" style="margin-top:6px">${body}</p>` : ""}</div>`;
+const confirmBtn = (label, action, arg, cls = "btn small") => `<button type="button" class="${cls}" data-confirm="${action}" data-arg="${esc(arg)}" data-label="${esc(label)}">${label}</button>`;
+
+function niceTicks(lo, hi, count = 4) {
+  if (lo === hi) { const d = Math.abs(lo) || 1; lo -= d / 2; hi += d / 2; }
+  const raw = (hi - lo) / count;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((x) => x * mag).find((s) => s >= raw) ?? 10 * mag;
+  let start = Math.floor(lo / step) * step;
+  if (lo >= 0 && start < 0) start = 0;
+  const out = [];
+  for (let v = start; v < hi + step * 0.999; v += step) out.push(+v.toFixed(10));
+  return out;
+}
+
+function chart(E, m, bands, h = 190, compact = false) {
+  const W = compact ? 120 : 560, H = compact ? 36 : h;
+  const L = compact ? 2 : 44, R = compact ? 2 : 10, T = compact ? 3 : 10, B = compact ? 3 : 24;
+  const t0 = ms(E.proj.start), t1 = Math.max(ms(m.targetDate), ...m.series.map((e) => ms(e.date)));
+  const vals = [m.baseline, m.target, ...m.series.map((e) => e.level)];
+  const ticks = niceTicks(Math.min(...vals), Math.max(...vals));
+  const y0 = ticks[0], y1 = ticks[ticks.length - 1];
+  const x = (t) => L + ((t - t0) / (t1 - t0 || 1)) * (W - L - R);
+  const y = (v) => T + (1 - (v - y0) / (y1 - y0 || 1)) * (H - T - B);
+  const pts = m.series.map((e) => [x(ms(e.date)), y(e.level), e]);
+  const expLine = `M${x(t0)},${y(m.baseline)} L${x(ms(m.targetDate))},${y(m.target)}`;
+  const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
+  if (compact) return `<svg class="chart" viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${expLine}" stroke="var(--muted)" stroke-dasharray="3 3" fill="none"/><path d="${line}" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Trend for ${esc(m.name)}">`;
+  ticks.forEach((v) => (s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end" class="num">${num(v, { compact: true })}</text>`));
+  (bands || []).forEach((c) => {
+    const a = Math.max(t0, ms(c.start)), b = Math.min(t1, c.end ? ms(c.end) : t1);
+    if (b > a) s += `<rect x="${x(a)}" y="${T}" width="${x(b) - x(a)}" height="${H - T - B}" fill="var(--band)"/><text x="${x(a) + 4}" y="${T + 12}" style="fill:var(--ink-2)">${c.n}</text>`;
+  });
+  s += `<line x1="${L}" x2="${W - R}" y1="${y(m.target)}" y2="${y(m.target)}" stroke="var(--line-strong)"/><text x="${W - R - 2}" y="${y(m.target) - 4}" text-anchor="end">Target</text>`;
+  s += `<line x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}" stroke="var(--line-strong)"/>`;
+  const span = (t1 - t0) / 86400000;
+  const stepM = span > 500 ? 6 : span > 200 ? 3 : 1;
+  for (let d = new Date(Date.UTC(new Date(t0).getUTCFullYear(), new Date(t0).getUTCMonth(), 1)); d.getTime() <= t1; d = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + stepM, 1))) {
+    if (d.getTime() >= t0) s += `<text x="${x(d.getTime())}" y="${H - 6}" text-anchor="middle">${month(d.getTime())}</text>`;
+  }
+  s += `<path d="${expLine}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>`;
+  s += `<path d="${line}" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+  pts.forEach(([px, py, e]) => {
+    const expected = m.baseline + (m.target - m.baseline) * expectedOf(E.proj.start, m.targetDate, e.date);
+    const tip = esc(`${date(e.date)}|${val(e.level, m.unit)} · ${e.confidence}|Expected ${val(expected, m.unit, { round: true })}${e.note ? "|" + e.note : ""}`);
+    s += `<circle cx="${px}" cy="${py}" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/><circle class="dot" cx="${px}" cy="${py}" r="12" fill="transparent" data-tip="${tip}"/>`;
+  });
+  return s + "</svg>";
+}
+
+// ---------- dashboard pieces ----------
+function metricCard(E, m, size, ev, bands) {
+  const e = expAt(m);
+  const evidence = ev.filter((x) => x.param === m.id);
+  const mix = Object.entries(m.mix);
+  return `<article class="card pad stack-sm">
+    <div class="row between" style="align-items:flex-start;flex-wrap:nowrap"><div><h3 style="${size === "lg" ? "font-size:16px" : ""}">${esc(m.name)}</h3>${size === "lg" && m.definition ? `<p class="sub xs" style="margin-top:2px">${esc(m.definition)}</p>` : ""}</div>${status(m.status)}</div>
+    ${m.riskFrom.length ? `<div class="risk"><strong>At risk:</strong> leading indicator ${esc(m.riskFrom.join(", "))} ${m.riskFrom.length === 1 ? "is" : "are"} behind target.</div>` : ""}
+    <div class="row" style="align-items:baseline;gap:4px 8px"><span class="${size === "lg" ? "bigger" : "big"}">${val(m.current, m.unit, { compact: true })}</span><span class="sub">of ${val(m.target, m.unit, { compact: true })} target by ${date(m.targetDate)}</span></div>
+    <div>${progress(m.progress, m.expected)}<div class="row between xs sub" style="margin-top:4px"><span>${pct(m.progress === null ? null : Math.max(0, m.progress))} of the way from baseline</span>${e !== null ? `<span>Expected at last update: ${val(e, m.unit, { compact: true, round: true })}</span>` : ""}</div></div>
+    ${m.series.length ? chart(E, m, bands, size === "lg" ? 190 : 150) : ""}
+    <div class="row" style="border-top:1px solid var(--line);padding-top:10px;margin-top:auto">${conf(m.latestConf)}<span class="xs muted">${m.latestDate ? "Updated " + date(m.latestDate) : "No entries yet"}${m.dataSource ? " · " + esc(m.dataSource) : ""}</span>${mix.length > 1 ? `<span class="xs muted">History: ${mix.map(([c, n]) => `${n} ${c}`).join(", ")}</span>` : ""}${evidence.length ? `<button class="btn small" style="margin-left:auto;color:var(--accent-ink)" data-evidence="${m.id}">${evidence.length} ${evidence.length === 1 ? "piece" : "pieces"} of evidence</button>` : ""}</div>
+  </article>`;
+}
+function metricRow(E, m, ev) {
+  const evidence = ev ? ev.filter((x) => x.param === m.id) : [];
+  return `<tr><td><div style="font-weight:520">${esc(m.name)}</div><div class="xs muted">${m.latestDate ? "Updated " + date(m.latestDate) : "No entries yet"}</div>${m.riskFrom.length ? `<div class="xs" style="color:var(--warning-ink)">At risk: ${esc(m.riskFrom.join(", "))} behind</div>` : ""}</td>
+  <td class="num" style="white-space:nowrap"><strong>${val(m.current, m.unit, { compact: true })}</strong> <span class="sub">/ ${val(m.target, m.unit, { compact: true })}</span></td>
+  <td style="width:180px;vertical-align:middle">${progress(m.progress, m.expected)}</td><td style="width:130px;vertical-align:middle">${m.series.length ? chart(E, m, null, 36, true) : ""}</td>
+  <td>${status(m.status)}</td><td>${conf(m.latestConf)}</td><td class="r">${evidence.length ? `<button class="btn small" style="color:var(--accent-ink)" data-evidence="${m.id}">${evidence.length} evidence</button>` : ""}</td></tr>`;
+}
+function summary(E) {
+  const p = E.proj;
+  return `<section class="grid g3">
+    <div class="card pad"><div class="label">Overall status</div><div style="margin-top:4px">${status(E.overall, true)}</div><p class="xs sub" style="margin-top:8px">Worst status among ${E.metrics.some((m) => m.isKey) ? "key metrics" : "all metrics"}.</p></div>
+    <div class="card pad"><div class="label">Timeline</div><div class="big">${pct(E.elapsed)}</div><div class="track" style="margin-top:8px"><b style="width:${E.elapsed * 100}%"></b></div><p class="xs sub" style="margin-top:8px">${date(p.start)} – ${date(p.end)}${p.budget ? ` · Budget ${val(p.budget, sym(p.currency), { compact: true })}` : ""}</p></div>
+    <div class="card pad"><div class="label">Metrics</div><ul style="list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px">${["green", "amber", "red", "no-data", "not-started"].filter((s) => E.counts[s]).map((s) => `<li class="row between">${status(s)}<strong class="num">${E.counts[s]}</strong></li>`).join("")}</ul></div>
+  </section>`;
+}
+function riskAlert(E) {
+  const r = E.metrics.filter((m) => m.riskFrom.length);
+  if (!r.length) return "";
+  const words = { green: "on track", amber: "behind", red: "off track", "no-data": "no data yet", "not-started": "not started" };
+  return `<section class="alert"><h3 class="row" style="gap:8px"><svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 10.5 L1 10.5 Z" fill="var(--warning)"/></svg>${r.length} ${r.length === 1 ? "metric is" : "metrics are"} at risk</h3>
+  <ul style="margin:8px 0 0;padding-left:20px">${r.map((m) => `<li><strong style="font-weight:560">${esc(m.name)}</strong> <span class="sub">(currently ${words[m.status]}): its leading indicator ${esc(m.riskFrom.join(", "))} ${m.riskFrom.length === 1 ? "is" : "are"} behind target.</span></li>`).join("")}</ul></section>`;
+}
+function tocStrip(proj) {
+  const t = proj.toc;
+  const items = [["input", t.inputs], ["activity", t.activities], ["output", t.outputs], ["outcome", t.outcomes], ["impact", t.impact]];
+  if (!items.some(([, s]) => s)) return "";
+  return `<details class="card pad" open><summary style="cursor:pointer;font-weight:600">Theory of change</summary><ol class="toc">${items.map(([l, s], i) => `<li><div class="eyebrow">${i + 1}. ${LEVEL_LABELS[l]}</div><p style="margin-top:4px">${s ? esc(s) : '<span class="muted">Not set</span>'}</p></li>`).join("")}</ol></details>`;
+}
+const correlation = `<p class="xs sub">Shaded periods show when campaigns ran. Changes during a campaign show <strong style="color:var(--ink)">correlation, not proof of cause</strong>: other things were happening at the same time.</p>`;
+function campaignLegend(E) {
+  if (!E.campaigns.length) return "";
+  return `<div class="card pad stack-sm" style="padding:12px 14px"><div class="row" style="gap:6px 20px">${E.campaigns.map((c) => `<span class="row xs" style="gap:6px"><span class="legend-n">${c.n}</span><strong style="font-weight:560">${esc(c.name)}</strong><span class="muted">${CHANNELS[c.channel]} · ${date(c.start)} – ${c.end ? date(c.end) : "ongoing"}</span></span>`).join("")}</div>${correlation}</div>`;
+}
+const explainer = `<p class="xs muted">Status compares progress with where the metric should be by its latest entry, assuming steady progress from baseline at the project start to target at the target date: on track ≥ 90% of expected, behind ≥ 70%, off track below that. The tick on each bar marks where it should have been at its latest update.</p>`;
+
+function levelSections(E, ev, bands) {
+  const sections = [
+    [["impact"], "lg", "The long-term change the programme contributes to."],
+    [["outcome"], "lg", "Changes for participants and communities."],
+    [["output"], "md", "What the programme has directly delivered."],
+    [["activity", "input"], "row", "Delivery and resources."],
+  ];
+  return sections.map(([lv, size, blurb]) => {
+    const items = E.metrics.filter((m) => lv.includes(m.level));
+    if (!items.length) return "";
+    const present = lv.filter((l) => items.some((m) => m.level === l));
+    const head = `<div class="section-h"><h2 style="${size === "row" ? "font-size:16px" : ""}">${present.map((l) => LEVEL_LABELS[l]).join(" & ")}</h2><p class="sub">${blurb}</p></div>`;
+    if (size === "row") return `<section>${head}<div class="card scroll"><table><tbody>${items.map((m) => metricRow(E, m, ev)).join("")}</tbody></table></div></section>`;
+    return `<section>${head}<div class="grid ${size === "lg" ? "g2" : "g3c"}">${items.map((m) => metricCard(E, m, size, ev, bands)).join("")}</div></section>`;
+  }).join("");
+}
+function campaignTable(cs, currency) {
+  const names = [...new Set(cs.flatMap((c) => Object.keys(c.totals)))];
+  const pref = ["impressions", "views", "sent", "opens", "attendees", "clicks", "sign-ups"];
+  names.sort((a, b) => (pref.indexOf(a) + 1 || 99) - (pref.indexOf(b) + 1 || 99));
+  return `<div class="card scroll"><table><thead><tr><th>Campaign</th><th class="r">Spend</th>${names.map((n) => `<th class="r">${cap(n.replace(/-/g, " "))}</th>`).join("")}<th class="r">Click-through</th><th class="r">Cost per sign-up</th></tr></thead><tbody class="num">
+  ${cs.map((c) => `<tr><td><div style="font-weight:520"><span class="xs muted" style="margin-right:6px">${c.n}</span>${esc(c.name)}</div><div class="xs muted">${CHANNELS[c.channel]}${c.tag ? " · " + esc(c.tag) : ""}</div></td><td class="r">${val(c.spend, currency, { compact: true })}</td>${names.map((n) => `<td class="r">${c.totals[n] !== undefined ? num(c.totals[n], { compact: true }) : '<span class="muted">–</span>'}</td>`).join("")}<td class="r">${c.ctr === null ? '<span class="muted">–</span>' : pct(c.ctr, 1)}</td><td class="r">${c.cps === null ? '<span class="muted">–</span>' : val(c.cps, currency, { round: true })}</td></tr>`).join("")}</tbody></table></div>`;
+}
+function gantt(proj, cs, asOf) {
+  const s = ms(proj.start), e = ms(proj.end);
+  const p = (t) => Math.min(100, Math.max(0, ((t - s) / (e - s)) * 100));
+  const months = [];
+  for (let d = new Date(s); d.getTime() <= e; d = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 2, 1))) months.push(d.getTime());
+  return `<div class="card pad"><div style="position:relative;height:18px;margin-left:min(200px,35%)" class="xs muted">${months.map((t) => `<span style="position:absolute;left:${p(t)}%;transform:translateX(-50%)">${month(t)}</span>`).join("")}</div>
+  <div class="stack-sm" style="gap:8px">${cs.map((c) => `<div class="row" style="flex-wrap:nowrap;gap:0"><span style="width:min(200px,35%);flex-shrink:0;padding-right:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(c.name)}"><span class="xs muted" style="margin-right:6px">${c.n}</span>${esc(c.name)}</span><span class="gantt"><b style="left:${p(ms(c.start))}%;width:max(${p(ms(c.end || asOf)) - p(ms(c.start))}%,4px)" title="${date(c.start)} – ${c.end ? date(c.end) : "ongoing"}"></b></span></div>`).join("")}</div></div>`;
+}
+function evidenceItem(e, compact) {
+  const types = { quote: "Quote", survey: "Survey", "case-study": "Case study", link: "Link" };
+  const q = e.type === "quote";
+  return `<article class="stack-sm" style="gap:8px"><div class="row xs muted" style="gap:6px 8px"><span class="chip">${types[e.type]}</span><span>${date(e.date)}</span>${e.origin === "ai" ? '<span class="chip ai">AI-generated</span>' : ""}${e.origin === "ai" && !e.approved ? '<span style="color:var(--warning-ink)">Not approved: hidden from stakeholders</span>' : ""}</div>
+  ${q ? `<blockquote style="font-size:${compact ? 14 : 15}px">“${esc(e.body)}”</blockquote>` : `<h3 style="font-size:14px">${esc(e.title)}</h3>${e.body ? `<p class="sub" style="font-size:14px;line-height:1.55">${esc(e.body)}</p>` : ""}`}
+  <p class="xs sub">${q ? `<strong style="color:var(--ink);font-weight:560">${esc(e.title)}</strong> · ` : ""}${esc(e.source)}${e.url ? ` · <a href="${esc(e.url)}" target="_blank" rel="noreferrer" style="color:var(--accent-ink)">Open link</a>` : ""}</p></article>`;
+}
+
+function dashboardView(E, view, safe) {
+  if (!E.metrics.length) return empty("Nothing to show yet", `<button class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="param-new">Add parameters</button> and log some data to see the dashboard.`);
+  const ev = E.proj.evidence.filter((e) => ms(e.date) <= ms(E.asOf) && visible(e, safe));
+  const bands = E.campaigns;
+  const cur = sym(E.proj.currency);
+  if (view === "leadership") {
+    const key = E.metrics.filter((m) => m.isKey);
+    return `${summary(E)}${riskAlert(E)}
+    ${key.length ? `<section><div class="section-h"><h2>Key metrics</h2></div><div class="grid g3c">${key.map((m) => metricCard(E, m, "md", [], null)).join("")}</div></section>` : ""}
+    <section><div class="section-h"><h2>All metrics by level</h2></div><div class="card scroll"><table>${["impact", "outcome", "output", "activity", "input"].map((l) => { const rows = E.metrics.filter((m) => m.level === l); return rows.length ? `<tbody><tr class="lvl-row"><td colspan="7" class="eyebrow">${LEVEL_LABELS[l]}</td></tr>${rows.map((m) => metricRow(E, m, null)).join("")}</tbody>` : ""; }).join("")}</table></div></section>${explainer}`;
+  }
+  if (view === "comms") {
+    const rank = ["impact", "outcome", "output", "activity", "input"];
+    const head = E.metrics.filter((m) => m.current !== null && (m.isKey || ["impact", "outcome", "output"].includes(m.level))).sort((a, b) => b.isKey - a.isKey || rank.indexOf(a.level) - rank.indexOf(b.level)).slice(0, 6);
+    const stories = ev.filter((e) => e.type !== "link");
+    const links = ev.filter((e) => e.type === "link");
+    return `${E.proj.toc.impact ? `<section class="card pad"><div class="label">What we are working towards</div><p style="font-size:18px;line-height:1.4;margin-top:4px;text-wrap:balance">${esc(E.proj.toc.impact)}</p></section>` : ""}
+    <section><div class="section-h"><h2>Headline figures</h2></div>${head.length ? `<div class="grid g3c">${head.map((m) => `<div class="card pad"><div class="bigger">${val(m.current, m.unit, { compact: true })}</div><div style="margin-top:4px">${esc(m.name)}</div><div class="xs sub" style="margin-top:8px">${pct(Math.max(0, m.progress))} of the way to a target of ${val(m.target, m.unit, { compact: true })} by ${date(m.targetDate)}</div><div class="xs muted" style="margin-top:6px">${cap(m.latestConf)} · as of ${date(m.latestDate)}</div></div>`).join("")}</div><p class="xs muted" style="margin-top:8px">Check the confidence level before quoting a figure: self-reported, estimated and modelled figures should be described as such.</p>` : '<p class="sub">No figures logged yet.</p>'}</section>
+    ${stories.length ? `<section><div class="section-h"><h2>Stories and quotes</h2></div><div class="masonry">${stories.map((e) => `<div class="card pad">${evidenceItem(e, true)}${e.param ? `<p class="xs muted" style="margin-top:8px">Relates to: ${esc(E.proj.params.find((p) => p.id === e.param)?.name)}</p>` : ""}</div>`).join("")}</div></section>` : ""}
+    ${links.length ? `<section><div class="section-h"><h2 style="font-size:16px">Coverage and links</h2></div><div class="card pad">${links.map((e) => evidenceItem(e, true)).join("")}</div></section>` : ""}`;
+  }
+  if (view === "marketing") {
+    if (!E.campaigns.length) return empty("No campaigns yet", "Add one on the Campaigns tab to compare campaign activity with outcomes.");
+    const spend = E.campaigns.reduce((n, c) => n + c.spend, 0);
+    const su = E.campaigns.reduce((n, c) => n + (c.totals["sign-ups"] || 0), 0);
+    const outs = E.metrics.filter((m) => (m.level === "outcome" || m.level === "impact" || m.isKey) && m.series.length);
+    return `<section class="grid g3"><div class="card pad"><div class="label">Campaigns</div><div class="big">${E.campaigns.length}</div></div><div class="card pad"><div class="label">Total spend</div><div class="big">${val(spend, cur, { compact: true })}</div></div><div class="card pad"><div class="label">Sign-ups</div><div class="big">${num(su)}</div>${su && spend ? `<div class="xs sub" style="margin-top:4px">${val(spend / su, cur, { round: true })} per sign-up overall</div>` : ""}</div></section>
+    <section class="stack-sm"><div class="section-h" style="margin:0"><h2>Campaign performance</h2></div>${campaignTable(E.campaigns, cur)}${gantt(E.proj, E.campaigns, E.asOf)}</section>
+    ${outs.length ? `<section class="stack-sm"><div class="section-h" style="margin:0"><h2>Outcomes during campaigns</h2></div>${campaignLegend(E)}<div class="grid g2">${outs.map((m) => metricCard(E, m, "md", [], bands)).join("")}</div></section>` : ""}`;
+  }
+  return `${summary(E)}${riskAlert(E)}${tocStrip(E.proj)}${explainer}${campaignLegend(E)}${levelSections(E, ev, bands)}<p class="xs muted">Solid line: actual values (running total for cumulative metrics). Dashed line: expected path to target. Hover a point for its value. Data as of ${date(E.asOf)}.</p>`;
+}
+const viewSwitcher = (cur, key) =>
+  `<div><div class="seg" role="group" aria-label="Stakeholder view">${Object.entries(VIEWS).map(([v, [l]]) => `<button type="button" data-${key}="${v}" aria-pressed="${v === cur}">${l}</button>`).join("")}</div><p class="xs muted" style="margin-top:4px">${VIEWS[cur][1]}</p></div>`;
+
+// ---------- form helpers ----------
+function field(label, name, control, hint = "") {
+  return `<div class="field"><label for="f-${name}">${label}</label>${control}<p class="hint" data-hint="${name}">${hint}</p><p class="err" data-err="${name}" hidden></p></div>`;
+}
+const inp = (name, value = "", attrs = "") => `<input class="input" id="f-${name}" name="${name}" value="${esc(value)}" ${attrs}>`;
+const ta = (name, value = "", rows = 3, attrs = "") => `<textarea class="input" id="f-${name}" name="${name}" rows="${rows}" ${attrs}>${esc(value)}</textarea>`;
+const sel = (name, options, value, attrs = "") => `<select class="input" id="f-${name}" name="${name}" ${attrs}>${options.map(([v, l]) => `<option value="${esc(v)}"${String(v) === String(value ?? "") ? " selected" : ""}>${esc(l)}</option>`).join("")}</select>`;
+const actions = (submit, cancelGo) => `<div class="row" style="border-top:1px solid var(--line);padding-top:16px"><button class="btn primary" type="submit">${submit}</button>${cancelGo ? `<button type="button" class="btn ghost" data-go="${cancelGo}">Cancel</button>` : ""}<span class="err" data-err="_form" hidden></span></div>`;
+function showErrors(form, errs) {
+  form.querySelectorAll("[data-err]").forEach((el) => { el.hidden = true; el.textContent = ""; });
+  form.querySelectorAll(".input.invalid").forEach((el) => el.classList.remove("invalid"));
+  const keys = Object.keys(errs);
+  keys.forEach((k) => {
+    const el = form.querySelector(`[data-err="${k}"]`);
+    if (el) { el.textContent = errs[k]; el.hidden = false; }
+    form.querySelector(`[name="${k}"]`)?.classList.add("invalid");
+  });
+  if (keys.length) {
+    const f = form.querySelector(`[data-err="_form"]`);
+    if (f && !errs._form) { f.textContent = "Please fix the highlighted fields."; f.hidden = false; }
+    form.querySelector(".input.invalid")?.focus();
+  }
+  return keys.length > 0;
+}
+
+// ---------- pages ----------
+const TABS = [["dashboard", "Dashboard"], ["data", "Data entry"], ["parameters", "Parameters"], ["campaigns", "Campaigns"], ["evidence", "Evidence"], ["snapshots", "Snapshots"], ["settings", "Project & theory of change"]];
+const TAB_OF = { "param-new": "parameters", "param-edit": "parameters", "param-library": "parameters", "import": "data", "campaign-new": "campaigns", "campaign": "campaigns", "campaign-import": "campaigns", "evidence-form": "evidence", "snapshot-new": "snapshots", "snapshot": "snapshots" };
+
+function projectHeader() {
+  const p = P();
+  const tab = TAB_OF[ui.page] || ui.page;
+  return `<button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Portfolio</button>
+  <div class="row" style="align-items:baseline;gap:4px 12px;margin-top:4px"><h1>${esc(p.name)}</h1>${p.archived ? '<span class="chip">Archived</span>' : ""}<span class="sub">${cap(p.status)}${p.region ? " · " + esc(p.region) : ""} · ${date(p.start)} – ${date(p.end)}${p.owner ? " · Owner: " + esc(p.owner) : ""}</span></div>
+  <div class="tabs" role="tablist">${TABS.map(([k, l]) => `<button type="button" role="tab" aria-selected="${tab === k}" data-go="${k}">${l}</button>`).join("")}</div>`;
+}
+const subHead = (title, backGo, backLabel) => `<div class="row between" style="margin-bottom:16px"><h2>${title}</h2>${backGo ? `<button type="button" class="btn ghost" data-go="${backGo}">${backLabel}</button>` : ""}</div>`;
+
+function pagePortfolio() {
+  const list = S.projects.filter((p) => ui.showArchived || !p.archived);
+  const rows = list.map((p) => ({ p, E: evaluate(p, TODAY) }));
+  const totals = { green: 0, amber: 0, red: 0, "no-data": 0 };
+  rows.forEach(({ E }) => ["green", "amber", "red", "no-data"].forEach((s) => (totals[s] += E.counts[s])));
+  const budget = rows.reduce((n, { p }) => n + (p.currency === "GBP" ? p.budget || 0 : 0), 0);
+  const headline = (E) => {
+    const key = E.metrics.filter((m) => m.isKey);
+    const rank = ["impact", "outcome", "output", "activity", "input"];
+    return (key.length ? key : [...E.metrics].sort((a, b) => rank.indexOf(a.level) - rank.indexOf(b.level))).slice(0, 3);
+  };
+  return `<div class="stack"><div class="row between"><div><h1>Portfolio</h1><p class="sub" style="margin-top:4px">Every project's status at a glance. Open a project for its full dashboard.</p></div><button type="button" class="btn primary" data-go="project-new">New project</button></div>
+  <section class="grid g3"><div class="card pad"><div class="label">Projects</div><div class="big">${rows.length}</div><div class="xs sub">${rows.filter(({ p }) => p.status === "active").length} active</div></div><div class="card pad"><div class="label">Total budget</div><div class="big">${budget ? "£" + nfc.format(budget) : "–"}</div></div><div class="card pad"><div class="label">Metrics across projects</div><div class="row" style="margin-top:8px;gap:6px 16px">${["green", "amber", "red", "no-data"].filter((s) => totals[s]).map((s) => `<span class="row" style="gap:6px">${status(s)}<strong class="num">${totals[s]}</strong></span>`).join("") || '<span class="sub">–</span>'}</div></div></section>
+  ${rows.length ? `<div class="card scroll"><table><thead><tr><th>Project</th><th>Overall</th><th>Timeline</th><th>Metrics</th><th>Key metrics</th></tr></thead><tbody>${rows.map(({ p, E }) => `<tr>
+  <td><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--accent-ink);text-decoration:underline;text-align:left" data-open="${p.id}">${esc(p.name)}</button>${p.archived ? ' <span class="chip">Archived</span>' : ""}<div class="xs sub">${cap(p.status)}${p.region ? " · " + esc(p.region) : ""}${p.owner ? " · " + esc(p.owner) : ""}</div></td>
+  <td>${status(E.metrics.length ? E.overall : "no-data")}</td>
+  <td style="min-width:130px"><div class="xs sub">${pct(E.elapsed)} elapsed</div><div class="track" style="margin-top:4px"><b style="width:${E.elapsed * 100}%"></b></div></td>
+  <td style="min-width:170px">${E.metrics.length ? `<div style="display:flex;gap:2px;height:8px;border-radius:99px;overflow:hidden">${["green", "amber", "red", "no-data"].filter((s) => E.counts[s]).map((s) => `<i style="flex-grow:${E.counts[s]};background:var(--${{ green: "good", amber: "warning", red: "critical", "no-data": "line-strong" }[s]})"></i>`).join("")}</div><div class="xs sub" style="margin-top:4px">${["green", "amber", "red", "no-data"].filter((s) => E.counts[s]).map((s) => `${E.counts[s]} ${STATUS[s][0].toLowerCase()}`).join(" · ")}</div>` : '<span class="xs muted">–</span>'}</td>
+  <td>${E.metrics.length ? `<ul style="list-style:none;margin:0;padding:0;display:grid;gap:4px">${headline(E).map((m) => `<li class="row xs" style="gap:4px 8px">${status(m.status)}<span class="sub">${esc(m.name)}:</span><strong class="num">${val(m.current, m.unit, { compact: true })} / ${val(m.target, m.unit, { compact: true })}</strong></li>`).join("")}</ul>` : '<span class="xs muted">No parameters yet</span>'}</td></tr>`).join("")}</tbody></table></div>` : empty("No projects yet", "Create your first project with the button above.")}
+  <button type="button" class="linkbtn" data-toggle-archived>${ui.showArchived ? "Hide archived projects" : "Show archived projects"}</button></div>`;
+}
+
+function projectForm(p, submit, cancel) {
+  const t = p?.toc || {};
+  const toc = [["inputs", "Inputs", "Resources you put in: funding, staff, partners, tools."], ["activities", "Activities", "What the programme does with those inputs."], ["outputs", "Outputs", "Direct, countable products of the activities."], ["outcomes", "Outcomes", "Changes for participants that the outputs lead to."], ["impact", "Impact", "The long-term change you are ultimately contributing to."]];
+  return `<form data-form="project" class="stack" novalidate>
+  <section class="card pad stack-sm"><h2 style="font-size:16px">Project details</h2>
+    ${field("Name", "name", inp("name", p?.name, "required"))}
+    ${field("Description", "description", ta("description", p?.description, 3))}
+    <div class="grid g3">${field("Owner", "owner", sel("owner", [["", "Unassigned"], ...USERS.map((u) => [u, u])], p?.owner ?? S.user))}${field("Status", "status", sel("status", PSTATUS.map((s) => [s, cap(s)]), p?.status ?? "planning"))}${field("Region", "region", inp("region", p?.region))}
+    ${field("Start date", "start", inp("start", p?.start ?? TODAY, 'type="date" required'))}${field("End date", "end", inp("end", p?.end ?? "", 'type="date" required'))}
+    <div class="grid" style="grid-template-columns:1fr 6rem;gap:8px">${field("Budget", "budget", inp("budget", p?.budget ?? "", 'inputmode="decimal"'))}${field("Currency", "currency", sel("currency", [["GBP", "GBP"], ["USD", "USD"], ["EUR", "EUR"]], p?.currency ?? "GBP"))}</div></div>
+  </section>
+  <section class="card pad stack-sm"><div><h2 style="font-size:16px">Theory of change</h2><p class="sub" style="margin-top:4px">How the programme is expected to create change. Parameters you add later are grouped under these same levels.</p></div>
+    ${toc.map(([k, l, h], i) => `<div class="toc-row"><div><label for="f-toc-${k}" style="font-weight:560">${i + 1}. ${l}</label><p class="xs muted">${h}</p></div>${ta("toc-" + k, t[k], 2)}</div>`).join("")}
+  </section>${actions(submit, cancel)}</form>`;
+}
+function readProject(fd) {
+  const e = {};
+  const d = {
+    name: fd.get("name").trim(), description: fd.get("description").trim(), owner: fd.get("owner"), status: fd.get("status"), region: fd.get("region").trim(),
+    start: parseDate(fd.get("start")), end: parseDate(fd.get("end")), currency: fd.get("currency"),
+    toc: { inputs: fd.get("toc-inputs").trim(), activities: fd.get("toc-activities").trim(), outputs: fd.get("toc-outputs").trim(), outcomes: fd.get("toc-outcomes").trim(), impact: fd.get("toc-impact").trim() },
+  };
+  const b = parseNum(fd.get("budget"));
+  if (!d.name) e.name = "Required";
+  if (!d.start) e.start = "Enter a valid date";
+  if (!d.end) e.end = "Enter a valid date";
+  if (d.start && d.end && ms(d.end) <= ms(d.start)) e.end = "End date must be after the start date";
+  if (Number.isNaN(b) || (b !== null && b < 0)) e.budget = "Enter a number of 0 or more";
+  d.budget = Number.isNaN(b) ? null : b;
+  return { d, e };
+}
+const pageProjectNew = () => `<button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Portfolio</button><h1 style="margin:4px 0 20px">New project</h1><div style="max-width:900px">${projectForm(null, "Create project", "portfolio")}</div>`;
+function pageSettings() {
+  const p = P();
+  return `${projectHeader()}<div class="stack" style="max-width:900px">${projectForm(p, "Save changes", null)}
+  <section class="card pad row between"><div><h3>${p.archived ? "Restore project" : "Archive project"}</h3><p class="sub">${p.archived ? "Show this project in the portfolio again." : "Hide this project from the portfolio. All data is kept and it can be restored."}</p></div><button type="button" class="btn" data-archive-project>${p.archived ? "Restore" : "Archive"}</button></section></div>`;
+}
+
+function pageDashboard() {
+  const E = evaluate(P(), TODAY);
+  return `${projectHeader()}<div class="stack"><div class="row between" style="align-items:flex-start">${viewSwitcher(ui.view, "view")}<div class="row"><button type="button" class="btn" data-go="snapshot-new">Freeze snapshot</button><button type="button" class="btn" data-share>Share</button></div></div>${dashboardView(E, ui.view, ui.view !== "lead")}</div>`;
+}
+
+function gridColumns(p) {
+  const set = new Set(p.extraCols || []);
+  const last = Math.min(ms(p.end), ms(TODAY));
+  for (let d = new Date(Date.UTC(new Date(ms(p.start)).getUTCFullYear(), new Date(ms(p.start)).getUTCMonth(), 1)); d.getTime() <= last; d = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1))) set.add(iso(d));
+  p.params.filter((x) => !x.archived).forEach((x) => x.entries.forEach((e) => set.add(e.date)));
+  return [...set].sort();
+}
+function pageData() {
+  const p = P();
+  const params = p.params.filter((x) => !x.archived);
+  if (!params.length) return `${projectHeader()}${empty("No parameters to enter data for", `<button type="button" class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="param-new">Add a parameter</button> first.`)}`;
+  const cols = gridColumns(p);
+  const E = evaluate(p, TODAY);
+  const byId = Object.fromEntries(E.metrics.map((m) => [m.id, m]));
+  const label = (c) => (c.endsWith("-01") ? month(ms(c)) : new Date(ms(c)).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }));
+  let body = "";
+  LEVELS.forEach((l) => {
+    const rows = params.filter((x) => x.level === l);
+    if (!rows.length) return;
+    body += `<tr class="lvl"><th colspan="${cols.length + 2}">${LEVEL_LABELS[l]}</th></tr>`;
+    rows.forEach((x) => {
+      body += `<tr><th scope="row"><div style="font-weight:520">${esc(x.name)}</div><div class="xs muted">${esc(x.unit)}${x.measureType === "cumulative" ? " · per period, added up" : ""}</div></th>${cols.map((c) => { const e = x.entries.find((y) => y.date === c); return `<td><input id="cell-${x.id}-${c}" data-cell="${x.id}|${c}" inputmode="decimal" value="${e ? e.value : ""}" class="num ${e && e.confidence !== "measured" ? "est" : ""}" aria-label="${esc(x.name)}, ${date(c)}" title="${e ? esc(`${e.confidence}${e.note ? " · " + e.note : ""}${e.by ? " · by " + e.by : ""}`) : ""}"></td>`; }).join("")}<td class="st" id="st-${x.id}">${status(byId[x.id].status)}</td></tr>`;
+    });
+  });
+  return `${projectHeader()}<div class="stack-sm">
+  <details class="card"><summary style="cursor:pointer;padding:12px 16px;font-weight:560">Add a single entry with a note</summary><div style="border-top:1px solid var(--line);padding:16px">
+    <form data-form="entry" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))" novalidate>
+      ${field("Parameter", "param", sel("param", params.map((x) => [x.id, x.name + (x.unit ? ` (${x.unit})` : "")]), ui.draft?.param))}${field("Date", "date", inp("date", ui.draft?.date ?? TODAY, 'type="date"'))}${field("Value", "value", inp("value", "", 'inputmode="decimal"'))}${field("Confidence", "confidence", sel("confidence", CONF.map((c) => [c, cap(c)]), ui.draft?.confidence ?? "measured"))}
+      <div style="grid-column:1/-1">${field("Note", "note", ta("note", "", 2, 'placeholder="Optional context"'))}</div>
+      <div class="row" style="grid-column:1/-1"><button class="btn primary" type="submit">Save entry</button><span class="xs muted">Replaces any existing value for the same parameter and date.</span></div>
+    </form></div></details>
+  <div class="row between"><p class="sub">Type straight into the grid; changes save as you leave each cell. Enter or ↓ moves down, arrows move between cells, clear a cell to delete it.</p><div class="row"><button type="button" class="btn" data-go="import">Import CSV</button><button type="button" class="btn" data-export>Export CSV</button></div></div>
+  <form data-form="addcol" class="row" novalidate><label for="f-col" class="sub">Confidence for new values</label>${sel("gridconf", CONF.map((c) => [c, cap(c)]), ui.gridConf || "measured", 'style="width:auto" data-gridconf')}<input class="input" style="width:auto" type="date" id="f-col" name="col" aria-label="New date column"><button class="btn" type="submit">Add date column</button></form>
+  <div class="card scroll" style="max-height:70vh"><table class="gridtbl"><thead><tr><th class="label">Parameter</th>${cols.map((c) => `<th class="label" title="${date(c)}">${label(c)}</th>`).join("")}<th class="label" style="text-align:left;padding-left:12px">Status now</th></tr></thead><tbody>${body}</tbody></table></div>
+  <p class="xs muted">Values in italics are not directly measured (self-reported, estimated or modelled). Hover a cell to see its confidence, note and who logged it.</p></div>`;
+}
+function setEntry(x, d, value, confidence, note) {
+  const i = x.entries.findIndex((y) => y.date === d);
+  if (value === null) { if (i >= 0) x.entries.splice(i, 1); return; }
+  if (i >= 0) Object.assign(x.entries[i], { value, by: S.user }, confidence ? { confidence } : {}, note !== undefined && note !== "" ? { note } : {});
+  else x.entries.push({ date: d, value, confidence: confidence || "measured", note: note || "", by: S.user });
+}
+function pageImport() {
+  const c = ui.csv;
+  const valid = c?.rows?.filter((r) => !r.error) || [];
+  return `${projectHeader()}${subHead("Import entries from CSV", "data", "Back to data entry")}<div class="stack-sm" style="max-width:1000px">
+  <div class="card pad stack-sm"><div class="sub"><p>Two layouts work:</p><ul style="margin:4px 0;padding-left:20px"><li><strong style="color:var(--ink)">Long</strong>: columns <code>parameter, date, value</code>, and optionally <code>confidence</code> and <code>note</code>. This is what Export CSV produces.</li><li><strong style="color:var(--ink)">Wide</strong> (like the grid): first column is the parameter name, other column headers are dates.</li></ul><p>Dates as YYYY-MM-DD or DD/MM/YYYY. Existing values for the same parameter and date are replaced.</p></div>
+  <div class="row"><label class="btn" for="f-csvfile">Choose file</label><input type="file" id="f-csvfile" accept=".csv,text/csv" class="sr-only" data-csvfile="csv"><span class="sub">or paste below</span><button type="button" class="btn ghost" data-csv-example="csv">Insert example</button></div>
+  <textarea class="input mono" id="f-csvtext" rows="8" data-csvtext="csv" placeholder="parameter,date,value,confidence,note">${esc(c?.text || "")}</textarea>
+  <div class="row"><button type="button" class="btn primary" data-csv-preview>Preview import</button></div></div>
+  ${c?.error ? `<div class="card pad" style="color:var(--critical-ink)">${esc(c.error)}</div>` : ""}
+  ${c?.done ? `<div class="card pad">Imported ${c.done.created} new and updated ${c.done.updated} existing values${c.done.skipped ? `; skipped ${c.done.skipped} rows with problems` : ""}. <button type="button" class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="data">Back to the grid</button> or <button type="button" class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="dashboard">see the dashboard</button>.</div>` : ""}
+  ${c?.rows && !c.done ? `<div class="card"><div class="row between pad" style="border-bottom:1px solid var(--line)"><span>${c.format === "wide" ? "Wide" : "Long"} layout · <strong>${valid.length}</strong> rows ready${c.rows.length > valid.length ? ` · <span style="color:var(--critical-ink)">${c.rows.length - valid.length} with problems (will be skipped)</span>` : ""}</span><button type="button" class="btn primary" data-csv-commit ${valid.length ? "" : "disabled"}>Import ${valid.length} rows</button></div>
+  <div class="scroll" style="max-height:420px"><table><thead><tr><th>Line</th><th>Parameter</th><th>Date</th><th class="r">Value</th><th>Confidence</th><th>Result</th></tr></thead><tbody>${c.rows.map((r) => `<tr><td class="muted num">${r.line}</td><td>${esc(r.name)}</td><td>${r.date ? date(r.date) : "–"}</td><td class="r num">${num(r.value)}</td><td>${cap(r.confidence)}</td><td>${r.error ? `<span style="color:var(--critical-ink)">${esc(r.error)}</span>` : r.update ? '<span style="color:var(--warning-ink)">Replaces existing value</span>' : '<span style="color:var(--good-ink)">New</span>'}</td></tr>`).join("")}</tbody></table></div></div>` : ""}
+  </div>`;
+}
+function previewEntriesCsv(text) {
+  const p = P();
+  const params = p.params.filter((x) => !x.archived);
+  const find = (s) => params.find((x) => x.name.trim().toLowerCase() === String(s).trim().toLowerCase());
+  const rows = parseCsv(text.trim());
+  const [h, ...body] = rows;
+  if (!h || h.length < 2) return { error: "The file needs a header row and at least two columns." };
+  const cols = h.map((x) => x.trim().toLowerCase());
+  const iP = cols.findIndex((c) => ["parameter", "metric", "name"].includes(c)), iD = cols.indexOf("date"), iV = cols.indexOf("value"), iC = cols.indexOf("confidence"), iN = cols.indexOf("note");
+  const make = (line, name, d, v, c = "", note = "") => {
+    const par = find(name), dt = parseDate(d), value = parseNum(v), confidence = (c || "").trim().toLowerCase() || "measured";
+    let error = null;
+    if (!String(name).trim()) error = "Missing parameter";
+    else if (!par) error = `Unknown parameter “${String(name).trim()}”`;
+    else if (!dt) error = `Invalid date “${d}” (use YYYY-MM-DD)`;
+    else if (value === null || Number.isNaN(value)) error = `Invalid value “${v}”`;
+    else if (!CONF.includes(confidence)) error = `Unknown confidence “${c}”`;
+    return { line, name: String(name).trim(), pid: par?.id, date: dt, value: Number.isNaN(value) ? null : value, confidence, note: (note || "").trim(), error, update: !!(par && dt && par.entries.some((e) => e.date === dt)) };
+  };
+  let out, format;
+  if (iP >= 0 && iD >= 0 && iV >= 0) { format = "long"; out = body.map((r, i) => make(i + 2, r[iP] ?? "", r[iD] ?? "", r[iV] ?? "", iC >= 0 ? r[iC] : "", iN >= 0 ? r[iN] : "")); }
+  else {
+    const bad = h.slice(1).findIndex((x) => !parseDate(x));
+    if (bad >= 0) return { error: `Couldn't read column “${h[bad + 1]}”. Use either columns parameter,date,value or parameter followed by date columns (YYYY-MM-DD).` };
+    format = "wide"; out = [];
+    body.forEach((r, i) => h.slice(1).forEach((d, j) => { if ((r[j + 1] ?? "").trim() !== "") out.push(make(i + 2, r[0] ?? "", d, r[j + 1])); }));
+  }
+  const last = new Map();
+  out.forEach((r, i) => !r.error && last.set(r.pid + "|" + r.date, i));
+  out.forEach((r, i) => { if (!r.error && last.get(r.pid + "|" + r.date) !== i) r.error = "Duplicate: a later row sets the same value"; });
+  return { format, rows: out };
+}
+
+function pageParameters() {
+  const p = P();
+  const active = p.params.filter((x) => !x.archived), archived = p.params.filter((x) => x.archived);
+  return `${projectHeader()}<div class="stack"><div class="row between"><p class="sub">Metrics tracked for this project. You can add parameters at any point; existing data is unaffected.</p><div class="row"><button type="button" class="btn" data-go="param-library">Add from library</button><button type="button" class="btn primary" data-go="param-new">New parameter</button></div></div>
+  ${active.length ? "" : empty("No parameters yet", "Add one from scratch or start from the shared library.")}
+  ${LEVELS.map((l) => { const rows = active.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h2 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h2><div class="card scroll"><table><thead><tr><th>Parameter</th><th>Baseline → target</th><th>By</th><th>Frequency</th><th class="r">Entries</th><th></th></tr></thead><tbody>${rows.map((x) => `<tr><td><div style="font-weight:520">${esc(x.name)} ${x.isKey ? '<span class="chip key">Key</span>' : ""} ${x.libraryId ? '<span class="chip">Library</span>' : ""}</div><div class="xs sub" style="max-width:520px">${esc(x.definition)}</div>${x.lead ? `<div class="xs muted" style="margin-top:2px">Leading indicator for: ${esc(p.params.find((y) => y.id === x.lead)?.name)}</div>` : ""}</td><td class="num" style="white-space:nowrap">${val(x.baseline, x.unit)} → ${val(x.target, x.unit)}<div class="xs muted">${x.measureType === "cumulative" ? "Running total" : "Latest value"}</div></td><td style="white-space:nowrap">${date(x.targetDate || p.end)}</td><td>${cap(x.frequency)}</td><td class="r num">${x.entries.length}</td><td class="r" style="white-space:nowrap"><button type="button" class="btn small ghost" data-edit-param="${x.id}">Edit</button>${x.libraryId ? "" : `<button type="button" class="btn small ghost" data-to-library="${x.id}">Save to library</button>`}${confirmBtn("Archive", "archive-param", x.id, "btn small ghost")}</td></tr>`).join("")}</tbody></table></div></section>`; }).join("")}
+  ${archived.length ? `<details class="card pad"><summary style="cursor:pointer;font-weight:560">Archived parameters (${archived.length})</summary><ul style="list-style:none;padding:0;margin:12px 0 0">${archived.map((x) => `<li class="row between" style="padding:8px 0;border-top:1px solid var(--line)"><span>${esc(x.name)} <span class="muted">· ${x.entries.length} entries kept</span></span><button type="button" class="btn small" data-restore-param="${x.id}">Restore</button></li>`).join("")}</ul></details>` : ""}</div>`;
+}
+function paramForm(x, mode, others, libName) {
+  const d = x || {};
+  return `<form data-form="${mode === "library" ? "library" : "param"}" class="card pad stack-sm" style="max-width:820px" novalidate>
+  ${libName ? `<p class="chip" style="display:block;padding:8px 12px">Based on library definition <strong style="color:var(--ink)">${esc(libName)}</strong>. Changes here apply to this project only.</p>` : ""}
+  ${field("Name", "name", inp("name", d.name, "required"))}
+  ${field("Definition", "definition", ta("definition", d.definition, 2), "Exactly what is counted, so everyone measures it the same way.")}
+  <div class="grid g3">${field("Logic-model level", "level", sel("level", LEVELS.map((l) => [l, LEVEL_ONE[l]]), d.level ?? "output"))}${field("Unit", "unit", inp("unit", d.unit), "e.g. people, %, £, score (1-10)")}${field("Update frequency", "frequency", sel("frequency", FREQ.map((f) => [f, cap(f)]), d.frequency ?? "monthly"))}</div>
+  <div class="grid g2" style="gap:16px">${field("Good direction", "direction", sel("direction", [["increase", "Higher is better"], ["decrease", "Lower is better"]], d.direction ?? "increase"))}${field("How entries combine", "measureType", sel("measureType", [["point", "Latest value (point in time)"], ["cumulative", "Running total (entries are added up)"]], d.measureType ?? "point"))}</div>
+  ${field("Data source", "dataSource", inp("dataSource", d.dataSource), "Where the numbers come from, e.g. attendance registers, web analytics.")}
+  ${mode === "library" ? "" : `<div class="grid g3">${field("Baseline", "baseline", inp("baseline", d.baseline ?? 0, 'inputmode="decimal"'), "Value at project start")}${field("Target", "target", inp("target", d.target ?? "", 'inputmode="decimal" required'))}${field("Target date", "targetDate", inp("targetDate", d.targetDate ?? "", 'type="date"'), "Defaults to the project end date")}</div>
+  ${field("Leading indicator for", "lead", sel("lead", [["", "None"], ...others.map((o) => [o.id, o.name])], d.lead ?? ""), "If this metric falls behind, the linked metric is flagged as at risk.")}
+  <label class="row" style="gap:8px"><input type="checkbox" name="isKey" ${d.isKey ? "checked" : ""}> Key metric (shown on the portfolio and used for the project's overall status)</label>`}
+  ${actions(mode === "library" ? "Save definition" : x?.id ? "Save changes" : "Add parameter", mode === "library" ? "library" : "parameters")}</form>`;
+}
+function pageParamForm() {
+  const p = P();
+  const existing = ui.page === "param-edit" ? p.params.find((x) => x.id === ui.id) : null;
+  const lib = ui.page === "param-new" && ui.id ? S.library.find((l) => l.id === ui.id) : null;
+  const base = existing || (lib ? { ...lib, id: undefined, libraryId: lib.id } : null);
+  ui.formLib = base?.libraryId || null;
+  const others = p.params.filter((x) => !x.archived && x.id !== existing?.id);
+  const libName = base?.libraryId ? S.library.find((l) => l.id === base.libraryId)?.name : null;
+  return `${projectHeader()}${subHead(existing ? "Edit parameter" : lib ? "Add parameter from library" : "New parameter")}${paramForm(base, "param", others, libName)}`;
+}
+function readParam(fd, mode) {
+  const e = {};
+  const d = { name: fd.get("name").trim(), definition: fd.get("definition").trim(), level: fd.get("level"), unit: fd.get("unit").trim(), frequency: fd.get("frequency"), direction: fd.get("direction"), measureType: fd.get("measureType"), dataSource: fd.get("dataSource").trim() };
+  if (!d.name) e.name = "Required";
+  if (mode !== "library") {
+    const b = parseNum(fd.get("baseline")), t = parseNum(fd.get("target"));
+    const td = fd.get("targetDate") ? parseDate(fd.get("targetDate")) : null;
+    if (Number.isNaN(b)) e.baseline = "Enter a number";
+    if (t === null) e.target = "Required"; else if (Number.isNaN(t)) e.target = "Enter a number";
+    if (fd.get("targetDate") && !td) e.targetDate = "Enter a valid date";
+    d.baseline = b ?? 0; d.target = t; d.targetDate = td; d.lead = fd.get("lead") || null; d.isKey = fd.get("isKey") === "on";
+    if (!e.target && !e.baseline) {
+      if (d.direction === "increase" && d.target < d.baseline) e.target = "For a ‘higher is better’ metric the target should be at or above the baseline";
+      if (d.direction === "decrease" && d.target > d.baseline) e.target = "For a ‘lower is better’ metric the target should be at or below the baseline";
+    }
+  }
+  return { d, e };
+}
+function pageParamLibrary() {
+  const p = P();
+  const used = new Set(p.params.filter((x) => !x.archived).map((x) => x.libraryId));
+  return `${projectHeader()}${subHead("Add from library", "parameters", "Back to parameters")}<div class="stack">${S.library.length ? "" : empty("The library is empty", "Use “Save to library” on any parameter, or add a definition on the Parameter library page.")}
+  ${LEVELS.map((l) => { const rows = S.library.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h3 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h3><div class="card">${rows.map((x, i) => `<div class="row between pad" style="${i ? "border-top:1px solid var(--line)" : ""}"><div style="min-width:0;flex:1"><div style="font-weight:520">${esc(x.name)}</div><div class="xs sub">${esc(x.definition)}${x.unit ? ` <span class="muted">· ${esc(x.unit)}</span>` : ""}</div></div>${used.has(x.id) ? '<span class="xs muted">Already in this project</span>' : `<button type="button" class="btn" data-use-lib="${x.id}">Use</button>`}</div>`).join("")}</div></section>`; }).join("")}</div>`;
+}
+function pageLibrary() {
+  const usedIn = (id) => S.projects.filter((p) => p.params.some((x) => !x.archived && x.libraryId === id));
+  return `<div class="stack"><div class="row between" style="align-items:flex-start"><div><h1>Parameter library</h1><p class="sub" style="margin-top:4px;max-width:760px">Shared metric definitions, so the same thing is measured the same way across projects. Copying a definition into a project doesn't link them: editing here won't change live projects.</p></div><button type="button" class="btn primary" data-go="library-new">New definition</button></div>
+  ${S.library.length ? "" : empty("No definitions yet", "Save a project parameter to the library, or create one here.")}
+  ${LEVELS.map((l) => { const rows = S.library.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h2 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h2><div class="card">${rows.map((x, i) => { const u = usedIn(x.id); return `<div class="row between pad" style="align-items:flex-start;${i ? "border-top:1px solid var(--line)" : ""}"><div style="min-width:0;flex:1;max-width:760px"><div style="font-weight:520">${esc(x.name)}</div>${x.definition ? `<div class="sub">${esc(x.definition)}</div>` : ""}<div class="xs muted" style="margin-top:2px">${[x.unit, x.frequency, x.measureType === "cumulative" ? "running total" : "latest value", x.dataSource].filter(Boolean).map(esc).join(" · ")}</div>${u.length ? `<div class="xs sub" style="margin-top:2px">Used in: ${u.map((p) => esc(p.name)).join(", ")}</div>` : ""}</div><div class="row" style="gap:4px"><button type="button" class="btn small ghost" data-edit-lib="${x.id}">Edit</button>${confirmBtn("Delete", "delete-lib", x.id, "btn small ghost")}</div></div>`; }).join("")}</div></section>`; }).join("")}</div>`;
+}
+function pageLibraryForm() {
+  const x = ui.page === "library-edit" ? S.library.find((l) => l.id === ui.id) : null;
+  return `<button type="button" class="linkbtn xs" data-go="library" style="padding-left:0">← Parameter library</button><h1 style="margin:4px 0 20px">${x ? "Edit library definition" : "New library definition"}</h1>${paramForm(x, "library")}`;
+}
+
+function pageCampaigns() {
+  const p = P();
+  const cs = [...p.campaigns].sort((a, b) => ms(a.start) - ms(b.start)).map((c, i) => campaignSummary(c, "9999-01-01", i + 1));
+  return `${projectHeader()}<div class="stack-sm"><div class="row between"><p class="sub">Marketing activity for this project. Campaigns appear as numbered shaded periods on trend charts.</p><div class="row"><button type="button" class="btn" data-go="campaign-import">Import metrics CSV</button><button type="button" class="btn primary" data-go="campaign-new">New campaign</button></div></div>
+  ${cs.length ? `${campaignTable(cs, sym(p.currency))}<div class="row">${cs.map((c) => `<button type="button" class="btn small ghost" data-open-campaign="${c.id}">Edit ${c.n}. ${esc(c.name)}</button>`).join("")}</div>${gantt(p, cs, TODAY)}${correlation}` : empty("No campaigns yet", "Add one to compare campaign activity with changes in outcomes.")}</div>`;
+}
+function campaignForm(c) {
+  return `<form data-form="campaign" class="card pad stack-sm" novalidate>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))">${field("Name", "name", inp("name", c?.name, "required"))}${field("Channel", "channel", sel("channel", Object.entries(CHANNELS), c?.channel ?? "social"))}</div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">${field("Start date", "start", inp("start", c?.start ?? TODAY, 'type="date"'))}${field("End date", "end", inp("end", c?.end ?? "", 'type="date"'), "Leave blank if ongoing")}${field("Spend", "spend", inp("spend", c?.spend ?? 0, 'inputmode="decimal"'))}${field("Tracking tag", "tag", inp("tag", c?.tag), "UTM campaign or other ID")}</div>
+  ${field("Notes", "notes", ta("notes", c?.notes, 2))}
+  ${actions(c ? "Save changes" : "Create campaign", "campaigns")}</form>`;
+}
+function readCampaign(fd) {
+  const e = {};
+  const d = { name: fd.get("name").trim(), channel: fd.get("channel"), start: parseDate(fd.get("start")), end: fd.get("end") ? parseDate(fd.get("end")) : null, tag: fd.get("tag").trim(), notes: fd.get("notes").trim() };
+  const sp = parseNum(fd.get("spend"));
+  if (!d.name) e.name = "Required";
+  if (!d.start) e.start = "Enter a valid date";
+  if (fd.get("end") && !d.end) e.end = "Enter a valid date";
+  if (d.start && d.end && ms(d.end) < ms(d.start)) e.end = "End date must be on or after the start date";
+  if (Number.isNaN(sp) || (sp !== null && sp < 0)) e.spend = "Enter a number of 0 or more";
+  d.spend = Number.isNaN(sp) ? 0 : sp ?? 0;
+  return { d, e };
+}
+const pageCampaignNew = () => `${projectHeader()}${subHead("New campaign", "campaigns", "All campaigns")}<div style="max-width:900px">${campaignForm(null)}</div>`;
+function pageCampaign() {
+  const c = P().campaigns.find((x) => x.id === ui.id);
+  if (!c) return pageCampaigns();
+  const names = [...new Set(c.metrics.map((m) => m.metric))];
+  const dates = [...new Set(c.metrics.map((m) => m.date))].sort();
+  const v = (d, m) => c.metrics.find((x) => x.date === d && x.metric === m)?.value;
+  return `${projectHeader()}${subHead(esc(c.name), "campaigns", "All campaigns")}<div class="stack" style="max-width:900px">${campaignForm(c)}
+  <section class="card pad stack-sm"><div><h3>Campaign metrics</h3><p class="sub">Enter totals per period (e.g. per month). Saving the same date and metric again replaces the value.</p></div>
+  ${dates.length ? `<div class="scroll"><table><thead><tr><th>Period</th>${names.map((n) => `<th class="r">${cap(n.replace(/-/g, " "))}</th>`).join("")}</tr></thead><tbody class="num">${dates.map((d) => `<tr><td>${date(d)}</td>${names.map((n) => `<td class="r">${v(d, n) === undefined ? '<span class="muted">–</span>' : num(v(d, n))}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+  <form data-form="cmetric" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:end" novalidate>${field("Date", "date", inp("date", ui.draft?.cdate ?? "", 'type="date"'))}${field("Metric", "metric", inp("metric", ui.draft?.cmetric ?? "", 'list="metric-names" placeholder="e.g. clicks"'))}<datalist id="metric-names">${[...new Set([...names, "impressions", "views", "clicks", "sign-ups", "opens", "attendees"])].map((m) => `<option value="${m}"></option>`).join("")}</datalist>${field("Value", "value", inp("value", "", 'inputmode="decimal"'), "Blank removes the value")}<div style="padding-bottom:22px"><button class="btn primary" type="submit">Save value</button></div></form></section>
+  <div>${confirmBtn("Delete campaign", "delete-campaign", c.id, "btn")}</div></div>`;
+}
+function pageCampaignImport() {
+  const c = ui.ccsv;
+  const valid = c?.rows?.filter((r) => !r.error) || [];
+  return `${projectHeader()}${subHead("Import campaign metrics", "campaigns", "Back to campaigns")}<div class="stack-sm" style="max-width:1000px"><div class="card pad stack-sm"><p class="sub">Columns: <code>campaign, date, metric, value</code>. The campaign column can be the campaign name or its tracking tag, which suits exports from ad platforms and email tools. Existing values for the same campaign, date and metric are replaced.</p>
+  <div class="row"><label class="btn" for="f-ccsvfile">Choose file</label><input type="file" id="f-ccsvfile" accept=".csv,text/csv" class="sr-only" data-csvfile="ccsv"><button type="button" class="btn ghost" data-csv-example="ccsv">Insert example</button></div>
+  <textarea class="input mono" id="f-ccsvtext" rows="7" data-csvtext="ccsv" placeholder="campaign,date,metric,value">${esc(c?.text || "")}</textarea><div><button type="button" class="btn primary" data-ccsv-preview>Preview import</button></div></div>
+  ${c?.error ? `<div class="card pad" style="color:var(--critical-ink)">${esc(c.error)}</div>` : ""}${c?.done !== undefined ? `<div class="card pad">Imported ${c.done} values. <button type="button" class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="campaigns">See campaigns</button></div>` : ""}
+  ${c?.rows && c.done === undefined ? `<div class="card"><div class="row between pad" style="border-bottom:1px solid var(--line)"><span><strong>${valid.length}</strong> rows ready${c.rows.length > valid.length ? ` · <span style="color:var(--critical-ink)">${c.rows.length - valid.length} with problems</span>` : ""}</span><button type="button" class="btn primary" data-ccsv-commit ${valid.length ? "" : "disabled"}>Import ${valid.length} rows</button></div><div class="scroll"><table><tbody>${c.rows.map((r) => `<tr><td class="muted num">${r.line}</td><td>${esc(r.name)}</td><td>${r.date ? date(r.date) : "–"}</td><td>${esc(r.metric)}</td><td class="r num">${num(r.value)}</td><td>${r.error ? `<span style="color:var(--critical-ink)">${esc(r.error)}</span>` : '<span style="color:var(--good-ink)">OK</span>'}</td></tr>`).join("")}</tbody></table></div></div>` : ""}</div>`;
+}
+function previewCampaignCsv(text) {
+  const p = P();
+  const rows = parseCsv(text.trim());
+  const [h, ...body] = rows;
+  const cols = (h || []).map((x) => x.trim().toLowerCase());
+  const iC = cols.findIndex((c) => ["campaign", "tracking tag", "tag"].includes(c)), iD = cols.indexOf("date"), iM = cols.indexOf("metric"), iV = cols.indexOf("value");
+  if (iC < 0 || iD < 0 || iM < 0 || iV < 0) return { error: "The header must include campaign, date, metric and value columns." };
+  const find = (s) => { const k = String(s).trim().toLowerCase(); return p.campaigns.find((c) => c.name.toLowerCase() === k || (c.tag && c.tag.toLowerCase() === k)); };
+  return {
+    rows: body.map((r, i) => {
+      const c = find(r[iC] ?? ""), d = parseDate(r[iD]), metric = normMetric(r[iM] ?? ""), value = parseNum(r[iV]);
+      let error = null;
+      if (!c) error = `Unknown campaign “${(r[iC] ?? "").trim()}”`;
+      else if (!d) error = `Invalid date “${r[iD] ?? ""}”`;
+      else if (!metric) error = "Missing metric name";
+      else if (value === null || Number.isNaN(value)) error = `Invalid value “${r[iV] ?? ""}”`;
+      return { line: i + 2, name: (r[iC] ?? "").trim(), cid: c?.id, date: d, metric, value: Number.isNaN(value) ? null : value, error };
+    }),
+  };
+}
+
+function pageEvidence() {
+  const p = P();
+  const f = ui.evFilter;
+  const items = [...p.evidence].sort((a, b) => ms(b.date) - ms(a.date)).filter((e) => !f || (f === "none" ? !e.param : e.param === f));
+  const pending = p.evidence.filter((e) => e.origin === "ai" && !e.approved).length;
+  const params = p.params.filter((x) => !x.archived);
+  return `${projectHeader()}<div class="stack-sm"><div class="row between"><div class="row"><label for="f-evfilter" class="sub">Show</label>${sel("evfilter", [["", "All evidence"], ["none", "Not linked to a metric"], ...params.map((x) => [x.id, x.name])], f, 'style="width:auto" data-evfilter')}</div><button type="button" class="btn primary" data-new-evidence>Add evidence</button></div>
+  ${pending ? `<p class="alert" style="padding:10px 14px">${pending} AI-generated ${pending === 1 ? "item needs" : "items need"} review. Unapproved items are hidden from every stakeholder view, snapshot and share link. Approve below, then check the Comms & policy view on the dashboard.</p>` : ""}
+  ${items.length ? `<div class="card">${items.map((e, i) => `<div class="row between pad" style="align-items:flex-start;${i ? "border-top:1px solid var(--line)" : ""}"><div style="flex:1;min-width:240px;max-width:760px">${evidenceItem(e, true)}<p class="xs muted" style="margin-top:6px">${e.param ? "Metric: " + esc(p.params.find((x) => x.id === e.param)?.name) : "Whole project"}${e.tags ? " · Tags: " + esc(e.tags.split(",").join(", ")) : ""}</p></div><div class="row" style="gap:4px">${e.origin === "ai" ? `<button type="button" class="btn small ${e.approved ? "ghost" : "primary"}" data-approve="${e.id}">${e.approved ? "Withdraw approval" : "Approve"}</button>` : ""}<button type="button" class="btn small ghost" data-edit-evidence="${e.id}">Edit</button>${confirmBtn("Delete", "delete-evidence", e.id, "btn small ghost")}</div></div>`).join("")}</div>` : empty("No evidence yet", "Add quotes, survey results, case studies or links, and attach them to the metric they support.")}</div>`;
+}
+function pageEvidenceForm() {
+  const p = P();
+  const e = ui.id ? p.evidence.find((x) => x.id === ui.id) : null;
+  const params = p.params.filter((x) => !x.archived);
+  return `${projectHeader()}${subHead(e ? `Edit evidence ${e.origin === "ai" ? '<span class="chip ai">AI-generated</span>' : ""}` : "Add evidence")}<form data-form="evidence" class="card pad stack-sm" style="max-width:820px" novalidate>
+  <div class="grid g3">${field("Type", "type", sel("type", Object.entries(ETYPES), e?.type ?? "quote"))}${field("Date", "date", inp("date", e?.date ?? TODAY, 'type="date"'))}${field("Related metric", "param", sel("param", [["", "Whole project"], ...params.map((x) => [x.id, x.name])], e?.param ?? (ui.evFilter && ui.evFilter !== "none" ? ui.evFilter : "")), "Optional")}</div>
+  ${field("Title", "title", inp("title", e?.title), "For quotes, who said it in a few words, e.g. “Editor on the analytics dashboard”")}
+  ${field("Text", "body", ta("body", e?.body, 5), "The quote, survey result or story")}
+  <div class="grid g2" style="gap:16px">${field("Source", "source", inp("source", e?.source), "Who or where it came from. Check consent before naming people.")}${field("Link", "url", inp("url", e?.url, 'type="url" placeholder="https://"'))}</div>
+  ${field("Tags", "tags", inp("tags", e?.tags), "Comma-separated, e.g. revenue, membership")}
+  ${actions(e ? "Save changes" : "Add evidence", "evidence")}</form>`;
+}
+
+function pageSnapshots() {
+  const p = P();
+  const list = [...p.snapshots].sort((a, b) => ms(b.asOf) - ms(a.asOf));
+  return `${projectHeader()}<div class="stack-sm"><div class="row between"><p class="sub">Frozen copies of the dashboard, so figures already shared don’t change when data is edited later.</p><button type="button" class="btn primary" data-go="snapshot-new">Freeze snapshot</button></div>
+  ${list.length ? `<div class="card">${list.map((s, i) => `<div class="row between pad" style="${i ? "border-top:1px solid var(--line)" : ""}"><div><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--accent-ink);text-decoration:underline" data-open-snapshot="${s.id}">${esc(s.label)}</button><div class="xs sub">Data as of ${date(s.asOf)} · frozen ${date(s.frozenOn)} by ${esc(s.by)}</div></div><div class="row" style="gap:4px"><button type="button" class="btn small" data-open-snapshot="${s.id}">View</button>${confirmBtn("Delete", "delete-snapshot", s.id, "btn small ghost")}</div></div>`).join("")}</div>` : empty("No snapshots yet", "Freeze one before a report or board meeting.")}</div>`;
+}
+function pageSnapshotNew() {
+  const q = Math.floor(new Date(ms(TODAY)).getUTCMonth() / 3) + 1;
+  return `${projectHeader()}${subHead("Freeze a snapshot")}<form data-form="snapshot" class="card pad stack-sm" style="max-width:560px" novalidate>
+  ${field("Label", "label", inp("label", `Q${q} 2026 as reported`), "How people will refer to it, e.g. “Q3 2026 as reported to the board”.")}
+  ${field("Data as of", "asOf", inp("asOf", TODAY, 'type="date"'), "Entries, campaigns and evidence dated after this are left out.")}
+  <p class="chip" style="display:block;padding:8px 12px">The snapshot stores a frozen copy of the dashboard. Later edits to entries or parameters won’t change it. AI-generated items that haven’t been approved are left out.</p>
+  ${actions("Freeze snapshot", "snapshots")}</form>`;
+}
+function pageSnapshot() {
+  const s = P().snapshots.find((x) => x.id === ui.id);
+  if (!s) return pageSnapshots();
+  const E = evaluate(s.data, s.asOf);
+  return `${projectHeader()}<div class="stack"><div class="snapbanner"><span class="tag">Snapshot · read-only</span><strong>${esc(s.label)}</strong><span class="sub">Data as of ${date(s.asOf)} · frozen ${date(s.frozenOn)} by ${esc(s.by)}. Later edits don’t change these figures.</span></div>
+  <div class="row between" style="align-items:flex-start">${viewSwitcher(ui.snapView, "snapview")}<div class="row"><button type="button" class="btn" data-share>Share</button><button type="button" class="btn ghost" data-go="snapshots">All snapshots</button></div></div>${dashboardView(E, ui.snapView, true)}</div>`;
+}
+
+const PAGES = {
+  portfolio: pagePortfolio, "project-new": pageProjectNew, library: pageLibrary, "library-new": pageLibraryForm, "library-edit": pageLibraryForm,
+  dashboard: pageDashboard, data: pageData, import: pageImport, parameters: pageParameters, "param-new": pageParamForm, "param-edit": pageParamForm, "param-library": pageParamLibrary,
+  campaigns: pageCampaigns, "campaign-new": pageCampaignNew, campaign: pageCampaign, "campaign-import": pageCampaignImport,
+  evidence: pageEvidence, "evidence-form": pageEvidenceForm, snapshots: pageSnapshots, "snapshot-new": pageSnapshotNew, snapshot: pageSnapshot, settings: pageSettings,
+};
+const GLOBAL = new Set(["portfolio", "project-new", "library", "library-new", "library-edit"]);
+
+function render(keepScroll) {
+  if (!GLOBAL.has(ui.page) && !P()) ui.page = "portfolio";
+  const y = window.scrollY;
+  document.getElementById("app").innerHTML = PAGES[ui.page]();
+  document.querySelectorAll(".nav [data-go]").forEach((a) => a.setAttribute("aria-current", String(a.dataset.go === (ui.page.startsWith("library") ? "library" : GLOBAL.has(ui.page) ? "portfolio" : "x"))));
+  const us = document.getElementById("f-user");
+  if (us) us.value = S.user;
+  if (keepScroll) window.scrollTo(0, y);
+}
+function go(page, id = null) {
+  if (page !== "import") ui.csv = null;
+  if (page !== "campaign-import") ui.ccsv = null;
+  ui.page = page; ui.id = id;
+  try { history.replaceState(null, "", "#" + (GLOBAL.has(page) ? page.split("-")[0] : "project")); } catch {}
+  render();
+  window.scrollTo(0, 0);
+}
+function commit(msg, page, id) {
+  save();
+  if (page) go(page, id); else render(true);
+  if (msg) toast(msg);
+}
+
+// ---------- interactions ----------
+let toastTimer;
+function toast(msg) {
+  let t = document.querySelector(".toast");
+  if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+  t.textContent = msg;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.remove(), 3500);
+}
+function openEvidence(id) {
+  const p = P();
+  const snap = ui.page === "snapshot" ? p.snapshots.find((s) => s.id === ui.id) : null;
+  const src = snap ? snap.data : p;
+  const safe = !!snap || ui.view !== "lead";
+  const asOf = snap ? snap.asOf : TODAY;
+  const m = src.params.find((x) => x.id === id);
+  const items = src.evidence.filter((e) => e.param === id && visible(e, safe) && ms(e.date) <= ms(asOf));
+  const el = document.createElement("div");
+  el.className = "drawer";
+  el.innerHTML = `<aside role="dialog" aria-modal="true" aria-label="Evidence for ${esc(m.name)}"><div class="row between" style="align-items:flex-start;margin-bottom:20px;flex-wrap:nowrap"><div><div class="label">Evidence</div><h2>${esc(m.name)}</h2></div><button type="button" class="btn" data-close>Close</button></div>${items.map((e) => `<div class="ev">${evidenceItem(e)}</div>`).join("")}</aside>`;
+  document.body.appendChild(el);
+  el.querySelector("[data-close]").focus();
+  el.addEventListener("click", (ev) => { if (ev.target === el || ev.target.closest("[data-close]")) el.remove(); });
+}
+function exportCsv() {
+  const p = P();
+  const rows = [["parameter", "date", "value", "confidence", "note", "logged_by"]];
+  p.params.filter((x) => !x.archived).forEach((x) => [...x.entries].sort((a, b) => ms(a.date) - ms(b.date)).forEach((e) => rows.push([x.name, e.date, e.value, e.confidence, e.note || "", e.by || ""])));
+  const csv = rows.map((r) => r.map((c) => (/[",\n]/.test(String(c)) ? `"${String(c).replace(/"/g, '""')}"` : c)).join(",")).join("\n");
+  ui.csv = { text: csv };
+  go("import");
+  toast("Here's the export as CSV text. In the full app it downloads as a file; you can edit it here and re-import.");
+}
+const CONFIRMS = {
+  "archive-param": (id) => { P().params.find((x) => x.id === id).archived = true; commit("Parameter archived. Its entries are kept."); },
+  "delete-lib": (id) => { S.library = S.library.filter((l) => l.id !== id); S.projects.forEach((p) => p.params.forEach((x) => { if (x.libraryId === id) x.libraryId = null; })); commit("Definition deleted. Projects keep their own copy."); },
+  "delete-campaign": (id) => { const p = P(); p.campaigns = p.campaigns.filter((c) => c.id !== id); commit("Campaign deleted.", "campaigns"); },
+  "delete-evidence": (id) => { const p = P(); p.evidence = p.evidence.filter((e) => e.id !== id); commit("Evidence deleted."); },
+  "delete-snapshot": (id) => { const p = P(); p.snapshots = p.snapshots.filter((s) => s.id !== id); commit("Snapshot deleted.", "snapshots"); },
+};
+
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("button,a,[data-go]");
+  if (!t) return;
+  const ds = t.dataset;
+  if (ds.go) { e.preventDefault(); go(ds.go); }
+  else if (ds.open) { ui.pid = ds.open; ui.view = "lead"; go("dashboard"); }
+  else if (ds.view) { ui.view = ds.view; render(true); }
+  else if (ds.snapview) { ui.snapView = ds.snapview; render(true); }
+  else if (ds.evidence) openEvidence(ds.evidence);
+  else if (ds.share !== undefined) toast("In the full app, Share creates a read-only link for this view (live or a snapshot) that works without signing in.");
+  else if (ds.toggleArchived !== undefined) { ui.showArchived = !ui.showArchived; render(true); }
+  else if (ds.archiveProject !== undefined) { const p = P(); p.archived = !p.archived; commit(p.archived ? "Project archived. It's hidden from the portfolio." : "Project restored."); }
+  else if (ds.editParam) go("param-edit", ds.editParam);
+  else if (ds.restoreParam) { P().params.find((x) => x.id === ds.restoreParam).archived = false; commit("Parameter restored."); }
+  else if (ds.toLibrary) {
+    const x = P().params.find((y) => y.id === ds.toLibrary);
+    const item = { id: uid("lib"), name: x.name, definition: x.definition, level: x.level, unit: x.unit, direction: x.direction, measureType: x.measureType, frequency: x.frequency, dataSource: x.dataSource };
+    S.library.push(item); x.libraryId = item.id; commit(`“${x.name}” saved to the library.`);
+  }
+  else if (ds.useLib) go("param-new", ds.useLib);
+  else if (ds.editLib) go("library-edit", ds.editLib);
+  else if (ds.openCampaign) go("campaign", ds.openCampaign);
+  else if (ds.editEvidence) go("evidence-form", ds.editEvidence);
+  else if (ds.newEvidence !== undefined) go("evidence-form", null);
+  else if (ds.approve) { const ev = P().evidence.find((x) => x.id === ds.approve); ev.approved = !ev.approved; ev.approvedBy = ev.approved ? S.user : null; commit(ev.approved ? "Approved: now visible on stakeholder views." : "Approval withdrawn: hidden from stakeholder views."); }
+  else if (ds.openSnapshot) go("snapshot", ds.openSnapshot);
+  else if (ds.export !== undefined) exportCsv();
+  else if (ds.csvExample) {
+    const ex = ds.csvExample === "csv"
+      ? "parameter,date,value,confidence,note\nJournalists trained,2026-10-01,25,measured,\nReader trust score,2026-10-01,6.6,self-reported,Autumn survey\nNewsrooms using analytics weekly,2026-10-01,15,,"
+      : "campaign,date,metric,value\nutm_campaign=toolkit_launch,2026-06-01,clicks,210\nNewsroom Futures roadshow,2026-09-01,attendees,120";
+    ui[ds.csvExample] = { text: ex }; render(true);
+  }
+  else if (ds.csvPreview !== undefined) { const text = document.getElementById("f-csvtext").value; ui.csv = text.trim() ? { text, ...previewEntriesCsv(text) } : { text, error: "Paste some CSV or choose a file first." }; render(true); }
+  else if (ds.csvCommit !== undefined) {
+    const p = P(); const rows = ui.csv.rows; let created = 0, updated = 0;
+    rows.filter((r) => !r.error).forEach((r) => { const x = p.params.find((y) => y.id === r.pid); r.update ? updated++ : created++; setEntry(x, r.date, r.value, r.confidence, r.note); });
+    ui.csv = { text: "", done: { created, updated, skipped: rows.filter((r) => r.error).length } }; commit("Import complete.");
+  }
+  else if (ds.ccsvPreview !== undefined) { const text = document.getElementById("f-ccsvtext").value; ui.ccsv = text.trim() ? { text, ...previewCampaignCsv(text) } : { text, error: "Paste some CSV or choose a file first." }; render(true); }
+  else if (ds.ccsvCommit !== undefined) {
+    const p = P(); const ok = ui.ccsv.rows.filter((r) => !r.error);
+    ok.forEach((r) => { const c = p.campaigns.find((x) => x.id === r.cid); const m = c.metrics.find((x) => x.date === r.date && x.metric === r.metric); if (m) m.value = r.value; else c.metrics.push({ date: r.date, metric: r.metric, value: r.value }); });
+    ui.ccsv = { text: "", done: ok.length }; commit("Import complete.");
+  }
+  else if (ds.confirm) {
+    // In-page confirmation: first click arms the button, second click acts.
+    if (t.dataset.armed) { CONFIRMS[ds.confirm](ds.arg); return; }
+    t.dataset.armed = "1"; t.textContent = "Click again to confirm"; t.classList.add("danger");
+    setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = ds.label; t.classList.remove("danger"); } }, 3500);
+  }
+  else if (ds.reset !== undefined) {
+    if (!t.dataset.armed) { t.dataset.armed = "1"; t.textContent = "Click again to reset"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Reset example data"; } }, 3500); return; }
+    delete t.dataset.armed; t.textContent = "Reset example data";
+    S = initialStore(); save(); ui.pid = null; go("portfolio"); toast("Example data restored.");
+  }
+});
+
+document.addEventListener("submit", (e) => {
+  const form = e.target.closest("form[data-form]");
+  if (!form) return;
+  e.preventDefault();
+  const fd = new FormData(form);
+  const kind = form.dataset.form;
+  if (kind === "project") {
+    const { d, e: errs } = readProject(fd);
+    if (showErrors(form, errs)) return;
+    if (ui.page === "project-new") {
+      const p = { id: uid("p"), ...d, archived: false, params: [], campaigns: [], evidence: [], snapshots: [], extraCols: [] };
+      S.projects.unshift(p); ui.pid = p.id; commit(`Project created. Next, add the parameters you'll track.`, "parameters");
+    } else { Object.assign(P(), d); commit("Saved."); }
+  } else if (kind === "param") {
+    const { d, e: errs } = readParam(fd, "param");
+    if (showErrors(form, errs)) return;
+    const p = P();
+    if (ui.page === "param-edit") Object.assign(p.params.find((x) => x.id === ui.id), d);
+    else p.params.push({ id: uid("m"), ...d, libraryId: ui.formLib, archived: false, entries: [] });
+    commit(ui.page === "param-edit" ? "Parameter saved." : "Parameter added. Log values on the Data entry tab.", "parameters");
+  } else if (kind === "library") {
+    const { d, e: errs } = readParam(fd, "library");
+    if (showErrors(form, errs)) return;
+    if (ui.page === "library-edit") Object.assign(S.library.find((l) => l.id === ui.id), d);
+    else S.library.push({ id: uid("lib"), ...d });
+    commit("Definition saved.", "library");
+  } else if (kind === "entry") {
+    const errs = {};
+    const x = P().params.find((y) => y.id === fd.get("param"));
+    const d = parseDate(fd.get("date")), v = parseNum(fd.get("value"));
+    if (!d) errs.date = "Enter a valid date";
+    if (v === null) errs.value = "Required"; else if (Number.isNaN(v)) errs.value = "Enter a number";
+    if (showErrors(form, errs)) return;
+    setEntry(x, d, v, fd.get("confidence"), fd.get("note").trim());
+    ui.draft = { param: x.id, date: d, confidence: fd.get("confidence") };
+    commit(`Saved ${val(v, x.unit)} for ${x.name} on ${date(d)}.`);
+    document.querySelector("details.card")?.setAttribute("open", "");
+  } else if (kind === "addcol") {
+    const d = parseDate(fd.get("col"));
+    if (!d) { toast("Choose a date for the new column."); return; }
+    const p = P(); p.extraCols = [...new Set([...(p.extraCols || []), d])]; commit(`Added a column for ${date(d)}.`);
+  } else if (kind === "campaign") {
+    const { d, e: errs } = readCampaign(fd);
+    if (showErrors(form, errs)) return;
+    const p = P();
+    if (ui.page === "campaign") { Object.assign(p.campaigns.find((c) => c.id === ui.id), d); commit("Campaign saved."); }
+    else { const c = { id: uid("c"), ...d, metrics: [] }; p.campaigns.push(c); commit("Campaign created. Add its metrics below.", "campaign", c.id); }
+  } else if (kind === "cmetric") {
+    const errs = {};
+    const d = parseDate(fd.get("date")), metric = normMetric(fd.get("metric") || ""), v = parseNum(fd.get("value"));
+    if (!d) errs.date = "Enter a valid date";
+    if (!metric) errs.metric = "Required";
+    if (Number.isNaN(v)) errs.value = "Enter a number";
+    if (showErrors(form, errs)) return;
+    const c = P().campaigns.find((x) => x.id === ui.id);
+    const i = c.metrics.findIndex((m) => m.date === d && m.metric === metric);
+    if (v === null) { if (i >= 0) c.metrics.splice(i, 1); } else if (i >= 0) c.metrics[i].value = v; else c.metrics.push({ date: d, metric, value: v });
+    ui.draft = { ...(ui.draft || {}), cdate: d, cmetric: metric };
+    commit(v === null ? "Value removed." : "Value saved.");
+  } else if (kind === "evidence") {
+    const errs = {};
+    const d = { type: fd.get("type"), date: parseDate(fd.get("date")), param: fd.get("param") || null, title: fd.get("title").trim(), body: fd.get("body").trim(), source: fd.get("source").trim(), url: fd.get("url").trim(), tags: fd.get("tags").split(",").map((s) => s.trim()).filter(Boolean).join(",") };
+    if (!d.title) errs.title = "Required";
+    if (!d.date) errs.date = "Enter a valid date";
+    if (d.url && !/^https?:\/\//i.test(d.url)) errs.url = "Links must start with http:// or https://";
+    if (showErrors(form, errs)) return;
+    const p = P();
+    if (ui.id) Object.assign(p.evidence.find((x) => x.id === ui.id), d);
+    else p.evidence.push({ id: uid("e"), ...d, origin: "human", approved: false });
+    commit(ui.id ? "Evidence saved." : "Evidence added.", "evidence");
+  } else if (kind === "snapshot") {
+    const errs = {};
+    const label = fd.get("label").trim(), asOf = parseDate(fd.get("asOf"));
+    if (!label) errs.label = "Required";
+    if (!asOf) errs.asOf = "Enter a valid date";
+    else if (ms(asOf) > ms(TODAY)) errs.asOf = "Snapshots can't be dated in the future";
+    if (showErrors(form, errs)) return;
+    const s = freeze(P(), label, asOf, S.user, TODAY);
+    P().snapshots.push(s);
+    commit("Snapshot frozen. Later edits won't change it.", "snapshot", s.id);
+  }
+});
+
+document.addEventListener("change", async (e) => {
+  const el = e.target;
+  if (el.id === "f-user") { S.user = el.value; save(); toast(`Now working as ${el.value}. New entries are logged under this name.`); return; }
+  if (el.dataset.evfilter !== undefined) { ui.evFilter = el.value; render(true); return; }
+  if (el.dataset.gridconf !== undefined) { ui.gridConf = el.value; return; }
+  if (el.dataset.csvfile) { const f = el.files?.[0]; if (f) { ui[el.dataset.csvfile] = { text: await f.text() }; render(true); } return; }
+  if (!el.dataset.cell) return;
+  const [pid, c] = el.dataset.cell.split("|");
+  const x = P().params.find((y) => y.id === pid);
+  const v = parseNum(el.value);
+  if (Number.isNaN(v)) { el.classList.add("bad"); el.title = "Enter a number"; toast("Enter a number, e.g. 1200 or 6.5"); return; }
+  el.classList.remove("bad");
+  const had = x.entries.some((y) => y.date === c);
+  setEntry(x, c, v, had ? undefined : ui.gridConf || "measured");
+  save();
+  const before = document.getElementById("st-" + pid).textContent;
+  const m = evaluate(P(), TODAY).metrics.find((y) => y.id === pid);
+  document.getElementById("st-" + pid).innerHTML = status(m.status);
+  toast(v === null ? "Value cleared." : before !== STATUS[m.status][0] ? `Saved. ${x.name} is now “${STATUS[m.status][0]}”.` : "Saved. The dashboard uses the new value.");
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".drawer")?.remove();
+  const el = e.target;
+  if (!el.dataset?.cell) return;
+  const [pid, c] = el.dataset.cell.split("|");
+  const inputs = [...document.querySelectorAll("[data-cell]")];
+  const rowIds = [...new Set(inputs.map((i) => i.dataset.cell.split("|")[0]))];
+  const colIds = [...new Set(inputs.map((i) => i.dataset.cell.split("|")[1]))];
+  const r = rowIds.indexOf(pid), k = colIds.indexOf(c);
+  const move = (dr, dc) => { const t = document.getElementById(`cell-${rowIds[r + dr]}-${colIds[k + dc]}`); if (t) { e.preventDefault(); t.focus(); } else if (e.key === "Enter") { e.preventDefault(); el.blur(); } };
+  if (e.key === "Enter" || e.key === "ArrowDown") move(1, 0);
+  else if (e.key === "ArrowUp") move(-1, 0);
+  else if (e.key === "ArrowLeft" && el.selectionStart === 0 && el.selectionEnd === 0) move(0, -1);
+  else if (e.key === "ArrowRight" && el.selectionStart === el.value.length) move(0, 1);
+});
+document.addEventListener("focusin", (e) => { if (e.target.dataset?.cell) e.target.select(); });
+let tip;
+document.addEventListener("pointerover", (e) => {
+  const d = e.target.closest?.("[data-tip]");
+  if (!d) return;
+  tip = tip || Object.assign(document.createElement("div"), { className: "tip" });
+  const [a, b, c, n] = d.dataset.tip.split("|");
+  tip.innerHTML = `<div class="muted">${esc(a)}</div><div class="num" style="font-weight:600">${esc(b)}</div><div class="num sub">${esc(c)}</div>${n ? `<div class="sub" style="max-width:240px">${esc(n)}</div>` : ""}`;
+  document.body.appendChild(tip);
+  const r = d.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.innerWidth - 260, r.left + r.width / 2 + 10)) + "px";
+  tip.style.top = Math.max(8, r.top - 10 - tip.offsetHeight) + "px";
+});
+document.addEventListener("pointerout", (e) => { if (e.target.closest?.("[data-tip]")) tip?.remove(); });
+
+const startPage = (location.hash || "").slice(1);
+ui.page = startPage === "library" ? "library" : "portfolio";
+render();
+</script>
