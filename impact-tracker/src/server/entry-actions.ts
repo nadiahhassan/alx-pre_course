@@ -16,10 +16,9 @@ export interface CellEntry {
   updatedAt: string;
 }
 
-async function assertParameter(projectId: string, parameterId: string) {
+async function parameterInProject(projectId: string, parameterId: string) {
   const p = await db.parameter.findUnique({ where: { id: parameterId } });
-  if (!p || p.projectId !== projectId) throw new Error("Parameter not found in this project");
-  return p;
+  return p && p.projectId === projectId && !p.archivedAt ? p : null;
 }
 
 function revalidate(projectId: string) {
@@ -37,7 +36,7 @@ export async function saveCell(
   value: number | null,
   meta: { confidence?: string; note?: string } = {},
 ): Promise<SaveResult> {
-  await assertParameter(projectId, parameterId);
+  if (!(await parameterInProject(projectId, parameterId))) return { ok: false, error: "Parameter not found in this project" };
   const date = new Date(dateIso);
   if (Number.isNaN(date.getTime())) return { ok: false, error: "Invalid date" };
   const where = { parameterId_date: { parameterId, date } };
