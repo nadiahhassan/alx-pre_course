@@ -26,7 +26,7 @@ Open http://localhost:3000.
 | `npm test` | Run the unit tests (status calculations, CSV parsing) |
 | `npm run lint` | Type-check the project |
 | `npm run build && npm start` | Production build and server |
-| `npm run db:seed` | Reload the example data. **This wipes the database first.** |
+| `npm run db:seed` | Reload the example data. **This wipes the database first.** (Plain `prisma db seed` only loads it into an empty database.) |
 | `npm run db:reset` | Drop, re-migrate and reseed the database |
 | `npm run db:migrate` | Create a migration after editing `prisma/schema.prisma` |
 
@@ -100,18 +100,28 @@ src/
 tests/              Vitest unit tests
 ```
 
-## Moving to Postgres
+## Hosting (Postgres)
 
-The schema avoids SQLite-only features:
-- enum-like fields are strings, checked against `src/lib/constants.ts`
-- JSON is stored as text
-- there is no raw SQL
+Local development uses SQLite. For hosting, the app uses a generated Postgres copy of the schema (`prisma/postgres/`), so nothing changes locally.
 
-To switch:
-1. Set `provider = "postgresql"` in `prisma/schema.prisma`.
-2. Point `DATABASE_URL` at your database.
-3. Delete `prisma/migrations`.
-4. Run `npx prisma migrate dev --name init`.
+**Recommended: Vercel for the app and Neon for the database.** Both have free tiers.
+
+1. Create a Postgres database on [Neon](https://neon.tech) and copy its connection string.
+2. In [Vercel](https://vercel.com), import this GitHub repository and set:
+   - **Root directory:** `impact-tracker`
+   - **Build command:** `npm run build:postgres`
+   - **Environment variables:**
+     - `DATABASE_URL`: the Neon connection string
+     - `APP_PASSWORD`: a shared password for your team
+3. Deploy. The first build creates the tables and loads the example project. Later builds apply new migrations and leave your data alone.
+
+Any host that runs Node.js and Postgres works the same way (Render, Railway, Fly.io).
+
+**Access:** when `APP_PASSWORD` is set, every page asks for it (any username). Read-only share links (`/share/...`) stay open to anyone with the link. This is a stopgap until real sign-in is added.
+
+**After changing `prisma/schema.prisma`:**
+1. Run `npm run db:postgres-schema`.
+2. Create a Postgres migration with `npx prisma migrate diff --from-schema-datasource prisma/postgres/schema.prisma --to-schema-datamodel prisma/postgres/schema.prisma --script` against a Postgres database, or with `migrate dev --schema prisma/postgres/schema.prisma`.
 
 ## AI features (phase 3)
 

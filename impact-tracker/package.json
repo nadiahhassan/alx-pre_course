@@ -9,9 +9,11 @@
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "prisma db seed",
+    "db:seed": "tsx prisma/seed.ts --reset",
     "db:reset": "prisma migrate reset --force",
-    "setup": "prisma migrate deploy && prisma db seed"
+    "setup": "prisma migrate deploy && prisma db seed",
+    "db:postgres-schema": "node scripts/postgres-schema.mjs",
+    "build:postgres": "node scripts/postgres-schema.mjs && prisma generate --schema prisma/postgres/schema.prisma && prisma migrate deploy --schema prisma/postgres/schema.prisma && tsx prisma/seed.ts && next build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

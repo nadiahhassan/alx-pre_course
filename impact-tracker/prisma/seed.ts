@@ -1,5 +1,8 @@
 // Seed data: one realistic programme supporting local news organisations.
-// Run with `npm run db:seed`. Wipes existing data first.
+//
+// By default this only loads the example into an EMPTY database, so it is
+// safe to run on every deploy. `npm run db:seed` passes --reset, which wipes
+// all data first and reloads the example.
 
 import { PrismaClient } from "@prisma/client";
 import { buildPayload } from "../src/lib/payload";
@@ -9,6 +12,11 @@ const d = (s: string) => new Date(`${s}T00:00:00Z`);
 const MONTHS = ["2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01"];
 
 async function main() {
+  const reset = process.argv.includes("--reset");
+  if (!reset && (await prisma.project.count()) > 0) {
+    console.log("Database already has projects; skipping the example data. Use `npm run db:seed` to wipe and reload it.");
+    return;
+  }
   await prisma.$transaction([
     prisma.shareLink.deleteMany(),
     prisma.snapshot.deleteMany(),
