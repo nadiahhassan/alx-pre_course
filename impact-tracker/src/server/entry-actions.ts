@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { CONFIDENCE, isOneOf } from "@/lib/constants";
 import { parseEntriesCsv, type CsvRow } from "@/lib/csv";
 import { getCurrentUser } from "@/lib/current-user";
-import { FormReader, type FormState } from "@/lib/forms";
+import { FormReader, formValues, type FormState } from "@/lib/forms";
 
 export interface CellEntry {
   id: string;
@@ -93,10 +93,12 @@ export async function createEntry(projectId: string, _prev: FormState, fd: FormD
   const value = f.number("value", { required: true });
   const confidence = f.oneOf("confidence", CONFIDENCE, "measured");
   const note = f.text("note", { max: 2000 });
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   const result = await saveCell(projectId, parameterId, date!.toISOString(), value!, { confidence, note });
-  if (!result.ok) return { errors: { value: result.error } };
-  return { message: "Entry saved" };
+  if (!result.ok) return { errors: { value: result.error }, values: formValues(fd) };
+  // Keep parameter, date and confidence for the next entry; clear value and note.
+  const { value: _v, note: _n, ...keep } = formValues(fd);
+  return { message: "Entry saved", values: keep };
 }
 
 export interface ImportPreview {

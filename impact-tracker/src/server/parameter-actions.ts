@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { DIRECTIONS, FREQUENCIES, LEVELS, MEASURE_TYPES } from "@/lib/constants";
-import { FormReader, type FormState } from "@/lib/forms";
+import { FormReader, formValues, type FormState } from "@/lib/forms";
 
 /** Fields shared by project parameters and library definitions. */
 function readDefinition(f: FormReader) {
@@ -55,7 +55,7 @@ function revalidateProject(projectId: string) {
 
 export async function createParameter(projectId: string, _prev: FormState, fd: FormData): Promise<FormState> {
   const { f, data } = await readParameter(projectId, fd);
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   const last = await db.parameter.findFirst({ where: { projectId }, orderBy: { sortOrder: "desc" } });
   await db.parameter.create({
     data: { ...data, target: data.target!, projectId, sortOrder: (last?.sortOrder ?? -1) + 1 },
@@ -71,7 +71,7 @@ export async function updateParameter(
   fd: FormData,
 ): Promise<FormState> {
   const { f, data } = await readParameter(projectId, fd, parameterId);
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.parameter.update({ where: { id: parameterId, projectId }, data: { ...data, target: data.target! } });
   revalidateProject(projectId);
   redirect(`/projects/${projectId}/parameters`);
@@ -110,7 +110,7 @@ export async function saveParameterToLibrary(projectId: string, parameterId: str
 export async function createLibraryParameter(_prev: FormState, fd: FormData): Promise<FormState> {
   const f = new FormReader(fd);
   const data = readDefinition(f);
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.libraryParameter.create({ data });
   revalidatePath("/library");
   redirect("/library");
@@ -119,7 +119,7 @@ export async function createLibraryParameter(_prev: FormState, fd: FormData): Pr
 export async function updateLibraryParameter(id: string, _prev: FormState, fd: FormData): Promise<FormState> {
   const f = new FormReader(fd);
   const data = readDefinition(f);
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.libraryParameter.update({ where: { id }, data });
   revalidatePath("/library");
   redirect("/library");

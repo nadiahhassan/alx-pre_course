@@ -7,6 +7,27 @@ export type FieldErrors = Record<string, string>;
 export interface FormState {
   errors?: FieldErrors;
   message?: string;
+  /** Submitted values, echoed back so the form can be re-filled (React resets forms after an action). */
+  values?: Record<string, string>;
+}
+
+export function formValues(fd: FormData): Record<string, string> {
+  const out: Record<string, string> = {};
+  fd.forEach((v, k) => {
+    if (typeof v === "string" && !k.startsWith("$")) out[k] = v;
+  });
+  return out;
+}
+
+/** Value to show in a field: what was just submitted, else the saved value. */
+export function fieldDefault(state: FormState, name: string, fallback: string | number | null | undefined): string {
+  if (state.values) return state.values[name] ?? "";
+  return fallback === null || fallback === undefined ? "" : String(fallback);
+}
+
+/** Remount a form when new submitted values come back, so defaults apply. */
+export function formKey(state: FormState): string {
+  return state.values ? JSON.stringify(state.values) : "initial";
 }
 
 export class FormReader {

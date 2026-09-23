@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { PROJECT_STATUSES } from "@/lib/constants";
-import { FormReader, type FormState } from "@/lib/forms";
+import { FormReader, formValues, type FormState } from "@/lib/forms";
 
 function readProject(fd: FormData) {
   const f = new FormReader(fd);
@@ -32,7 +32,7 @@ function readProject(fd: FormData) {
 
 export async function createProject(_prev: FormState, fd: FormData): Promise<FormState> {
   const { f, data } = readProject(fd);
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   const project = await db.project.create({ data: { ...data, startDate: data.startDate!, endDate: data.endDate! } });
   revalidatePath("/");
   redirect(`/projects/${project.id}/parameters`);
@@ -40,11 +40,11 @@ export async function createProject(_prev: FormState, fd: FormData): Promise<For
 
 export async function updateProject(id: string, _prev: FormState, fd: FormData): Promise<FormState> {
   const { f, data } = readProject(fd);
-  if (!f.ok) return { errors: f.errors };
+  if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.project.update({ where: { id }, data: { ...data, startDate: data.startDate!, endDate: data.endDate! } });
   revalidatePath("/");
   revalidatePath(`/projects/${id}`, "layout");
-  return { message: "Saved" };
+  return { message: "Saved", values: formValues(fd) };
 }
 
 export async function setProjectArchived(id: string, archived: boolean) {

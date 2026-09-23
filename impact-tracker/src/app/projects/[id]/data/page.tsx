@@ -60,7 +60,17 @@ export default async function DataEntryPage({ params }: { params: Promise<{ id: 
   const columns = [...dates].sort();
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[1fr_20rem]">
+    <div className="space-y-4">
+      <details className="card">
+        <summary className="cursor-pointer px-4 py-3 text-sm font-medium">Add a single entry with a note</summary>
+        <div className="border-t border-line p-4">
+          <EntryForm
+            action={createEntry.bind(null, id)}
+            parameters={parameters.map((p) => ({ id: p.id, name: p.name, unit: p.unit }))}
+            defaultDate={toDateInput(today())}
+          />
+        </div>
+      </details>
       <div className="min-w-0 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm text-ink-2">Type straight into the grid. Changes save as you leave each cell.</p>
@@ -80,13 +90,6 @@ export default async function DataEntryPage({ params }: { params: Promise<{ id: 
           initialCells={cells}
         />
       </div>
-      <aside>
-        <EntryForm
-          action={createEntry.bind(null, id)}
-          parameters={parameters.map((p) => ({ id: p.id, name: p.name, unit: p.unit }))}
-          defaultDate={toDateInput(today())}
-        />
-      </aside>
     </div>
   );
 }

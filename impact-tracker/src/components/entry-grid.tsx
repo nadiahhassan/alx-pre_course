@@ -207,7 +207,7 @@ export function EntryGrid({
                       <div className="font-medium">{row.name}</div>
                       <div className="text-xs text-muted">
                         {row.unit}
-                        {row.measureType === "cumulative" && " · amount per period (added up)"}
+                        {row.measureType === "cumulative" && " · per period, added up"}
                       </div>
                     </th>
                     {columns.map((date, c) => {
