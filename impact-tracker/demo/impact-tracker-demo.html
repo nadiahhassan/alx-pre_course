@@ -138,10 +138,10 @@ textarea.input{resize:vertical;line-height:1.45}
 .who select{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:6px;padding:3px 6px;margin-left:6px}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;background:var(--surface-2);padding:1px 4px;border-radius:4px}
 </style>
-<div class="preview-bar"><div class="wrap"><strong>Demo</strong><span>Impact Tracker with an example project. Everything works; your changes are saved in your browser only. Demo date: 23 Sept 2026.</span><button type="button" data-reset>Reset example data</button></div></div>
-<header class="app"><div class="wrap"><span class="brand">Impact Tracker</span><nav class="nav" aria-label="Main"><a href="#portfolio" data-go="portfolio">Portfolio</a><a href="#library" data-go="library">Parameter library</a></nav><label class="who">Signed in as<select id="f-user"><option>Amira Okafor</option><option>Tom Reeves</option><option>Priya Shah</option></select></label></div></header>
+<div class="preview-bar"><div class="wrap"><strong>Demo</strong><span>Impact Tracker for the Global News Programme, with example data. Everything works; your changes are saved in your browser only. Try “Signed in as” to see each role. Demo date: 23 Sept 2026.</span><button type="button" data-reset>Reset example data</button></div></div>
+<header class="app" id="hdr"></header>
 <main class="wrap" id="app"></main>
-<script>const ORIGINAL = {"project":{"name":"Local News Resilience Programme","description":"A 12-month programme helping independent local news organisations build digital audiences and sustainable revenue through training, a shared digital toolkit and small grants.","owner":"Amira Okafor","start":"2026-03-01","end":"2027-02-28","budget":450000,"region":"North of England","status":"active","toc":{"inputs":"£450k grant fund; 3 programme staff; trainer network of 12 working journalists; shared analytics and CMS toolkit.","activities":"Monthly training cohorts on audience development and revenue; toolkit onboarding and support; small grants for pilots; peer-learning roadshow.","outputs":"300 journalists trained; 40 newsrooms onboarded to the toolkit; 30 newsrooms using audience analytics every week.","outcomes":"Newsrooms grow digital audiences, add new revenue streams, and staff apply new skills; local readers trust their local news more.","impact":"More local news organisations are financially sustainable, so communities keep access to reliable local reporting."}},"params":[{"id":"p0","name":"Grant funding disbursed","definition":"Grant payments released to participating newsrooms.","level":"input","unit":"£","measureType":"cumulative","direction":"increase","baseline":0,"target":450000,"targetDate":null,"frequency":"monthly","dataSource":"Finance system","isKey":false,"lead":null,"entries":[{"date":"2026-04-01","value":30000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":25000,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":35000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":30000,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":25000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":35000,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p1","name":"Training sessions delivered","definition":"Live training sessions (online or in person) of at least 90 minutes.","level":"activity","unit":"sessions","measureType":"cumulative","direction":"increase","baseline":0,"target":48,"targetDate":null,"frequency":"monthly","dataSource":"Training calendar","isKey":false,"lead":null,"entries":[{"date":"2026-04-01","value":4,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":5,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":4,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p2","name":"Newsrooms onboarded to digital toolkit","definition":"Newsrooms with an active toolkit account and a completed onboarding call.","level":"activity","unit":"newsrooms","measureType":"cumulative","direction":"increase","baseline":0,"target":40,"targetDate":null,"frequency":"monthly","dataSource":"Toolkit CRM","isKey":false,"lead":null,"entries":[{"date":"2026-04-01","value":3,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":6,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":5,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":"lib1"},{"id":"p3","name":"Journalists trained","definition":"Unique journalists completing at least one full training session.","level":"output","unit":"people","measureType":"cumulative","direction":"increase","baseline":0,"target":300,"targetDate":null,"frequency":"monthly","dataSource":"Attendance registers","isKey":true,"lead":"p7","entries":[{"date":"2026-04-01","value":18,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":22,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":30,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":28,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":24,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":26,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":"lib2"},{"id":"p4","name":"Newsrooms using analytics weekly","definition":"Newsrooms that logged into the analytics dashboard in at least 3 of the last 4 weeks.","level":"output","unit":"newsrooms","measureType":"point","direction":"increase","baseline":0,"target":30,"targetDate":null,"frequency":"monthly","dataSource":"Toolkit usage logs","isKey":false,"lead":"p5","entries":[{"date":"2026-04-01","value":2,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":8,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":10,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":11,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":12,"confidence":"measured","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p5","name":"Average monthly digital audience per newsroom","definition":"Median monthly unique visitors across participating newsrooms' websites.","level":"outcome","unit":"unique visitors","measureType":"point","direction":"increase","baseline":12000,"target":18000,"targetDate":null,"frequency":"monthly","dataSource":"Web analytics (shared toolkit)","isKey":true,"lead":null,"entries":[{"date":"2026-04-01","value":12100,"confidence":"estimated","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":12400,"confidence":"estimated","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":12900,"confidence":"estimated","note":"Jump partly from the YouTube series driving traffic to partner sites.","by":"Amira Okafor"},{"date":"2026-07-01","value":13100,"confidence":"estimated","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":13300,"confidence":"estimated","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":13500,"confidence":"estimated","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p6","name":"Newsrooms with a new revenue stream","definition":"Share of participating newsrooms that launched a revenue stream (memberships, events, sponsorship) since joining.","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":15,"target":50,"targetDate":null,"frequency":"monthly","dataSource":"Monthly check-in form","isKey":false,"lead":"p9","entries":[{"date":"2026-04-01","value":15,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":18,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":22,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":26,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":30,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":33,"confidence":"self-reported","note":"","by":"Tom Reeves"}],"libraryId":null},{"id":"p7","name":"Trainees applying new skills","definition":"Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":0,"target":70,"targetDate":null,"frequency":"quarterly","dataSource":"Follow-up survey","isKey":false,"lead":null,"entries":[{"date":"2026-06-01","value":58,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":64,"confidence":"self-reported","note":"","by":"Tom Reeves"}],"libraryId":"lib3"},{"id":"p8","name":"Reader trust score","definition":"Mean answer to 'How much do you trust this outlet?' on a 1-10 scale, across participating newsrooms' reader surveys.","level":"outcome","unit":"score (1-10)","measureType":"point","direction":"increase","baseline":6.2,"target":7,"targetDate":null,"frequency":"quarterly","dataSource":"Reader survey","isKey":false,"lead":null,"entries":[{"date":"2026-06-01","value":6.4,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":6.5,"confidence":"self-reported","note":"","by":"Tom Reeves"}],"libraryId":"lib0"},{"id":"p9","name":"Financially sustainable newsrooms","definition":"Participating newsrooms whose revenue covers operating costs for 3 consecutive months.","level":"impact","unit":"newsrooms","measureType":"point","direction":"increase","baseline":8,"target":20,"targetDate":null,"frequency":"quarterly","dataSource":"Financial returns (modelled from partial data)","isKey":true,"lead":null,"entries":[{"date":"2026-04-01","value":8,"confidence":"modelled","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":10,"confidence":"modelled","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":11,"confidence":"modelled","note":"Modelled from 14 of 22 newsrooms' returns; remainder due in October.","by":"Tom Reeves"}],"libraryId":null}],"campaigns":[{"name":"Local News Matters (YouTube series)","channel":"youtube","start":"2026-04-15","end":"2026-06-30","spend":12000,"tag":"utm_campaign=lnm_youtube_2026","notes":"Six short documentaries on local newsrooms, each linking to the featured outlet.","metrics":[{"date":"2026-04-01","metric":"clicks","value":1400},{"date":"2026-04-01","metric":"impressions","value":85000},{"date":"2026-04-01","metric":"sign-ups","value":90},{"date":"2026-04-01","metric":"views","value":21000},{"date":"2026-05-01","metric":"clicks","value":3100},{"date":"2026-05-01","metric":"impressions","value":160000},{"date":"2026-05-01","metric":"sign-ups","value":240},{"date":"2026-05-01","metric":"views","value":46000},{"date":"2026-06-01","metric":"clicks","value":2700},{"date":"2026-06-01","metric":"impressions","value":140000},{"date":"2026-06-01","metric":"sign-ups","value":210},{"date":"2026-06-01","metric":"views","value":39000}]},{"name":"Toolkit launch email series","channel":"email","start":"2026-05-01","end":"2026-05-31","spend":1500,"tag":"utm_campaign=toolkit_launch","notes":"Four-email sequence to 2,300 local editors and publishers.","metrics":[{"date":"2026-05-01","metric":"clicks","value":620},{"date":"2026-05-01","metric":"opens","value":3900},{"date":"2026-05-01","metric":"sent","value":9200},{"date":"2026-05-01","metric":"sign-ups","value":41}]},{"name":"Newsroom Futures roadshow","channel":"events","start":"2026-07-01","end":"2026-08-31","spend":18000,"tag":"EVT-NF26","notes":"Five regional half-day events with peer case studies and toolkit demos.","metrics":[{"date":"2026-07-01","metric":"attendees","value":140},{"date":"2026-07-01","metric":"sign-ups","value":18},{"date":"2026-08-01","metric":"attendees","value":165},{"date":"2026-08-01","metric":"sign-ups","value":23}]}],"evidence":[{"type":"quote","title":"Publisher on sustainability","body":"We're closer, but one big advertiser leaving would still put us back in the red. The grant bought us time to diversify.","source":"Publisher, Morecambe Bay News","url":"","date":"2026-09-15","param":"p9","tags":"sustainability,risk","origin":"human","approved":false},{"type":"survey","title":"Theme: memberships are the most common new revenue stream","body":"Across 38 check-in responses, memberships (14) and local events (9) were the most-cited new revenue streams. Sentiment is mostly positive, with concern about sustaining member numbers after launch.","source":"AI theme coding of monthly check-in forms","url":"","date":"2026-09-12","param":"p6","tags":"revenue,theme","origin":"ai","approved":false},{"type":"survey","title":"Follow-up survey, cohort 1-3 (n=112)","body":"64% say they used a technique from training in the last month. Most cited: headline testing (41%), newsletter segmentation (29%), audience surveys (18%).","source":"Follow-up survey, September","url":"","date":"2026-09-10","param":"p7","tags":"skills,survey","origin":"human","approved":false},{"type":"quote","title":"Reader survey comment","body":"They actually come to the meetings now and explain what the decisions mean for us. That's why I read them.","source":"Reader, Hebden Bridge","url":"","date":"2026-09-02","param":"p8","tags":"trust,readers","origin":"human","approved":false},{"type":"case-study","title":"Tyneside Tribune launches a membership scheme","body":"After the revenue cohort, the Tribune launched a £4/month membership with a members-only newsletter. 310 members joined in the first six weeks, covering one part-time reporter.","source":"Programme case study","url":"","date":"2026-08-05","param":"p6","tags":"revenue,membership","origin":"human","approved":false},{"type":"link","title":"Regional press coverage of the roadshow","body":"Article on the Newsroom Futures roadshow and the programme's aims.","source":"Regional business press","url":"https://example.org/press/newsroom-futures","date":"2026-07-22","param":null,"tags":"press","origin":"human","approved":false},{"type":"quote","title":"Trainee on newsletter skills","body":"I rebuilt our newsletter the week after the session. Open rates went from 22% to 38%.","source":"Reporter, Wharfedale Weekly","url":"","date":"2026-06-30","param":"p7","tags":"skills,newsletter","origin":"human","approved":false},{"type":"quote","title":"Editor on the analytics dashboard","body":"For the first time we can see which stories people actually finish. We've moved our council coverage to the morning slot and it's our most-read section now.","source":"Editor, Calder Valley Voice","url":"","date":"2026-06-18","param":"p5","tags":"analytics,audience","origin":"human","approved":false}],"library":[{"id":"lib0","name":"Audience trust score","definition":"Mean answer to 'How much do you trust this outlet?' on a 1-10 scale.","level":"outcome","unit":"score (1-10)","direction":"increase","measureType":"point","frequency":"quarterly","dataSource":"Reader survey"},{"id":"lib1","name":"Organisations onboarded","definition":"Organisations with an active account and a completed onboarding call.","level":"activity","unit":"organisations","direction":"increase","measureType":"cumulative","frequency":"monthly","dataSource":"CRM"},{"id":"lib2","name":"People trained","definition":"Unique people completing at least one full training session.","level":"output","unit":"people","direction":"increase","measureType":"cumulative","frequency":"monthly","dataSource":"Attendance registers"},{"id":"lib3","name":"Trainees applying new skills","definition":"Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.","level":"outcome","unit":"%","direction":"increase","measureType":"point","frequency":"quarterly","dataSource":"Follow-up survey"}]};</script>
+<script>const ORIGINAL = {"programme":{"name":"Global News Programme","mission":"Help news organisations and the people who work with them build the skills, audiences and support that keep reliable journalism going.","description":"A global programme run with Comms, Government Affairs & Public Policy and Marketing. This year's focus is training, for newsrooms outside the organisation and for colleagues inside it.","currency":"USD","budget":500000,"start":"2026-03-01","end":"2027-02-28"},"focusAreas":[{"id":"fa0","name":"Trainings","description":"Skills training for journalists and newsrooms (external), and news-literacy training that turns colleagues into programme champions (internal).","owner":"Amira Okafor","budget":500000,"archived":false}],"users":[{"name":"Amira Okafor","email":"lead@example.org","role":"admin","team":"","active":true},{"name":"Tom Reeves","email":"programme@example.org","role":"programme","team":"","active":true},{"name":"Priya Shah","email":"comms@example.org","role":"partner","team":"comms","active":true},{"name":"Daniel Mensah","email":"gapp@example.org","role":"partner","team":"gapp","active":true},{"name":"Sofia Lindqvist","email":"marketing@example.org","role":"partner","team":"marketing","active":true}],"library":[{"id":"lib0","name":"Audience trust score","definition":"Mean answer to 'How much do you trust this outlet?' on a 1-10 scale.","level":"outcome","unit":"score (1-10)","direction":"increase","measureType":"point","frequency":"quarterly","dataSource":"Reader survey"},{"id":"lib1","name":"Organisations onboarded","definition":"Organisations with an active account and a completed onboarding call.","level":"activity","unit":"organisations","direction":"increase","measureType":"cumulative","frequency":"monthly","dataSource":"CRM"},{"id":"lib2","name":"People trained","definition":"Unique people completing at least one full training session.","level":"output","unit":"people","direction":"increase","measureType":"cumulative","frequency":"monthly","dataSource":"Attendance registers"},{"id":"lib3","name":"Trainees applying new skills","definition":"Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.","level":"outcome","unit":"%","direction":"increase","measureType":"point","frequency":"quarterly","dataSource":"Follow-up survey"}],"projects":[{"id":"i0","focusAreaId":"fa0","name":"Newsroom Digital Skills Training","description":"Training cohorts, a shared digital toolkit and small grants that help independent local newsrooms build digital audiences and sustainable revenue.","owner":"Amira Okafor","start":"2026-03-01","end":"2027-02-28","budget":420000,"currency":"USD","region":"UK & Ireland","status":"active","toc":{"inputs":"$420k budget including a grant fund; 3 programme staff; trainer network of 12 working journalists; shared analytics and CMS toolkit.","activities":"Monthly training cohorts on audience development and revenue; toolkit onboarding and support; small grants for pilots; peer-learning roadshow.","outputs":"300 journalists trained; 40 newsrooms onboarded to the toolkit; 30 newsrooms using audience analytics every week.","outcomes":"Newsrooms grow digital audiences, add new revenue streams, and staff apply new skills; local readers trust their local news more.","impact":"More local news organisations are financially sustainable, so communities keep access to reliable local reporting."},"params":[{"id":"p0","name":"Training grants disbursed","definition":"Grant payments released to participating newsrooms to cover training time and pilots.","level":"input","unit":"$","measureType":"cumulative","direction":"increase","baseline":0,"target":300000,"targetDate":null,"frequency":"monthly","dataSource":"Finance system","isKey":false,"audience":"external","lead":null,"libraryId":null,"entries":[{"date":"2026-04-01","value":20000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":17000,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":23000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":20000,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":17000,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":23000,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p1","name":"Training sessions delivered","definition":"Live training sessions (online or in person) of at least 90 minutes.","level":"activity","unit":"sessions","measureType":"cumulative","direction":"increase","baseline":0,"target":48,"targetDate":null,"frequency":"monthly","dataSource":"Training calendar","isKey":false,"audience":"external","lead":null,"libraryId":null,"entries":[{"date":"2026-04-01","value":4,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":5,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":4,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p2","name":"Newsrooms onboarded to digital toolkit","definition":"Newsrooms with an active toolkit account and a completed onboarding call.","level":"activity","unit":"newsrooms","measureType":"cumulative","direction":"increase","baseline":0,"target":40,"targetDate":null,"frequency":"monthly","dataSource":"Toolkit CRM","isKey":false,"audience":"external","lead":null,"libraryId":"lib1","entries":[{"date":"2026-04-01","value":3,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":6,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":5,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p3","name":"Journalists trained","definition":"Unique journalists completing at least one full training session.","level":"output","unit":"people","measureType":"cumulative","direction":"increase","baseline":0,"target":300,"targetDate":null,"frequency":"monthly","dataSource":"Attendance registers","isKey":true,"audience":"external","lead":"p7","libraryId":"lib2","entries":[{"date":"2026-04-01","value":18,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":22,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":30,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":28,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":24,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":26,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p4","name":"Newsrooms using analytics weekly","definition":"Newsrooms that logged into the analytics dashboard in at least 3 of the last 4 weeks.","level":"output","unit":"newsrooms","measureType":"point","direction":"increase","baseline":0,"target":30,"targetDate":null,"frequency":"monthly","dataSource":"Toolkit usage logs","isKey":false,"audience":"external","lead":"p5","libraryId":null,"entries":[{"date":"2026-04-01","value":2,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":8,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":10,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":11,"confidence":"measured","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":12,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p5","name":"Average monthly digital audience per newsroom","definition":"Median monthly unique visitors across participating newsrooms' websites.","level":"outcome","unit":"unique visitors","measureType":"point","direction":"increase","baseline":12000,"target":18000,"targetDate":null,"frequency":"monthly","dataSource":"Web analytics (shared toolkit)","isKey":true,"audience":"external","lead":null,"libraryId":null,"entries":[{"date":"2026-04-01","value":12100,"confidence":"estimated","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":12400,"confidence":"estimated","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":12900,"confidence":"estimated","note":"Jump partly from the YouTube series driving traffic to partner sites.","by":"Amira Okafor"},{"date":"2026-07-01","value":13100,"confidence":"estimated","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":13300,"confidence":"estimated","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":13500,"confidence":"estimated","note":"","by":"Tom Reeves"}]},{"id":"p6","name":"Newsrooms with a new revenue stream","definition":"Share of participating newsrooms that launched a revenue stream (memberships, events, sponsorship) since joining.","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":15,"target":50,"targetDate":null,"frequency":"monthly","dataSource":"Monthly check-in form","isKey":false,"audience":"external","lead":"p9","libraryId":null,"entries":[{"date":"2026-04-01","value":15,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-05-01","value":18,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":22,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":26,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":30,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":33,"confidence":"self-reported","note":"","by":"Tom Reeves"}]},{"id":"p7","name":"Trainees applying new skills","definition":"Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":0,"target":70,"targetDate":null,"frequency":"quarterly","dataSource":"Follow-up survey","isKey":false,"audience":"external","lead":null,"libraryId":"lib3","entries":[{"date":"2026-06-01","value":58,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":64,"confidence":"self-reported","note":"","by":"Tom Reeves"}]},{"id":"p8","name":"Reader trust score","definition":"Mean answer to 'How much do you trust this outlet?' on a 1-10 scale, across participating newsrooms' reader surveys.","level":"outcome","unit":"score (1-10)","measureType":"point","direction":"increase","baseline":6.2,"target":7,"targetDate":null,"frequency":"quarterly","dataSource":"Reader survey","isKey":false,"audience":"external","lead":null,"libraryId":"lib0","entries":[{"date":"2026-06-01","value":6.4,"confidence":"self-reported","note":"","by":"Amira Okafor"},{"date":"2026-09-01","value":6.5,"confidence":"self-reported","note":"","by":"Tom Reeves"}]},{"id":"p9","name":"Financially sustainable newsrooms","definition":"Participating newsrooms whose revenue covers operating costs for 3 consecutive months.","level":"impact","unit":"newsrooms","measureType":"point","direction":"increase","baseline":8,"target":20,"targetDate":null,"frequency":"quarterly","dataSource":"Financial returns (modelled from partial data)","isKey":true,"audience":"external","lead":null,"libraryId":null,"entries":[{"date":"2026-04-01","value":8,"confidence":"modelled","note":"","by":"Amira Okafor"},{"date":"2026-07-01","value":10,"confidence":"modelled","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":11,"confidence":"modelled","note":"Modelled from 14 of 22 newsrooms' returns; remainder due in October.","by":"Tom Reeves"}]}],"campaigns":[{"name":"Local News Matters (YouTube series)","channel":"youtube","audience":"external","start":"2026-04-15","end":"2026-06-30","spend":12000,"tag":"utm_campaign=lnm_youtube_2026","notes":"Six short documentaries on local newsrooms, each linking to the featured outlet.","metrics":[{"date":"2026-04-01","metric":"clicks","value":1400},{"date":"2026-04-01","metric":"impressions","value":85000},{"date":"2026-04-01","metric":"sign-ups","value":90},{"date":"2026-04-01","metric":"views","value":21000},{"date":"2026-05-01","metric":"clicks","value":3100},{"date":"2026-05-01","metric":"impressions","value":160000},{"date":"2026-05-01","metric":"sign-ups","value":240},{"date":"2026-05-01","metric":"views","value":46000},{"date":"2026-06-01","metric":"clicks","value":2700},{"date":"2026-06-01","metric":"impressions","value":140000},{"date":"2026-06-01","metric":"sign-ups","value":210},{"date":"2026-06-01","metric":"views","value":39000}]},{"name":"Toolkit launch email series","channel":"email","audience":"external","start":"2026-05-01","end":"2026-05-31","spend":1500,"tag":"utm_campaign=toolkit_launch","notes":"Four-email sequence to 2,300 local editors and publishers.","metrics":[{"date":"2026-05-01","metric":"clicks","value":620},{"date":"2026-05-01","metric":"opens","value":3900},{"date":"2026-05-01","metric":"sent","value":9200},{"date":"2026-05-01","metric":"sign-ups","value":41}]},{"name":"Newsroom Futures roadshow","channel":"events","audience":"external","start":"2026-07-01","end":"2026-08-31","spend":18000,"tag":"EVT-NF26","notes":"Five regional half-day events with peer case studies and toolkit demos.","metrics":[{"date":"2026-07-01","metric":"attendees","value":140},{"date":"2026-07-01","metric":"sign-ups","value":18},{"date":"2026-08-01","metric":"attendees","value":165},{"date":"2026-08-01","metric":"sign-ups","value":23}]}],"evidence":[{"type":"quote","title":"Publisher on sustainability","body":"We're closer, but one big advertiser leaving would still put us back in the red. The grant bought us time to diversify.","source":"Publisher, Morecambe Bay News","url":"","date":"2026-09-15","param":"p9","tags":"sustainability,risk","origin":"human","approved":false},{"type":"survey","title":"Theme: memberships are the most common new revenue stream","body":"Across 38 check-in responses, memberships (14) and local events (9) were the most-cited new revenue streams. Sentiment is mostly positive, with concern about sustaining member numbers after launch.","source":"AI theme coding of monthly check-in forms","url":"","date":"2026-09-12","param":"p6","tags":"revenue,theme","origin":"ai","approved":false},{"type":"survey","title":"Follow-up survey, cohort 1-3 (n=112)","body":"64% say they used a technique from training in the last month. Most cited: headline testing (41%), newsletter segmentation (29%), audience surveys (18%).","source":"Follow-up survey, September","url":"","date":"2026-09-10","param":"p7","tags":"skills,survey","origin":"human","approved":false},{"type":"quote","title":"Reader survey comment","body":"They actually come to the meetings now and explain what the decisions mean for us. That's why I read them.","source":"Reader, Hebden Bridge","url":"","date":"2026-09-02","param":"p8","tags":"trust,readers","origin":"human","approved":false},{"type":"case-study","title":"Tyneside Tribune launches a membership scheme","body":"After the revenue cohort, the Tribune launched a $5/month membership with a members-only newsletter. 310 members joined in the first six weeks, covering one part-time reporter.","source":"Programme case study","url":"","date":"2026-08-05","param":"p6","tags":"revenue,membership","origin":"human","approved":false},{"type":"link","title":"Regional press coverage of the roadshow","body":"Article on the Newsroom Futures roadshow and the programme's aims.","source":"Regional business press","url":"https://example.org/press/newsroom-futures","date":"2026-07-22","param":null,"tags":"press","origin":"human","approved":false},{"type":"quote","title":"Trainee on newsletter skills","body":"I rebuilt our newsletter the week after the session. Open rates went from 22% to 38%.","source":"Reporter, Wharfedale Weekly","url":"","date":"2026-06-30","param":"p7","tags":"skills,newsletter","origin":"human","approved":false},{"type":"quote","title":"Editor on the analytics dashboard","body":"For the first time we can see which stories people actually finish. We've moved our council coverage to the morning slot and it's our most-read section now.","source":"Editor, Calder Valley Voice","url":"","date":"2026-06-18","param":"p5","tags":"analytics,audience","origin":"human","approved":false}]},{"id":"i1","focusAreaId":"fa0","name":"Newsroom Champions (internal)","description":"News-literacy sessions for colleagues, and a champions network who explain the programme and use its stories in their own teams.","owner":"Tom Reeves","start":"2026-03-01","end":"2027-02-28","budget":60000,"currency":"USD","region":"Global","status":"active","toc":{"inputs":"$60k; 1 programme lead; content from the external training; support from Comms and Marketing.","activities":"Monthly news-literacy sessions; a champions certification; an internal case-study pack.","outputs":"400 colleagues trained; 40 certified champions.","outcomes":"Colleagues can explain the programme confidently and use its stories with partners and policymakers.","impact":"The organisation speaks about news and journalism with one informed voice."},"params":[{"id":"p10","name":"Colleagues completing news-literacy training","definition":"","level":"output","unit":"people","measureType":"cumulative","direction":"increase","baseline":0,"target":400,"targetDate":null,"frequency":"monthly","dataSource":"Learning platform","isKey":true,"audience":"internal","lead":null,"libraryId":null,"entries":[{"date":"2026-04-01","value":30,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-05-01","value":45,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":40,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-07-01","value":25,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":20,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":35,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p11","name":"Certified internal champions","definition":"","level":"output","unit":"champions","measureType":"cumulative","direction":"increase","baseline":0,"target":40,"targetDate":null,"frequency":"monthly","dataSource":"Champions register","isKey":false,"audience":"internal","lead":"p12","libraryId":null,"entries":[{"date":"2026-04-01","value":0,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-05-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":3,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-07-01","value":2,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":1,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":3,"confidence":"measured","note":"","by":"Tom Reeves"}]},{"id":"p12","name":"Colleagues confident explaining the programme","definition":"","level":"outcome","unit":"%","measureType":"point","direction":"increase","baseline":35,"target":70,"targetDate":null,"frequency":"quarterly","dataSource":"Quarterly pulse survey","isKey":true,"audience":"internal","lead":null,"libraryId":null,"entries":[{"date":"2026-06-01","value":41,"confidence":"self-reported","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":44,"confidence":"self-reported","note":"","by":"Tom Reeves"}]},{"id":"p13","name":"Teams using programme case studies","definition":"","level":"outcome","unit":"teams","measureType":"point","direction":"increase","baseline":0,"target":15,"targetDate":null,"frequency":"monthly","dataSource":"Comms request log","isKey":false,"audience":"internal","lead":null,"libraryId":null,"entries":[{"date":"2026-04-01","value":1,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-05-01","value":2,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-06-01","value":4,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-07-01","value":5,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-08-01","value":7,"confidence":"measured","note":"","by":"Tom Reeves"},{"date":"2026-09-01","value":9,"confidence":"measured","note":"","by":"Tom Reeves"}]}],"campaigns":[{"name":"Internal launch: town hall and newsletter","channel":"events","audience":"internal","start":"2026-04-20","end":"2026-05-15","spend":3500,"tag":"INT-LAUNCH-26","notes":"Global town hall with the Comms team, followed by a four-part internal newsletter.","metrics":[{"date":"2026-04-01","metric":"attendees","value":620},{"date":"2026-05-01","metric":"opens","value":4100},{"date":"2026-05-01","metric":"sign-ups","value":85}]}],"evidence":[{"type":"quote","title":"Policy colleague on the champions session","body":"I used the local newsroom examples in a meeting with a ministry team the following week. Having real numbers made the conversation much easier.","source":"Champion, Government Affairs & Public Policy","url":"","date":"2026-09-08","param":"p12","tags":"gapp,champions","origin":"human","approved":false}]}]};</script>
 <script>
 // Impact Tracker demo. A complete in-browser version of the app: every
 // screen and form works on the example data, with the same status rules as
@@ -149,7 +149,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 // own browser only.
 
 const TODAY = "2026-09-23"; // demo date, so the example data reads as "now"
-const STORE_KEY = "impact-tracker-demo-v1";
+const STORE_KEY = "impact-tracker-demo-v2";
 const THRESH = { green: 0.9, amber: 0.7 };
 const LEVELS = ["input", "activity", "output", "outcome", "impact"];
 const LEVEL_LABELS = { input: "Inputs", activity: "Activities", output: "Outputs", outcome: "Outcomes", impact: "Impact" };
@@ -165,7 +165,19 @@ const CONF = ["measured", "self-reported", "estimated", "modelled"];
 const FREQ = ["weekly", "monthly", "quarterly", "annually", "ad-hoc"];
 const PSTATUS = ["planning", "active", "paused", "completed"];
 const ETYPES = { quote: "Quote", survey: "Survey response or result", "case-study": "Case study", link: "Link" };
-const USERS = ["Amira Okafor", "Tom Reeves", "Priya Shah"];
+const ROLE_LABELS = { admin: "Global lead (admin)", programme: "Programme team", partner: "Partner team", viewer: "Viewer" };
+const TEAM_LABELS = { comms: "Comms", gapp: "Government Affairs & Public Policy", marketing: "Marketing" };
+const AUDIENCE_LABELS = { external: "External", internal: "Internal", both: "Internal & external" };
+// Same rules as src/lib/permissions.ts in the real app.
+function can(ability, u = me()) {
+  if (!u) return false;
+  if (u.role === "admin") return true;
+  if (u.role === "programme") return ability !== "manage-users" && ability !== "manage-programme";
+  if (u.role === "partner") return ability === "edit-evidence" || ability === "share" || (ability === "edit-campaigns" && u.team === "marketing");
+  return false;
+}
+const who = (u) => (u.role === "partner" ? TEAM_LABELS[u.team] : ROLE_LABELS[u.role]);
+const matchesAudience = (tag, f) => f === "all" || (tag || "external") === f || tag === "both";
 const STATUS = {
   green: ["On track", "green", '<circle cx="6" cy="6" r="5" fill="var(--good)"/>'],
   amber: ["Behind", "amber", '<path d="M6 1 L11 10.5 L1 10.5 Z" fill="var(--warning)"/>'],
@@ -254,23 +266,20 @@ function freeze(P, label, asOf, by, frozenOn) {
 }
 function initialStore() {
   const d = structuredClone(ORIGINAL);
-  const p = d.project;
-  const P = {
-    id: "lnrp", name: p.name, description: p.description, owner: p.owner, start: p.start, end: p.end, budget: p.budget, currency: "GBP",
-    region: p.region, status: p.status, toc: p.toc, archived: false,
-    params: d.params.map((x) => ({ ...x, archived: false })),
-    campaigns: d.campaigns.map((c) => ({ ...c, id: uid("c") })),
-    evidence: d.evidence.map((e) => ({ ...e, id: uid("e") })),
-    snapshots: [],
-    extraCols: [],
-  };
-  P.snapshots.push(freeze(P, "Q2 2026 as reported to the board", "2026-06-30", "Amira Okafor", "2026-07-03"));
-  return { v: 1, projects: [P], library: d.library, user: "Amira Okafor" };
+  const projects = d.projects.map((p) => ({
+    ...p, archived: false,
+    params: p.params.map((x) => ({ ...x, archived: false })),
+    campaigns: p.campaigns.map((c) => ({ ...c, id: uid("c") })),
+    evidence: p.evidence.map((e) => ({ ...e, id: uid("e") })),
+    snapshots: [], extraCols: [],
+  }));
+  projects[0].snapshots.push(freeze(projects[0], "Q2 2026 as reported to the board", "2026-06-30", "Amira Okafor", "2026-07-03"));
+  return { v: 2, programme: d.programme, focusAreas: d.focusAreas, projects, library: d.library, users: d.users, user: d.users[0].email };
 }
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(STORE_KEY));
-    if (s && s.v === 1 && Array.isArray(s.projects)) return s;
+    if (s && s.v === 2 && Array.isArray(s.projects)) return s;
   } catch {}
   return initialStore();
 }
@@ -279,7 +288,8 @@ function save() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch {}
 }
 
-const ui = { page: "portfolio", pid: null, id: null, view: "lead", snapView: "leadership", showArchived: false, evFilter: "", draft: null, csv: null, ccsv: null };
+const me = () => S.users.find((u) => u.email === S.user) || S.users[0];
+const ui = { audience: "all", faid: null, page: "portfolio", pid: null, id: null, view: "lead", snapView: "leadership", showArchived: false, evFilter: "", draft: null, csv: null, ccsv: null };
 const P = () => S.projects.find((p) => p.id === ui.pid);
 
 // ---------- status logic (same rules as src/lib/status.ts) ----------
@@ -343,6 +353,17 @@ function campaignSummary(c, asOf, n) {
   return { ...c, n, totals, ctr: totals.clicks && totals.impressions ? totals.clicks / totals.impressions : null, cps: c.spend && totals["sign-ups"] ? c.spend / totals["sign-ups"] : null };
 }
 const visible = (e, safe) => !safe || e.origin !== "ai" || e.approved;
+/** Narrow an evaluation to one audience ("both" counts for each), recalculating counts. */
+function filterE(E, audience) {
+  if (audience === "all") return E;
+  const metrics = E.metrics.filter((m) => matchesAudience(m.audience, audience));
+  const counts = { green: 0, amber: 0, red: 0, "no-data": 0, "not-started": 0 };
+  metrics.forEach((m) => counts[m.status]++);
+  const pool = metrics.some((m) => m.isKey) ? metrics.filter((m) => m.isKey) : metrics;
+  const st = pool.map((m) => m.status);
+  const overall = st.includes("red") ? "red" : st.includes("amber") ? "amber" : st.includes("green") ? "green" : "no-data";
+  return { ...E, metrics, counts, overall, campaigns: E.campaigns.filter((c) => matchesAudience(c.audience, audience)) };
+}
 
 // ---------- small components ----------
 function status(s, lg) {
@@ -498,7 +519,8 @@ function evidenceItem(e, compact) {
 
 function dashboardView(E, view, safe) {
   if (!E.metrics.length) return empty("Nothing to show yet", `<button class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="param-new">Add parameters</button> and log some data to see the dashboard.`);
-  const ev = E.proj.evidence.filter((e) => ms(e.date) <= ms(E.asOf) && visible(e, safe));
+  const ids = new Set(E.metrics.map((m) => m.id));
+  const ev = E.proj.evidence.filter((e) => ms(e.date) <= ms(E.asOf) && visible(e, safe) && (!e.param || ids.has(e.param)));
   const bands = E.campaigns;
   const cur = sym(E.proj.currency);
   if (view === "leadership") {
@@ -529,7 +551,7 @@ function dashboardView(E, view, safe) {
   return `${summary(E)}${riskAlert(E)}${tocStrip(E.proj)}${explainer}${campaignLegend(E)}${levelSections(E, ev, bands)}<p class="xs muted">Solid line: actual values (running total for cumulative metrics). Dashed line: expected path to target. Hover a point for its value. Data as of ${date(E.asOf)}.</p>`;
 }
 const viewSwitcher = (cur, key) =>
-  `<div><div class="seg" role="group" aria-label="Stakeholder view">${Object.entries(VIEWS).map(([v, [l]]) => `<button type="button" data-${key}="${v}" aria-pressed="${v === cur}">${l}</button>`).join("")}</div><p class="xs muted" style="margin-top:4px">${VIEWS[cur][1]}</p></div>`;
+  `<div><div class="row" style="gap:8px"><div class="seg" role="group" aria-label="Stakeholder view">${Object.entries(VIEWS).map(([v, [l]]) => `<button type="button" data-${key}="${v}" aria-pressed="${v === cur}">${l}</button>`).join("")}</div><div class="seg" role="group" aria-label="Audience">${[["all", "All audiences"], ["external", "External"], ["internal", "Internal"]].map(([a, l]) => `<button type="button" data-aud="${a}" aria-pressed="${ui.audience === a}">${l}</button>`).join("")}</div></div><p class="xs muted" style="margin-top:4px">${VIEWS[cur][1]}${ui.audience !== "all" ? ` Showing ${ui.audience} audience metrics and campaigns only.` : ""}</p></div>`;
 
 // ---------- form helpers ----------
 function field(label, name, control, hint = "") {
@@ -557,50 +579,180 @@ function showErrors(form, errs) {
 }
 
 // ---------- pages ----------
-const TABS = [["dashboard", "Dashboard"], ["data", "Data entry"], ["parameters", "Parameters"], ["campaigns", "Campaigns"], ["evidence", "Evidence"], ["snapshots", "Snapshots"], ["settings", "Project & theory of change"]];
+const TABS = [["dashboard", "Dashboard"], ["data", "Data entry"], ["parameters", "Parameters"], ["campaigns", "Campaigns"], ["evidence", "Evidence"], ["snapshots", "Snapshots"], ["settings", "Initiative & theory of change"]];
 const TAB_OF = { "param-new": "parameters", "param-edit": "parameters", "param-library": "parameters", "import": "data", "campaign-new": "campaigns", "campaign": "campaigns", "campaign-import": "campaigns", "evidence-form": "evidence", "snapshot-new": "snapshots", "snapshot": "snapshots" };
 
 function projectHeader() {
   const p = P();
   const tab = TAB_OF[ui.page] || ui.page;
-  return `<button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Portfolio</button>
+  const fa = S.focusAreas.find((f) => f.id === p.focusAreaId);
+  return `<button type="button" class="linkbtn xs" ${fa ? `data-open-fa="${fa.id}"` : 'data-go="portfolio"'} style="padding-left:0">← ${fa ? esc(fa.name) : "Programme"}</button>
   <div class="row" style="align-items:baseline;gap:4px 12px;margin-top:4px"><h1>${esc(p.name)}</h1>${p.archived ? '<span class="chip">Archived</span>' : ""}<span class="sub">${cap(p.status)}${p.region ? " · " + esc(p.region) : ""} · ${date(p.start)} – ${date(p.end)}${p.owner ? " · Owner: " + esc(p.owner) : ""}</span></div>
   <div class="tabs" role="tablist">${TABS.map(([k, l]) => `<button type="button" role="tab" aria-selected="${tab === k}" data-go="${k}">${l}</button>`).join("")}</div>`;
 }
 const subHead = (title, backGo, backLabel) => `<div class="row between" style="margin-bottom:16px"><h2>${title}</h2>${backGo ? `<button type="button" class="btn ghost" data-go="${backGo}">${backLabel}</button>` : ""}</div>`;
 
-function pagePortfolio() {
-  const list = S.projects.filter((p) => ui.showArchived || !p.archived);
-  const rows = list.map((p) => ({ p, E: evaluate(p, TODAY) }));
-  const totals = { green: 0, amber: 0, red: 0, "no-data": 0 };
-  rows.forEach(({ E }) => ["green", "amber", "red", "no-data"].forEach((s) => (totals[s] += E.counts[s])));
-  const budget = rows.reduce((n, { p }) => n + (p.currency === "GBP" ? p.budget || 0 : 0), 0);
+
+const ROLE_HELP = {
+  admin: "You can do everything, including People, programme settings and budgets.",
+  programme: "You can edit initiatives, metrics, data, campaigns, evidence and snapshots.",
+  partner: "You can view everything, add evidence and share views. Editing buttons are hidden.",
+  marketing: "You can view everything, add evidence, share views and manage campaigns.",
+  viewer: "You have read-only access.",
+};
+const GLOBAL_ADMIN = new Set(["programme-settings", "focus-area-new", "focus-area-edit", "people", "person-new", "person-edit"]);
+
+function renderHeader() {
+  const u = me();
+  document.getElementById("hdr").innerHTML = `<div class="wrap"><span class="brand">Impact Tracker</span><nav class="nav" aria-label="Main"><a href="#portfolio" data-go="portfolio">Programme</a><a href="#library" data-go="library">Parameter library</a>${can("manage-users") ? '<a href="#people" data-go="people">People</a>' : ""}</nav>
+  <label class="who">Signed in as<select id="f-user">${S.users.filter((x) => x.active).map((x) => `<option value="${esc(x.email)}"${x.email === u.email ? " selected" : ""}>${esc(x.name)} · ${esc(who(x))}</option>`).join("")}</select></label></div>`;
+  document.querySelectorAll(".nav [data-go]").forEach((a) => {
+    const cur = ui.page.startsWith("library") ? "library" : ui.page.startsWith("people") || ui.page.startsWith("person") ? "people" : ["portfolio", "focus-area", "programme-settings", "focus-area-new", "focus-area-edit", "project-new"].includes(ui.page) ? "portfolio" : "";
+    a.setAttribute("aria-current", String(a.dataset.go === cur));
+  });
+}
+
+const statusMix = (counts) => {
+  const order = ["green", "amber", "red", "no-data"];
+  const total = order.reduce((n, s) => n + (counts[s] || 0), 0);
+  if (!total) return '<span class="xs muted">No metrics</span>';
+  const col = { green: "good", amber: "warning", red: "critical", "no-data": "line-strong" };
+  return `<div style="min-width:160px"><div style="display:flex;gap:2px;height:8px;border-radius:99px;overflow:hidden">${order.filter((s) => counts[s]).map((s) => `<i style="flex-grow:${counts[s]};background:var(--${col[s]})"></i>`).join("")}</div><div class="xs sub" style="margin-top:4px">${order.filter((s) => counts[s]).map((s) => `${counts[s]} ${STATUS[s][0].toLowerCase()}`).join(" · ")}</div></div>`;
+};
+function rollup(metrics) {
+  const counts = { green: 0, amber: 0, red: 0, "no-data": 0, "not-started": 0 };
+  metrics.forEach((m) => counts[m.status]++);
+  const pool = metrics.some((m) => m.isKey) ? metrics.filter((m) => m.isKey) : metrics;
+  const st = pool.map((m) => m.status);
+  const overall = st.includes("red") ? "red" : st.includes("amber") ? "amber" : st.includes("green") ? "green" : "no-data";
+  return { counts, overall };
+}
+function audienceSplit(metrics) {
+  const part = (a) => {
+    const ms_ = metrics.filter((m) => matchesAudience(m.audience, a));
+    return `<div><div style="font-weight:560">${a === "external" ? "External" : "Internal"} <span class="muted" style="font-weight:400">· ${ms_.length} metrics</span></div><div style="margin-top:4px">${statusMix(rollup(ms_).counts)}</div></div>`;
+  };
+  return `<div class="card pad"><div class="label">By audience</div><div class="stack-sm" style="margin-top:8px">${part("external")}${part("internal")}</div></div>`;
+}
+function needsAttention(rows) {
+  const items = rows.flatMap(({ p, E }) => E.metrics.filter((m) => m.riskFrom.length || (m.status === "red" && m.isKey)).map((m) => ({ p, m, why: m.riskFrom.length ? "At risk: a leading indicator is behind" : "Key metric off track" })));
+  return `<section class="card pad"><h2 style="font-size:14px">Needs attention</h2>${items.length ? `<div>${items.map(({ p, m, why }, i) => `<div class="row between" style="padding:8px 0;${i ? "border-top:1px solid var(--line)" : ""}"><span><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--ink);text-decoration:underline;text-align:left" data-open="${p.id}">${esc(m.name)}</button> <span class="sub">· ${esc(p.name)}</span><span class="xs muted" style="display:block">${why}</span></span>${status(m.status)}</div>`).join("")}</div>` : '<p class="sub" style="margin-top:6px">Nothing flagged. Key metrics are on track or behind by less than the red threshold.</p>'}</section>`;
+}
+function initiativeTable(rows) {
+  const cur = sym(S.programme.currency);
   const headline = (E) => {
     const key = E.metrics.filter((m) => m.isKey);
     const rank = ["impact", "outcome", "output", "activity", "input"];
     return (key.length ? key : [...E.metrics].sort((a, b) => rank.indexOf(a.level) - rank.indexOf(b.level))).slice(0, 3);
   };
-  return `<div class="stack"><div class="row between"><div><h1>Portfolio</h1><p class="sub" style="margin-top:4px">Every project's status at a glance. Open a project for its full dashboard.</p></div><button type="button" class="btn primary" data-go="project-new">New project</button></div>
-  <section class="grid g3"><div class="card pad"><div class="label">Projects</div><div class="big">${rows.length}</div><div class="xs sub">${rows.filter(({ p }) => p.status === "active").length} active</div></div><div class="card pad"><div class="label">Total budget</div><div class="big">${budget ? "£" + nfc.format(budget) : "–"}</div></div><div class="card pad"><div class="label">Metrics across projects</div><div class="row" style="margin-top:8px;gap:6px 16px">${["green", "amber", "red", "no-data"].filter((s) => totals[s]).map((s) => `<span class="row" style="gap:6px">${status(s)}<strong class="num">${totals[s]}</strong></span>`).join("") || '<span class="sub">–</span>'}</div></div></section>
-  ${rows.length ? `<div class="card scroll"><table><thead><tr><th>Project</th><th>Overall</th><th>Timeline</th><th>Metrics</th><th>Key metrics</th></tr></thead><tbody>${rows.map(({ p, E }) => `<tr>
-  <td><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--accent-ink);text-decoration:underline;text-align:left" data-open="${p.id}">${esc(p.name)}</button>${p.archived ? ' <span class="chip">Archived</span>' : ""}<div class="xs sub">${cap(p.status)}${p.region ? " · " + esc(p.region) : ""}${p.owner ? " · " + esc(p.owner) : ""}</div></td>
+  return `<div class="card scroll"><table><thead><tr><th>Initiative</th><th>Overall</th><th>Timeline</th><th>Metrics</th><th>Key metrics</th></tr></thead><tbody>${rows.map(({ p, E }) => `<tr>
+  <td><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--accent-ink);text-decoration:underline;text-align:left" data-open="${p.id}">${esc(p.name)}</button>${p.archived ? ' <span class="chip">Archived</span>' : ""}<div class="xs sub">${cap(p.status)}${p.region ? " · " + esc(p.region) : ""}${p.owner ? " · " + esc(p.owner) : ""}${p.budget ? " · " + val(p.budget, cur, { compact: true }) : ""}</div></td>
   <td>${status(E.metrics.length ? E.overall : "no-data")}</td>
   <td style="min-width:130px"><div class="xs sub">${pct(E.elapsed)} elapsed</div><div class="track" style="margin-top:4px"><b style="width:${E.elapsed * 100}%"></b></div></td>
-  <td style="min-width:170px">${E.metrics.length ? `<div style="display:flex;gap:2px;height:8px;border-radius:99px;overflow:hidden">${["green", "amber", "red", "no-data"].filter((s) => E.counts[s]).map((s) => `<i style="flex-grow:${E.counts[s]};background:var(--${{ green: "good", amber: "warning", red: "critical", "no-data": "line-strong" }[s]})"></i>`).join("")}</div><div class="xs sub" style="margin-top:4px">${["green", "amber", "red", "no-data"].filter((s) => E.counts[s]).map((s) => `${E.counts[s]} ${STATUS[s][0].toLowerCase()}`).join(" · ")}</div>` : '<span class="xs muted">–</span>'}</td>
-  <td>${E.metrics.length ? `<ul style="list-style:none;margin:0;padding:0;display:grid;gap:4px">${headline(E).map((m) => `<li class="row xs" style="gap:4px 8px">${status(m.status)}<span class="sub">${esc(m.name)}:</span><strong class="num">${val(m.current, m.unit, { compact: true })} / ${val(m.target, m.unit, { compact: true })}</strong></li>`).join("")}</ul>` : '<span class="xs muted">No parameters yet</span>'}</td></tr>`).join("")}</tbody></table></div>` : empty("No projects yet", "Create your first project with the button above.")}
-  <button type="button" class="linkbtn" data-toggle-archived>${ui.showArchived ? "Hide archived projects" : "Show archived projects"}</button></div>`;
+  <td>${statusMix(E.counts)}</td>
+  <td>${E.metrics.length ? `<ul style="list-style:none;margin:0;padding:0;display:grid;gap:4px">${headline(E).map((m) => `<li class="row xs" style="gap:4px 8px">${status(m.status)}<span class="sub">${esc(m.name)}:</span><strong class="num">${val(m.current, m.unit, { compact: true })} / ${val(m.target, m.unit, { compact: true })}</strong></li>`).join("")}</ul>` : '<span class="xs muted">No parameters yet</span>'}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+function pagePortfolio() {
+  const G = S.programme, cur = sym(G.currency);
+  const rows = S.projects.filter((p) => ui.showArchived || !p.archived).map((p) => ({ p, E: evaluate(p, TODAY) }));
+  const all = rows.flatMap((r) => r.E.metrics);
+  const R = rollup(all);
+  const elapsed = expectedOf(G.start, G.end, TODAY);
+  const fas = S.focusAreas.filter((f) => ui.showArchived || !f.archived);
+  const allocated = fas.filter((f) => !f.archived).reduce((n, f) => n + (f.budget || 0), 0);
+  const section = (title, faId, rs, meta) => `<section class="stack-sm"><div class="row between" style="border-bottom:1px solid var(--line);padding-bottom:8px;align-items:flex-end"><div><h2>${faId ? `<button type="button" class="linkbtn" style="padding:0;font:inherit;color:inherit;text-decoration:underline" data-open-fa="${faId}">${esc(title)}</button>` : esc(title)}</h2><p class="xs sub">${meta}</p></div>${faId && can("edit-data") ? `<button type="button" class="btn ghost" data-new-initiative="${faId}">Add initiative</button>` : ""}</div>${rs.length ? initiativeTable(rs) : '<p class="sub">No initiatives yet.</p>'}</section>`;
+  const unassigned = rows.filter((r) => !r.p.focusAreaId || !S.focusAreas.some((f) => f.id === r.p.focusAreaId));
+  return `<div class="stack">
+  <div class="row between" style="align-items:flex-start"><div style="max-width:760px"><div class="eyebrow">Programme</div><h1>${esc(G.name)}</h1>${G.mission ? `<p class="sub" style="font-size:15px;margin-top:4px">${esc(G.mission)}</p>` : ""}<p class="xs muted" style="margin-top:4px">${date(G.start)} – ${date(G.end)}</p></div>
+  <div class="row">${can("manage-programme") ? '<button type="button" class="btn" data-go="programme-settings">Programme settings</button><button type="button" class="btn" data-go="focus-area-new">New focus area</button>' : ""}${can("edit-data") ? '<button type="button" class="btn primary" data-new-initiative="">New initiative</button>' : ""}</div></div>
+  <section class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))">
+    <div class="card pad"><div class="label">Overall status</div><div style="margin-top:4px">${status(R.overall, true)}</div><p class="xs sub" style="margin-top:8px">Worst status among key metrics across all initiatives.</p><div style="margin-top:10px">${statusMix(R.counts)}</div></div>
+    <div class="card pad"><div class="label">Timeline</div><div class="big">${pct(elapsed)}</div><div class="track" style="margin-top:8px"><b style="width:${elapsed * 100}%"></b></div><p class="xs sub" style="margin-top:8px">of the programme year elapsed</p></div>
+    <div class="card pad"><div class="label">Budget</div><div class="big">${val(G.budget, cur, { compact: true })}</div><div class="track" style="margin-top:8px"><b style="width:${Math.min(100, (allocated / (G.budget || 1)) * 100)}%;background:var(--accent)"></b></div><p class="xs sub" style="margin-top:8px">${val(allocated, cur, { compact: true })} allocated to focus areas${G.budget - allocated > 0 ? ` · ${val(G.budget - allocated, cur, { compact: true })} unallocated` : ""}${G.budget - allocated < 0 ? ` · over-allocated by ${val(allocated - G.budget, cur, { compact: true })}` : ""}</p></div>
+    ${audienceSplit(all)}
+  </section>
+  ${needsAttention(rows)}
+  ${fas.map((f) => { const rs = rows.filter((r) => r.p.focusAreaId === f.id); const toI = rs.reduce((n, r) => n + (r.p.budget || 0), 0); return section(f.name, f.id, rs, `${f.owner ? "Owner: " + esc(f.owner) : "No owner"} · Budget ${val(f.budget, cur, { compact: true })}${rs.length ? ` · ${val(toI, cur, { compact: true })} allocated to initiatives` : ""}${f.archived ? " · Archived" : ""}`); }).join("")}
+  ${unassigned.length ? section("Not in a focus area", null, unassigned, "Assign these under Initiative & theory of change.") : ""}
+  ${!fas.length && !rows.length ? empty("No focus areas yet", can("manage-programme") ? "Create the first one with “New focus area”." : "The Global lead sets up focus areas.") : ""}
+  <button type="button" class="linkbtn" data-toggle-archived>${ui.showArchived ? "Hide archived" : "Show archived focus areas and initiatives"}</button></div>`;
+}
+
+function pageFocusArea() {
+  const f = S.focusAreas.find((x) => x.id === ui.faid);
+  if (!f) return pagePortfolio();
+  const cur = sym(S.programme.currency);
+  const rows = S.projects.filter((p) => !p.archived && p.focusAreaId === f.id).map((p) => ({ p, E: evaluate(p, TODAY) }));
+  const all = rows.flatMap((r) => r.E.metrics);
+  const R = rollup(all);
+  const toI = rows.reduce((n, r) => n + (r.p.budget || 0), 0);
+  return `<div class="stack"><div><button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Programme</button>
+  <div class="row between" style="align-items:flex-start;margin-top:4px"><div style="max-width:760px"><h1>${esc(f.name)}</h1><p class="sub">Focus area${f.owner ? " · Owner: " + esc(f.owner) : ""}${f.archived ? " · Archived" : ""}</p>${f.description ? `<p class="sub" style="margin-top:4px">${esc(f.description)}</p>` : ""}</div>
+  <div class="row">${can("manage-programme") ? '<button type="button" class="btn" data-go="focus-area-edit">Edit focus area</button>' : ""}${can("edit-data") ? `<button type="button" class="btn primary" data-new-initiative="${f.id}">Add initiative</button>` : ""}</div></div></div>
+  <section class="grid g3">
+    <div class="card pad"><div class="label">Overall status</div><div style="margin-top:4px">${status(R.overall, true)}</div><div style="margin-top:10px">${statusMix(R.counts)}</div></div>
+    <div class="card pad"><div class="label">Budget allocation</div><div class="big">${val(f.budget, cur, { compact: true })}</div><p class="xs sub" style="margin-top:8px">${val(toI, cur, { compact: true })} assigned to initiatives${f.budget - toI > 0 ? ` · ${val(f.budget - toI, cur, { compact: true })} unassigned` : ""}${f.budget - toI < 0 ? ` · over by ${val(toI - f.budget, cur, { compact: true })}` : ""}</p><p class="xs muted" style="margin-top:4px">Spend tracking arrives with Stage 2 (Operations).</p></div>
+    ${audienceSplit(all)}
+  </section>
+  ${needsAttention(rows)}
+  <section class="stack-sm"><div class="section-h" style="margin:0"><h2>Initiatives</h2></div>${rows.length ? initiativeTable(rows) : '<p class="sub">No initiatives yet.</p>'}</section></div>`;
+}
+function focusAreaForm(f) {
+  const cur = sym(S.programme.currency);
+  return `<form data-form="focusarea" class="card pad stack-sm" style="max-width:720px" novalidate>
+  ${field("Name", "name", inp("name", f?.name), "e.g. Trainings, Product partnerships, Research")}
+  ${field("Description", "description", ta("description", f?.description, 3))}
+  <div class="grid g2" style="gap:16px">${field("Owner", "owner", sel("owner", [["", "Unassigned"], ...S.users.filter((u) => u.active).map((u) => [u.name, u.name])], f?.owner ?? ""))}${field(`Budget allocation (${cur})`, "budget", inp("budget", f?.budget ?? 0, 'inputmode="decimal"'), "Share of the programme budget")}</div>
+  ${actions(f ? "Save changes" : "Create focus area", f ? "focus-area" : "portfolio")}</form>
+  ${f ? `<div style="margin-top:16px"><button type="button" class="btn" data-archive-fa>${f.archived ? "Restore focus area" : "Archive focus area"}</button></div>` : ""}`;
+}
+const pageFocusAreaNew = () => (can("manage-programme") ? `<button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Programme</button><h1 style="margin:4px 0 20px">New focus area</h1>${focusAreaForm(null)}` : noAccess());
+function pageFocusAreaEdit() {
+  const f = S.focusAreas.find((x) => x.id === ui.faid);
+  return can("manage-programme") && f ? `<button type="button" class="linkbtn xs" data-go="focus-area" style="padding-left:0">← ${esc(f.name)}</button><h1 style="margin:4px 0 20px">Edit ${esc(f.name)}</h1>${focusAreaForm(f)}` : noAccess();
+}
+function pageProgrammeSettings() {
+  if (!can("manage-programme")) return noAccess();
+  const G = S.programme;
+  return `<button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Programme</button><h1 style="margin:4px 0 20px">Programme settings</h1>
+  <form data-form="programme" class="card pad stack-sm" style="max-width:820px" novalidate>
+  ${field("Programme name", "name", inp("name", G.name))}
+  ${field("Mission", "mission", ta("mission", G.mission, 2), "One or two sentences on the change the programme exists to create.")}
+  ${field("Description", "description", ta("description", G.description, 3))}
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">${field("Budget", "budget", inp("budget", G.budget, 'inputmode="decimal"'))}${field("Currency", "currency", sel("currency", [["USD", "USD"], ["GBP", "GBP"], ["EUR", "EUR"]], G.currency))}${field("Start", "start", inp("start", G.start, 'type="date"'))}${field("End", "end", inp("end", G.end, 'type="date"'))}</div>
+  ${actions("Save programme", "portfolio")}</form>`;
+}
+const noAccess = () => empty("You don't have access to this page", "Switch to the Global lead with “Signed in as” at the top to see it.");
+
+const ROLE_OPTS = Object.entries(ROLE_LABELS);
+function pagePeople() {
+  if (!can("manage-users")) return noAccess();
+  return `<div class="stack"><div class="row between" style="align-items:flex-start"><div><h1>People</h1><p class="sub" style="margin-top:4px;max-width:760px">Who can sign in, and what they can do. Partners from Comms, GAPP and Marketing see everything and contribute evidence; Marketing also manages campaigns.</p></div><button type="button" class="btn primary" data-go="person-new">Add person</button></div>
+  <div class="card scroll"><table><thead><tr><th>Name</th><th>Role</th><th></th></tr></thead><tbody>${S.users.map((u, i) => `<tr style="${u.active ? "" : "color:var(--muted)"}"><td><div style="font-weight:520">${esc(u.name)} ${u.active ? "" : '<span class="chip">Deactivated</span>'}</div><div class="xs sub">${esc(u.email)}</div></td><td>${esc(ROLE_LABELS[u.role])}${u.team ? `<div class="xs sub">${esc(TEAM_LABELS[u.team])}</div>` : ""}</td><td class="r" style="white-space:nowrap"><button type="button" class="btn small ghost" data-edit-person="${i}">Edit</button>${u.email === me().email ? "" : `<button type="button" class="btn small ghost" data-toggle-person="${i}">${u.active ? "Deactivate" : "Reactivate"}</button>`}</td></tr>`).join("")}</tbody></table></div>
+  <p class="xs muted">In the full app each person signs in with their own email and password. In this demo, switch between them with “Signed in as”.</p></div>`;
+}
+function pagePersonForm() {
+  if (!can("manage-users")) return noAccess();
+  const u = ui.id !== null && ui.id !== undefined ? S.users[+ui.id] : null;
+  return `<button type="button" class="linkbtn xs" data-go="people" style="padding-left:0">← People</button><h1 style="margin:4px 0 20px">${u ? "Edit " + esc(u.name) : "Add person"}</h1>
+  <form data-form="person" class="card pad stack-sm" style="max-width:720px" novalidate>
+  <div class="grid g2" style="gap:16px">${field("Name", "name", inp("name", u?.name))}${field("Email", "email", inp("email", u?.email, 'type="email"'))}
+  ${field("Role", "role", sel("role", ROLE_OPTS, u?.role ?? "programme", "data-role-select"), ROLE_HELP[u?.role ?? "programme"])}
+  <div data-team-field ${u?.role === "partner" ? "" : "hidden"}>${field("Partner team", "team", sel("team", Object.entries(TEAM_LABELS), u?.team || "comms"))}</div></div>
+  ${actions(u ? "Save changes" : "Add person", "people")}</form>`;
 }
 
 function projectForm(p, submit, cancel) {
   const t = p?.toc || {};
   const toc = [["inputs", "Inputs", "Resources you put in: funding, staff, partners, tools."], ["activities", "Activities", "What the programme does with those inputs."], ["outputs", "Outputs", "Direct, countable products of the activities."], ["outcomes", "Outcomes", "Changes for participants that the outputs lead to."], ["impact", "Impact", "The long-term change you are ultimately contributing to."]];
   return `<form data-form="project" class="stack" novalidate>
-  <section class="card pad stack-sm"><h2 style="font-size:16px">Project details</h2>
+  <section class="card pad stack-sm"><h2 style="font-size:16px">Initiative details</h2>
     ${field("Name", "name", inp("name", p?.name, "required"))}
     ${field("Description", "description", ta("description", p?.description, 3))}
-    <div class="grid g3">${field("Owner", "owner", sel("owner", [["", "Unassigned"], ...USERS.map((u) => [u, u])], p?.owner ?? S.user))}${field("Status", "status", sel("status", PSTATUS.map((s) => [s, cap(s)]), p?.status ?? "planning"))}${field("Region", "region", inp("region", p?.region))}
+    <div class="grid g3">${field("Focus area", "focusAreaId", sel("focusAreaId", [["", "None"], ...S.focusAreas.filter((f) => !f.archived).map((f) => [f.id, f.name])], p ? p.focusAreaId ?? "" : ui.faid ?? ""))}${field("Owner", "owner", sel("owner", [["", "Unassigned"], ...S.users.filter((u) => u.active).map((u) => [u.name, u.name])], p?.owner ?? me().name))}${field("Status", "status", sel("status", PSTATUS.map((s) => [s, cap(s)]), p?.status ?? "planning"))}${field("Region", "region", inp("region", p?.region))}
     ${field("Start date", "start", inp("start", p?.start ?? TODAY, 'type="date" required'))}${field("End date", "end", inp("end", p?.end ?? "", 'type="date" required'))}
-    <div class="grid" style="grid-template-columns:1fr 6rem;gap:8px">${field("Budget", "budget", inp("budget", p?.budget ?? "", 'inputmode="decimal"'))}${field("Currency", "currency", sel("currency", [["GBP", "GBP"], ["USD", "USD"], ["EUR", "EUR"]], p?.currency ?? "GBP"))}</div></div>
+    <div class="grid" style="grid-template-columns:1fr 6rem;gap:8px">${field("Budget", "budget", inp("budget", p?.budget ?? "", 'inputmode="decimal"'))}${field("Currency", "currency", sel("currency", [["USD", "USD"], ["GBP", "GBP"], ["EUR", "EUR"]], p?.currency ?? S.programme.currency))}</div></div>
   </section>
   <section class="card pad stack-sm"><div><h2 style="font-size:16px">Theory of change</h2><p class="sub" style="margin-top:4px">How the programme is expected to create change. Parameters you add later are grouped under these same levels.</p></div>
     ${toc.map(([k, l, h], i) => `<div class="toc-row"><div><label for="f-toc-${k}" style="font-weight:560">${i + 1}. ${l}</label><p class="xs muted">${h}</p></div>${ta("toc-" + k, t[k], 2)}</div>`).join("")}
@@ -609,7 +761,7 @@ function projectForm(p, submit, cancel) {
 function readProject(fd) {
   const e = {};
   const d = {
-    name: fd.get("name").trim(), description: fd.get("description").trim(), owner: fd.get("owner"), status: fd.get("status"), region: fd.get("region").trim(),
+    name: fd.get("name").trim(), focusAreaId: fd.get("focusAreaId") || null, description: fd.get("description").trim(), owner: fd.get("owner"), status: fd.get("status"), region: fd.get("region").trim(),
     start: parseDate(fd.get("start")), end: parseDate(fd.get("end")), currency: fd.get("currency"),
     toc: { inputs: fd.get("toc-inputs").trim(), activities: fd.get("toc-activities").trim(), outputs: fd.get("toc-outputs").trim(), outcomes: fd.get("toc-outcomes").trim(), impact: fd.get("toc-impact").trim() },
   };
@@ -622,16 +774,17 @@ function readProject(fd) {
   d.budget = Number.isNaN(b) ? null : b;
   return { d, e };
 }
-const pageProjectNew = () => `<button type="button" class="linkbtn xs" data-go="portfolio" style="padding-left:0">← Portfolio</button><h1 style="margin:4px 0 20px">New project</h1><div style="max-width:900px">${projectForm(null, "Create project", "portfolio")}</div>`;
+const pageProjectNew = () => `<button type="button" class="linkbtn xs" data-go="${ui.faid ? "focus-area" : "portfolio"}" style="padding-left:0">← Back</button><h1 style="margin:4px 0 20px">New initiative</h1><div style="max-width:900px">${projectForm(null, "Create initiative", ui.faid ? "focus-area" : "portfolio")}</div>`;
 function pageSettings() {
   const p = P();
-  return `${projectHeader()}<div class="stack" style="max-width:900px">${projectForm(p, "Save changes", null)}
-  <section class="card pad row between"><div><h3>${p.archived ? "Restore project" : "Archive project"}</h3><p class="sub">${p.archived ? "Show this project in the portfolio again." : "Hide this project from the portfolio. All data is kept and it can be restored."}</p></div><button type="button" class="btn" data-archive-project>${p.archived ? "Restore" : "Archive"}</button></section></div>`;
+  const ro = !can("edit-data");
+  return `${projectHeader()}<div class="stack" style="max-width:900px">${ro ? '<p class="sub">You can view this initiative. Ask the programme team to change it.</p><fieldset disabled style="border:0;padding:0;margin:0">' : ""}${projectForm(p, "Save changes", null)}${ro ? "</fieldset>" : ""}
+  <section class="card pad row between" ${ro ? "hidden" : ""}><div><h3>${p.archived ? "Restore project" : "Archive project"}</h3><p class="sub">${p.archived ? "Show this project in the portfolio again." : "Hide this project from the portfolio. All data is kept and it can be restored."}</p></div><button type="button" class="btn" data-archive-project>${p.archived ? "Restore" : "Archive"}</button></section></div>`;
 }
 
 function pageDashboard() {
   const E = evaluate(P(), TODAY);
-  return `${projectHeader()}<div class="stack"><div class="row between" style="align-items:flex-start">${viewSwitcher(ui.view, "view")}<div class="row"><button type="button" class="btn" data-go="snapshot-new">Freeze snapshot</button><button type="button" class="btn" data-share>Share</button></div></div>${dashboardView(E, ui.view, ui.view !== "lead")}</div>`;
+  return `${projectHeader()}<div class="stack"><div class="row between" style="align-items:flex-start">${viewSwitcher(ui.view, "view")}<div class="row">${can("edit-data") ? '<button type="button" class="btn" data-go="snapshot-new">Freeze snapshot</button>' : ""}${can("share") ? '<button type="button" class="btn" data-share>Share</button>' : ""}</div></div>${dashboardView(filterE(E, ui.audience), ui.view, ui.view !== "lead")}</div>`;
 }
 
 function gridColumns(p) {
@@ -647,6 +800,7 @@ function pageData() {
   if (!params.length) return `${projectHeader()}${empty("No parameters to enter data for", `<button type="button" class="linkbtn" style="color:var(--accent-ink);text-decoration:underline" data-go="param-new">Add a parameter</button> first.`)}`;
   const cols = gridColumns(p);
   const E = evaluate(p, TODAY);
+  const ro = !can("edit-data");
   const byId = Object.fromEntries(E.metrics.map((m) => [m.id, m]));
   const label = (c) => (c.endsWith("-01") ? month(ms(c)) : new Date(ms(c)).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }));
   let body = "";
@@ -655,28 +809,29 @@ function pageData() {
     if (!rows.length) return;
     body += `<tr class="lvl"><th colspan="${cols.length + 2}">${LEVEL_LABELS[l]}</th></tr>`;
     rows.forEach((x) => {
-      body += `<tr><th scope="row"><div style="font-weight:520">${esc(x.name)}</div><div class="xs muted">${esc(x.unit)}${x.measureType === "cumulative" ? " · per period, added up" : ""}</div></th>${cols.map((c) => { const e = x.entries.find((y) => y.date === c); return `<td><input id="cell-${x.id}-${c}" data-cell="${x.id}|${c}" inputmode="decimal" value="${e ? e.value : ""}" class="num ${e && e.confidence !== "measured" ? "est" : ""}" aria-label="${esc(x.name)}, ${date(c)}" title="${e ? esc(`${e.confidence}${e.note ? " · " + e.note : ""}${e.by ? " · by " + e.by : ""}`) : ""}"></td>`; }).join("")}<td class="st" id="st-${x.id}">${status(byId[x.id].status)}</td></tr>`;
+      body += `<tr><th scope="row"><div style="font-weight:520">${esc(x.name)}</div><div class="xs muted">${esc(x.unit)}${x.measureType === "cumulative" ? " · per period, added up" : ""}</div></th>${cols.map((c) => { const e = x.entries.find((y) => y.date === c); return `<td><input id="cell-${x.id}-${c}" data-cell="${x.id}|${c}" inputmode="decimal" value="${e ? e.value : ""}" class="num ${e && e.confidence !== "measured" ? "est" : ""}" aria-label="${esc(x.name)}, ${date(c)}" ${ro ? "readonly" : ""} title="${e ? esc(`${e.confidence}${e.note ? " · " + e.note : ""}${e.by ? " · by " + e.by : ""}`) : ""}"></td>`; }).join("")}<td class="st" id="st-${x.id}">${status(byId[x.id].status)}</td></tr>`;
     });
   });
-  return `${projectHeader()}<div class="stack-sm">
-  <details class="card"><summary style="cursor:pointer;padding:12px 16px;font-weight:560">Add a single entry with a note</summary><div style="border-top:1px solid var(--line);padding:16px">
+  return `${projectHeader()}<div class="stack-sm">${ro ? '<p class="sub">You can view this data. Ask the programme team to change values.</p>' : ""}
+  <details class="card" ${ro ? "hidden" : ""}><summary style="cursor:pointer;padding:12px 16px;font-weight:560">Add a single entry with a note</summary><div style="border-top:1px solid var(--line);padding:16px">
     <form data-form="entry" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))" novalidate>
       ${field("Parameter", "param", sel("param", params.map((x) => [x.id, x.name + (x.unit ? ` (${x.unit})` : "")]), ui.draft?.param))}${field("Date", "date", inp("date", ui.draft?.date ?? TODAY, 'type="date"'))}${field("Value", "value", inp("value", "", 'inputmode="decimal"'))}${field("Confidence", "confidence", sel("confidence", CONF.map((c) => [c, cap(c)]), ui.draft?.confidence ?? "measured"))}
       <div style="grid-column:1/-1">${field("Note", "note", ta("note", "", 2, 'placeholder="Optional context"'))}</div>
       <div class="row" style="grid-column:1/-1"><button class="btn primary" type="submit">Save entry</button><span class="xs muted">Replaces any existing value for the same parameter and date.</span></div>
     </form></div></details>
-  <div class="row between"><p class="sub">Type straight into the grid; changes save as you leave each cell. Enter or ↓ moves down, arrows move between cells, clear a cell to delete it.</p><div class="row"><button type="button" class="btn" data-go="import">Import CSV</button><button type="button" class="btn" data-export>Export CSV</button></div></div>
-  <form data-form="addcol" class="row" novalidate><label for="f-col" class="sub">Confidence for new values</label>${sel("gridconf", CONF.map((c) => [c, cap(c)]), ui.gridConf || "measured", 'style="width:auto" data-gridconf')}<input class="input" style="width:auto" type="date" id="f-col" name="col" aria-label="New date column"><button class="btn" type="submit">Add date column</button></form>
+  <div class="row between"><p class="sub">Type straight into the grid; changes save as you leave each cell. Enter or ↓ moves down, arrows move between cells, clear a cell to delete it.</p><div class="row">${ro ? "" : '<button type="button" class="btn" data-go="import">Import CSV</button>'}<button type="button" class="btn" data-export>Export CSV</button></div></div>
+  <form data-form="addcol" class="row" novalidate ${ro ? "hidden" : ""}><label for="f-col" class="sub">Confidence for new values</label>${sel("gridconf", CONF.map((c) => [c, cap(c)]), ui.gridConf || "measured", 'style="width:auto" data-gridconf')}<input class="input" style="width:auto" type="date" id="f-col" name="col" aria-label="New date column"><button class="btn" type="submit">Add date column</button></form>
   <div class="card scroll" style="max-height:70vh"><table class="gridtbl"><thead><tr><th class="label">Parameter</th>${cols.map((c) => `<th class="label" title="${date(c)}">${label(c)}</th>`).join("")}<th class="label" style="text-align:left;padding-left:12px">Status now</th></tr></thead><tbody>${body}</tbody></table></div>
   <p class="xs muted">Values in italics are not directly measured (self-reported, estimated or modelled). Hover a cell to see its confidence, note and who logged it.</p></div>`;
 }
 function setEntry(x, d, value, confidence, note) {
   const i = x.entries.findIndex((y) => y.date === d);
   if (value === null) { if (i >= 0) x.entries.splice(i, 1); return; }
-  if (i >= 0) Object.assign(x.entries[i], { value, by: S.user }, confidence ? { confidence } : {}, note !== undefined && note !== "" ? { note } : {});
-  else x.entries.push({ date: d, value, confidence: confidence || "measured", note: note || "", by: S.user });
+  if (i >= 0) Object.assign(x.entries[i], { value, by: me().name }, confidence ? { confidence } : {}, note !== undefined && note !== "" ? { note } : {});
+  else x.entries.push({ date: d, value, confidence: confidence || "measured", note: note || "", by: me().name });
 }
 function pageImport() {
+  if (!can("edit-data")) return projectHeader() + noAccess();
   const c = ui.csv;
   const valid = c?.rows?.filter((r) => !r.error) || [];
   return `${projectHeader()}${subHead("Import entries from CSV", "data", "Back to data entry")}<div class="stack-sm" style="max-width:1000px">
@@ -726,10 +881,10 @@ function previewEntriesCsv(text) {
 function pageParameters() {
   const p = P();
   const active = p.params.filter((x) => !x.archived), archived = p.params.filter((x) => x.archived);
-  return `${projectHeader()}<div class="stack"><div class="row between"><p class="sub">Metrics tracked for this project. You can add parameters at any point; existing data is unaffected.</p><div class="row"><button type="button" class="btn" data-go="param-library">Add from library</button><button type="button" class="btn primary" data-go="param-new">New parameter</button></div></div>
+  return `${projectHeader()}<div class="stack"><div class="row between"><p class="sub">Metrics tracked for this project. You can add parameters at any point; existing data is unaffected.</p>${can("edit-data") ? '<div class="row"><button type="button" class="btn" data-go="param-library">Add from library</button><button type="button" class="btn primary" data-go="param-new">New parameter</button></div>' : ""}</div>
   ${active.length ? "" : empty("No parameters yet", "Add one from scratch or start from the shared library.")}
-  ${LEVELS.map((l) => { const rows = active.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h2 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h2><div class="card scroll"><table><thead><tr><th>Parameter</th><th>Baseline → target</th><th>By</th><th>Frequency</th><th class="r">Entries</th><th></th></tr></thead><tbody>${rows.map((x) => `<tr><td><div style="font-weight:520">${esc(x.name)} ${x.isKey ? '<span class="chip key">Key</span>' : ""} ${x.libraryId ? '<span class="chip">Library</span>' : ""}</div><div class="xs sub" style="max-width:520px">${esc(x.definition)}</div>${x.lead ? `<div class="xs muted" style="margin-top:2px">Leading indicator for: ${esc(p.params.find((y) => y.id === x.lead)?.name)}</div>` : ""}</td><td class="num" style="white-space:nowrap">${val(x.baseline, x.unit)} → ${val(x.target, x.unit)}<div class="xs muted">${x.measureType === "cumulative" ? "Running total" : "Latest value"}</div></td><td style="white-space:nowrap">${date(x.targetDate || p.end)}</td><td>${cap(x.frequency)}</td><td class="r num">${x.entries.length}</td><td class="r" style="white-space:nowrap"><button type="button" class="btn small ghost" data-edit-param="${x.id}">Edit</button>${x.libraryId ? "" : `<button type="button" class="btn small ghost" data-to-library="${x.id}">Save to library</button>`}${confirmBtn("Archive", "archive-param", x.id, "btn small ghost")}</td></tr>`).join("")}</tbody></table></div></section>`; }).join("")}
-  ${archived.length ? `<details class="card pad"><summary style="cursor:pointer;font-weight:560">Archived parameters (${archived.length})</summary><ul style="list-style:none;padding:0;margin:12px 0 0">${archived.map((x) => `<li class="row between" style="padding:8px 0;border-top:1px solid var(--line)"><span>${esc(x.name)} <span class="muted">· ${x.entries.length} entries kept</span></span><button type="button" class="btn small" data-restore-param="${x.id}">Restore</button></li>`).join("")}</ul></details>` : ""}</div>`;
+  ${LEVELS.map((l) => { const rows = active.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h2 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h2><div class="card scroll"><table><thead><tr><th>Parameter</th><th>Baseline → target</th><th>By</th><th>Frequency</th><th class="r">Entries</th><th></th></tr></thead><tbody>${rows.map((x) => `<tr><td><div style="font-weight:520">${esc(x.name)} ${x.isKey ? '<span class="chip key">Key</span>' : ""} ${x.libraryId ? '<span class="chip">Library</span>' : ""}</div><div class="xs sub" style="max-width:520px">${esc(x.definition)}</div>${x.lead ? `<div class="xs muted" style="margin-top:2px">Leading indicator for: ${esc(p.params.find((y) => y.id === x.lead)?.name)}</div>` : ""}</td><td class="num" style="white-space:nowrap">${val(x.baseline, x.unit)} → ${val(x.target, x.unit)}<div class="xs muted">${x.measureType === "cumulative" ? "Running total" : "Latest value"}</div></td><td style="white-space:nowrap">${date(x.targetDate || p.end)}</td><td>${cap(x.frequency)}</td><td class="r num">${x.entries.length}</td><td class="r" style="white-space:nowrap">${can("edit-data") ? `<button type="button" class="btn small ghost" data-edit-param="${x.id}">Edit</button>${x.libraryId ? "" : `<button type="button" class="btn small ghost" data-to-library="${x.id}">Save to library</button>`}${confirmBtn("Archive", "archive-param", x.id, "btn small ghost")}` : ""}</td></tr>`).join("")}</tbody></table></div></section>`; }).join("")}
+  ${archived.length ? `<details class="card pad"><summary style="cursor:pointer;font-weight:560">Archived parameters (${archived.length})</summary><ul style="list-style:none;padding:0;margin:12px 0 0">${archived.map((x) => `<li class="row between" style="padding:8px 0;border-top:1px solid var(--line)"><span>${esc(x.name)} <span class="muted">· ${x.entries.length} entries kept</span></span>${can("edit-data") ? `<button type="button" class="btn small" data-restore-param="${x.id}">Restore</button>` : ""}</li>`).join("")}</ul></details>` : ""}</div>`;
 }
 function paramForm(x, mode, others, libName) {
   const d = x || {};
@@ -741,11 +896,13 @@ function paramForm(x, mode, others, libName) {
   <div class="grid g2" style="gap:16px">${field("Good direction", "direction", sel("direction", [["increase", "Higher is better"], ["decrease", "Lower is better"]], d.direction ?? "increase"))}${field("How entries combine", "measureType", sel("measureType", [["point", "Latest value (point in time)"], ["cumulative", "Running total (entries are added up)"]], d.measureType ?? "point"))}</div>
   ${field("Data source", "dataSource", inp("dataSource", d.dataSource), "Where the numbers come from, e.g. attendance registers, web analytics.")}
   ${mode === "library" ? "" : `<div class="grid g3">${field("Baseline", "baseline", inp("baseline", d.baseline ?? 0, 'inputmode="decimal"'), "Value at project start")}${field("Target", "target", inp("target", d.target ?? "", 'inputmode="decimal" required'))}${field("Target date", "targetDate", inp("targetDate", d.targetDate ?? "", 'type="date"'), "Defaults to the project end date")}</div>
+  ${field("Audience", "audience", sel("audience", Object.entries(AUDIENCE_LABELS), d.audience ?? "external"), "Who this metric is about: people inside the organisation, outside it, or both.")}
   ${field("Leading indicator for", "lead", sel("lead", [["", "None"], ...others.map((o) => [o.id, o.name])], d.lead ?? ""), "If this metric falls behind, the linked metric is flagged as at risk.")}
   <label class="row" style="gap:8px"><input type="checkbox" name="isKey" ${d.isKey ? "checked" : ""}> Key metric (shown on the portfolio and used for the project's overall status)</label>`}
   ${actions(mode === "library" ? "Save definition" : x?.id ? "Save changes" : "Add parameter", mode === "library" ? "library" : "parameters")}</form>`;
 }
 function pageParamForm() {
+  if (!can("edit-data")) return projectHeader() + noAccess();
   const p = P();
   const existing = ui.page === "param-edit" ? p.params.find((x) => x.id === ui.id) : null;
   const lib = ui.page === "param-new" && ui.id ? S.library.find((l) => l.id === ui.id) : null;
@@ -765,7 +922,7 @@ function readParam(fd, mode) {
     if (Number.isNaN(b)) e.baseline = "Enter a number";
     if (t === null) e.target = "Required"; else if (Number.isNaN(t)) e.target = "Enter a number";
     if (fd.get("targetDate") && !td) e.targetDate = "Enter a valid date";
-    d.baseline = b ?? 0; d.target = t; d.targetDate = td; d.lead = fd.get("lead") || null; d.isKey = fd.get("isKey") === "on";
+    d.baseline = b ?? 0; d.target = t; d.targetDate = td; d.lead = fd.get("lead") || null; d.isKey = fd.get("isKey") === "on"; d.audience = fd.get("audience");
     if (!e.target && !e.baseline) {
       if (d.direction === "increase" && d.target < d.baseline) e.target = "For a ‘higher is better’ metric the target should be at or above the baseline";
       if (d.direction === "decrease" && d.target > d.baseline) e.target = "For a ‘lower is better’ metric the target should be at or below the baseline";
@@ -774,6 +931,7 @@ function readParam(fd, mode) {
   return { d, e };
 }
 function pageParamLibrary() {
+  if (!can("edit-data")) return projectHeader() + noAccess();
   const p = P();
   const used = new Set(p.params.filter((x) => !x.archived).map((x) => x.libraryId));
   return `${projectHeader()}${subHead("Add from library", "parameters", "Back to parameters")}<div class="stack">${S.library.length ? "" : empty("The library is empty", "Use “Save to library” on any parameter, or add a definition on the Parameter library page.")}
@@ -781,11 +939,12 @@ function pageParamLibrary() {
 }
 function pageLibrary() {
   const usedIn = (id) => S.projects.filter((p) => p.params.some((x) => !x.archived && x.libraryId === id));
-  return `<div class="stack"><div class="row between" style="align-items:flex-start"><div><h1>Parameter library</h1><p class="sub" style="margin-top:4px;max-width:760px">Shared metric definitions, so the same thing is measured the same way across projects. Copying a definition into a project doesn't link them: editing here won't change live projects.</p></div><button type="button" class="btn primary" data-go="library-new">New definition</button></div>
+  return `<div class="stack"><div class="row between" style="align-items:flex-start"><div><h1>Parameter library</h1><p class="sub" style="margin-top:4px;max-width:760px">Shared metric definitions, so the same thing is measured the same way across projects. Copying a definition into a project doesn't link them: editing here won't change live projects.</p></div>${can("edit-data") ? '<button type="button" class="btn primary" data-go="library-new">New definition</button>' : ""}</div>
   ${S.library.length ? "" : empty("No definitions yet", "Save a project parameter to the library, or create one here.")}
-  ${LEVELS.map((l) => { const rows = S.library.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h2 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h2><div class="card">${rows.map((x, i) => { const u = usedIn(x.id); return `<div class="row between pad" style="align-items:flex-start;${i ? "border-top:1px solid var(--line)" : ""}"><div style="min-width:0;flex:1;max-width:760px"><div style="font-weight:520">${esc(x.name)}</div>${x.definition ? `<div class="sub">${esc(x.definition)}</div>` : ""}<div class="xs muted" style="margin-top:2px">${[x.unit, x.frequency, x.measureType === "cumulative" ? "running total" : "latest value", x.dataSource].filter(Boolean).map(esc).join(" · ")}</div>${u.length ? `<div class="xs sub" style="margin-top:2px">Used in: ${u.map((p) => esc(p.name)).join(", ")}</div>` : ""}</div><div class="row" style="gap:4px"><button type="button" class="btn small ghost" data-edit-lib="${x.id}">Edit</button>${confirmBtn("Delete", "delete-lib", x.id, "btn small ghost")}</div></div>`; }).join("")}</div></section>`; }).join("")}</div>`;
+  ${LEVELS.map((l) => { const rows = S.library.filter((x) => x.level === l); if (!rows.length) return ""; return `<section><h2 class="eyebrow" style="margin-bottom:8px">${LEVEL_LABELS[l]}</h2><div class="card">${rows.map((x, i) => { const u = usedIn(x.id); return `<div class="row between pad" style="align-items:flex-start;${i ? "border-top:1px solid var(--line)" : ""}"><div style="min-width:0;flex:1;max-width:760px"><div style="font-weight:520">${esc(x.name)}</div>${x.definition ? `<div class="sub">${esc(x.definition)}</div>` : ""}<div class="xs muted" style="margin-top:2px">${[x.unit, x.frequency, x.measureType === "cumulative" ? "running total" : "latest value", x.dataSource].filter(Boolean).map(esc).join(" · ")}</div>${u.length ? `<div class="xs sub" style="margin-top:2px">Used in: ${u.map((p) => esc(p.name)).join(", ")}</div>` : ""}</div>${can("edit-data") ? `<div class="row" style="gap:4px"><button type="button" class="btn small ghost" data-edit-lib="${x.id}">Edit</button>${confirmBtn("Delete", "delete-lib", x.id, "btn small ghost")}</div>` : ""}</div>`; }).join("")}</div></section>`; }).join("")}</div>`;
 }
 function pageLibraryForm() {
+  if (!can("edit-data")) return noAccess();
   const x = ui.page === "library-edit" ? S.library.find((l) => l.id === ui.id) : null;
   return `<button type="button" class="linkbtn xs" data-go="library" style="padding-left:0">← Parameter library</button><h1 style="margin:4px 0 20px">${x ? "Edit library definition" : "New library definition"}</h1>${paramForm(x, "library")}`;
 }
@@ -793,19 +952,19 @@ function pageLibraryForm() {
 function pageCampaigns() {
   const p = P();
   const cs = [...p.campaigns].sort((a, b) => ms(a.start) - ms(b.start)).map((c, i) => campaignSummary(c, "9999-01-01", i + 1));
-  return `${projectHeader()}<div class="stack-sm"><div class="row between"><p class="sub">Marketing activity for this project. Campaigns appear as numbered shaded periods on trend charts.</p><div class="row"><button type="button" class="btn" data-go="campaign-import">Import metrics CSV</button><button type="button" class="btn primary" data-go="campaign-new">New campaign</button></div></div>
-  ${cs.length ? `${campaignTable(cs, sym(p.currency))}<div class="row">${cs.map((c) => `<button type="button" class="btn small ghost" data-open-campaign="${c.id}">Edit ${c.n}. ${esc(c.name)}</button>`).join("")}</div>${gantt(p, cs, TODAY)}${correlation}` : empty("No campaigns yet", "Add one to compare campaign activity with changes in outcomes.")}</div>`;
+  return `${projectHeader()}<div class="stack-sm"><div class="row between"><p class="sub">Marketing activity for this project. Campaigns appear as numbered shaded periods on trend charts.</p>${can("edit-campaigns") ? '<div class="row"><button type="button" class="btn" data-go="campaign-import">Import metrics CSV</button><button type="button" class="btn primary" data-go="campaign-new">New campaign</button></div>' : ""}</div>
+  ${cs.length ? `${campaignTable(cs, sym(p.currency))}${can("edit-campaigns") ? `<div class="row">${cs.map((c) => `<button type="button" class="btn small ghost" data-open-campaign="${c.id}">Edit ${c.n}. ${esc(c.name)}</button>`).join("")}</div>` : ""}${gantt(p, cs, TODAY)}${correlation}` : empty("No campaigns yet", "Add one to compare campaign activity with changes in outcomes.")}</div>`;
 }
 function campaignForm(c) {
   return `<form data-form="campaign" class="card pad stack-sm" novalidate>
-  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))">${field("Name", "name", inp("name", c?.name, "required"))}${field("Channel", "channel", sel("channel", Object.entries(CHANNELS), c?.channel ?? "social"))}</div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))">${field("Name", "name", inp("name", c?.name, "required"))}${field("Channel", "channel", sel("channel", Object.entries(CHANNELS), c?.channel ?? "social"))}${field("Audience", "audience", sel("audience", Object.entries(AUDIENCE_LABELS), c?.audience ?? "external"))}</div>
   <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">${field("Start date", "start", inp("start", c?.start ?? TODAY, 'type="date"'))}${field("End date", "end", inp("end", c?.end ?? "", 'type="date"'), "Leave blank if ongoing")}${field("Spend", "spend", inp("spend", c?.spend ?? 0, 'inputmode="decimal"'))}${field("Tracking tag", "tag", inp("tag", c?.tag), "UTM campaign or other ID")}</div>
   ${field("Notes", "notes", ta("notes", c?.notes, 2))}
   ${actions(c ? "Save changes" : "Create campaign", "campaigns")}</form>`;
 }
 function readCampaign(fd) {
   const e = {};
-  const d = { name: fd.get("name").trim(), channel: fd.get("channel"), start: parseDate(fd.get("start")), end: fd.get("end") ? parseDate(fd.get("end")) : null, tag: fd.get("tag").trim(), notes: fd.get("notes").trim() };
+  const d = { name: fd.get("name").trim(), channel: fd.get("channel"), audience: fd.get("audience"), start: parseDate(fd.get("start")), end: fd.get("end") ? parseDate(fd.get("end")) : null, tag: fd.get("tag").trim(), notes: fd.get("notes").trim() };
   const sp = parseNum(fd.get("spend"));
   if (!d.name) e.name = "Required";
   if (!d.start) e.start = "Enter a valid date";
@@ -815,8 +974,9 @@ function readCampaign(fd) {
   d.spend = Number.isNaN(sp) ? 0 : sp ?? 0;
   return { d, e };
 }
-const pageCampaignNew = () => `${projectHeader()}${subHead("New campaign", "campaigns", "All campaigns")}<div style="max-width:900px">${campaignForm(null)}</div>`;
+const pageCampaignNew = () => !can("edit-campaigns") ? projectHeader() + noAccess() : `${projectHeader()}${subHead("New campaign", "campaigns", "All campaigns")}<div style="max-width:900px">${campaignForm(null)}</div>`;
 function pageCampaign() {
+  if (!can("edit-campaigns")) return projectHeader() + noAccess();
   const c = P().campaigns.find((x) => x.id === ui.id);
   if (!c) return pageCampaigns();
   const names = [...new Set(c.metrics.map((m) => m.metric))];
@@ -829,6 +989,7 @@ function pageCampaign() {
   <div>${confirmBtn("Delete campaign", "delete-campaign", c.id, "btn")}</div></div>`;
 }
 function pageCampaignImport() {
+  if (!can("edit-campaigns")) return projectHeader() + noAccess();
   const c = ui.ccsv;
   const valid = c?.rows?.filter((r) => !r.error) || [];
   return `${projectHeader()}${subHead("Import campaign metrics", "campaigns", "Back to campaigns")}<div class="stack-sm" style="max-width:1000px"><div class="card pad stack-sm"><p class="sub">Columns: <code>campaign, date, metric, value</code>. The campaign column can be the campaign name or its tracking tag, which suits exports from ad platforms and email tools. Existing values for the same campaign, date and metric are replaced.</p>
@@ -864,11 +1025,12 @@ function pageEvidence() {
   const items = [...p.evidence].sort((a, b) => ms(b.date) - ms(a.date)).filter((e) => !f || (f === "none" ? !e.param : e.param === f));
   const pending = p.evidence.filter((e) => e.origin === "ai" && !e.approved).length;
   const params = p.params.filter((x) => !x.archived);
-  return `${projectHeader()}<div class="stack-sm"><div class="row between"><div class="row"><label for="f-evfilter" class="sub">Show</label>${sel("evfilter", [["", "All evidence"], ["none", "Not linked to a metric"], ...params.map((x) => [x.id, x.name])], f, 'style="width:auto" data-evfilter')}</div><button type="button" class="btn primary" data-new-evidence>Add evidence</button></div>
+  return `${projectHeader()}<div class="stack-sm"><div class="row between"><div class="row"><label for="f-evfilter" class="sub">Show</label>${sel("evfilter", [["", "All evidence"], ["none", "Not linked to a metric"], ...params.map((x) => [x.id, x.name])], f, 'style="width:auto" data-evfilter')}</div>${can("edit-evidence") ? '<button type="button" class="btn primary" data-new-evidence>Add evidence</button>' : ""}</div>
   ${pending ? `<p class="alert" style="padding:10px 14px">${pending} AI-generated ${pending === 1 ? "item needs" : "items need"} review. Unapproved items are hidden from every stakeholder view, snapshot and share link. Approve below, then check the Comms & policy view on the dashboard.</p>` : ""}
-  ${items.length ? `<div class="card">${items.map((e, i) => `<div class="row between pad" style="align-items:flex-start;${i ? "border-top:1px solid var(--line)" : ""}"><div style="flex:1;min-width:240px;max-width:760px">${evidenceItem(e, true)}<p class="xs muted" style="margin-top:6px">${e.param ? "Metric: " + esc(p.params.find((x) => x.id === e.param)?.name) : "Whole project"}${e.tags ? " · Tags: " + esc(e.tags.split(",").join(", ")) : ""}</p></div><div class="row" style="gap:4px">${e.origin === "ai" ? `<button type="button" class="btn small ${e.approved ? "ghost" : "primary"}" data-approve="${e.id}">${e.approved ? "Withdraw approval" : "Approve"}</button>` : ""}<button type="button" class="btn small ghost" data-edit-evidence="${e.id}">Edit</button>${confirmBtn("Delete", "delete-evidence", e.id, "btn small ghost")}</div></div>`).join("")}</div>` : empty("No evidence yet", "Add quotes, survey results, case studies or links, and attach them to the metric they support.")}</div>`;
+  ${items.length ? `<div class="card">${items.map((e, i) => `<div class="row between pad" style="align-items:flex-start;${i ? "border-top:1px solid var(--line)" : ""}"><div style="flex:1;min-width:240px;max-width:760px">${evidenceItem(e, true)}<p class="xs muted" style="margin-top:6px">${e.param ? "Metric: " + esc(p.params.find((x) => x.id === e.param)?.name) : "Whole project"}${e.tags ? " · Tags: " + esc(e.tags.split(",").join(", ")) : ""}</p></div><div class="row" style="gap:4px">${e.origin === "ai" && can("approve-ai") ? `<button type="button" class="btn small ${e.approved ? "ghost" : "primary"}" data-approve="${e.id}">${e.approved ? "Withdraw approval" : "Approve"}</button>` : ""}${can("edit-evidence") ? `<button type="button" class="btn small ghost" data-edit-evidence="${e.id}">Edit</button>${confirmBtn("Delete", "delete-evidence", e.id, "btn small ghost")}` : ""}</div></div>`).join("")}</div>` : empty("No evidence yet", "Add quotes, survey results, case studies or links, and attach them to the metric they support.")}</div>`;
 }
 function pageEvidenceForm() {
+  if (!can("edit-evidence")) return projectHeader() + noAccess();
   const p = P();
   const e = ui.id ? p.evidence.find((x) => x.id === ui.id) : null;
   const params = p.params.filter((x) => !x.archived);
@@ -884,10 +1046,11 @@ function pageEvidenceForm() {
 function pageSnapshots() {
   const p = P();
   const list = [...p.snapshots].sort((a, b) => ms(b.asOf) - ms(a.asOf));
-  return `${projectHeader()}<div class="stack-sm"><div class="row between"><p class="sub">Frozen copies of the dashboard, so figures already shared don’t change when data is edited later.</p><button type="button" class="btn primary" data-go="snapshot-new">Freeze snapshot</button></div>
-  ${list.length ? `<div class="card">${list.map((s, i) => `<div class="row between pad" style="${i ? "border-top:1px solid var(--line)" : ""}"><div><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--accent-ink);text-decoration:underline" data-open-snapshot="${s.id}">${esc(s.label)}</button><div class="xs sub">Data as of ${date(s.asOf)} · frozen ${date(s.frozenOn)} by ${esc(s.by)}</div></div><div class="row" style="gap:4px"><button type="button" class="btn small" data-open-snapshot="${s.id}">View</button>${confirmBtn("Delete", "delete-snapshot", s.id, "btn small ghost")}</div></div>`).join("")}</div>` : empty("No snapshots yet", "Freeze one before a report or board meeting.")}</div>`;
+  return `${projectHeader()}<div class="stack-sm"><div class="row between"><p class="sub">Frozen copies of the dashboard, so figures already shared don’t change when data is edited later.</p>${can("edit-data") ? '<button type="button" class="btn primary" data-go="snapshot-new">Freeze snapshot</button>' : ""}</div>
+  ${list.length ? `<div class="card">${list.map((s, i) => `<div class="row between pad" style="${i ? "border-top:1px solid var(--line)" : ""}"><div><button type="button" class="linkbtn" style="padding:0;font-weight:560;color:var(--accent-ink);text-decoration:underline" data-open-snapshot="${s.id}">${esc(s.label)}</button><div class="xs sub">Data as of ${date(s.asOf)} · frozen ${date(s.frozenOn)} by ${esc(s.by)}</div></div><div class="row" style="gap:4px"><button type="button" class="btn small" data-open-snapshot="${s.id}">View</button>${can("edit-data") ? confirmBtn("Delete", "delete-snapshot", s.id, "btn small ghost") : ""}</div></div>`).join("")}</div>` : empty("No snapshots yet", "Freeze one before a report or board meeting.")}</div>`;
 }
 function pageSnapshotNew() {
+  if (!can("edit-data")) return projectHeader() + noAccess();
   const q = Math.floor(new Date(ms(TODAY)).getUTCMonth() / 3) + 1;
   return `${projectHeader()}${subHead("Freeze a snapshot")}<form data-form="snapshot" class="card pad stack-sm" style="max-width:560px" novalidate>
   ${field("Label", "label", inp("label", `Q${q} 2026 as reported`), "How people will refer to it, e.g. “Q3 2026 as reported to the board”.")}
@@ -900,24 +1063,23 @@ function pageSnapshot() {
   if (!s) return pageSnapshots();
   const E = evaluate(s.data, s.asOf);
   return `${projectHeader()}<div class="stack"><div class="snapbanner"><span class="tag">Snapshot · read-only</span><strong>${esc(s.label)}</strong><span class="sub">Data as of ${date(s.asOf)} · frozen ${date(s.frozenOn)} by ${esc(s.by)}. Later edits don’t change these figures.</span></div>
-  <div class="row between" style="align-items:flex-start">${viewSwitcher(ui.snapView, "snapview")}<div class="row"><button type="button" class="btn" data-share>Share</button><button type="button" class="btn ghost" data-go="snapshots">All snapshots</button></div></div>${dashboardView(E, ui.snapView, true)}</div>`;
+  <div class="row between" style="align-items:flex-start">${viewSwitcher(ui.snapView, "snapview")}<div class="row">${can("share") ? '<button type="button" class="btn" data-share>Share</button>' : ""}<button type="button" class="btn ghost" data-go="snapshots">All snapshots</button></div></div>${dashboardView(filterE(E, ui.audience), ui.snapView, true)}</div>`;
 }
 
 const PAGES = {
-  portfolio: pagePortfolio, "project-new": pageProjectNew, library: pageLibrary, "library-new": pageLibraryForm, "library-edit": pageLibraryForm,
+  portfolio: pagePortfolio, "focus-area": pageFocusArea, "focus-area-new": pageFocusAreaNew, "focus-area-edit": pageFocusAreaEdit, "programme-settings": pageProgrammeSettings,
+  people: pagePeople, "person-new": pagePersonForm, "person-edit": pagePersonForm, "project-new": pageProjectNew, library: pageLibrary, "library-new": pageLibraryForm, "library-edit": pageLibraryForm,
   dashboard: pageDashboard, data: pageData, import: pageImport, parameters: pageParameters, "param-new": pageParamForm, "param-edit": pageParamForm, "param-library": pageParamLibrary,
   campaigns: pageCampaigns, "campaign-new": pageCampaignNew, campaign: pageCampaign, "campaign-import": pageCampaignImport,
   evidence: pageEvidence, "evidence-form": pageEvidenceForm, snapshots: pageSnapshots, "snapshot-new": pageSnapshotNew, snapshot: pageSnapshot, settings: pageSettings,
 };
-const GLOBAL = new Set(["portfolio", "project-new", "library", "library-new", "library-edit"]);
+const GLOBAL = new Set(["portfolio", "project-new", "library", "library-new", "library-edit", "focus-area", "focus-area-new", "focus-area-edit", "programme-settings", "people", "person-new", "person-edit"]);
 
 function render(keepScroll) {
   if (!GLOBAL.has(ui.page) && !P()) ui.page = "portfolio";
   const y = window.scrollY;
   document.getElementById("app").innerHTML = PAGES[ui.page]();
-  document.querySelectorAll(".nav [data-go]").forEach((a) => a.setAttribute("aria-current", String(a.dataset.go === (ui.page.startsWith("library") ? "library" : GLOBAL.has(ui.page) ? "portfolio" : "x"))));
-  const us = document.getElementById("f-user");
-  if (us) us.value = S.user;
+  renderHeader();
   if (keepScroll) window.scrollTo(0, y);
 }
 function go(page, id = null) {
@@ -981,8 +1143,14 @@ document.addEventListener("click", (e) => {
   const ds = t.dataset;
   if (ds.go) { e.preventDefault(); go(ds.go); }
   else if (ds.open) { ui.pid = ds.open; ui.view = "lead"; go("dashboard"); }
+  else if (ds.openFa) { ui.faid = ds.openFa; go("focus-area"); }
+  else if (ds.newInitiative !== undefined) { ui.faid = ds.newInitiative || null; go("project-new"); }
+  else if (ds.editPerson !== undefined) go("person-edit", ds.editPerson);
+  else if (ds.togglePerson !== undefined) { const u = S.users[+ds.togglePerson]; u.active = !u.active; commit(u.active ? `${u.name} reactivated.` : `${u.name} deactivated. They can no longer sign in.`); }
+  else if (ds.archiveFa !== undefined) { const f = S.focusAreas.find((x) => x.id === ui.faid); f.archived = !f.archived; commit(f.archived ? "Focus area archived." : "Focus area restored.", "focus-area"); }
   else if (ds.view) { ui.view = ds.view; render(true); }
   else if (ds.snapview) { ui.snapView = ds.snapview; render(true); }
+  else if (ds.aud) { ui.audience = ds.aud; render(true); }
   else if (ds.evidence) openEvidence(ds.evidence);
   else if (ds.share !== undefined) toast("In the full app, Share creates a read-only link for this view (live or a snapshot) that works without signing in.");
   else if (ds.toggleArchived !== undefined) { ui.showArchived = !ui.showArchived; render(true); }
@@ -999,7 +1167,7 @@ document.addEventListener("click", (e) => {
   else if (ds.openCampaign) go("campaign", ds.openCampaign);
   else if (ds.editEvidence) go("evidence-form", ds.editEvidence);
   else if (ds.newEvidence !== undefined) go("evidence-form", null);
-  else if (ds.approve) { const ev = P().evidence.find((x) => x.id === ds.approve); ev.approved = !ev.approved; ev.approvedBy = ev.approved ? S.user : null; commit(ev.approved ? "Approved: now visible on stakeholder views." : "Approval withdrawn: hidden from stakeholder views."); }
+  else if (ds.approve) { const ev = P().evidence.find((x) => x.id === ds.approve); ev.approved = !ev.approved; ev.approvedBy = ev.approved ? me().name : null; commit(ev.approved ? "Approved: now visible on stakeholder views." : "Approval withdrawn: hidden from stakeholder views."); }
   else if (ds.openSnapshot) go("snapshot", ds.openSnapshot);
   else if (ds.export !== undefined) exportCsv();
   else if (ds.csvExample) {
@@ -1039,12 +1207,52 @@ document.addEventListener("submit", (e) => {
   e.preventDefault();
   const fd = new FormData(form);
   const kind = form.dataset.form;
+  if (kind === "programme") {
+    const e = {};
+    const d = { name: fd.get("name").trim(), mission: fd.get("mission").trim(), description: fd.get("description").trim(), currency: fd.get("currency"), start: parseDate(fd.get("start")), end: parseDate(fd.get("end")) };
+    const b = parseNum(fd.get("budget"));
+    if (!d.name) e.name = "Required";
+    if (b === null || Number.isNaN(b) || b < 0) e.budget = "Enter a number of 0 or more";
+    if (!d.start) e.start = "Enter a valid date";
+    if (!d.end) e.end = "Enter a valid date";
+    if (d.start && d.end && ms(d.end) <= ms(d.start)) e.end = "End date must be after the start date";
+    if (showErrors(form, e)) return;
+    Object.assign(S.programme, d, { budget: b });
+    commit("Programme saved.", "portfolio");
+    return;
+  }
+  if (kind === "focusarea") {
+    const e = {};
+    const d = { name: fd.get("name").trim(), description: fd.get("description").trim(), owner: fd.get("owner") };
+    const b = parseNum(fd.get("budget"));
+    if (!d.name) e.name = "Required";
+    if (Number.isNaN(b) || (b !== null && b < 0)) e.budget = "Enter a number of 0 or more";
+    if (showErrors(form, e)) return;
+    d.budget = b ?? 0;
+    if (ui.page === "focus-area-edit") { Object.assign(S.focusAreas.find((x) => x.id === ui.faid), d); commit("Focus area saved.", "focus-area"); }
+    else { const f = { id: uid("fa"), ...d, archived: false }; S.focusAreas.push(f); ui.faid = f.id; commit("Focus area created. Add its first initiative.", "focus-area"); }
+    return;
+  }
+  if (kind === "person") {
+    const e = {};
+    const d = { name: fd.get("name").trim(), email: fd.get("email").trim().toLowerCase(), role: fd.get("role"), team: fd.get("role") === "partner" ? fd.get("team") : "" };
+    const editing = ui.page === "person-edit" ? S.users[+ui.id] : null;
+    if (!d.name) e.name = "Required";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) e.email = "Enter a valid email address";
+    else if (S.users.some((u) => u.email === d.email && u !== editing)) e.email = "Someone already uses this email";
+    if (editing && editing.email === me().email && d.role !== "admin") e.role = "You can't remove your own admin role";
+    if (showErrors(form, e)) return;
+    if (editing) { const wasMe = editing.email === S.user; Object.assign(editing, d); if (wasMe) S.user = d.email; commit("Saved.", "people"); }
+    else { S.users.push({ ...d, active: true }); commit(`${d.name} added. In the full app they'd get a temporary password.`, "people"); }
+    return;
+  }
   if (kind === "project") {
     const { d, e: errs } = readProject(fd);
     if (showErrors(form, errs)) return;
     if (ui.page === "project-new") {
       const p = { id: uid("p"), ...d, archived: false, params: [], campaigns: [], evidence: [], snapshots: [], extraCols: [] };
-      S.projects.unshift(p); ui.pid = p.id; commit(`Project created. Next, add the parameters you'll track.`, "parameters");
+      if (!p.focusAreaId && ui.faid) p.focusAreaId = ui.faid;
+      S.projects.unshift(p); ui.pid = p.id; commit(`Initiative created. Next, add the parameters you'll track.`, "parameters");
     } else { Object.assign(P(), d); commit("Saved."); }
   } else if (kind === "param") {
     const { d, e: errs } = readParam(fd, "param");
@@ -1110,7 +1318,7 @@ document.addEventListener("submit", (e) => {
     if (!asOf) errs.asOf = "Enter a valid date";
     else if (ms(asOf) > ms(TODAY)) errs.asOf = "Snapshots can't be dated in the future";
     if (showErrors(form, errs)) return;
-    const s = freeze(P(), label, asOf, S.user, TODAY);
+    const s = freeze(P(), label, asOf, me().name, TODAY);
     P().snapshots.push(s);
     commit("Snapshot frozen. Later edits won't change it.", "snapshot", s.id);
   }
@@ -1118,7 +1326,19 @@ document.addEventListener("submit", (e) => {
 
 document.addEventListener("change", async (e) => {
   const el = e.target;
-  if (el.id === "f-user") { S.user = el.value; save(); toast(`Now working as ${el.value}. New entries are logged under this name.`); return; }
+  if (el.id === "f-user") {
+    S.user = el.value; save();
+    const u = me();
+    if (GLOBAL_ADMIN.has(ui.page) && !can("manage-programme")) ui.page = "portfolio";
+    render(true);
+    toast(`Now signed in as ${u.name} (${who(u)}). ${ROLE_HELP[u.role === "partner" && u.team === "marketing" ? "marketing" : u.role]}`);
+    return;
+  }
+  if (el.dataset.roleSelect !== undefined) {
+    document.querySelector("[data-team-field]").hidden = el.value !== "partner";
+    const h = document.querySelector('[data-hint="role"]'); if (h) h.textContent = ROLE_HELP[el.value];
+    return;
+  }
   if (el.dataset.evfilter !== undefined) { ui.evFilter = el.value; render(true); return; }
   if (el.dataset.gridconf !== undefined) { ui.gridConf = el.value; return; }
   if (el.dataset.csvfile) { const f = el.files?.[0]; if (f) { ui[el.dataset.csvfile] = { text: await f.text() }; render(true); } return; }
