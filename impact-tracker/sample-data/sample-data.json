@@ -1,0 +1,4747 @@
+{
+ "initiatives": [
+  {
+   "name": "Newsroom Digital Skills Training",
+   "description": "Training cohorts, a shared digital toolkit and small grants that help independent local newsrooms build digital audiences and sustainable revenue.",
+   "owner": "Amira Okafor",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 190000,
+   "region": "UK & Ireland",
+   "status": "active",
+   "toc": {
+    "inputs": "$190k budget including a grant fund; 3 programme staff; trainer network of 12 working journalists; shared analytics and CMS toolkit.",
+    "activities": "Monthly training cohorts on audience development and revenue; toolkit onboarding and support; small grants for pilots; peer-learning roadshow.",
+    "outputs": "300 journalists trained; 40 newsrooms onboarded to the toolkit; 30 newsrooms using audience analytics every week.",
+    "outcomes": "Newsrooms grow digital audiences, add new revenue streams, and staff apply new skills; local readers trust their local news more.",
+    "impact": "More local news organisations are financially sustainable, so communities keep access to reliable local reporting."
+   },
+   "focusArea": "Trainings"
+  },
+  {
+   "name": "Newsroom Champions (internal)",
+   "description": "News-literacy sessions for colleagues, and a champions network who explain the programme and use its stories in their own teams.",
+   "owner": "Tom Reeves",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 40000,
+   "region": "Global",
+   "status": "active",
+   "toc": {
+    "inputs": "$40k; 1 programme lead; content from the external training; support from Comms and Marketing.",
+    "activities": "Monthly news-literacy sessions; a champions certification; an internal case-study pack.",
+    "outputs": "400 colleagues trained; 40 certified champions.",
+    "outcomes": "Colleagues can explain the programme confidently and use its stories with partners and policymakers.",
+    "impact": "The organisation speaks about news and journalism with one informed voice."
+   },
+   "focusArea": "Trainings"
+  },
+  {
+   "name": "Newsroom Tools Partnership",
+   "description": "Onboards newsrooms to partner publishing, transcription and analytics tools, with training and support.",
+   "owner": "Tom Reeves",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 80000,
+   "region": "Global",
+   "status": "active",
+   "focusArea": "Product & Technology Partnerships",
+   "toc": {
+    "inputs": "$80k; partner tools at no cost to newsrooms; 1 partnerships manager; support desk.",
+    "activities": "Newsroom onboarding; monthly tool clinics; integration support.",
+    "outputs": "60 partner newsrooms live; 6,000 stories published with the tools.",
+    "outcomes": "Journalists save time on routine tasks and use the tools every week.",
+    "impact": "Newsrooms spend more time on original reporting."
+   }
+  },
+  {
+   "name": "Product Feedback Loop (internal)",
+   "description": "Brings newsroom feedback to internal product teams, so tools are built around real newsroom needs.",
+   "owner": "Tom Reeves",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 30000,
+   "region": "Global",
+   "status": "active",
+   "focusArea": "Product & Technology Partnerships",
+   "toc": {
+    "inputs": "$30k; programme staff time; access to product teams.",
+    "activities": "Monthly feedback sessions; a shared insights log; newsroom visits for product staff.",
+    "outputs": "24 feedback sessions held.",
+    "outcomes": "Product teams use newsroom insights in planning and ship requested features.",
+    "impact": "The organisation's products serve news organisations better."
+   }
+  },
+  {
+   "name": "Local News Audience Study",
+   "description": "A large survey of local news audiences, published as short briefs and a full report.",
+   "owner": "Tom Reeves",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 60000,
+   "region": "Global",
+   "status": "active",
+   "focusArea": "Research & Insights",
+   "toc": {
+    "inputs": "$60k; survey panel; 1 researcher; academic adviser.",
+    "activities": "Fieldwork in 6 countries; analysis; briefs and report.",
+    "outputs": "5,000 survey responses; 6 research briefs.",
+    "outcomes": "Findings are cited by policymakers and press, and used by internal teams.",
+    "impact": "Decisions about local news are based on evidence."
+   }
+  },
+  {
+   "name": "Global News Summit 2026",
+   "description": "Two-day summit in November for newsroom leaders, partners and policymakers.",
+   "owner": "Amira Okafor",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 55000,
+   "region": "Global (in person and online)",
+   "status": "active",
+   "focusArea": "Events & Convenings",
+   "toc": {
+    "inputs": "$55k; venue partner; sponsors; programme and Marketing staff.",
+    "activities": "Programme design; speaker and sponsor outreach; registration campaign.",
+    "outputs": "800 registrations; 40 speakers.",
+    "outcomes": "Attendees rate it highly and start partnerships afterwards.",
+    "impact": "A stronger network of organisations supporting local news."
+   }
+  },
+  {
+   "name": "Lunch & Learn series (internal)",
+   "description": "Monthly internal sessions where newsroom partners and programme staff share stories and results with colleagues.",
+   "owner": "Priya Shah",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 15000,
+   "region": "Global",
+   "status": "active",
+   "focusArea": "Events & Convenings",
+   "toc": {
+    "inputs": "$15k; Comms support; guest speakers from partner newsrooms.",
+    "activities": "Monthly lunch-and-learn sessions, in person and online.",
+    "outputs": "20 sessions; 1,200 colleague attendances.",
+    "outcomes": "Colleagues understand the programme and share its stories.",
+    "impact": "Stronger internal support for the programme."
+   }
+  },
+  {
+   "name": "Policy Engagement on Local News",
+   "description": "Briefings, consultation responses and roundtables that bring programme evidence to policymakers.",
+   "owner": "Daniel Mensah",
+   "start": "2026-03-01",
+   "end": "2027-02-28",
+   "budget": 30000,
+   "region": "UK, EU and US",
+   "status": "active",
+   "focusArea": "Policy & Public Affairs",
+   "toc": {
+    "inputs": "$30k; GAPP team time; programme data and case studies.",
+    "activities": "Policymaker briefings; written submissions; roundtables with newsrooms.",
+    "outputs": "24 briefings; 6 submissions; 60 policymakers engaged.",
+    "outcomes": "Programme evidence is cited in policy and officials ask for more.",
+    "impact": "Policy that supports a sustainable local news sector."
+   }
+  }
+ ],
+ "metrics": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Training grants disbursed",
+   "definition": "Grant payments released to participating newsrooms to cover training time and pilots.",
+   "level": "input",
+   "unit": "$",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 120000,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Finance system",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Training sessions delivered",
+   "definition": "Live training sessions (online or in person) of at least 90 minutes.",
+   "level": "activity",
+   "unit": "sessions",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 48,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Training calendar",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Newsrooms onboarded to digital toolkit",
+   "definition": "Newsrooms with an active toolkit account and a completed onboarding call.",
+   "level": "activity",
+   "unit": "newsrooms",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 40,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Toolkit CRM",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": "Organisations onboarded"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Journalists trained",
+   "definition": "Unique journalists completing at least one full training session.",
+   "level": "output",
+   "unit": "people",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 300,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Attendance registers",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "Trainees applying new skills",
+   "library": "People trained"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Newsrooms using analytics weekly",
+   "definition": "Newsrooms that logged into the analytics dashboard in at least 3 of the last 4 weeks.",
+   "level": "output",
+   "unit": "newsrooms",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 30,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Toolkit usage logs",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "Average monthly digital audience per newsroom",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Average monthly digital audience per newsroom",
+   "definition": "Median monthly unique visitors across participating newsrooms' websites.",
+   "level": "outcome",
+   "unit": "unique visitors",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 12000,
+   "target": 18000,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Web analytics (shared toolkit)",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Newsrooms with a new revenue stream",
+   "definition": "Share of participating newsrooms that launched a revenue stream (memberships, events, sponsorship) since joining.",
+   "level": "outcome",
+   "unit": "%",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 15,
+   "target": 50,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Monthly check-in form",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "Financially sustainable newsrooms",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Trainees applying new skills",
+   "definition": "Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.",
+   "level": "outcome",
+   "unit": "%",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 70,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "Follow-up survey",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": "Trainees applying new skills"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Reader trust score",
+   "definition": "Mean answer to 'How much do you trust this outlet?' on a 1-10 scale, across participating newsrooms' reader surveys.",
+   "level": "outcome",
+   "unit": "score (1-10)",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 6.2,
+   "target": 7,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "Reader survey",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": "Audience trust score"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Financially sustainable newsrooms",
+   "definition": "Participating newsrooms whose revenue covers operating costs for 3 consecutive months.",
+   "level": "impact",
+   "unit": "newsrooms",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 8,
+   "target": 20,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "Financial returns (modelled from partial data)",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "name": "Colleagues completing news-literacy training",
+   "definition": "",
+   "level": "output",
+   "unit": "people",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 400,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Learning platform",
+   "isKey": true,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "name": "Certified internal champions",
+   "definition": "",
+   "level": "output",
+   "unit": "champions",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 40,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Champions register",
+   "isKey": false,
+   "audience": "internal",
+   "leadingIndicatorFor": "Colleagues confident explaining the programme",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "name": "Colleagues confident explaining the programme",
+   "definition": "",
+   "level": "outcome",
+   "unit": "%",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 35,
+   "target": 70,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "Quarterly pulse survey",
+   "isKey": true,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "name": "Teams using programme case studies",
+   "definition": "",
+   "level": "outcome",
+   "unit": "teams",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 15,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Comms request log",
+   "isKey": false,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "name": "Partner newsrooms live on the tools",
+   "definition": "Newsrooms with at least one partner tool in weekly use.",
+   "level": "output",
+   "unit": "newsrooms",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 60,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Partner dashboards",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "name": "Weekly active journalists on the tools",
+   "definition": "Unique journalists using a partner tool in the last 7 days.",
+   "level": "outcome",
+   "unit": "journalists",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 900,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Partner analytics",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "Partner satisfaction (NPS)",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "name": "Minutes saved per story",
+   "definition": "Average time saved on transcription and publishing per story, from the quarterly user survey.",
+   "level": "outcome",
+   "unit": "minutes",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 20,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "User survey",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "name": "Stories published with partner tools",
+   "definition": "Stories published through partner publishing tools.",
+   "level": "output",
+   "unit": "stories",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 6000,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Partner analytics",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "name": "Partner satisfaction (NPS)",
+   "definition": "Net Promoter Score from newsroom users of partner tools.",
+   "level": "outcome",
+   "unit": "NPS",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 20,
+   "target": 50,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "User survey",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "name": "Newsroom feedback sessions with product teams",
+   "definition": "Structured sessions where newsroom users meet product teams.",
+   "level": "activity",
+   "unit": "sessions",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 24,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Programme log",
+   "isKey": false,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "name": "Product teams using newsroom insights",
+   "definition": "Product teams that cite programme insights in their quarterly plans.",
+   "level": "outcome",
+   "unit": "teams",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 12,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Product planning docs",
+   "isKey": true,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "name": "Newsroom-requested features shipped",
+   "definition": "Features shipped that trace back to a newsroom request in the insights log.",
+   "level": "output",
+   "unit": "features",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 10,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Insights log",
+   "isKey": false,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "name": "Survey responses collected",
+   "definition": "Completed responses meeting quality checks.",
+   "level": "activity",
+   "unit": "responses",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 5000,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Survey panel",
+   "isKey": false,
+   "audience": "both",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "name": "Research briefs published",
+   "definition": "Short briefs published on the programme website.",
+   "level": "output",
+   "unit": "briefs",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 6,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Website",
+   "isKey": false,
+   "audience": "both",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "name": "Report downloads",
+   "definition": "Downloads of briefs and the full report.",
+   "level": "output",
+   "unit": "downloads",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 4000,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Website analytics",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "Citations in policy papers and press",
+   "library": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "name": "Citations in policy papers and press",
+   "definition": "Policy documents and press articles citing the study.",
+   "level": "outcome",
+   "unit": "citations",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 25,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Media and policy monitoring",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "name": "Internal teams using the findings",
+   "definition": "Internal teams that used a finding in a plan, pitch or briefing.",
+   "level": "outcome",
+   "unit": "teams",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 10,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Internal survey",
+   "isKey": true,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "name": "Summit registrations",
+   "definition": "Confirmed registrations (in person and online).",
+   "level": "output",
+   "unit": "registrations",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 800,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Registration platform",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "name": "Speakers confirmed",
+   "definition": "Speakers with signed confirmations.",
+   "level": "activity",
+   "unit": "speakers",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 40,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Programme plan",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "name": "Sponsor and partner commitments",
+   "definition": "Signed sponsorship or in-kind partner agreements.",
+   "level": "input",
+   "unit": "sponsors",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 12,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Partnership agreements",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "name": "Partnerships started after events",
+   "definition": "Collaborations between attendees reported in follow-up surveys (from this year's roadshow and meet-ups).",
+   "level": "outcome",
+   "unit": "partnerships",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 30,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Follow-up survey",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "name": "Attendee satisfaction",
+   "definition": "Average rating of programme events this year.",
+   "level": "outcome",
+   "unit": "score (1-10)",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 7.5,
+   "target": 8.5,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "Event feedback forms",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "name": "Sessions held",
+   "definition": "Lunch & Learn sessions delivered.",
+   "level": "activity",
+   "unit": "sessions",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 20,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Events calendar",
+   "isKey": false,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "name": "Colleague attendances",
+   "definition": "Total attendances, in person and online.",
+   "level": "output",
+   "unit": "attendances",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 1200,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Registration list",
+   "isKey": true,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "name": "Attendees who understand the programme better",
+   "definition": "Share of attendees agreeing they understand the programme better after a session.",
+   "level": "outcome",
+   "unit": "%",
+   "direction": "increase",
+   "measureType": "point",
+   "baseline": 0,
+   "target": 80,
+   "targetDate": "",
+   "frequency": "quarterly",
+   "dataSource": "Session feedback",
+   "isKey": false,
+   "audience": "internal",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "name": "Policymaker briefings held",
+   "definition": "Meetings or calls with officials where programme evidence was presented.",
+   "level": "activity",
+   "unit": "briefings",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 24,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "GAPP contact log",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "name": "Written submissions to consultations",
+   "definition": "Formal responses to government or regulator consultations.",
+   "level": "output",
+   "unit": "submissions",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 6,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "GAPP tracker",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "Programme evidence cited in policy documents",
+   "library": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "name": "Policymakers engaged",
+   "definition": "Unique officials and elected representatives engaged.",
+   "level": "output",
+   "unit": "people",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 60,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "GAPP contact log",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "name": "Programme evidence cited in policy documents",
+   "definition": "Policy documents, speeches or reports citing programme data or case studies.",
+   "level": "outcome",
+   "unit": "citations",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 10,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "Policy monitoring",
+   "isKey": true,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "name": "Follow-up requests from officials",
+   "definition": "Requests from officials for more data, briefings or visits.",
+   "level": "outcome",
+   "unit": "requests",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "baseline": 0,
+   "target": 20,
+   "targetDate": "",
+   "frequency": "monthly",
+   "dataSource": "GAPP contact log",
+   "isKey": false,
+   "audience": "external",
+   "leadingIndicatorFor": "",
+   "library": ""
+  }
+ ],
+ "entries": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training grants disbursed",
+   "date": "2026-04-01",
+   "value": 8000,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training grants disbursed",
+   "date": "2026-05-01",
+   "value": 6800,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training grants disbursed",
+   "date": "2026-06-01",
+   "value": 9200,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training grants disbursed",
+   "date": "2026-07-01",
+   "value": 8000,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training grants disbursed",
+   "date": "2026-08-01",
+   "value": 6800,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training grants disbursed",
+   "date": "2026-09-01",
+   "value": 9200,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training sessions delivered",
+   "date": "2026-04-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training sessions delivered",
+   "date": "2026-05-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training sessions delivered",
+   "date": "2026-06-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training sessions delivered",
+   "date": "2026-07-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training sessions delivered",
+   "date": "2026-08-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Training sessions delivered",
+   "date": "2026-09-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms onboarded to digital toolkit",
+   "date": "2026-04-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms onboarded to digital toolkit",
+   "date": "2026-05-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms onboarded to digital toolkit",
+   "date": "2026-06-01",
+   "value": 6,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms onboarded to digital toolkit",
+   "date": "2026-07-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms onboarded to digital toolkit",
+   "date": "2026-08-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms onboarded to digital toolkit",
+   "date": "2026-09-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Journalists trained",
+   "date": "2026-04-01",
+   "value": 18,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Journalists trained",
+   "date": "2026-05-01",
+   "value": 22,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Journalists trained",
+   "date": "2026-06-01",
+   "value": 30,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Journalists trained",
+   "date": "2026-07-01",
+   "value": 28,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Journalists trained",
+   "date": "2026-08-01",
+   "value": 24,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Journalists trained",
+   "date": "2026-09-01",
+   "value": 26,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms using analytics weekly",
+   "date": "2026-04-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms using analytics weekly",
+   "date": "2026-05-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms using analytics weekly",
+   "date": "2026-06-01",
+   "value": 8,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms using analytics weekly",
+   "date": "2026-07-01",
+   "value": 10,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms using analytics weekly",
+   "date": "2026-08-01",
+   "value": 11,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms using analytics weekly",
+   "date": "2026-09-01",
+   "value": 12,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "date": "2026-04-01",
+   "value": 12100,
+   "confidence": "estimated",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "date": "2026-05-01",
+   "value": 12400,
+   "confidence": "estimated",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "date": "2026-06-01",
+   "value": 12900,
+   "confidence": "estimated",
+   "note": "Jump partly from the YouTube series driving traffic to partner sites.",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "date": "2026-07-01",
+   "value": 13100,
+   "confidence": "estimated",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "date": "2026-08-01",
+   "value": 13300,
+   "confidence": "estimated",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "date": "2026-09-01",
+   "value": 13500,
+   "confidence": "estimated",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "date": "2026-04-01",
+   "value": 15,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "date": "2026-05-01",
+   "value": 18,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "date": "2026-06-01",
+   "value": 22,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "date": "2026-07-01",
+   "value": 26,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "date": "2026-08-01",
+   "value": 30,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "date": "2026-09-01",
+   "value": 33,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Trainees applying new skills",
+   "date": "2026-06-01",
+   "value": 58,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Trainees applying new skills",
+   "date": "2026-09-01",
+   "value": 64,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Reader trust score",
+   "date": "2026-06-01",
+   "value": 6.4,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Reader trust score",
+   "date": "2026-09-01",
+   "value": 6.5,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Financially sustainable newsrooms",
+   "date": "2026-04-01",
+   "value": 8,
+   "confidence": "modelled",
+   "note": "",
+   "loggedBy": "Amira Okafor"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Financially sustainable newsrooms",
+   "date": "2026-07-01",
+   "value": 10,
+   "confidence": "modelled",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Financially sustainable newsrooms",
+   "date": "2026-09-01",
+   "value": 11,
+   "confidence": "modelled",
+   "note": "Modelled from 14 of 22 newsrooms' returns; remainder due in October.",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues completing news-literacy training",
+   "date": "2026-04-01",
+   "value": 30,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues completing news-literacy training",
+   "date": "2026-05-01",
+   "value": 45,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues completing news-literacy training",
+   "date": "2026-06-01",
+   "value": 40,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues completing news-literacy training",
+   "date": "2026-07-01",
+   "value": 25,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues completing news-literacy training",
+   "date": "2026-08-01",
+   "value": 20,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues completing news-literacy training",
+   "date": "2026-09-01",
+   "value": 35,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Certified internal champions",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Certified internal champions",
+   "date": "2026-05-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Certified internal champions",
+   "date": "2026-06-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Certified internal champions",
+   "date": "2026-07-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Certified internal champions",
+   "date": "2026-08-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Certified internal champions",
+   "date": "2026-09-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues confident explaining the programme",
+   "date": "2026-06-01",
+   "value": 41,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues confident explaining the programme",
+   "date": "2026-09-01",
+   "value": 44,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Teams using programme case studies",
+   "date": "2026-04-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Teams using programme case studies",
+   "date": "2026-05-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Teams using programme case studies",
+   "date": "2026-06-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Teams using programme case studies",
+   "date": "2026-07-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Teams using programme case studies",
+   "date": "2026-08-01",
+   "value": 7,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Teams using programme case studies",
+   "date": "2026-09-01",
+   "value": 9,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner newsrooms live on the tools",
+   "date": "2026-04-01",
+   "value": 6,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner newsrooms live on the tools",
+   "date": "2026-05-01",
+   "value": 12,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner newsrooms live on the tools",
+   "date": "2026-06-01",
+   "value": 19,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner newsrooms live on the tools",
+   "date": "2026-07-01",
+   "value": 24,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner newsrooms live on the tools",
+   "date": "2026-08-01",
+   "value": 29,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner newsrooms live on the tools",
+   "date": "2026-09-01",
+   "value": 33,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Weekly active journalists on the tools",
+   "date": "2026-04-01",
+   "value": 80,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Weekly active journalists on the tools",
+   "date": "2026-05-01",
+   "value": 160,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Weekly active journalists on the tools",
+   "date": "2026-06-01",
+   "value": 240,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Weekly active journalists on the tools",
+   "date": "2026-07-01",
+   "value": 300,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Weekly active journalists on the tools",
+   "date": "2026-08-01",
+   "value": 350,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Weekly active journalists on the tools",
+   "date": "2026-09-01",
+   "value": 390,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Minutes saved per story",
+   "date": "2026-06-01",
+   "value": 9,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Minutes saved per story",
+   "date": "2026-09-01",
+   "value": 12,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Stories published with partner tools",
+   "date": "2026-04-01",
+   "value": 300,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Stories published with partner tools",
+   "date": "2026-05-01",
+   "value": 450,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Stories published with partner tools",
+   "date": "2026-06-01",
+   "value": 600,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Stories published with partner tools",
+   "date": "2026-07-01",
+   "value": 700,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Stories published with partner tools",
+   "date": "2026-08-01",
+   "value": 750,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Stories published with partner tools",
+   "date": "2026-09-01",
+   "value": 800,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner satisfaction (NPS)",
+   "date": "2026-06-01",
+   "value": 26,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner satisfaction (NPS)",
+   "date": "2026-09-01",
+   "value": 31,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom feedback sessions with product teams",
+   "date": "2026-04-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom feedback sessions with product teams",
+   "date": "2026-05-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom feedback sessions with product teams",
+   "date": "2026-06-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom feedback sessions with product teams",
+   "date": "2026-07-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom feedback sessions with product teams",
+   "date": "2026-08-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom feedback sessions with product teams",
+   "date": "2026-09-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Product teams using newsroom insights",
+   "date": "2026-04-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Product teams using newsroom insights",
+   "date": "2026-05-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Product teams using newsroom insights",
+   "date": "2026-06-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Product teams using newsroom insights",
+   "date": "2026-07-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Product teams using newsroom insights",
+   "date": "2026-08-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Product teams using newsroom insights",
+   "date": "2026-09-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom-requested features shipped",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom-requested features shipped",
+   "date": "2026-05-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom-requested features shipped",
+   "date": "2026-06-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom-requested features shipped",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom-requested features shipped",
+   "date": "2026-08-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "metric": "Newsroom-requested features shipped",
+   "date": "2026-09-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "date": "2026-04-01",
+   "value": 400,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "date": "2026-05-01",
+   "value": 700,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "date": "2026-06-01",
+   "value": 900,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "date": "2026-07-01",
+   "value": 800,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "date": "2026-08-01",
+   "value": 600,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "date": "2026-09-01",
+   "value": 500,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Research briefs published",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Research briefs published",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Research briefs published",
+   "date": "2026-06-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Research briefs published",
+   "date": "2026-07-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Research briefs published",
+   "date": "2026-08-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Research briefs published",
+   "date": "2026-09-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Report downloads",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Report downloads",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Report downloads",
+   "date": "2026-06-01",
+   "value": 300,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Report downloads",
+   "date": "2026-07-01",
+   "value": 250,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Report downloads",
+   "date": "2026-08-01",
+   "value": 200,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Report downloads",
+   "date": "2026-09-01",
+   "value": 150,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "date": "2026-06-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "date": "2026-07-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "date": "2026-08-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "date": "2026-09-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Internal teams using the findings",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Internal teams using the findings",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Internal teams using the findings",
+   "date": "2026-06-01",
+   "value": 2,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Internal teams using the findings",
+   "date": "2026-07-01",
+   "value": 3,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Internal teams using the findings",
+   "date": "2026-08-01",
+   "value": 5,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Internal teams using the findings",
+   "date": "2026-09-01",
+   "value": 6,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Summit registrations",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Sofia Lindqvist"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Summit registrations",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Sofia Lindqvist"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Summit registrations",
+   "date": "2026-06-01",
+   "value": 40,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Sofia Lindqvist"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Summit registrations",
+   "date": "2026-07-01",
+   "value": 90,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Sofia Lindqvist"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Summit registrations",
+   "date": "2026-08-01",
+   "value": 150,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Sofia Lindqvist"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Summit registrations",
+   "date": "2026-09-01",
+   "value": 160,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Sofia Lindqvist"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Speakers confirmed",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Speakers confirmed",
+   "date": "2026-05-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Speakers confirmed",
+   "date": "2026-06-01",
+   "value": 8,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Speakers confirmed",
+   "date": "2026-07-01",
+   "value": 6,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Speakers confirmed",
+   "date": "2026-08-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Speakers confirmed",
+   "date": "2026-09-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Sponsor and partner commitments",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Sponsor and partner commitments",
+   "date": "2026-05-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Sponsor and partner commitments",
+   "date": "2026-06-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Sponsor and partner commitments",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Sponsor and partner commitments",
+   "date": "2026-08-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Sponsor and partner commitments",
+   "date": "2026-09-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "date": "2026-06-01",
+   "value": 3,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "date": "2026-07-01",
+   "value": 3,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "date": "2026-08-01",
+   "value": 3,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "date": "2026-09-01",
+   "value": 3,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Attendee satisfaction",
+   "date": "2026-06-01",
+   "value": 8.1,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Attendee satisfaction",
+   "date": "2026-09-01",
+   "value": 8.3,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Tom Reeves"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Sessions held",
+   "date": "2026-04-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Sessions held",
+   "date": "2026-05-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Sessions held",
+   "date": "2026-06-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Sessions held",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Sessions held",
+   "date": "2026-08-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Sessions held",
+   "date": "2026-09-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Colleague attendances",
+   "date": "2026-04-01",
+   "value": 80,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Colleague attendances",
+   "date": "2026-05-01",
+   "value": 140,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Colleague attendances",
+   "date": "2026-06-01",
+   "value": 160,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Colleague attendances",
+   "date": "2026-07-01",
+   "value": 90,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Colleague attendances",
+   "date": "2026-08-01",
+   "value": 70,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Colleague attendances",
+   "date": "2026-09-01",
+   "value": 150,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Attendees who understand the programme better",
+   "date": "2026-06-01",
+   "value": 72,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Attendees who understand the programme better",
+   "date": "2026-09-01",
+   "value": 76,
+   "confidence": "self-reported",
+   "note": "",
+   "loggedBy": "Priya Shah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymaker briefings held",
+   "date": "2026-04-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymaker briefings held",
+   "date": "2026-05-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymaker briefings held",
+   "date": "2026-06-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymaker briefings held",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymaker briefings held",
+   "date": "2026-08-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymaker briefings held",
+   "date": "2026-09-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Written submissions to consultations",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Written submissions to consultations",
+   "date": "2026-05-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Written submissions to consultations",
+   "date": "2026-06-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Written submissions to consultations",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Written submissions to consultations",
+   "date": "2026-08-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Written submissions to consultations",
+   "date": "2026-09-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymakers engaged",
+   "date": "2026-04-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymakers engaged",
+   "date": "2026-05-01",
+   "value": 6,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymakers engaged",
+   "date": "2026-06-01",
+   "value": 5,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymakers engaged",
+   "date": "2026-07-01",
+   "value": 4,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymakers engaged",
+   "date": "2026-08-01",
+   "value": 8,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Policymakers engaged",
+   "date": "2026-09-01",
+   "value": 6,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "date": "2026-05-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "date": "2026-06-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "date": "2026-08-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "date": "2026-09-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "date": "2026-04-01",
+   "value": 0,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "date": "2026-05-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "date": "2026-06-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "date": "2026-07-01",
+   "value": 1,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "date": "2026-08-01",
+   "value": 3,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "date": "2026-09-01",
+   "value": 2,
+   "confidence": "measured",
+   "note": "",
+   "loggedBy": "Daniel Mensah"
+  }
+ ],
+ "campaigns": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Local News Matters (YouTube series)",
+   "channel": "youtube",
+   "audience": "external",
+   "start": "2026-04-15",
+   "end": "2026-06-30",
+   "spend": 6000,
+   "tag": "utm_campaign=lnm_youtube_2026",
+   "notes": "Six short documentaries on local newsrooms, each linking to the featured outlet."
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Toolkit launch email series",
+   "channel": "email",
+   "audience": "external",
+   "start": "2026-05-01",
+   "end": "2026-05-31",
+   "spend": 800,
+   "tag": "utm_campaign=toolkit_launch",
+   "notes": "Four-email sequence to 2,300 local editors and publishers."
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "name": "Newsroom Futures roadshow",
+   "channel": "events",
+   "audience": "external",
+   "start": "2026-07-01",
+   "end": "2026-08-31",
+   "spend": 9000,
+   "tag": "EVT-NF26",
+   "notes": "Five regional half-day events with peer case studies and toolkit demos."
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "name": "Internal launch: town hall and newsletter",
+   "channel": "events",
+   "audience": "internal",
+   "start": "2026-04-20",
+   "end": "2026-05-15",
+   "spend": 2100,
+   "tag": "INT-LAUNCH-26",
+   "notes": "Global town hall with the Comms team, followed by a four-part internal newsletter."
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "name": "Tools launch webinar series",
+   "channel": "events",
+   "audience": "external",
+   "start": "2026-06-01",
+   "end": "2026-07-31",
+   "spend": 3000,
+   "tag": "WEB-TOOLS-26",
+   "notes": "Four webinars demonstrating partner tools to newsroom leaders."
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "name": "Summit early-bird campaign",
+   "channel": "social",
+   "audience": "external",
+   "start": "2026-07-01",
+   "end": "2026-09-30",
+   "spend": 4000,
+   "tag": "utm_campaign=summit26_earlybird",
+   "notes": "Social ads and partner newsletters promoting early-bird registration."
+  }
+ ],
+ "campaignMetrics": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-04-01",
+   "metric": "clicks",
+   "value": 1400
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-04-01",
+   "metric": "impressions",
+   "value": 85000
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-04-01",
+   "metric": "sign-ups",
+   "value": 90
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-04-01",
+   "metric": "views",
+   "value": 21000
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-05-01",
+   "metric": "clicks",
+   "value": 3100
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-05-01",
+   "metric": "impressions",
+   "value": 160000
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-05-01",
+   "metric": "sign-ups",
+   "value": 240
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-05-01",
+   "metric": "views",
+   "value": 46000
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-06-01",
+   "metric": "clicks",
+   "value": 2700
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-06-01",
+   "metric": "impressions",
+   "value": 140000
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-06-01",
+   "metric": "sign-ups",
+   "value": 210
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Local News Matters (YouTube series)",
+   "date": "2026-06-01",
+   "metric": "views",
+   "value": 39000
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Toolkit launch email series",
+   "date": "2026-05-01",
+   "metric": "clicks",
+   "value": 620
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Toolkit launch email series",
+   "date": "2026-05-01",
+   "metric": "opens",
+   "value": 3900
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Toolkit launch email series",
+   "date": "2026-05-01",
+   "metric": "sent",
+   "value": 9200
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Toolkit launch email series",
+   "date": "2026-05-01",
+   "metric": "sign-ups",
+   "value": 41
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Newsroom Futures roadshow",
+   "date": "2026-07-01",
+   "metric": "attendees",
+   "value": 140
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Newsroom Futures roadshow",
+   "date": "2026-07-01",
+   "metric": "sign-ups",
+   "value": 18
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Newsroom Futures roadshow",
+   "date": "2026-08-01",
+   "metric": "attendees",
+   "value": 165
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "campaign": "Newsroom Futures roadshow",
+   "date": "2026-08-01",
+   "metric": "sign-ups",
+   "value": 23
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "campaign": "Internal launch: town hall and newsletter",
+   "date": "2026-04-01",
+   "metric": "attendees",
+   "value": 620
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "campaign": "Internal launch: town hall and newsletter",
+   "date": "2026-05-01",
+   "metric": "opens",
+   "value": 4100
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "campaign": "Internal launch: town hall and newsletter",
+   "date": "2026-05-01",
+   "metric": "sign-ups",
+   "value": 85
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "campaign": "Tools launch webinar series",
+   "date": "2026-06-01",
+   "metric": "attendees",
+   "value": 210
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "campaign": "Tools launch webinar series",
+   "date": "2026-06-01",
+   "metric": "sign-ups",
+   "value": 28
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "campaign": "Tools launch webinar series",
+   "date": "2026-07-01",
+   "metric": "attendees",
+   "value": 180
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "campaign": "Tools launch webinar series",
+   "date": "2026-07-01",
+   "metric": "sign-ups",
+   "value": 22
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-07-01",
+   "metric": "impressions",
+   "value": 48000
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-07-01",
+   "metric": "clicks",
+   "value": 1100
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-07-01",
+   "metric": "sign-ups",
+   "value": 50
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-08-01",
+   "metric": "impressions",
+   "value": 62000
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-08-01",
+   "metric": "clicks",
+   "value": 1500
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-08-01",
+   "metric": "sign-ups",
+   "value": 60
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-09-01",
+   "metric": "impressions",
+   "value": 55000
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-09-01",
+   "metric": "clicks",
+   "value": 1300
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "campaign": "Summit early-bird campaign",
+   "date": "2026-09-01",
+   "metric": "sign-ups",
+   "value": 45
+  }
+ ],
+ "evidence": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Financially sustainable newsrooms",
+   "type": "quote",
+   "title": "Publisher on sustainability",
+   "body": "We're closer, but one big advertiser leaving would still put us back in the red. The grant bought us time to diversify.",
+   "source": "Publisher, Morecambe Bay News",
+   "url": "",
+   "date": "2026-09-15",
+   "tags": "sustainability,risk",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "type": "survey",
+   "title": "Theme: memberships are the most common new revenue stream",
+   "body": "Across 38 check-in responses, memberships (14) and local events (9) were the most-cited new revenue streams. Sentiment is mostly positive, with concern about sustaining member numbers after launch.",
+   "source": "AI theme coding of monthly check-in forms",
+   "url": "",
+   "date": "2026-09-12",
+   "tags": "revenue,theme",
+   "origin": "ai"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Trainees applying new skills",
+   "type": "survey",
+   "title": "Follow-up survey, cohort 1-3 (n=112)",
+   "body": "64% say they used a technique from training in the last month. Most cited: headline testing (41%), newsletter segmentation (29%), audience surveys (18%).",
+   "source": "Follow-up survey, September",
+   "url": "",
+   "date": "2026-09-10",
+   "tags": "skills,survey",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Reader trust score",
+   "type": "quote",
+   "title": "Reader survey comment",
+   "body": "They actually come to the meetings now and explain what the decisions mean for us. That's why I read them.",
+   "source": "Reader, Hebden Bridge",
+   "url": "",
+   "date": "2026-09-02",
+   "tags": "trust,readers",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Newsrooms with a new revenue stream",
+   "type": "case-study",
+   "title": "Tyneside Tribune launches a membership scheme",
+   "body": "After the revenue cohort, the Tribune launched a $5/month membership with a members-only newsletter. 310 members joined in the first six weeks, covering one part-time reporter.",
+   "source": "Programme case study",
+   "url": "",
+   "date": "2026-08-05",
+   "tags": "revenue,membership",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "",
+   "type": "link",
+   "title": "Regional press coverage of the roadshow",
+   "body": "Article on the Newsroom Futures roadshow and the programme's aims.",
+   "source": "Regional business press",
+   "url": "https://example.org/press/newsroom-futures",
+   "date": "2026-07-22",
+   "tags": "press",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Trainees applying new skills",
+   "type": "quote",
+   "title": "Trainee on newsletter skills",
+   "body": "I rebuilt our newsletter the week after the session. Open rates went from 22% to 38%.",
+   "source": "Reporter, Wharfedale Weekly",
+   "url": "",
+   "date": "2026-06-30",
+   "tags": "skills,newsletter",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "metric": "Average monthly digital audience per newsroom",
+   "type": "quote",
+   "title": "Editor on the analytics dashboard",
+   "body": "For the first time we can see which stories people actually finish. We've moved our council coverage to the morning slot and it's our most-read section now.",
+   "source": "Editor, Calder Valley Voice",
+   "url": "",
+   "date": "2026-06-18",
+   "tags": "analytics,audience",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "metric": "Colleagues confident explaining the programme",
+   "type": "quote",
+   "title": "Policy colleague on the champions session",
+   "body": "I used the local newsroom examples in a meeting with a ministry team the following week. Having real numbers made the conversation much easier.",
+   "source": "Champion, Government Affairs & Public Policy",
+   "url": "",
+   "date": "2026-09-08",
+   "tags": "gapp,champions",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Minutes saved per story",
+   "type": "quote",
+   "title": "Reporter on automated transcription",
+   "body": "Transcribing a council meeting used to take me an evening. Now I have a draft in twenty minutes and spend the time chasing the story.",
+   "source": "Reporter, Coastal Courier",
+   "url": "",
+   "date": "2026-07-10",
+   "tags": "tools,time-saved",
+   "origin": "human"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "metric": "Partner satisfaction (NPS)",
+   "type": "survey",
+   "title": "Q3 user survey (n=146)",
+   "body": "NPS rose from 26 to 31. Most common complaint: the analytics tool's setup takes too long without support.",
+   "source": "User survey, September",
+   "url": "",
+   "date": "2026-09-05",
+   "tags": "survey,nps",
+   "origin": "human"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Citations in policy papers and press",
+   "type": "link",
+   "title": "Study cited in national press",
+   "body": "Coverage of brief 2 (who pays for local news) in a national newspaper's media section.",
+   "source": "National press",
+   "url": "https://example.org/press/local-news-study",
+   "date": "2026-08-20",
+   "tags": "press,citation",
+   "origin": "human"
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "metric": "Survey responses collected",
+   "type": "survey",
+   "title": "Headline finding from brief 2",
+   "body": "62% of local news readers would pay something for local news, but only 14% currently do. Price sensitivity is highest under 35.",
+   "source": "Local News Audience Study, brief 2",
+   "url": "",
+   "date": "2026-07-30",
+   "tags": "survey,revenue",
+   "origin": "human"
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "metric": "Partnerships started after events",
+   "type": "case-study",
+   "title": "Two newsrooms share a data reporter",
+   "body": "After meeting at the July roadshow, two county newsrooms now share a data reporter and co-publish investigations.",
+   "source": "Programme case study",
+   "url": "",
+   "date": "2026-09-12",
+   "tags": "partnerships,events",
+   "origin": "human"
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "metric": "Attendees who understand the programme better",
+   "type": "quote",
+   "title": "Sales colleague after a session",
+   "body": "I finally get what the programme does. I've already used the Tyneside membership story with a client.",
+   "source": "Attendee, Advertising sales",
+   "url": "",
+   "date": "2026-08-14",
+   "tags": "internal,comms",
+   "origin": "human"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Follow-up requests from officials",
+   "type": "quote",
+   "title": "Adviser in a ministry team",
+   "body": "The newsroom case studies were exactly what we needed. Could you send the survey figures by region?",
+   "source": "Policy adviser, national government",
+   "url": "",
+   "date": "2026-08-28",
+   "tags": "gapp,policy",
+   "origin": "human"
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "metric": "Programme evidence cited in policy documents",
+   "type": "link",
+   "title": "Consultation response on local media",
+   "body": "Our written response to the local media consultation, drawing on the audience study and training results.",
+   "source": "GAPP",
+   "url": "https://example.org/policy/consultation-response",
+   "date": "2026-09-18",
+   "tags": "gapp,submission",
+   "origin": "human"
+  }
+ ],
+ "library": [
+  {
+   "id": "lib0",
+   "name": "Audience trust score",
+   "definition": "Mean answer to 'How much do you trust this outlet?' on a 1-10 scale.",
+   "level": "outcome",
+   "unit": "score (1-10)",
+   "direction": "increase",
+   "measureType": "point",
+   "frequency": "quarterly",
+   "dataSource": "Reader survey"
+  },
+  {
+   "id": "lib1",
+   "name": "Organisations onboarded",
+   "definition": "Organisations with an active account and a completed onboarding call.",
+   "level": "activity",
+   "unit": "organisations",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "frequency": "monthly",
+   "dataSource": "CRM"
+  },
+  {
+   "id": "lib2",
+   "name": "People trained",
+   "definition": "Unique people completing at least one full training session.",
+   "level": "output",
+   "unit": "people",
+   "direction": "increase",
+   "measureType": "cumulative",
+   "frequency": "monthly",
+   "dataSource": "Attendance registers"
+  },
+  {
+   "id": "lib3",
+   "name": "Trainees applying new skills",
+   "definition": "Share of trainees who report using a technique from training in the last month, surveyed 8+ weeks after training.",
+   "level": "outcome",
+   "unit": "%",
+   "direction": "increase",
+   "measureType": "point",
+   "frequency": "quarterly",
+   "dataSource": "Follow-up survey"
+  }
+ ],
+ "responsibilities": [
+  {
+   "title": "Q2 report to funders",
+   "description": "",
+   "type": "report",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-07-15",
+   "recurrence": "quarterly",
+   "status": "done",
+   "completedAt": "2026-07-14",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Impact figures for the corporate annual report",
+   "description": "Five headline stats and two case studies, cleared for external use.",
+   "type": "report",
+   "team": "comms",
+   "owner": "Priya Shah",
+   "dueDate": "2026-09-15",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Renew analytics toolkit vendor contract",
+   "description": "Current licence ends in October. Vendor has proposed a 12% increase.",
+   "type": "contract",
+   "team": "programme",
+   "owner": "Amira Okafor",
+   "dueDate": "2026-09-20",
+   "recurrence": "none",
+   "status": "in-progress",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "title": "Sign off champions certification",
+   "description": "",
+   "type": "approval",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-09-26",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Champions (internal)"
+  },
+  {
+   "title": "Approve monthly expenses",
+   "description": "",
+   "type": "approval",
+   "team": "programme",
+   "owner": "Amira Okafor",
+   "dueDate": "2026-09-30",
+   "recurrence": "monthly",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Policy briefing: local news and democracy",
+   "description": "Briefing for the ministry roundtable, using headline figures and newsroom case studies.",
+   "type": "report",
+   "team": "gapp",
+   "owner": "Daniel Mensah",
+   "dueDate": "2026-10-02",
+   "recurrence": "none",
+   "status": "in-progress",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Q4 recruitment plan for training cohorts",
+   "description": "",
+   "type": "admin",
+   "team": "marketing",
+   "owner": "Sofia Lindqvist",
+   "dueDate": "2026-10-10",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "title": "Q3 report to funders",
+   "description": "Progress against targets, spend and case studies. Use the Q3 snapshot.",
+   "type": "report",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-10-15",
+   "recurrence": "quarterly",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Grant agreements for cohort 4 newsrooms",
+   "description": "",
+   "type": "contract",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-10-31",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "title": "Safeguarding and data protection review",
+   "description": "",
+   "type": "compliance",
+   "team": "programme",
+   "owner": "Amira Okafor",
+   "dueDate": "2026-11-30",
+   "recurrence": "annually",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Renew partner tool agreements for 2027",
+   "description": "Three partner agreements end in December.",
+   "type": "contract",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-10-30",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Newsroom Tools Partnership"
+  },
+  {
+   "title": "Monthly partner performance review",
+   "description": "",
+   "type": "report",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-09-25",
+   "recurrence": "monthly",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Newsroom Tools Partnership"
+  },
+  {
+   "title": "Quarterly insights digest for product leadership",
+   "description": "",
+   "type": "report",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-09-19",
+   "recurrence": "quarterly",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Product Feedback Loop (internal)"
+  },
+  {
+   "title": "Publish brief 4: young audiences",
+   "description": "",
+   "type": "report",
+   "team": "programme",
+   "owner": "Tom Reeves",
+   "dueDate": "2026-10-20",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Research & Insights",
+   "initiative": "Local News Audience Study"
+  },
+  {
+   "title": "Press launch plan for the full report",
+   "description": "",
+   "type": "admin",
+   "team": "comms",
+   "owner": "Priya Shah",
+   "dueDate": "2026-10-06",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Research & Insights",
+   "initiative": "Local News Audience Study"
+  },
+  {
+   "title": "Confirm summit venue contract",
+   "description": "",
+   "type": "contract",
+   "team": "programme",
+   "owner": "Amira Okafor",
+   "dueDate": "2026-09-30",
+   "recurrence": "none",
+   "status": "in-progress",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Events & Convenings",
+   "initiative": "Global News Summit 2026"
+  },
+  {
+   "title": "Summit registration campaign, phase 2",
+   "description": "",
+   "type": "admin",
+   "team": "marketing",
+   "owner": "Sofia Lindqvist",
+   "dueDate": "2026-10-01",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Events & Convenings",
+   "initiative": "Global News Summit 2026"
+  },
+  {
+   "title": "Summit accessibility and safeguarding plan",
+   "description": "",
+   "type": "compliance",
+   "team": "programme",
+   "owner": "Amira Okafor",
+   "dueDate": "2026-10-15",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Events & Convenings",
+   "initiative": "Global News Summit 2026"
+  },
+  {
+   "title": "Book Lunch & Learn speakers for Q4",
+   "description": "",
+   "type": "admin",
+   "team": "comms",
+   "owner": "Priya Shah",
+   "dueDate": "2026-09-18",
+   "recurrence": "none",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Events & Convenings",
+   "initiative": "Lunch & Learn series (internal)"
+  },
+  {
+   "title": "Response to the local media consultation",
+   "description": "",
+   "type": "report",
+   "team": "gapp",
+   "owner": "Daniel Mensah",
+   "dueDate": "2026-09-12",
+   "recurrence": "none",
+   "status": "done",
+   "completedAt": "2026-09-11",
+   "notes": "",
+   "focusArea": "Policy & Public Affairs",
+   "initiative": "Policy Engagement on Local News"
+  },
+  {
+   "title": "Prepare evidence pack for the parliamentary committee",
+   "description": "",
+   "type": "report",
+   "team": "gapp",
+   "owner": "Daniel Mensah",
+   "dueDate": "2026-10-09",
+   "recurrence": "none",
+   "status": "in-progress",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Policy & Public Affairs",
+   "initiative": "Policy Engagement on Local News"
+  },
+  {
+   "title": "Quarterly policy horizon scan",
+   "description": "",
+   "type": "report",
+   "team": "gapp",
+   "owner": "Daniel Mensah",
+   "dueDate": "2026-10-01",
+   "recurrence": "quarterly",
+   "status": "open",
+   "completedAt": "",
+   "notes": "",
+   "focusArea": "Policy & Public Affairs",
+   "initiative": "Policy Engagement on Local News"
+  }
+ ],
+ "risks": [
+  {
+   "title": "Digital audience growth misses target",
+   "description": "Audience growth is off track and its leading indicator (weekly analytics use) is behind.",
+   "likelihood": 4,
+   "impact": 4,
+   "mitigation": "One-to-one analytics coaching for the 18 newsrooms not yet using the dashboard weekly.",
+   "status": "open",
+   "owner": "Tom Reeves",
+   "reviewDate": "2026-10-01",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "title": "Partner newsrooms drop out before cohort 4",
+   "description": "",
+   "likelihood": 3,
+   "impact": 4,
+   "mitigation": "Monthly check-ins; grant tranches tied to attendance; peer mentoring pairs.",
+   "status": "open",
+   "owner": "Tom Reeves",
+   "reviewDate": "2026-10-15",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "title": "Toolkit vendor price rise at renewal",
+   "description": "",
+   "likelihood": 4,
+   "impact": 3,
+   "mitigation": "Negotiate a two-year rate; price an alternative supplier by end of September.",
+   "status": "open",
+   "owner": "Amira Okafor",
+   "reviewDate": "2026-09-15",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "title": "Data protection issue with shared newsroom analytics",
+   "description": "",
+   "likelihood": 2,
+   "impact": 5,
+   "mitigation": "Data processing agreements signed with all newsrooms; access reviewed quarterly.",
+   "status": "mitigating",
+   "owner": "Amira Okafor",
+   "reviewDate": "2026-11-30",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Internal budget underspent and returned at year end",
+   "description": "",
+   "likelihood": 3,
+   "impact": 2,
+   "mitigation": "Extend champions sessions to regional offices from October.",
+   "status": "open",
+   "owner": "Amira Okafor",
+   "reviewDate": "2026-10-31",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Champions (internal)"
+  },
+  {
+   "title": "Ministry roundtable postponed",
+   "description": "",
+   "likelihood": 2,
+   "impact": 3,
+   "mitigation": "Prepare a written briefing that can be sent if the meeting slips.",
+   "status": "open",
+   "owner": "Daniel Mensah",
+   "reviewDate": "2026-10-01",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "title": "Partner changes tool pricing for newsrooms",
+   "description": "",
+   "likelihood": 3,
+   "impact": 4,
+   "mitigation": "Agree fixed pricing to the end of 2027 in the renewal.",
+   "status": "open",
+   "owner": "Tom Reeves",
+   "reviewDate": "2026-10-15",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Newsroom Tools Partnership"
+  },
+  {
+   "title": "Low weekly use means partners lose interest",
+   "description": "",
+   "likelihood": 3,
+   "impact": 3,
+   "mitigation": "Tool clinics for newsrooms below weekly use; share usage data with partners monthly.",
+   "status": "open",
+   "owner": "Tom Reeves",
+   "reviewDate": "2026-10-01",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Newsroom Tools Partnership"
+  },
+  {
+   "title": "Product teams deprioritise newsroom requests",
+   "description": "",
+   "likelihood": 3,
+   "impact": 3,
+   "mitigation": "Agree two newsroom features per quarter with product leadership.",
+   "status": "open",
+   "owner": "Tom Reeves",
+   "reviewDate": "2026-10-31",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Product Feedback Loop (internal)"
+  },
+  {
+   "title": "Report launch misses the policy window",
+   "description": "",
+   "likelihood": 2,
+   "impact": 4,
+   "mitigation": "Publish briefs early and share embargoed findings with GAPP.",
+   "status": "open",
+   "owner": "Tom Reeves",
+   "reviewDate": "2026-10-10",
+   "focusArea": "Research & Insights",
+   "initiative": "Local News Audience Study"
+  },
+  {
+   "title": "Summit registrations fall short of 800",
+   "description": "",
+   "likelihood": 3,
+   "impact": 4,
+   "mitigation": "Phase 2 campaign through partner newsletters; group discounts for newsrooms.",
+   "status": "open",
+   "owner": "Sofia Lindqvist",
+   "reviewDate": "2026-10-01",
+   "focusArea": "Events & Convenings",
+   "initiative": "Global News Summit 2026"
+  },
+  {
+   "title": "Sponsor shortfall leaves a budget gap",
+   "description": "",
+   "likelihood": 4,
+   "impact": 3,
+   "mitigation": "Scale the online track; approach two additional foundations.",
+   "status": "open",
+   "owner": "Amira Okafor",
+   "reviewDate": "2026-09-20",
+   "focusArea": "Events & Convenings",
+   "initiative": "Global News Summit 2026"
+  },
+  {
+   "title": "Election period limits access to officials",
+   "description": "",
+   "likelihood": 3,
+   "impact": 3,
+   "mitigation": "Front-load briefings before the pre-election period; focus on officials, not ministers.",
+   "status": "open",
+   "owner": "Daniel Mensah",
+   "reviewDate": "2026-11-01",
+   "focusArea": "Policy & Public Affairs",
+   "initiative": "Policy Engagement on Local News"
+  }
+ ],
+ "decisions": [
+  {
+   "date": "2026-09-10",
+   "title": "Extend champions sessions to regional offices",
+   "decision": "Run champions sessions in four regional offices from October.",
+   "rationale": "Internal spend is well behind the timeline and demand from regional teams is high.",
+   "madeBy": "Amira Okafor (Global lead)",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Champions (internal)"
+  },
+  {
+   "date": "2026-07-08",
+   "title": "Report Q2 from a frozen snapshot",
+   "decision": "Board and funder reports use the Q2 snapshot, not live figures.",
+   "rationale": "Figures shared with the board shouldn't change when late data arrives.",
+   "madeBy": "Programme board",
+   "focusArea": "Trainings",
+   "initiative": ""
+  },
+  {
+   "date": "2026-06-20",
+   "title": "Fund a memberships pilot",
+   "decision": "Up to $8k of grant budget goes to five newsrooms piloting memberships.",
+   "rationale": "Memberships were the most common new revenue stream; a pilot tests whether support speeds it up.",
+   "madeBy": "Amira Okafor (Global lead)",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "date": "2026-05-12",
+   "title": "Move revenue training earlier in each cohort",
+   "decision": "Revenue sessions move from week 6 to week 2.",
+   "rationale": "Early cohorts said they needed revenue ideas before planning audience work.",
+   "madeBy": "Programme board",
+   "focusArea": "Trainings",
+   "initiative": "Newsroom Digital Skills Training"
+  },
+  {
+   "date": "2026-06-05",
+   "title": "Choose the summit city",
+   "decision": "The summit will be held in Lisbon, with an online track.",
+   "rationale": "Best mix of cost, access for global attendees and a venue partner offering a discount.",
+   "madeBy": "Programme board",
+   "focusArea": "Events & Convenings",
+   "initiative": "Global News Summit 2026"
+  },
+  {
+   "date": "2026-07-22",
+   "title": "Publish research as briefs first",
+   "decision": "Findings will be released as six short briefs before the full report.",
+   "rationale": "Policy and press interest is highest now; briefs keep the study in the news for longer.",
+   "madeBy": "Tom Reeves",
+   "focusArea": "Research & Insights",
+   "initiative": "Local News Audience Study"
+  },
+  {
+   "date": "2026-08-12",
+   "title": "Prioritise transcription over analytics integrations",
+   "decision": "Phase 3 integration budget goes to transcription tools.",
+   "rationale": "Transcription saves the most time in the user survey; analytics setup needs more support than budget allows.",
+   "madeBy": "Programme board",
+   "focusArea": "Product & Technology Partnerships",
+   "initiative": "Newsroom Tools Partnership"
+  },
+  {
+   "date": "2026-09-02",
+   "title": "Lead the consultation response jointly with GAPP",
+   "decision": "GAPP leads the consultation response; the programme supplies data and case studies.",
+   "rationale": "GAPP owns relationships with officials; the programme owns the evidence.",
+   "madeBy": "Amira Okafor (Global lead) and GAPP",
+   "focusArea": "Policy & Public Affairs",
+   "initiative": "Policy Engagement on Local News"
+  }
+ ],
+ "spend": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-03-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-03"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-03-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-04-15",
+   "amount": 12000,
+   "category": "vendors",
+   "status": "actual",
+   "description": "Analytics and CMS toolkit licence (annual)",
+   "reference": "PO-4102"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-04-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-04"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-04-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-04-28",
+   "amount": 8000,
+   "category": "grants",
+   "status": "actual",
+   "description": "Newsroom training grants",
+   "reference": "GR-04"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-04-30",
+   "amount": 2100,
+   "category": "events",
+   "status": "actual",
+   "description": "Internal launch town hall",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-05-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-05"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-05-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-05-28",
+   "amount": 6800,
+   "category": "grants",
+   "status": "actual",
+   "description": "Newsroom training grants",
+   "reference": "GR-05"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-05-31",
+   "amount": 800,
+   "category": "marketing",
+   "status": "actual",
+   "description": "Toolkit launch email series",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-06-15",
+   "amount": 3000,
+   "category": "travel",
+   "status": "actual",
+   "description": "Trainer travel, cohorts 1-3",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-06-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-06"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-06-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-06-28",
+   "amount": 9200,
+   "category": "grants",
+   "status": "actual",
+   "description": "Newsroom training grants",
+   "reference": "GR-06"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-06-30",
+   "amount": 6000,
+   "category": "marketing",
+   "status": "actual",
+   "description": "Local News Matters YouTube series production",
+   "reference": "PO-4410"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-06-30",
+   "amount": 600,
+   "category": "other",
+   "status": "actual",
+   "description": "Champions certificates and materials",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-07-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-07"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-07-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-07-28",
+   "amount": 8000,
+   "category": "grants",
+   "status": "actual",
+   "description": "Newsroom training grants",
+   "reference": "GR-07"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-07-31",
+   "amount": 4500,
+   "category": "events",
+   "status": "actual",
+   "description": "Newsroom Futures roadshow: venues and catering (July)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-08-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-08"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-08-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-08-28",
+   "amount": 6800,
+   "category": "grants",
+   "status": "actual",
+   "description": "Newsroom training grants",
+   "reference": "GR-08"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-08-31",
+   "amount": 4500,
+   "category": "events",
+   "status": "actual",
+   "description": "Newsroom Futures roadshow: venues and catering (August)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-09-28",
+   "amount": 5000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Programme staff and trainers",
+   "reference": "PAY-09"
+  },
+  {
+   "initiative": "Newsroom Champions (internal)",
+   "date": "2026-09-28",
+   "amount": 1200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-09-28",
+   "amount": 9200,
+   "category": "grants",
+   "status": "actual",
+   "description": "Newsroom training grants",
+   "reference": "GR-09"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-10-20",
+   "amount": 7500,
+   "category": "events",
+   "status": "committed",
+   "description": "Cohort 7 venue booking",
+   "reference": "PO-5530"
+  },
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "date": "2026-11-01",
+   "amount": 5000,
+   "category": "vendors",
+   "status": "committed",
+   "description": "Toolkit support contract (Q4)",
+   "reference": "PO-5541"
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-04-28",
+   "amount": 12000,
+   "category": "vendors",
+   "status": "actual",
+   "description": "Integration work, phase 1",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-06-28",
+   "amount": 8000,
+   "category": "vendors",
+   "status": "actual",
+   "description": "Integration work, phase 2",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-06-28",
+   "amount": 3000,
+   "category": "events",
+   "status": "actual",
+   "description": "Tools launch webinars",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-11-15",
+   "amount": 8000,
+   "category": "vendors",
+   "status": "committed",
+   "description": "Integration work, phase 3",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-03-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-04-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-05-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-06-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-07-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-08-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Newsroom Tools Partnership",
+   "date": "2026-09-28",
+   "amount": 3000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Partnerships manager (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-05-28",
+   "amount": 1500,
+   "category": "travel",
+   "status": "actual",
+   "description": "Product team newsroom visits",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-08-28",
+   "amount": 1500,
+   "category": "travel",
+   "status": "actual",
+   "description": "Product team newsroom visits",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-04-28",
+   "amount": 850,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-05-28",
+   "amount": 850,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-06-28",
+   "amount": 850,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-07-28",
+   "amount": 850,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-08-28",
+   "amount": 850,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Product Feedback Loop (internal)",
+   "date": "2026-09-28",
+   "amount": 850,
+   "category": "staff",
+   "status": "actual",
+   "description": "Session facilitation",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-04-28",
+   "amount": 9000,
+   "category": "vendors",
+   "status": "actual",
+   "description": "Survey panel, wave 1",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-06-28",
+   "amount": 9000,
+   "category": "vendors",
+   "status": "actual",
+   "description": "Survey panel, wave 2",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-08-28",
+   "amount": 6000,
+   "category": "vendors",
+   "status": "actual",
+   "description": "Survey panel, wave 3",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-07-28",
+   "amount": 1000,
+   "category": "other",
+   "status": "actual",
+   "description": "Translation",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-03-28",
+   "amount": 1800,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-04-28",
+   "amount": 1800,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-05-28",
+   "amount": 1800,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-06-28",
+   "amount": 1800,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-07-28",
+   "amount": 1800,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-08-28",
+   "amount": 1800,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Local News Audience Study",
+   "date": "2026-09-28",
+   "amount": 2200,
+   "category": "staff",
+   "status": "actual",
+   "description": "Researcher (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-06-28",
+   "amount": 6000,
+   "category": "events",
+   "status": "actual",
+   "description": "Venue deposit",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-07-28",
+   "amount": 4000,
+   "category": "marketing",
+   "status": "actual",
+   "description": "Early-bird campaign",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-08-28",
+   "amount": 3000,
+   "category": "travel",
+   "status": "actual",
+   "description": "Speaker travel bookings",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-11-10",
+   "amount": 22000,
+   "category": "events",
+   "status": "committed",
+   "description": "Venue, AV and catering balance",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-03-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-04-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-05-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-06-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-07-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-08-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Global News Summit 2026",
+   "date": "2026-09-28",
+   "amount": 1000,
+   "category": "staff",
+   "status": "actual",
+   "description": "Event coordinator (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-03-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-04-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-05-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-06-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-07-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-08-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Lunch & Learn series (internal)",
+   "date": "2026-09-28",
+   "amount": 1100,
+   "category": "events",
+   "status": "actual",
+   "description": "Catering and streaming",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-03-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-04-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-05-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-06-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-07-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-08-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-09-28",
+   "amount": 1400,
+   "category": "staff",
+   "status": "actual",
+   "description": "GAPP analyst (part)",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-05-28",
+   "amount": 2000,
+   "category": "travel",
+   "status": "actual",
+   "description": "Roundtable travel",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-07-28",
+   "amount": 2200,
+   "category": "events",
+   "status": "actual",
+   "description": "Newsroom roundtable with officials",
+   "reference": ""
+  },
+  {
+   "initiative": "Policy Engagement on Local News",
+   "date": "2026-09-28",
+   "amount": 2000,
+   "category": "travel",
+   "status": "actual",
+   "description": "Capital visits",
+   "reference": ""
+  }
+ ],
+ "people": [
+  {
+   "name": "Amira Okafor",
+   "email": "lead@example.org",
+   "role": "admin",
+   "team": ""
+  },
+  {
+   "name": "Tom Reeves",
+   "email": "programme@example.org",
+   "role": "programme",
+   "team": ""
+  },
+  {
+   "name": "Priya Shah",
+   "email": "comms@example.org",
+   "role": "partner",
+   "team": "comms"
+  },
+  {
+   "name": "Daniel Mensah",
+   "email": "gapp@example.org",
+   "role": "partner",
+   "team": "gapp"
+  },
+  {
+   "name": "Sofia Lindqvist",
+   "email": "marketing@example.org",
+   "role": "partner",
+   "team": "marketing"
+  }
+ ],
+ "programme": {
+  "name": "Global News Programme",
+  "mission": "Help news organisations and the people who work with them build the skills, audiences and support that keep reliable journalism going.",
+  "description": "A global programme run with Comms, Government Affairs & Public Policy and Marketing, across five focus areas: trainings, product and technology partnerships, research, events, and policy and public affairs.",
+  "currency": "USD",
+  "budget": 500000,
+  "start": "2026-03-01",
+  "end": "2027-02-28",
+  "demoDate": "2026-09-23"
+ },
+ "focusAreas": [
+  {
+   "name": "Trainings",
+   "description": "Skills training for journalists and newsrooms (external), and news-literacy training that turns colleagues into programme champions (internal).",
+   "owner": "Amira Okafor",
+   "budget": 230000
+  },
+  {
+   "name": "Product & Technology Partnerships",
+   "description": "Free and discounted newsroom tools from product partners, and a feedback loop so product teams build what newsrooms need.",
+   "owner": "Tom Reeves",
+   "budget": 110000
+  },
+  {
+   "name": "Research & Insights",
+   "description": "Evidence on local news audiences and business models, for newsrooms, policymakers and internal teams.",
+   "owner": "Tom Reeves",
+   "budget": 60000
+  },
+  {
+   "name": "Events & Convenings",
+   "description": "The flagship summit for newsroom leaders, and internal events that keep colleagues close to the programme.",
+   "owner": "Amira Okafor",
+   "budget": 70000
+  },
+  {
+   "name": "Policy & Public Affairs",
+   "description": "Working with Government Affairs & Public Policy so programme evidence informs policy on local news.",
+   "owner": "Daniel Mensah",
+   "budget": 30000
+  }
+ ],
+ "snapshots": [
+  {
+   "initiative": "Newsroom Digital Skills Training",
+   "label": "Q2 2026 as reported to the board",
+   "asOf": "2026-06-30",
+   "by": "Amira Okafor",
+   "frozenOn": "2026-07-03"
+  }
+ ],
+ "version": 1
+}

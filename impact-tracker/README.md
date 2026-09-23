@@ -60,6 +60,31 @@ The Global lead adds and manages people under **People**.
   - metrics grouped by logic-model level: impact and outcomes get large cards, outputs medium cards, activities and inputs compact rows
 - **User picker**: there's no login yet. Pick who you are in the header; entries record who logged them.
 
+## Sample data and the Excel template
+
+The sample Global News Programme lives in `sample-data/sample-data.json`. It has five focus areas ($500K budget):
+- Trainings
+- Product & Technology Partnerships
+- Research & Insights
+- Events & Convenings
+- Policy & Public Affairs
+
+These hold 8 internal and external initiatives, plus their metrics, entries, campaigns, evidence, spend, responsibilities, risks, decisions and a snapshot. The database seed (`npm run db:seed`) and the in-browser demo both load this file.
+
+`sample-data/impact-tracker-template.xlsx` holds the same data as a workbook, one sheet per kind of data, with dropdowns and a calculated Summary sheet. To demo with your own programme:
+
+1. Replace the rows with your own; the "Read me" sheet explains every column.
+2. Load it into the demo with **Load your data**. The demo checks every row, lists anything it can't use, and then replaces its data.
+
+To regenerate the sample and the template (needs Python 3 and `openpyxl`):
+
+```bash
+python3 sample-data/build_sample_data.py
+python3 sample-data/build_template.py
+```
+
+To seed the real app from a different dataset of the same shape: `npx tsx prisma/seed.ts --reset --file=path/to/data.json`.
+
 ## Operations (Stage 2)
 
 Under **Operations** the Global lead sees budget, responsibilities, risks and decisions across focus areas.
