@@ -21,9 +21,9 @@ export function formatValue(n: number | null | undefined, unit: string, opts: { 
   return unit ? `${v} ${unit}` : v;
 }
 
-export function formatPercent(fraction: number | null | undefined): string {
+export function formatPercent(fraction: number | null | undefined, digits = 0): string {
   if (fraction === null || fraction === undefined || Number.isNaN(fraction)) return "–";
-  return `${Math.round(fraction * 100)}%`;
+  return `${(fraction * 100).toFixed(digits)}%`;
 }
 
 export function formatDate(d: Date | string | null | undefined): string {

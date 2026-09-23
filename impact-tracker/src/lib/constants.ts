@@ -34,6 +34,16 @@ export type ProjectStatus = (typeof PROJECT_STATUSES)[number];
 export const CHANNELS = ["youtube", "social", "email", "events", "paid-search", "press", "other"] as const;
 export type Channel = (typeof CHANNELS)[number];
 
+export const CHANNEL_LABELS: Record<string, string> = {
+  youtube: "YouTube",
+  social: "Social",
+  email: "Email",
+  events: "Events",
+  "paid-search": "Paid search",
+  press: "Press",
+  other: "Other",
+};
+
 export const EVIDENCE_TYPES = ["quote", "survey", "case-study", "link"] as const;
 export type EvidenceType = (typeof EVIDENCE_TYPES)[number];
 

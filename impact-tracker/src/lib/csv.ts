@@ -6,6 +6,7 @@
 // Parameters are matched by name (case-insensitive) or id.
 
 import Papa from "papaparse";
+import { normalizeMetricName } from "./campaigns";
 import { CONFIDENCE, isOneOf } from "./constants";
 import { parseDate } from "./format";
 
@@ -104,4 +105,62 @@ export function parseEntriesCsv(
 
 export function toCsv(rows: (string | number)[][]): string {
   return Papa.unparse(rows);
+}
+
+export interface CampaignCsvRow {
+  line: number;
+  campaignName: string;
+  campaignId: string | null;
+  date: string | null;
+  metric: string;
+  value: number | null;
+  error: string | null;
+}
+
+/**
+ * Campaign metrics CSV: campaign,date,metric,value. The campaign column
+ * matches a campaign name or tracking tag (case-insensitive).
+ */
+export function parseCampaignCsv(
+  text: string,
+  campaigns: { id: string; name: string; trackingTag: string }[],
+): { rows: CampaignCsvRow[]; error: string | null } {
+  const parsed = Papa.parse<string[]>(text.trim(), { skipEmptyLines: "greedy" });
+  const [header, ...body] = parsed.data;
+  const cols = (header ?? []).map(norm);
+  const iC = cols.findIndex((c) => c === "campaign" || c === "tracking tag" || c === "tag");
+  const iD = cols.indexOf("date");
+  const iM = cols.indexOf("metric");
+  const iV = cols.indexOf("value");
+  if (iC < 0 || iD < 0 || iM < 0 || iV < 0) {
+    return { rows: [], error: "The header must include campaign, date, metric and value columns." };
+  }
+  const lookup = new Map<string, string>();
+  for (const c of campaigns) {
+    lookup.set(norm(c.name), c.id);
+    if (c.trackingTag) lookup.set(norm(c.trackingTag), c.id);
+  }
+  const rows = body.map((r, i): CampaignCsvRow => {
+    const name = (r[iC] ?? "").trim();
+    const campaignId = lookup.get(norm(name)) ?? null;
+    const date = parseDate(r[iD] ?? "");
+    const metric = normalizeMetricName(r[iM] ?? "");
+    const raw = (r[iV] ?? "").trim().replace(/[,£$€%]/g, "");
+    const value = raw === "" ? null : Number(raw);
+    let error: string | null = null;
+    if (!campaignId) error = `Unknown campaign “${name}”`;
+    else if (!date) error = `Invalid date “${r[iD] ?? ""}”`;
+    else if (!metric) error = "Missing metric name";
+    else if (value === null || !Number.isFinite(value)) error = `Invalid value “${r[iV] ?? ""}”`;
+    return {
+      line: i + 2,
+      campaignName: name,
+      campaignId,
+      date: date?.toISOString() ?? null,
+      metric,
+      value: value !== null && Number.isFinite(value) ? value : null,
+      error,
+    };
+  });
+  return { rows, error: null };
 }

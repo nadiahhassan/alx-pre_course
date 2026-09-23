@@ -2,6 +2,7 @@
 // Run with `npm run db:seed`. Wipes existing data first.
 
 import { PrismaClient } from "@prisma/client";
+import { buildPayload } from "../src/lib/payload";
 
 const prisma = new PrismaClient();
 const d = (s: string) => new Date(`${s}T00:00:00Z`);
@@ -9,6 +10,7 @@ const MONTHS = ["2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01", "2026-08
 
 async function main() {
   await prisma.$transaction([
+    prisma.shareLink.deleteMany(),
     prisma.snapshot.deleteMany(),
     prisma.evidence.deleteMany(),
     prisma.campaignMetric.deleteMany(),
@@ -295,7 +297,38 @@ async function main() {
     ],
   });
 
-  console.log(`Seeded "${project.name}" with ${params.length} parameters, ${campaigns.length} campaigns and 7 evidence items.`);
+  // An AI-drafted theme summary awaiting review: visible (labelled) to the
+  // project lead, hidden from stakeholder views until someone approves it.
+  await prisma.evidence.create({
+    data: {
+      projectId: project.id, parameterId: ids.revenue, type: "survey", date: d("2026-09-12"), origin: "ai",
+      title: "Theme: memberships are the most common new revenue stream",
+      body: "Across 38 check-in responses, memberships (14) and local events (9) were the most-cited new revenue streams. Sentiment is mostly positive, with concern about sustaining member numbers after launch.",
+      source: "AI theme coding of monthly check-in forms", tags: "revenue,theme",
+    },
+  });
+
+  // A frozen Q2 snapshot, built from the data as it stood on 30 June.
+  const full = {
+    project,
+    parameters: await prisma.parameter.findMany({ where: { projectId: project.id, archivedAt: null }, include: { entries: true } }),
+    campaigns: await prisma.campaign.findMany({ where: { projectId: project.id }, include: { metrics: true } }),
+    evidence: await prisma.evidence.findMany({ where: { projectId: project.id } }),
+  };
+  const q2 = await prisma.snapshot.create({
+    data: {
+      projectId: project.id,
+      label: "Q2 2026 as reported to the board",
+      asOfDate: d("2026-06-30"),
+      payload: JSON.stringify(buildPayload(full, new Date("2026-06-30T23:59:59.999Z"), { stakeholderSafe: true })),
+      createdById: lead.id,
+    },
+  });
+  await prisma.shareLink.create({
+    data: { projectId: project.id, snapshotId: q2.id, view: "leadership", label: "Board pack, July", token: "example-q2-board-pack" },
+  });
+
+  console.log(`Seeded "${project.name}" with ${params.length} parameters, ${campaigns.length} campaigns, 8 evidence items and a Q2 snapshot.`);
 }
 
 main()

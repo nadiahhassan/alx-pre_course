@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseEntriesCsv } from "@/lib/csv";
+import { parseCampaignCsv, parseEntriesCsv } from "@/lib/csv";
 
 const params = [
   { id: "p1", name: "Journalists trained" },
@@ -35,5 +35,22 @@ describe("parseEntriesCsv", () => {
 
   it("rejects an unrecognised header", () => {
     expect(parseEntriesCsv("foo,bar\n1,2", params).error).toMatch(/Couldn't read column/);
+  });
+});
+
+describe("parseCampaignCsv", () => {
+  const campaigns = [{ id: "c1", name: "Toolkit launch", trackingTag: "utm_campaign=toolkit_launch" }];
+  it("matches campaigns by name or tracking tag and normalises metric names", () => {
+    const r = parseCampaignCsv(
+      "campaign,date,metric,value\ntoolkit launch,2026-05-01,Sign ups,41\nutm_campaign=toolkit_launch,2026-05-01,clicks,\"1,200\"\nOther,2026-05-01,clicks,3",
+      campaigns,
+    );
+    expect(r.rows[0]).toMatchObject({ campaignId: "c1", metric: "sign-ups", value: 41, error: null });
+    expect(r.rows[1]).toMatchObject({ campaignId: "c1", value: 1200, error: null });
+    expect(r.rows[2].error).toMatch(/Unknown campaign/);
+  });
+
+  it("requires the four columns", () => {
+    expect(parseCampaignCsv("campaign,date\nx,2026-01-01", campaigns).error).toMatch(/header/);
   });
 });

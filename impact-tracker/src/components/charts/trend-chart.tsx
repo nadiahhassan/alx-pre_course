@@ -1,9 +1,10 @@
 "use client";
 
 // Trend line for one parameter: actual values (solid), the expected path from
-// baseline to target (dashed), and the target itself (hairline).
+// baseline to target (dashed), and the target itself (hairline). Campaigns
+// can be overlaid as numbered shaded periods.
 
-import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { MetricView } from "@/lib/dashboard";
 import { formatDate, formatMonth, formatNumber, formatValue } from "@/lib/format";
 
@@ -24,6 +25,14 @@ function niceTicks(lo: number, hi: number, count = 4): number[] {
   return out;
 }
 
+export interface CampaignBand {
+  /** Number shown on the band; matches the campaign legend. */
+  n: number;
+  name: string;
+  startDate: string;
+  endDate: string | null;
+}
+
 interface Point {
   t: number;
   actual?: number;
@@ -36,11 +45,13 @@ export function TrendChart({
   startDate,
   height = 180,
   compact = false,
+  campaigns = [],
 }: {
   metric: MetricView;
   startDate: string;
   height?: number;
   compact?: boolean;
+  campaigns?: CampaignBand[];
 }) {
   const start = new Date(startDate).getTime();
   const end = new Date(metric.targetDate).getTime();
@@ -101,6 +112,18 @@ export function TrendChart({
           width={44}
           className="tabular"
         />
+        {campaigns.map((c) => (
+          <ReferenceArea
+            key={c.n}
+            x1={Math.max(start, new Date(c.startDate).getTime())}
+            x2={Math.min(domainEnd, c.endDate ? new Date(c.endDate).getTime() : domainEnd)}
+            fill="var(--ink)"
+            fillOpacity={0.06}
+            stroke="none"
+            ifOverflow="hidden"
+            label={{ value: String(c.n), position: "insideTopLeft", fill: "var(--ink-2)", fontSize: 11 }}
+          />
+        ))}
         <ReferenceLine
           y={metric.target}
           stroke="var(--line-strong)"

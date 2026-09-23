@@ -10,10 +10,14 @@ export function ProjectTabs({ projectId }: { projectId: string }) {
     { href: base, label: "Dashboard", exact: true },
     { href: `${base}/data`, label: "Data entry" },
     { href: `${base}/parameters`, label: "Parameters" },
+    { href: `${base}/campaigns`, label: "Campaigns" },
+    { href: `${base}/evidence`, label: "Evidence" },
+    { href: `${base}/snapshots`, label: "Snapshots" },
+    { href: `${base}/share`, label: "Share" },
     { href: `${base}/settings`, label: "Project & theory of change" },
   ];
   return (
-    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-line text-sm">
+    <nav className="mb-6 flex print:hidden gap-1 overflow-x-auto border-b border-line text-sm">
       {tabs.map((t) => {
         const active = t.exact ? pathname === t.href : pathname.startsWith(t.href);
         return (
