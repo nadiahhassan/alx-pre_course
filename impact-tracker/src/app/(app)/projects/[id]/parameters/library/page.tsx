@@ -1,9 +1,11 @@
+import { requirePageAbility } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { LEVEL_LABELS, LEVELS } from "@/lib/constants";
 import { EmptyState } from "@/components/ui";
 
 export default async function AddFromLibraryPage({ params }: { params: Promise<{ id: string }> }) {
+  await requirePageAbility("edit-data");
   const { id } = await params;
   const [items, used] = await Promise.all([
     db.libraryParameter.findMany({ orderBy: { name: "asc" } }),

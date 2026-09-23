@@ -1,9 +1,10 @@
 "use server";
 
+import { requireAbility } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { DIRECTIONS, FREQUENCIES, LEVELS, MEASURE_TYPES } from "@/lib/constants";
+import { AUDIENCES, DIRECTIONS, FREQUENCIES, LEVELS, MEASURE_TYPES } from "@/lib/constants";
 import { FormReader, formValues, type FormState } from "@/lib/forms";
 
 /** Fields shared by project parameters and library definitions. */
@@ -28,6 +29,7 @@ async function readParameter(projectId: string, fd: FormData, selfId?: string) {
     target: f.number("target", { required: true }),
     targetDate: f.date("targetDate"),
     isKey: f.bool("isKey"),
+    audience: f.oneOf("audience", AUDIENCES, "external"),
     leadingIndicatorForId: f.text("leadingIndicatorForId") || null,
     libraryItemId: f.text("libraryItemId") || null,
   };
@@ -54,6 +56,7 @@ function revalidateProject(projectId: string) {
 }
 
 export async function createParameter(projectId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-data");
   const { f, data } = await readParameter(projectId, fd);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   const last = await db.parameter.findFirst({ where: { projectId }, orderBy: { sortOrder: "desc" } });
@@ -70,6 +73,7 @@ export async function updateParameter(
   _prev: FormState,
   fd: FormData,
 ): Promise<FormState> {
+  await requireAbility("edit-data");
   const { f, data } = await readParameter(projectId, fd, parameterId);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.parameter.update({ where: { id: parameterId, projectId }, data: { ...data, target: data.target! } });
@@ -78,6 +82,7 @@ export async function updateParameter(
 }
 
 export async function setParameterArchived(projectId: string, parameterId: string, archived: boolean) {
+  await requireAbility("edit-data");
   await db.parameter.update({
     where: { id: parameterId, projectId },
     data: { archivedAt: archived ? new Date() : null },
@@ -87,6 +92,7 @@ export async function setParameterArchived(projectId: string, parameterId: strin
 
 /** Copy a project parameter's definition into the library and link the two. */
 export async function saveParameterToLibrary(projectId: string, parameterId: string) {
+  await requireAbility("edit-data");
   const p = await db.parameter.findUniqueOrThrow({ where: { id: parameterId, projectId } });
   const item = await db.libraryParameter.create({
     data: {
@@ -108,6 +114,7 @@ export async function saveParameterToLibrary(projectId: string, parameterId: str
 // Library definitions
 
 export async function createLibraryParameter(_prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-data");
   const f = new FormReader(fd);
   const data = readDefinition(f);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
@@ -117,6 +124,7 @@ export async function createLibraryParameter(_prev: FormState, fd: FormData): Pr
 }
 
 export async function updateLibraryParameter(id: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-data");
   const f = new FormReader(fd);
   const data = readDefinition(f);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
@@ -127,6 +135,7 @@ export async function updateLibraryParameter(id: string, _prev: FormState, fd: F
 
 /** Deleting a library item leaves project parameters untouched (they hold their own copy). */
 export async function deleteLibraryParameter(id: string) {
+  await requireAbility("edit-data");
   await db.libraryParameter.delete({ where: { id } });
   revalidatePath("/library");
 }

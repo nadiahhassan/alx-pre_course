@@ -1,3 +1,5 @@
+import { can } from "@/lib/permissions";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { LEVEL_LABELS, LEVELS } from "@/lib/constants";
@@ -5,6 +7,7 @@ import { EmptyState, PageHeader } from "@/components/ui";
 import { DeleteLibraryButton } from "@/components/delete-library-button";
 
 export default async function LibraryPage() {
+  const user = await requireUser();
   const items = await db.libraryParameter.findMany({
     orderBy: { name: "asc" },
     include: { parameters: { where: { archivedAt: null }, select: { project: { select: { id: true, name: true } } } } },
@@ -16,9 +19,11 @@ export default async function LibraryPage() {
         title="Parameter library"
         subtitle="Shared metric definitions, so the same thing is measured the same way across projects. Copying a definition into a project doesn't link them: editing here won't change live projects."
         actions={
-          <Link href="/library/new" className="btn-primary">
-            New definition
-          </Link>
+          can(user, "edit-data") && (
+            <Link href="/library/new" className="btn-primary">
+              New definition
+            </Link>
+          )
         }
       />
       {items.length === 0 && <EmptyState title="No definitions yet">Save a project parameter to the library, or create one here.</EmptyState>}
@@ -55,12 +60,12 @@ export default async function LibraryPage() {
                         </div>
                       )}
                     </div>
-                    <div className="flex gap-1">
+                    {can(user, "edit-data") && <div className="flex gap-1">
                       <Link href={`/library/${item.id}/edit`} className="btn-ghost px-2 py-1">
                         Edit
                       </Link>
                       <DeleteLibraryButton id={item.id} usedBy={item.parameters.length} />
-                    </div>
+                    </div>}
                   </li>
                 );
               })}

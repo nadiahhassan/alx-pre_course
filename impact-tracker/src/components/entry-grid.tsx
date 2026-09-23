@@ -38,11 +38,14 @@ export function EntryGrid({
   rows,
   initialColumns,
   initialCells,
+  readOnly = false,
 }: {
   projectId: string;
   rows: GridRow[];
   initialColumns: string[];
   initialCells: Record<string, CellEntry>;
+  /** For people who can view but not edit data. */
+  readOnly?: boolean;
 }) {
   const [columns, setColumns] = useState(initialColumns);
   const [cells, setCells] = useState(initialCells);
@@ -158,7 +161,8 @@ export function EntryGrid({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-end gap-4 text-sm">
+      {readOnly && <p className="text-sm text-ink-2">You can view this data. Ask the programme team to change values.</p>}
+      <div className={`flex flex-wrap items-end gap-4 text-sm ${readOnly ? "hidden" : ""}`}>
         <label className="flex items-center gap-2">
           <span className="text-ink-2">Confidence for new values</span>
           <select className="input w-auto py-1" value={defaultConfidence} onChange={(e) => setDefaultConfidence(e.target.value)}>
@@ -223,6 +227,7 @@ export function EntryGrid({
                               else inputs.current.delete(`${r}:${c}`);
                             }}
                             value={shown(k)}
+                            readOnly={readOnly}
                             inputMode="decimal"
                             aria-label={`${row.name}, ${formatDate(date)}`}
                             title={
@@ -252,7 +257,7 @@ export function EntryGrid({
       </div>
       <p className="text-xs text-muted">Values in italics are not directly measured (self-reported, estimated or modelled).</p>
 
-      {sel && (
+      {sel && !readOnly && (
         <CellDetails
           key={selKey}
           rowName={rows[sel.r].name}

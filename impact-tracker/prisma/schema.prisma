@@ -16,12 +16,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  role      String   @default("member") // member | admin
-  createdAt DateTime @default(now())
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  // admin (Global lead) | programme (programme team) | partner | viewer
+  role         String    @default("viewer")
+  // For partners: comms | gapp | marketing. Blank for others.
+  team         String    @default("")
+  passwordHash String    @default("")
+  active       Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
 
+  sessions           Session[]
+  ownedFocusAreas    FocusArea[] @relation("FocusAreaOwner")
   ownedProjects      Project[]   @relation("ProjectOwner")
   entries            Entry[]
   snapshots          Snapshot[]
@@ -29,8 +37,56 @@ model User {
   approvedEvidence   Evidence[]  @relation("EvidenceApprover")
 }
 
-model Project {
+// Signed-in sessions. Only a hash of the cookie token is stored.
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// The programme as a whole. There is one row.
+model Programme {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  mission     String   @default("")
+  currency    String   @default("USD")
+  budget      Float    @default(0)
+  startDate   DateTime
+  endDate     DateTime
+  updatedAt   DateTime @updatedAt
+
+  focusAreas FocusArea[]
+}
+
+model FocusArea {
   id          String    @id @default(cuid())
+  programmeId String
+  programme   Programme @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  name        String
+  description String    @default("")
+  ownerId     String?
+  owner       User?     @relation("FocusAreaOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  // Share of the programme budget allocated to this focus area.
+  budget      Float     @default(0)
+  sortOrder   Int       @default(0)
+  archivedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  projects Project[]
+}
+
+// An initiative within a focus area. (Named Project in the database.)
+model Project {
+  id          String     @id @default(cuid())
+  focusAreaId String?
+  focusArea   FocusArea? @relation(fields: [focusAreaId], references: [id], onDelete: SetNull)
   name        String
   description String    @default("")
   ownerId     String?
@@ -76,6 +132,7 @@ model Parameter {
   frequency   String  @default("monthly") // weekly | monthly | quarterly | annually | ad-hoc
   dataSource  String  @default("")
   isKey       Boolean @default(false) // shown on the portfolio view
+  audience    String  @default("external") // internal | external | both
 
   leadingIndicatorForId String?
   leadingIndicatorFor   Parameter?  @relation("LeadingIndicator", fields: [leadingIndicatorForId], references: [id], onDelete: SetNull)
@@ -146,6 +203,7 @@ model Campaign {
   endDate     DateTime?
   spend       Float    @default(0)
   trackingTag String   @default("") // UTM campaign or other ID
+  audience    String   @default("external") // internal | external | both
   notes       String   @default("")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

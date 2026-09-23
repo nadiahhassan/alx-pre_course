@@ -1,3 +1,5 @@
+import { can } from "@/lib/permissions";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { LEVELS } from "@/lib/constants";
@@ -22,6 +24,7 @@ function monthColumns(start: Date, end: Date): string[] {
 
 export default async function DataEntryPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const user = await requireUser();
   const project = await getProject(id);
   const parameters = await db.parameter.findMany({
     where: { projectId: id, archivedAt: null },
@@ -61,7 +64,7 @@ export default async function DataEntryPage({ params }: { params: Promise<{ id: 
 
   return (
     <div className="space-y-4">
-      <details className="card">
+      {can(user, "edit-data") && <details className="card">
         <summary className="cursor-pointer px-4 py-3 text-sm font-medium">Add a single entry with a note</summary>
         <div className="border-t border-line p-4">
           <EntryForm
@@ -70,14 +73,16 @@ export default async function DataEntryPage({ params }: { params: Promise<{ id: 
             defaultDate={toDateInput(today())}
           />
         </div>
-      </details>
+      </details>}
       <div className="min-w-0 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm text-ink-2">Type straight into the grid. Changes save as you leave each cell.</p>
           <div className="flex gap-2">
-            <Link href={`/projects/${id}/data/import`} className="btn-secondary">
-              Import CSV
-            </Link>
+            {can(user, "edit-data") && (
+              <Link href={`/projects/${id}/data/import`} className="btn-secondary">
+                Import CSV
+              </Link>
+            )}
             <a href={`/projects/${id}/data/export`} className="btn-secondary">
               Export CSV
             </a>
@@ -88,6 +93,7 @@ export default async function DataEntryPage({ params }: { params: Promise<{ id: 
           rows={parameters.map((p) => ({ id: p.id, name: p.name, unit: p.unit, level: p.level, measureType: p.measureType }))}
           initialColumns={columns}
           initialCells={cells}
+          readOnly={!can(user, "edit-data")}
         />
       </div>
     </div>

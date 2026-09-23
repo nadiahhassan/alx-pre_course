@@ -1,8 +1,10 @@
+import { requirePageAbility } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { CsvImport } from "@/components/csv-import";
 
 export default async function ImportPage({ params }: { params: Promise<{ id: string }> }) {
+  await requirePageAbility("edit-data");
   const { id } = await params;
   const parameters = await db.parameter.findMany({
     where: { projectId: id, archivedAt: null },

@@ -1,3 +1,4 @@
+import { requirePageAbility } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { ParameterForm, type ParameterDefaults } from "@/components/forms/parameter-form";
 import { createParameter } from "@/server/parameter-actions";
@@ -10,6 +11,7 @@ export default async function NewParameterPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ from?: string }>;
 }) {
+  await requirePageAbility("edit-data");
   const { id } = await params;
   const { from } = await searchParams;
   await getProject(id);

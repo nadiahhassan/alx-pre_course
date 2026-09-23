@@ -1,10 +1,10 @@
 "use server";
 
+import { requireAbility } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { EVIDENCE_TYPES } from "@/lib/constants";
-import { getCurrentUser } from "@/lib/current-user";
 import { FormReader, formValues, type FormState } from "@/lib/forms";
 
 async function readEvidence(projectId: string, fd: FormData) {
@@ -37,6 +37,7 @@ function revalidate(projectId: string) {
 }
 
 export async function createEvidence(projectId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-evidence");
   const { f, data } = await readEvidence(projectId, fd);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.evidence.create({ data: { ...data, date: data.date!, projectId } });
@@ -45,6 +46,7 @@ export async function createEvidence(projectId: string, _prev: FormState, fd: Fo
 }
 
 export async function updateEvidence(projectId: string, evidenceId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-evidence");
   const { f, data } = await readEvidence(projectId, fd);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.evidence.update({ where: { id: evidenceId, projectId }, data: { ...data, date: data.date! } });
@@ -53,16 +55,17 @@ export async function updateEvidence(projectId: string, evidenceId: string, _pre
 }
 
 export async function deleteEvidence(projectId: string, evidenceId: string) {
+  await requireAbility("edit-evidence");
   await db.evidence.delete({ where: { id: evidenceId, projectId } });
   revalidate(projectId);
 }
 
 /** A person approves an AI-generated item so it can appear on stakeholder views. */
 export async function setEvidenceApproved(projectId: string, evidenceId: string, approved: boolean) {
-  const user = await getCurrentUser();
+  const user = await requireAbility("approve-ai");
   await db.evidence.update({
     where: { id: evidenceId, projectId },
-    data: approved ? { approvedAt: new Date(), approvedById: user?.id } : { approvedAt: null, approvedById: null },
+    data: approved ? { approvedAt: new Date(), approvedById: user.id } : { approvedAt: null, approvedById: null },
   });
   revalidate(projectId);
 }

@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import type { Campaign } from "@prisma/client";
 import { Field } from "@/components/ui";
-import { CHANNEL_LABELS, CHANNELS } from "@/lib/constants";
+import { AUDIENCE_LABELS, AUDIENCES, CHANNEL_LABELS, CHANNELS } from "@/lib/constants";
 import { toDateInput } from "@/lib/format";
 import { fieldDefault, formKey, type FormState } from "@/lib/forms";
 
@@ -15,7 +15,7 @@ export function CampaignForm({ action, campaign, submitLabel }: { action: Action
   const d = (name: string, fallback: string | number | null | undefined) => fieldDefault(state, name, fallback);
   return (
     <form key={formKey(state)} action={formAction} className="card space-y-4 p-5">
-      <div className="grid gap-4 sm:grid-cols-[2fr_1fr]">
+      <div className="grid gap-4 sm:grid-cols-[2fr_1fr_1fr]">
         <Field label="Name" name="name" error={e.name}>
           <input id="name" name="name" className="input" defaultValue={d("name", campaign?.name)} required />
         </Field>
@@ -24,6 +24,15 @@ export function CampaignForm({ action, campaign, submitLabel }: { action: Action
             {CHANNELS.map((c) => (
               <option key={c} value={c}>
                 {CHANNEL_LABELS[c]}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <Field label="Audience" name="audience">
+          <select id="audience" name="audience" className="input" defaultValue={d("audience", campaign?.audience ?? "external")}>
+            {AUDIENCES.map((a) => (
+              <option key={a} value={a}>
+                {AUDIENCE_LABELS[a]}
               </option>
             ))}
           </select>

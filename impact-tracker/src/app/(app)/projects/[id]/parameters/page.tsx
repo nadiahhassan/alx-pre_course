@@ -1,3 +1,5 @@
+import { can } from "@/lib/permissions";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { LEVEL_LABELS, LEVELS } from "@/lib/constants";
@@ -8,6 +10,7 @@ import { getProject } from "@/server/queries";
 
 export default async function ParametersPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const user = await requireUser();
   const project = await getProject(id);
   const parameters = await db.parameter.findMany({
     where: { projectId: id },
@@ -23,14 +26,14 @@ export default async function ParametersPage({ params }: { params: Promise<{ id:
         <p className="text-sm text-ink-2">
           Metrics tracked for this project. You can add parameters at any point; existing data is unaffected.
         </p>
-        <div className="flex gap-2">
+        {can(user, "edit-data") && <div className="flex gap-2">
           <Link href={`/projects/${id}/parameters/library`} className="btn-secondary">
             Add from library
           </Link>
           <Link href={`/projects/${id}/parameters/new`} className="btn-primary">
             New parameter
           </Link>
-        </div>
+        </div>}
       </div>
 
       {active.length === 0 && (
@@ -77,7 +80,7 @@ export default async function ParametersPage({ params }: { params: Promise<{ id:
                       <td className="px-4 py-3 capitalize">{p.frequency}</td>
                       <td className="tabular px-4 py-3">{p._count.entries}</td>
                       <td className="px-4 py-3 text-right">
-                        <ParameterRowActions projectId={id} parameterId={p.id} archived={false} inLibrary={!!p.libraryItemId} />
+                        {can(user, "edit-data") && <ParameterRowActions projectId={id} parameterId={p.id} archived={false} inLibrary={!!p.libraryItemId} />}
                       </td>
                     </tr>
                   ))}
@@ -97,7 +100,7 @@ export default async function ParametersPage({ params }: { params: Promise<{ id:
                 <span>
                   {p.name} <span className="text-muted">· {p._count.entries} entries kept</span>
                 </span>
-                <ParameterRowActions projectId={id} parameterId={p.id} archived inLibrary={!!p.libraryItemId} />
+                {can(user, "edit-data") && <ParameterRowActions projectId={id} parameterId={p.id} archived inLibrary={!!p.libraryItemId} />}
               </li>
             ))}
           </ul>

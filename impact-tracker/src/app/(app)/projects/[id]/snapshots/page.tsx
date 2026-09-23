@@ -1,3 +1,5 @@
+import { can } from "@/lib/permissions";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/format";
@@ -5,6 +7,7 @@ import { EmptyState } from "@/components/ui";
 
 export default async function SnapshotsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const user = await requireUser();
   const snapshots = await db.snapshot.findMany({
     where: { projectId: id },
     select: {
@@ -18,9 +21,11 @@ export default async function SnapshotsPage({ params }: { params: Promise<{ id: 
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-ink-2">Frozen copies of the dashboard, so figures already shared don’t change when data is edited later.</p>
-        <Link href={`/projects/${id}/snapshots/new`} className="btn-primary">
-          Freeze snapshot
-        </Link>
+        {can(user, "edit-data") && (
+          <Link href={`/projects/${id}/snapshots/new`} className="btn-primary">
+            Freeze snapshot
+          </Link>
+        )}
       </div>
       {snapshots.length === 0 ? (
         <EmptyState title="No snapshots yet">Freeze one before a report or board meeting.</EmptyState>

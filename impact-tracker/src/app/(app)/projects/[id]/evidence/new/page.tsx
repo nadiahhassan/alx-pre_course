@@ -1,3 +1,4 @@
+import { requirePageAbility } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { toDateInput, today } from "@/lib/format";
 import { EvidenceForm } from "@/components/forms/evidence-form";
@@ -11,6 +12,7 @@ export default async function NewEvidencePage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ parameter?: string }>;
 }) {
+  await requirePageAbility("edit-evidence");
   const { id } = await params;
   const { parameter } = await searchParams;
   await getProject(id);

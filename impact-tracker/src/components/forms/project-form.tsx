@@ -20,13 +20,21 @@ const TOC = [
 export function ProjectForm({
   action,
   users,
+  focusAreas,
+  defaultFocusAreaId,
+  defaultCurrency = "USD",
   project,
   submitLabel,
+  readOnly = false,
 }: {
   action: Action;
   users: { id: string; name: string }[];
+  focusAreas: { id: string; name: string }[];
+  defaultFocusAreaId?: string;
+  defaultCurrency?: string;
   project?: Project;
   submitLabel: string;
+  readOnly?: boolean;
 }) {
   const [state, formAction, pending] = useActionState(action, {});
   const e = state.errors ?? {};
@@ -34,8 +42,9 @@ export function ProjectForm({
 
   return (
     <form key={formKey(state)} action={formAction} className="space-y-8">
+      <fieldset disabled={readOnly} className="space-y-8">
       <section className="card space-y-4 p-5">
-        <h2 className="font-semibold">Project details</h2>
+        <h2 className="font-semibold">Initiative details</h2>
         <Field label="Name" name="name" error={e.name}>
           <input id="name" name="name" className="input" defaultValue={d("name", project?.name)} required />
         </Field>
@@ -43,6 +52,16 @@ export function ProjectForm({
           <textarea id="description" name="description" rows={3} className="input" defaultValue={d("description", project?.description)} />
         </Field>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Focus area" name="focusAreaId">
+            <select id="focusAreaId" name="focusAreaId" className="input" defaultValue={d("focusAreaId", project?.focusAreaId ?? defaultFocusAreaId)}>
+              <option value="">None</option>
+              {focusAreas.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.name}
+                </option>
+              ))}
+            </select>
+          </Field>
           <Field label="Owner" name="ownerId">
             <select id="ownerId" name="ownerId" className="input" defaultValue={d("ownerId", project?.ownerId)}>
               <option value="">Unassigned</option>
@@ -76,7 +95,7 @@ export function ProjectForm({
               <input id="budget" name="budget" inputMode="decimal" className="input" defaultValue={d("budget", project?.budget)} />
             </Field>
             <Field label="Currency" name="currency">
-              <select id="currency" name="currency" className="input" defaultValue={d("currency", project?.currency ?? "GBP")}>
+              <select id="currency" name="currency" className="input" defaultValue={d("currency", project?.currency ?? defaultCurrency)}>
                 {["GBP", "USD", "EUR"].map((c) => (
                   <option key={c}>{c}</option>
                 ))}
@@ -108,7 +127,8 @@ export function ProjectForm({
         </ol>
       </section>
 
-      <div className="flex items-center gap-3">
+      </fieldset>
+      <div className={`flex items-center gap-3 ${readOnly ? "hidden" : ""}`}>
         <button type="submit" className="btn-primary" disabled={pending}>
           {pending ? "Saving…" : submitLabel}
         </button>

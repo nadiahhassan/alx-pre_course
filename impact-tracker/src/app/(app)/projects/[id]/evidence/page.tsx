@@ -1,3 +1,5 @@
+import { can } from "@/lib/permissions";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { EmptyState } from "@/components/ui";
@@ -13,6 +15,7 @@ export default async function EvidencePage({
   searchParams: Promise<{ parameter?: string }>;
 }) {
   const { id } = await params;
+  const user = await requireUser();
   const { parameter } = await searchParams;
   const [items, parameters] = await Promise.all([
     db.evidence.findMany({
@@ -42,9 +45,9 @@ export default async function EvidencePage({
           </select>
           <button className="btn-secondary py-1">Filter</button>
         </form>
-        <Link href={`/projects/${id}/evidence/new${parameter && parameter !== "none" ? `?parameter=${parameter}` : ""}`} className="btn-primary">
+        {can(user, "edit-evidence") && <Link href={`/projects/${id}/evidence/new${parameter && parameter !== "none" ? `?parameter=${parameter}` : ""}`} className="btn-primary">
           Add evidence
-        </Link>
+        </Link>}
       </div>
       {pending > 0 && (
         <p className="rounded-md border border-warning/60 bg-warning/10 px-3 py-2 text-sm">
@@ -74,7 +77,14 @@ export default async function EvidencePage({
                   {e.approvedAt && e.approvedBy && ` · Approved by ${e.approvedBy.name}`}
                 </p>
               </div>
-              <EvidenceActions projectId={id} evidenceId={e.id} isAi={e.origin === "ai"} approved={e.approvedAt !== null} />
+              <EvidenceActions
+                projectId={id}
+                evidenceId={e.id}
+                isAi={e.origin === "ai"}
+                approved={e.approvedAt !== null}
+                canEdit={can(user, "edit-evidence")}
+                canApprove={can(user, "approve-ai")}
+              />
             </li>
           ))}
         </ul>

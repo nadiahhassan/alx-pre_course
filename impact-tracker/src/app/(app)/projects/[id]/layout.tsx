@@ -14,8 +14,11 @@ export default async function ProjectLayout({
   const project = await getProject(id);
   return (
     <div>
-      <Link href="/" className="mb-2 inline-block text-sm text-ink-2 hover:text-ink print:hidden">
-        ← Portfolio
+      <Link
+        href={project.focusArea ? `/focus-areas/${project.focusArea.id}` : "/"}
+        className="mb-2 inline-block text-sm text-ink-2 hover:text-ink print:hidden"
+      >
+        ← {project.focusArea ? project.focusArea.name : "Programme"}
       </Link>
       <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <h1 className="text-2xl font-semibold tracking-tight">{project.name}</h1>

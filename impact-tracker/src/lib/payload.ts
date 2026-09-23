@@ -5,6 +5,8 @@ import type { Campaign, CampaignMetric, Entry, Evidence, Parameter, Project } fr
 import { summarizeCampaign, type CampaignSummary } from "./campaigns";
 import { buildDashboard, type ProjectDashboard } from "./dashboard";
 import { isStakeholderVisible } from "./visibility";
+import { matchesAudience, type AudienceFilter } from "./audience";
+import { countStatuses, overallRag } from "./status";
 
 export const PAYLOAD_VERSION = 1;
 
@@ -17,6 +19,7 @@ export interface CampaignView extends CampaignSummary {
   spend: number;
   trackingTag: string;
   notes: string;
+  audience: string;
 }
 
 export interface EvidenceView {
@@ -71,6 +74,7 @@ export function buildPayload(src: PayloadSource, asOf: Date, opts: { stakeholder
         spend: c.spend,
         trackingTag: c.trackingTag,
         notes: c.notes,
+        audience: c.audience,
         ...summarizeCampaign(c.spend, metrics),
       };
     });
@@ -101,5 +105,26 @@ export function buildPayload(src: PayloadSource, asOf: Date, opts: { stakeholder
     campaigns,
     evidence,
     stakeholderSafe: opts.stakeholderSafe,
+  };
+}
+
+/**
+ * Narrow a payload to one audience: metrics and campaigns tagged for it (or
+ * "both"), and evidence attached to those metrics or to the whole initiative.
+ * Status counts are recalculated for what remains.
+ */
+export function filterPayload(payload: DashboardPayload, audience: AudienceFilter): DashboardPayload {
+  if (audience === "all") return payload;
+  // Snapshots frozen before audiences existed have no tag; treat them as external.
+  const tag = (x: { audience?: string }) => x.audience ?? "external";
+  const metrics = payload.dashboard.metrics.filter((m) => matchesAudience(tag(m), audience));
+  const ids = new Set(metrics.map((m) => m.id));
+  const key = metrics.filter((m) => m.isKey).map((m) => m.status);
+  const all = metrics.map((m) => m.status);
+  return {
+    ...payload,
+    dashboard: { ...payload.dashboard, metrics, counts: countStatuses(all), overall: overallRag(key.length ? key : all) },
+    campaigns: payload.campaigns.filter((c) => matchesAudience(tag(c), audience)),
+    evidence: payload.evidence.filter((e) => !e.parameterId || ids.has(e.parameterId)),
   };
 }

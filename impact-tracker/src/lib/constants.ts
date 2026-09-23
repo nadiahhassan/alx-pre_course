@@ -50,3 +50,28 @@ export type EvidenceType = (typeof EVIDENCE_TYPES)[number];
 export function isOneOf<T extends readonly string[]>(list: T, value: unknown): value is T[number] {
   return typeof value === "string" && (list as readonly string[]).includes(value);
 }
+
+export const AUDIENCES = ["external", "internal", "both"] as const;
+export type Audience = (typeof AUDIENCES)[number];
+export const AUDIENCE_LABELS: Record<Audience, string> = {
+  external: "External",
+  internal: "Internal",
+  both: "Internal & external",
+};
+
+export const ROLES = ["admin", "programme", "partner", "viewer"] as const;
+export type Role = (typeof ROLES)[number];
+export const ROLE_LABELS: Record<Role, string> = {
+  admin: "Global lead (admin)",
+  programme: "Programme team",
+  partner: "Partner team",
+  viewer: "Viewer",
+};
+
+export const TEAMS = ["comms", "gapp", "marketing"] as const;
+export type Team = (typeof TEAMS)[number];
+export const TEAM_LABELS: Record<Team, string> = {
+  comms: "Comms",
+  gapp: "Government Affairs & Public Policy",
+  marketing: "Marketing",
+};

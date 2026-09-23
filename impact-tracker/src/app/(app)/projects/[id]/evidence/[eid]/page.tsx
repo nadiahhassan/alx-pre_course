@@ -1,3 +1,4 @@
+import { requirePageAbility } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { toDateInput, today } from "@/lib/format";
@@ -6,6 +7,7 @@ import { AiTag } from "@/components/ui";
 import { updateEvidence } from "@/server/evidence-actions";
 
 export default async function EditEvidencePage({ params }: { params: Promise<{ id: string; eid: string }> }) {
+  await requirePageAbility("edit-evidence");
   const { id, eid } = await params;
   const evidence = await db.evidence.findUnique({ where: { id: eid } });
   if (!evidence || evidence.projectId !== id) notFound();

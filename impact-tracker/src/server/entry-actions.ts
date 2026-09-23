@@ -1,10 +1,10 @@
 "use server";
 
+import { requireAbility } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { CONFIDENCE, isOneOf } from "@/lib/constants";
 import { parseEntriesCsv, type CsvRow } from "@/lib/csv";
-import { getCurrentUser } from "@/lib/current-user";
 import { FormReader, formValues, type FormState } from "@/lib/forms";
 
 export interface CellEntry {
@@ -36,6 +36,7 @@ export async function saveCell(
   value: number | null,
   meta: { confidence?: string; note?: string } = {},
 ): Promise<SaveResult> {
+  const user = await requireAbility("edit-data");
   if (!(await parameterInProject(projectId, parameterId))) return { ok: false, error: "Parameter not found in this project" };
   const date = new Date(dateIso);
   if (Number.isNaN(date.getTime())) return { ok: false, error: "Invalid date" };
@@ -51,7 +52,6 @@ export async function saveCell(
     return { ok: false, error: "Unknown confidence level" };
   }
 
-  const user = await getCurrentUser();
   const entry = await db.entry.upsert({
     where,
     create: {
@@ -60,13 +60,13 @@ export async function saveCell(
       value,
       confidence: meta.confidence ?? "measured",
       note: meta.note ?? "",
-      loggedById: user?.id,
+      loggedById: user.id,
     },
     update: {
       value,
       ...(meta.confidence !== undefined && { confidence: meta.confidence }),
       ...(meta.note !== undefined && { note: meta.note }),
-      loggedById: user?.id,
+      loggedById: user.id,
     },
     include: { loggedBy: true },
   });
@@ -86,6 +86,7 @@ export async function saveCell(
 
 /** Single-entry form. Replaces any existing value for the same parameter and date. */
 export async function createEntry(projectId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-data");
   const f = new FormReader(fd);
   const parameterId = f.text("parameterId", { required: true });
   const date = f.date("date", { required: true });
@@ -115,6 +116,7 @@ export async function importEntriesCsv(
   defaultConfidence: string,
   commit: boolean,
 ): Promise<ImportPreview> {
+  const user = await requireAbility("edit-data");
   const parameters = await db.parameter.findMany({
     where: { projectId, archivedAt: null },
     select: { id: true, name: true },
@@ -145,7 +147,6 @@ export async function importEntriesCsv(
 
   if (!commit) return { format: parsed.format, error: null, rows: withAction };
 
-  const user = await getCurrentUser();
   await db.$transaction(
     valid.map((r) =>
       db.entry.upsert({
@@ -156,13 +157,13 @@ export async function importEntriesCsv(
           value: r.value!,
           confidence: r.confidence,
           note: r.note,
-          loggedById: user?.id,
+          loggedById: user.id,
         },
         update: {
           value: r.value!,
           confidence: r.confidence,
           ...(r.note && { note: r.note }),
-          loggedById: user?.id,
+          loggedById: user.id,
         },
       }),
     ),

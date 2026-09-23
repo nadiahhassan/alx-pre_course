@@ -1,3 +1,4 @@
+import { requirePageAbility } from "@/lib/auth";
 import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/format";
@@ -14,6 +15,7 @@ export default async function SharePage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ view?: string; source?: string }>;
 }) {
+  await requirePageAbility("share");
   const { id } = await params;
   const sp = await searchParams;
   await getProject(id);

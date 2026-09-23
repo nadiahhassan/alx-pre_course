@@ -1,3 +1,4 @@
+import { requirePageAbility } from "@/lib/auth";
 import { SnapshotForm } from "@/components/forms/snapshot-form";
 import { toDateInput, today } from "@/lib/format";
 import { createSnapshot } from "@/server/snapshot-actions";
@@ -8,6 +9,7 @@ function quarterLabel(d: Date) {
 }
 
 export default async function NewSnapshotPage({ params }: { params: Promise<{ id: string }> }) {
+  await requirePageAbility("edit-data");
   const { id } = await params;
   await getProject(id);
   const now = today();

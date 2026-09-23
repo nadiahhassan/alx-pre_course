@@ -1,10 +1,11 @@
 "use server";
 
+import { requireAbility } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { normalizeMetricName } from "@/lib/campaigns";
-import { CHANNELS } from "@/lib/constants";
+import { AUDIENCES, CHANNELS } from "@/lib/constants";
 import { parseCampaignCsv, type CampaignCsvRow } from "@/lib/csv";
 import { FormReader, formValues, type FormState } from "@/lib/forms";
 
@@ -18,6 +19,7 @@ function readCampaign(fd: FormData) {
     spend: f.number("spend", { min: 0 }) ?? 0,
     trackingTag: f.text("trackingTag", { max: 200 }),
     notes: f.text("notes", { max: 2000 }),
+    audience: f.oneOf("audience", AUDIENCES, "external"),
   };
   if (data.startDate && data.endDate && data.endDate < data.startDate) f.errors.endDate = "End date must be on or after the start date";
   return { f, data };
@@ -28,6 +30,7 @@ function revalidate(projectId: string) {
 }
 
 export async function createCampaign(projectId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-campaigns");
   const { f, data } = readCampaign(fd);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   const c = await db.campaign.create({ data: { ...data, startDate: data.startDate!, projectId } });
@@ -36,6 +39,7 @@ export async function createCampaign(projectId: string, _prev: FormState, fd: Fo
 }
 
 export async function updateCampaign(projectId: string, campaignId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-campaigns");
   const { f, data } = readCampaign(fd);
   if (!f.ok) return { errors: f.errors, values: formValues(fd) };
   await db.campaign.update({ where: { id: campaignId, projectId }, data: { ...data, startDate: data.startDate! } });
@@ -44,6 +48,7 @@ export async function updateCampaign(projectId: string, campaignId: string, _pre
 }
 
 export async function deleteCampaign(projectId: string, campaignId: string) {
+  await requireAbility("edit-campaigns");
   await db.campaign.delete({ where: { id: campaignId, projectId } });
   revalidate(projectId);
   redirect(`/projects/${projectId}/campaigns`);
@@ -51,6 +56,7 @@ export async function deleteCampaign(projectId: string, campaignId: string) {
 
 /** Add or replace one metric value; an empty value deletes it. */
 export async function saveCampaignMetric(projectId: string, campaignId: string, _prev: FormState, fd: FormData): Promise<FormState> {
+  await requireAbility("edit-campaigns");
   const f = new FormReader(fd);
   const date = f.date("date", { required: true });
   const metric = normalizeMetricName(f.text("metric", { required: true, max: 60 }));
@@ -76,6 +82,7 @@ export interface CampaignImportResult {
 }
 
 export async function importCampaignCsv(projectId: string, text: string, commit: boolean): Promise<CampaignImportResult> {
+  await requireAbility("edit-campaigns");
   const campaigns = await db.campaign.findMany({ where: { projectId }, select: { id: true, name: true, trackingTag: true } });
   const parsed = parseCampaignCsv(text, campaigns);
   if (parsed.error || !commit) return parsed;

@@ -13,7 +13,8 @@
     "db:reset": "prisma migrate reset --force",
     "setup": "prisma migrate deploy && prisma db seed",
     "db:postgres-schema": "node scripts/postgres-schema.mjs",
-    "build:postgres": "node scripts/postgres-schema.mjs && prisma generate --schema prisma/postgres/schema.prisma && prisma migrate deploy --schema prisma/postgres/schema.prisma && tsx prisma/seed.ts && next build"
+    "build:postgres": "node scripts/postgres-schema.mjs && prisma generate --schema prisma/postgres/schema.prisma && prisma migrate deploy --schema prisma/postgres/schema.prisma && tsx prisma/seed.ts && next build",
+    "create-admin": "tsx scripts/create-admin.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

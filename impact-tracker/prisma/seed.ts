@@ -6,6 +6,10 @@
 
 import { PrismaClient } from "@prisma/client";
 import { buildPayload } from "../src/lib/payload";
+import { hashPassword } from "../src/lib/passwords";
+
+// Demo sign-in password for every seeded account. Override with SEED_PASSWORD.
+const PASSWORD = process.env.SEED_PASSWORD || "demo-password-2026";
 
 const prisma = new PrismaClient();
 const d = (s: string) => new Date(`${s}T00:00:00Z`);
@@ -18,6 +22,7 @@ async function main() {
     return;
   }
   await prisma.$transaction([
+    prisma.session.deleteMany(),
     prisma.shareLink.deleteMany(),
     prisma.snapshot.deleteMany(),
     prisma.evidence.deleteMany(),
@@ -27,28 +32,54 @@ async function main() {
     prisma.parameter.deleteMany(),
     prisma.libraryParameter.deleteMany(),
     prisma.project.deleteMany(),
+    prisma.focusArea.deleteMany(),
+    prisma.programme.deleteMany(),
     prisma.user.deleteMany(),
   ]);
 
-  const [lead, mel, comms] = await Promise.all([
-    prisma.user.create({ data: { name: "Amira Okafor", email: "amira@example.org", role: "admin" } }),
-    prisma.user.create({ data: { name: "Tom Reeves", email: "tom@example.org" } }),
-    prisma.user.create({ data: { name: "Priya Shah", email: "priya@example.org" } }),
-  ]);
+  const passwordHash = hashPassword(PASSWORD);
+  const person = (name: string, email: string, role: string, team = "") => prisma.user.create({ data: { name, email, role, team, passwordHash } });
+  const lead = await person("Amira Okafor", "lead@example.org", "admin");
+  const mel = await person("Tom Reeves", "programme@example.org", "programme");
+  await person("Priya Shah", "comms@example.org", "partner", "comms");
+  await person("Daniel Mensah", "gapp@example.org", "partner", "gapp");
+  await person("Sofia Lindqvist", "marketing@example.org", "partner", "marketing");
+
+  const programme = await prisma.programme.create({
+    data: {
+      name: "Global News Programme",
+      mission: "Help news organisations and the people who work with them build the skills, audiences and support that keep reliable journalism going.",
+      description: "A global programme run with Comms, Government Affairs & Public Policy and Marketing. This year's focus is training, for newsrooms outside the organisation and for colleagues inside it.",
+      currency: "USD",
+      budget: 500000,
+      startDate: d("2026-03-01"),
+      endDate: d("2027-02-28"),
+    },
+  });
+  const trainings = await prisma.focusArea.create({
+    data: {
+      programmeId: programme.id,
+      name: "Trainings",
+      description: "Skills training for journalists and newsrooms (external), and news-literacy training that turns colleagues into programme champions (internal).",
+      ownerId: lead.id,
+      budget: 500000,
+    },
+  });
 
   const project = await prisma.project.create({
     data: {
-      name: "Local News Resilience Programme",
+      focusAreaId: trainings.id,
+      name: "Newsroom Digital Skills Training",
       description:
-        "A 12-month programme helping independent local news organisations build digital audiences and sustainable revenue through training, a shared digital toolkit and small grants.",
+        "Training cohorts, a shared digital toolkit and small grants that help independent local newsrooms build digital audiences and sustainable revenue.",
       ownerId: lead.id,
       startDate: d("2026-03-01"),
       endDate: d("2027-02-28"),
-      budget: 450000,
-      currency: "GBP",
-      region: "North of England",
+      budget: 420000,
+      currency: "USD",
+      region: "UK & Ireland",
       status: "active",
-      tocInputs: "£450k grant fund; 3 programme staff; trainer network of 12 working journalists; shared analytics and CMS toolkit.",
+      tocInputs: "$420k budget including a grant fund; 3 programme staff; trainer network of 12 working journalists; shared analytics and CMS toolkit.",
       tocActivities: "Monthly training cohorts on audience development and revenue; toolkit onboarding and support; small grants for pilots; peer-learning roadshow.",
       tocOutputs: "300 journalists trained; 40 newsrooms onboarded to the toolkit; 30 newsrooms using audience analytics every week.",
       tocOutcomes: "Newsrooms grow digital audiences, add new revenue streams, and staff apply new skills; local readers trust their local news more.",
@@ -94,10 +125,10 @@ async function main() {
 
   const params: P[] = [
     {
-      key: "grants", name: "Grant funding disbursed", level: "input", unit: "£", measureType: "cumulative",
-      definition: "Grant payments released to participating newsrooms.", baseline: 0, target: 450000,
+      key: "grants", name: "Training grants disbursed", level: "input", unit: "$", measureType: "cumulative",
+      definition: "Grant payments released to participating newsrooms to cover training time and pilots.", baseline: 0, target: 300000,
       frequency: "monthly", dataSource: "Finance system", confidence: "measured",
-      values: [30000, 25000, 35000, 30000, 25000, 35000],
+      values: [20000, 17000, 23000, 20000, 17000, 23000],
     },
     {
       key: "sessions", name: "Training sessions delivered", level: "activity", unit: "sessions", measureType: "cumulative",
@@ -269,7 +300,7 @@ async function main() {
       {
         projectId: project.id, parameterId: ids.revenue, type: "case-study", date: d("2026-08-05"),
         title: "Tyneside Tribune launches a membership scheme",
-        body: "After the revenue cohort, the Tribune launched a £4/month membership with a members-only newsletter. 310 members joined in the first six weeks, covering one part-time reporter.",
+        body: "After the revenue cohort, the Tribune launched a $5/month membership with a members-only newsletter. 310 members joined in the first six weeks, covering one part-time reporter.",
         source: "Programme case study", tags: "revenue,membership",
       },
       {
@@ -336,7 +367,72 @@ async function main() {
     data: { projectId: project.id, snapshotId: q2.id, view: "leadership", label: "Board pack, July", token: "example-q2-board-pack" },
   });
 
-  console.log(`Seeded "${project.name}" with ${params.length} parameters, ${campaigns.length} campaigns, 8 evidence items and a Q2 snapshot.`);
+  // Second initiative: internal audience (colleagues across the organisation).
+  const internal = await prisma.project.create({
+    data: {
+      focusAreaId: trainings.id,
+      name: "Newsroom Champions (internal)",
+      description: "News-literacy sessions for colleagues, and a champions network who explain the programme and use its stories in their own teams.",
+      ownerId: mel.id,
+      startDate: d("2026-03-01"),
+      endDate: d("2027-02-28"),
+      budget: 60000,
+      currency: "USD",
+      region: "Global",
+      status: "active",
+      tocInputs: "$60k; 1 programme lead; content from the external training; support from Comms and Marketing.",
+      tocActivities: "Monthly news-literacy sessions; a champions certification; an internal case-study pack.",
+      tocOutputs: "400 colleagues trained; 40 certified champions.",
+      tocOutcomes: "Colleagues can explain the programme confidently and use its stories with partners and policymakers.",
+      tocImpact: "The organisation speaks about news and journalism with one informed voice.",
+    },
+  });
+  const internalParams = [
+    { name: "Colleagues completing news-literacy training", level: "output", unit: "people", measureType: "cumulative", target: 400, isKey: true, values: [30, 45, 40, 25, 20, 35], confidence: "measured", dataSource: "Learning platform" },
+    { name: "Certified internal champions", level: "output", unit: "champions", measureType: "cumulative", target: 40, values: [0, 4, 3, 2, 1, 3], confidence: "measured", dataSource: "Champions register", key: "champions" },
+    { name: "Colleagues confident explaining the programme", level: "outcome", unit: "%", measureType: "point", baseline: 35, target: 70, isKey: true, values: [null, null, 41, null, null, 44], confidence: "self-reported", dataSource: "Quarterly pulse survey", frequency: "quarterly", key: "confidence" },
+    { name: "Teams using programme case studies", level: "outcome", unit: "teams", measureType: "point", target: 15, values: [1, 2, 4, 5, 7, 9], confidence: "measured", dataSource: "Comms request log" },
+  ];
+  const internalIds: Record<string, string> = {};
+  for (const [i, ip] of internalParams.entries()) {
+    const created = await prisma.parameter.create({
+      data: {
+        projectId: internal.id, name: ip.name, level: ip.level, unit: ip.unit, measureType: ip.measureType,
+        baseline: ip.baseline ?? 0, target: ip.target, isKey: ip.isKey ?? false, audience: "internal",
+        frequency: ip.frequency ?? "monthly", dataSource: ip.dataSource, sortOrder: i,
+      },
+    });
+    if (ip.key) internalIds[ip.key] = created.id;
+    await prisma.entry.createMany({
+      data: ip.values.flatMap((value, m) =>
+        value === null ? [] : [{ parameterId: created.id, date: d(MONTHS[m]), value, confidence: ip.confidence, loggedById: mel.id }],
+      ),
+    });
+  }
+  // Champions are the leading indicator for colleague confidence.
+  await prisma.parameter.update({ where: { id: internalIds.champions }, data: { leadingIndicatorForId: internalIds.confidence } });
+  await prisma.campaign.create({
+    data: {
+      projectId: internal.id, name: "Internal launch: town hall and newsletter", channel: "events", audience: "internal",
+      startDate: d("2026-04-20"), endDate: d("2026-05-15"), spend: 3500, trackingTag: "INT-LAUNCH-26",
+      notes: "Global town hall with the Comms team, followed by a four-part internal newsletter.",
+      metrics: { create: [
+        { date: d("2026-04-01"), metric: "attendees", value: 620 },
+        { date: d("2026-05-01"), metric: "opens", value: 4100 },
+        { date: d("2026-05-01"), metric: "sign-ups", value: 85 },
+      ] },
+    },
+  });
+  await prisma.evidence.create({
+    data: {
+      projectId: internal.id, parameterId: internalIds.confidence, type: "quote", date: d("2026-09-08"),
+      title: "Policy colleague on the champions session",
+      body: "I used the local newsroom examples in a meeting with a ministry team the following week. Having real numbers made the conversation much easier.",
+      source: "Champion, Government Affairs & Public Policy", tags: "gapp,champions",
+    },
+  });
+
+  console.log(`Seeded "${project.name}" in focus area "${trainings.name}", plus the internal initiative "${internal.name}". Sign in with any @example.org demo account; password: ${PASSWORD}`);
 }
 
 main()

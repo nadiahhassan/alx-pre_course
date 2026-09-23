@@ -6,7 +6,7 @@ const now = new Date();
 
 function source(): PayloadSource {
   const project = {
-    id: "proj", name: "P", description: "", ownerId: null, startDate: d("2026-01-01"), endDate: d("2026-12-31"),
+    id: "proj", focusAreaId: null, name: "P", description: "", ownerId: null, startDate: d("2026-01-01"), endDate: d("2026-12-31"),
     budget: null, currency: "GBP", region: "", status: "active",
     tocInputs: "", tocActivities: "", tocOutputs: "", tocOutcomes: "", tocImpact: "",
     archivedAt: null, createdAt: now, updatedAt: now,
@@ -14,7 +14,7 @@ function source(): PayloadSource {
   const param = {
     id: "m1", projectId: "proj", name: "M", definition: "", level: "output", unit: "", direction: "increase",
     measureType: "point", baseline: 0, target: 100, targetDate: null, frequency: "monthly", dataSource: "",
-    isKey: true, leadingIndicatorForId: null, libraryItemId: null, origin: "human", approvedById: null,
+    isKey: true, audience: "external", leadingIndicatorForId: null, libraryItemId: null, origin: "human", approvedById: null,
     approvedAt: null, sortOrder: 0, archivedAt: null, createdAt: now, updatedAt: now,
   };
   const entry = (date: string, value: number) => ({
@@ -30,7 +30,7 @@ function source(): PayloadSource {
     campaigns: [
       {
         id: "c1", projectId: "proj", name: "C1", channel: "email", startDate: d("2026-02-01"), endDate: d("2026-02-28"),
-        spend: 100, trackingTag: "", notes: "", createdAt: now, updatedAt: now,
+        spend: 100, trackingTag: "", audience: "external", notes: "", createdAt: now, updatedAt: now,
         metrics: [
           { id: "x", campaignId: "c1", date: d("2026-02-01"), metric: "sign-ups", value: 10 },
           { id: "y", campaignId: "c1", date: d("2026-05-01"), metric: "sign-ups", value: 10 },
@@ -38,7 +38,7 @@ function source(): PayloadSource {
       },
       {
         id: "c2", projectId: "proj", name: "C2", channel: "events", startDate: d("2026-05-01"), endDate: null,
-        spend: 0, trackingTag: "", notes: "", createdAt: now, updatedAt: now, metrics: [],
+        spend: 0, trackingTag: "", audience: "external", notes: "", createdAt: now, updatedAt: now, metrics: [],
       },
     ],
     evidence: [

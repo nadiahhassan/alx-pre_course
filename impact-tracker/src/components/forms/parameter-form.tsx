@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { Field } from "@/components/ui";
-import { DIRECTIONS, FREQUENCIES, LEVEL_LABELS, LEVELS, MEASURE_TYPE_LABELS, MEASURE_TYPES } from "@/lib/constants";
+import { AUDIENCE_LABELS, AUDIENCES, DIRECTIONS, FREQUENCIES, LEVEL_LABELS, LEVELS, MEASURE_TYPE_LABELS, MEASURE_TYPES } from "@/lib/constants";
 import { fieldDefault, formKey, type FormState } from "@/lib/forms";
 
 type Action = (prev: FormState, fd: FormData) => Promise<FormState>;
@@ -21,6 +21,7 @@ export interface ParameterDefaults {
   target?: number;
   targetDate?: string;
   isKey?: boolean;
+  audience?: string;
   leadingIndicatorForId?: string | null;
   libraryItemId?: string | null;
 }
@@ -129,6 +130,16 @@ export function ParameterForm({
               <input id="targetDate" name="targetDate" type="date" className="input" defaultValue={d("targetDate")} />
             </Field>
           </div>
+
+          <Field label="Audience" name="audience" hint="Who this metric is about: people inside the organisation, outside it, or both.">
+            <select id="audience" name="audience" className="input" defaultValue={d("audience", "external")}>
+              {AUDIENCES.map((a) => (
+                <option key={a} value={a}>
+                  {AUDIENCE_LABELS[a]}
+                </option>
+              ))}
+            </select>
+          </Field>
 
           <Field
             label="Leading indicator for"

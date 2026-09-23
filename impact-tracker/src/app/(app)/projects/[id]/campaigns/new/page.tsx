@@ -1,8 +1,10 @@
+import { requirePageAbility } from "@/lib/auth";
 import { CampaignForm } from "@/components/forms/campaign-form";
 import { createCampaign } from "@/server/campaign-actions";
 import { getProject } from "@/server/queries";
 
 export default async function NewCampaignPage({ params }: { params: Promise<{ id: string }> }) {
+  await requirePageAbility("edit-campaigns");
   const { id } = await params;
   await getProject(id);
   return (

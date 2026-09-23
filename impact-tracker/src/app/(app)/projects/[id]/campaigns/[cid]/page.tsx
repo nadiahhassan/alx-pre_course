@@ -1,3 +1,4 @@
+import { requirePageAbility } from "@/lib/auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
@@ -8,6 +9,7 @@ import { DeleteCampaignButton } from "@/components/delete-campaign-button";
 import { saveCampaignMetric, updateCampaign } from "@/server/campaign-actions";
 
 export default async function CampaignPage({ params }: { params: Promise<{ id: string; cid: string }> }) {
+  await requirePageAbility("edit-campaigns");
   const { id, cid } = await params;
   const campaign = await db.campaign.findUnique({ where: { id: cid }, include: { metrics: { orderBy: { date: "asc" } } } });
   if (!campaign || campaign.projectId !== id) notFound();

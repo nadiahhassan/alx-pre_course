@@ -14,7 +14,7 @@ export function ProjectTabs({ projectId }: { projectId: string }) {
     { href: `${base}/evidence`, label: "Evidence" },
     { href: `${base}/snapshots`, label: "Snapshots" },
     { href: `${base}/share`, label: "Share" },
-    { href: `${base}/settings`, label: "Project & theory of change" },
+    { href: `${base}/settings`, label: "Initiative & theory of change" },
   ];
   return (
     <nav className="mb-6 flex print:hidden gap-1 overflow-x-auto border-b border-line text-sm">

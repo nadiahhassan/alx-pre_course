@@ -1,173 +1,174 @@
 import Link from "next/link";
-import { db } from "@/lib/db";
-import { buildDashboard, type MetricView } from "@/lib/dashboard";
-import { currencySymbol, formatPercent, formatValue } from "@/lib/format";
-import type { Status } from "@/lib/status";
-import { EmptyState, PageHeader, StatusBadge, statusLabel } from "@/components/ui";
+import { requireUser } from "@/lib/auth";
+import { can } from "@/lib/permissions";
+import { currencySymbol, formatDate, formatPercent, formatValue, today } from "@/lib/format";
+import { countStatuses, expectedFraction, overallRag } from "@/lib/status";
+import { EmptyState, StatusBadge } from "@/components/ui";
+import { AudienceSplit, InitiativeTable, NeedsAttention, RagStrip, type InitiativeRow } from "@/components/programme-panels";
+import { getProgrammeOverview } from "@/server/queries";
 
-/** Key metrics if marked, otherwise the highest-level ones (impact, then outcomes). */
-function headlineMetrics(metrics: MetricView[]) {
-  const key = metrics.filter((m) => m.isKey);
-  if (key.length) return key.slice(0, 3);
-  const rank = ["impact", "outcome", "output", "activity", "input"];
-  return [...metrics].sort((a, b) => rank.indexOf(a.level) - rank.indexOf(b.level)).slice(0, 3);
-}
-
-const RAG_ORDER: Status[] = ["green", "amber", "red", "no-data"];
-
-export default async function PortfolioPage({ searchParams }: { searchParams: Promise<{ archived?: string }> }) {
+export default async function ProgrammeHome({ searchParams }: { searchParams: Promise<{ archived?: string }> }) {
+  const user = await requireUser();
   const showArchived = (await searchParams).archived === "1";
-  const projects = await db.project.findMany({
-    where: showArchived ? {} : { archivedAt: null },
-    include: { owner: true, parameters: { where: { archivedAt: null }, include: { entries: true } } },
-    orderBy: { startDate: "desc" },
-  });
-  const rows = projects.map((p) => ({ project: p, dash: buildDashboard(p, p.parameters) }));
-
-  const totals = { green: 0, amber: 0, red: 0, "no-data": 0 } as Record<string, number>;
-  for (const r of rows) for (const s of RAG_ORDER) totals[s] += r.dash.counts[s];
-  const budgets = new Map<string, number>();
-  for (const { project } of rows) {
-    if (project.budget) budgets.set(project.currency, (budgets.get(project.currency) ?? 0) + project.budget);
-  }
+  const { programme, focusAreas, initiatives } = await getProgrammeOverview({ includeArchived: showArchived });
+  const sym = currencySymbol(programme.currency);
+  const allMetrics = initiatives.flatMap((i) => i.dash.metrics);
+  const keyStatuses = allMetrics.filter((m) => m.isKey).map((m) => m.status);
+  const overall = overallRag(keyStatuses.length ? keyStatuses : allMetrics.map((m) => m.status));
+  const counts = countStatuses(allMetrics.map((m) => m.status));
+  const elapsed = expectedFraction(programme.startDate, programme.endDate, today());
+  const allocated = focusAreas.reduce((n, f) => n + f.budget, 0);
+  const byFocus = (id: string | null) => initiatives.filter((i) => i.project.focusAreaId === id);
+  const unassigned = byFocus(null);
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Portfolio"
-        subtitle="Every project's status at a glance. Open a project for its full dashboard."
-        actions={
-          <Link href="/projects/new" className="btn-primary">
-            New project
-          </Link>
-        }
-      />
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-2">Programme</p>
+          <h1 className="text-2xl font-semibold tracking-tight">{programme.name}</h1>
+          {programme.mission && <p className="mt-1 text-ink-2">{programme.mission}</p>}
+          <p className="mt-1 text-sm text-muted">
+            {formatDate(programme.startDate)} – {formatDate(programme.endDate)}
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {can(user, "manage-programme") && (
+            <>
+              <Link href="/programme" className="btn-secondary">
+                Programme settings
+              </Link>
+              <Link href="/focus-areas/new" className="btn-secondary">
+                New focus area
+              </Link>
+            </>
+          )}
+          {can(user, "edit-data") && (
+            <Link href="/projects/new" className="btn-primary">
+              New initiative
+            </Link>
+          )}
+        </div>
+      </div>
 
-      {rows.length === 0 ? (
-        <EmptyState title="No projects yet">
-          <Link href="/projects/new" className="text-accent-ink underline">
-            Create your first project
-          </Link>{" "}
-          or run <code>npm run db:seed</code> to load the example.
-        </EmptyState>
-      ) : (
-        <>
-          <section className="grid gap-4 sm:grid-cols-3">
-            <div className="card p-4">
-              <div className="text-xs text-muted">Projects</div>
-              <div className="mt-1 text-2xl font-semibold">{rows.length}</div>
-              <div className="mt-1 text-xs text-ink-2">
-                {rows.filter((r) => r.project.status === "active").length} active
-              </div>
-            </div>
-            <div className="card p-4">
-              <div className="text-xs text-muted">Total budget</div>
-              <div className="mt-1 text-2xl font-semibold">
-                {budgets.size
-                  ? [...budgets].map(([c, v]) => formatValue(v, currencySymbol(c), { compact: true })).join(" + ")
-                  : "–"}
-              </div>
-            </div>
-            <div className="card p-4">
-              <div className="text-xs text-muted">Metrics across projects</div>
-              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-                {RAG_ORDER.filter((s) => totals[s]).map((s) => (
-                  <span key={s} className="flex items-center gap-1.5 text-sm">
-                    <StatusBadge status={s} /> <span className="tabular font-medium">{totals[s]}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <div className="card overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="border-b border-line text-left text-xs text-muted">
-                <tr>
-                  <th className="px-4 py-2 font-medium">Project</th>
-                  <th className="px-4 py-2 font-medium">Overall</th>
-                  <th className="px-4 py-2 font-medium">Timeline</th>
-                  <th className="px-4 py-2 font-medium">Metrics</th>
-                  <th className="px-4 py-2 font-medium">Key metrics</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {rows.map(({ project, dash }) => (
-                  <tr key={project.id} className="align-top">
-                    <td className="px-4 py-3">
-                      <Link href={`/projects/${project.id}`} className="font-medium hover:underline">
-                        {project.name}
-                      </Link>
-                      {project.archivedAt && <span className="ml-2 rounded bg-surface-2 px-1.5 py-0.5 text-xs text-ink-2">Archived</span>}
-                      <div className="mt-0.5 text-xs text-ink-2">
-                        <span className="capitalize">{project.status}</span>
-                        {project.region && ` · ${project.region}`}
-                        {project.owner && ` · ${project.owner.name}`}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <StatusBadge status={dash.overall ?? "no-data"} />
-                    </td>
-                    <td className="w-36 px-4 py-3">
-                      <div className="text-xs text-ink-2">{formatPercent(dash.timelineElapsed)} elapsed</div>
-                      <div className="mt-1 h-1.5 rounded-full bg-surface-2">
-                        <div className="h-1.5 rounded-full bg-ink-2" style={{ width: `${dash.timelineElapsed * 100}%` }} />
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <RagStrip counts={dash.counts} />
-                    </td>
-                    <td className="px-4 py-3">
-                      {dash.metrics.length === 0 ? (
-                        <span className="text-xs text-muted">No parameters yet</span>
-                      ) : (
-                        <ul className="space-y-1.5">
-                          {headlineMetrics(dash.metrics).map((m) => (
-                            <li key={m.id} className="flex flex-wrap items-center gap-x-2 text-xs">
-                              <StatusBadge status={m.status} />
-                              <span className="text-ink-2">{m.name}:</span>
-                              <span className="tabular font-medium">
-                                {formatValue(m.current, m.unit, { compact: true })} / {formatValue(m.target, m.unit, { compact: true })}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="card p-4">
+          <div className="text-xs text-muted">Overall status</div>
+          <div className="mt-1">
+            <StatusBadge status={overall ?? "no-data"} size="lg" />
           </div>
-        </>
+          <p className="mt-2 text-xs text-ink-2">Worst status among key metrics across all initiatives.</p>
+          <div className="mt-3">
+            <RagStrip counts={counts} />
+          </div>
+        </div>
+        <div className="card p-4">
+          <div className="text-xs text-muted">Timeline</div>
+          <div className="mt-1 text-2xl font-semibold">{formatPercent(elapsed)}</div>
+          <div className="mt-2 h-1.5 rounded-full bg-surface-2">
+            <div className="h-1.5 rounded-full bg-ink-2" style={{ width: `${elapsed * 100}%` }} />
+          </div>
+          <p className="mt-2 text-xs text-ink-2">of the programme year elapsed</p>
+        </div>
+        <div className="card p-4">
+          <div className="text-xs text-muted">Budget</div>
+          <div className="mt-1 text-2xl font-semibold">{formatValue(programme.budget, sym, { compact: true })}</div>
+          <div className="mt-2 flex h-1.5 gap-0.5 overflow-hidden rounded-full bg-surface-2">
+            <div className="bg-accent" style={{ width: `${Math.min(100, (allocated / (programme.budget || 1)) * 100)}%` }} />
+          </div>
+          <p className="mt-2 text-xs text-ink-2">
+            {formatValue(allocated, sym, { compact: true })} allocated to focus areas
+            {programme.budget - allocated > 0 && ` · ${formatValue(programme.budget - allocated, sym, { compact: true })} unallocated`}
+            {programme.budget - allocated < 0 && ` · over-allocated by ${formatValue(allocated - programme.budget, sym, { compact: true })}`}
+          </p>
+        </div>
+        <AudienceSplit metrics={allMetrics} />
+      </section>
+
+      <NeedsAttention rows={initiatives} />
+
+      {focusAreas.length === 0 && initiatives.length === 0 && (
+        <EmptyState title="No focus areas yet">
+          {can(user, "manage-programme") ? (
+            <Link href="/focus-areas/new" className="text-accent-ink underline">
+              Create the first focus area
+            </Link>
+          ) : (
+            "The Global lead sets up focus areas."
+          )}
+        </EmptyState>
+      )}
+
+      {focusAreas.map((fa) => {
+        const rows = byFocus(fa.id);
+        const initiativeBudget = rows.reduce((n, r) => n + (r.project.budget ?? 0), 0);
+        return (
+          <FocusAreaSection
+            key={fa.id}
+            title={fa.name}
+            href={`/focus-areas/${fa.id}`}
+            meta={
+              <>
+                {fa.owner ? `Owner: ${fa.owner.name}` : "No owner"} · Budget {formatValue(fa.budget, sym, { compact: true })}
+                {rows.length > 0 && ` · ${formatValue(initiativeBudget, sym, { compact: true })} allocated to initiatives`}
+                {fa.archivedAt && " · Archived"}
+              </>
+            }
+            rows={rows}
+            currency={sym}
+            newHref={can(user, "edit-data") ? `/projects/new?focusArea=${fa.id}` : undefined}
+          />
+        );
+      })}
+
+      {unassigned.length > 0 && (
+        <FocusAreaSection title="Not in a focus area" meta="Assign these under Project & theory of change." rows={unassigned} currency={sym} />
       )}
 
       <Link href={showArchived ? "/" : "/?archived=1"} className="inline-block text-sm text-ink-2 hover:text-ink">
-        {showArchived ? "Hide archived projects" : "Show archived projects"}
+        {showArchived ? "Hide archived" : "Show archived focus areas and initiatives"}
       </Link>
     </div>
   );
 }
 
-/** Proportional strip of metric statuses with counts; shape icons in the legend carry meaning. */
-function RagStrip({ counts }: { counts: Record<Status, number> }) {
-  const total = RAG_ORDER.reduce((n, s) => n + counts[s], 0);
-  if (!total) return <span className="text-xs text-muted">–</span>;
-  const color: Record<string, string> = { green: "var(--good)", amber: "var(--warning)", red: "var(--critical)", "no-data": "var(--line-strong)" };
+function FocusAreaSection({
+  title,
+  href,
+  meta,
+  rows,
+  currency,
+  newHref,
+}: {
+  title: string;
+  href?: string;
+  meta: React.ReactNode;
+  rows: InitiativeRow[];
+  currency: string;
+  newHref?: string;
+}) {
   return (
-    <div className="w-44">
-      <div className="flex h-2 gap-0.5 overflow-hidden rounded-full" role="img" aria-label={RAG_ORDER.map((s) => `${counts[s]} ${statusLabel(s)}`).join(", ")}>
-        {RAG_ORDER.filter((s) => counts[s]).map((s) => (
-          <div key={s} style={{ flexGrow: counts[s], background: color[s] }} />
-        ))}
+    <section className="space-y-3">
+      <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-2">
+        <div>
+          <h2 className="text-lg font-semibold">
+            {href ? (
+              <Link href={href} className="hover:underline">
+                {title}
+              </Link>
+            ) : (
+              title
+            )}
+          </h2>
+          <p className="text-xs text-ink-2">{meta}</p>
+        </div>
+        {newHref && (
+          <Link href={newHref} className="btn-ghost">
+            Add initiative
+          </Link>
+        )}
       </div>
-      <div className="mt-1 flex flex-wrap gap-x-2 text-xs text-ink-2">
-        {RAG_ORDER.filter((s) => counts[s]).map((s) => (
-          <span key={s}>
-            {counts[s]} {statusLabel(s).toLowerCase()}
-          </span>
-        ))}
-      </div>
-    </div>
+      {rows.length ? <InitiativeTable rows={rows} currency={currency} /> : <p className="text-sm text-muted">No initiatives yet.</p>}
+    </section>
   );
 }

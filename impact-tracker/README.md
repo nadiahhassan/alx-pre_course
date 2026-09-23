@@ -1,6 +1,8 @@
 # Impact Tracker
 
-A spreadsheet-plus-dashboard tool for measuring the impact of programmes while they run. You log parameters (metrics) as a project progresses, and get dashboards you can show to stakeholders.
+A spreadsheet-plus-dashboard tool for running the Global News Programme: measuring its impact, the effect of marketing and events on internal and external audiences, and (in later steps) budgets, responsibilities and partner work with Comms, Government Affairs & Public Policy (GAPP) and Marketing.
+
+**Structure:** Programme → focus areas (e.g. Trainings) → initiatives → metrics, entries, campaigns and evidence.
 
 Built with Next.js (App Router, TypeScript), Prisma + SQLite, Tailwind CSS and Recharts.
 
@@ -16,7 +18,16 @@ npm run setup            # creates the database and loads the example project
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000 and sign in with one of the demo accounts (password `demo-password-2026`; they're listed on the sign-in page while `DEMO_ACCOUNTS=1`):
+
+| Account | Role |
+| --- | --- |
+| `lead@example.org` | Global lead (admin): everything, including people, programme settings and budgets |
+| `programme@example.org` | Programme team: initiatives, metrics, data, campaigns, evidence, snapshots |
+| `comms@example.org`, `gapp@example.org` | Partners: view everything, add evidence, create share links |
+| `marketing@example.org` | Marketing partner: as above, plus campaigns |
+
+The Global lead adds and manages people under **People**.
 
 ### Useful scripts
 
@@ -29,6 +40,7 @@ Open http://localhost:3000.
 | `npm run db:seed` | Reload the example data. **This wipes the database first.** (Plain `prisma db seed` only loads it into an empty database.) |
 | `npm run db:reset` | Drop, re-migrate and reseed the database |
 | `npm run db:migrate` | Create a migration after editing `prisma/schema.prisma` |
+| `npm run create-admin -- <email> "<name>" "<password>"` | Create or reset a Global lead account (for real deployments) |
 
 ## What's in phase 1
 
@@ -112,16 +124,17 @@ Local development uses SQLite. For hosting, the app uses a generated Postgres co
    - **Build command:** `npm run build:postgres`
    - **Environment variables:**
      - `DATABASE_URL`: the Neon connection string
-     - `APP_PASSWORD`: a shared password for your team
-3. Deploy. The first build creates the tables and loads the example project. Later builds apply new migrations and leave your data alone.
+     - For a **demo** deployment: `DEMO_ACCOUNTS=1` and a `SEED_PASSWORD` of your choice
+3. Deploy. The first build creates the tables and loads the example programme with its demo accounts. Later builds apply new migrations and leave your data alone.
+4. For **real** use, don't set `DEMO_ACCOUNTS`. Create your own admin with `npm run create-admin` (run it locally with `DATABASE_URL` pointing at the hosted database) and deactivate the demo accounts under People.
 
 Any host that runs Node.js and Postgres works the same way (Render, Railway, Fly.io).
 
-**Access:** when `APP_PASSWORD` is set, every page asks for it (any username). Read-only share links (`/share/...`) stay open to anyone with the link. This is a stopgap until real sign-in is added.
+**Access:** everyone signs in with their own account. Passwords are hashed with scrypt, sessions last 14 days, and every action that changes data checks the person's role on the server. Read-only share links (`/share/...`) open without signing in.
 
 **After changing `prisma/schema.prisma`:**
 1. Run `npm run db:postgres-schema`.
-2. Create a Postgres migration with `npx prisma migrate diff --from-schema-datasource prisma/postgres/schema.prisma --to-schema-datamodel prisma/postgres/schema.prisma --script` against a Postgres database, or with `migrate dev --schema prisma/postgres/schema.prisma`.
+2. Create the matching Postgres migration in `prisma/postgres/migrations/<n>_<name>/migration.sql` with `npx prisma migrate diff --from-migrations prisma/postgres/migrations --to-schema-datamodel prisma/postgres/schema.prisma --shadow-database-url <an empty Postgres database> --script`.
 
 ## AI features (phase 3)
 

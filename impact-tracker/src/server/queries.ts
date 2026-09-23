@@ -6,7 +6,7 @@ import { buildDashboard } from "@/lib/dashboard";
 import { buildPayload, type DashboardPayload } from "@/lib/payload";
 
 export const getProject = cache(async (id: string) => {
-  const project = await db.project.findUnique({ where: { id }, include: { owner: true } });
+  const project = await db.project.findUnique({ where: { id }, include: { owner: true, focusArea: true } });
   if (!project) notFound();
   return project;
 });
@@ -34,4 +34,33 @@ export async function getPayload(projectId: string, asOf: Date, stakeholderSafe:
 
 export function parsePayload(json: string): DashboardPayload {
   return JSON.parse(json) as DashboardPayload;
+}
+
+/** The programme. Databases created before programmes existed get a default one. */
+export const getProgramme = cache(async () => {
+  const existing = await db.programme.findFirst();
+  if (existing) return existing;
+  const year = new Date().getUTCFullYear();
+  return db.programme.create({
+    data: { name: "Programme", startDate: new Date(Date.UTC(year, 0, 1)), endDate: new Date(Date.UTC(year, 11, 31)) },
+  });
+});
+
+/** Everything the programme home and focus area pages need. */
+export async function getProgrammeOverview(opts: { includeArchived?: boolean } = {}) {
+  const programme = await getProgramme();
+  const [focusAreas, projects] = await Promise.all([
+    db.focusArea.findMany({
+      where: { programmeId: programme.id, ...(opts.includeArchived ? {} : { archivedAt: null }) },
+      include: { owner: true },
+      orderBy: { sortOrder: "asc" },
+    }),
+    db.project.findMany({
+      where: opts.includeArchived ? {} : { archivedAt: null },
+      include: { owner: true, parameters: { where: { archivedAt: null }, include: { entries: true } } },
+      orderBy: { startDate: "asc" },
+    }),
+  ]);
+  const initiatives = projects.map((p) => ({ project: p, dash: buildDashboard(p, p.parameters) }));
+  return { programme, focusAreas, initiatives };
 }

@@ -35,6 +35,7 @@ export interface MetricView {
   frequency: string;
   dataSource: string;
   isKey: boolean;
+  audience: string;
   leadingIndicatorForId: string | null;
   status: Status;
   current: number | null;
@@ -105,6 +106,7 @@ export function buildDashboard(
       frequency: p.frequency,
       dataSource: p.dataSource,
       isKey: p.isKey,
+      audience: p.audience,
       leadingIndicatorForId: p.leadingIndicatorForId,
       status: e.status,
       current: e.current,
