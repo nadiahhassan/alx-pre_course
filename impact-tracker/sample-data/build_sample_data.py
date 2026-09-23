@@ -60,7 +60,7 @@ for c in ds["campaigns"]:
     c["spend"] = r100(c["spend"] * (CHAMPIONS_SCALE if c["initiative"] == CHAMPIONS else DIGITAL_SCALE))
 for d in ds["decisions"]:
     d["decision"] = d["decision"].replace("Up to $15k", "Up to $8k")
-ds["focusAreas"] = [{"name": "Trainings", "description": ds["focusAreas"][0]["description"], "owner": "Amira Okafor", "budget": 230000}]
+ds["focusAreas"] = [{"name": "Trainings", "description": ds["focusAreas"][0]["description"], "owner": "Nadia Hassan", "budget": 230000}]
 
 # ---------------------------------------------------------------------------
 # Helpers for the new focus areas.
@@ -230,9 +230,9 @@ spend(STUDY, [("09", 2200, "staff", "Researcher (part)")])
 # Events & Convenings
 
 EV = "Events & Convenings"
-focus_area(EV, "Amira Okafor", 70000, "The flagship summit for newsroom leaders, and internal events that keep colleagues close to the programme.")
+focus_area(EV, "Nadia Hassan", 70000, "The flagship summit for newsroom leaders, and internal events that keep colleagues close to the programme.")
 SUMMIT = "Global News Summit 2026"
-initiative(SUMMIT, EV, "Amira Okafor", 55000, "Global (in person and online)",
+initiative(SUMMIT, EV, "Nadia Hassan", 55000, "Global (in person and online)",
            "Two-day summit in November for newsroom leaders, partners and policymakers.",
            ["$55k; venue partner; sponsors; programme and Marketing staff.",
             "Programme design; speaker and sponsor outreach; registration campaign.",
@@ -320,9 +320,9 @@ responsibility("Monthly partner performance review", "report", "programme", "Tom
 responsibility("Quarterly insights digest for product leadership", "report", "programme", "Tom Reeves", "2026-09-19", PT, FEEDBACK, recurrence="quarterly")
 responsibility("Publish brief 4: young audiences", "report", "programme", "Tom Reeves", "2026-10-20", RI, STUDY)
 responsibility("Press launch plan for the full report", "admin", "comms", "Priya Shah", "2026-10-06", RI, STUDY)
-responsibility("Confirm summit venue contract", "contract", "programme", "Amira Okafor", "2026-09-30", EV, SUMMIT, status="in-progress")
+responsibility("Confirm summit venue contract", "contract", "programme", "Nadia Hassan", "2026-09-30", EV, SUMMIT, status="in-progress")
 responsibility("Summit registration campaign, phase 2", "admin", "marketing", "Sofia Lindqvist", "2026-10-01", EV, SUMMIT)
-responsibility("Summit accessibility and safeguarding plan", "compliance", "programme", "Amira Okafor", "2026-10-15", EV, SUMMIT)
+responsibility("Summit accessibility and safeguarding plan", "compliance", "programme", "Nadia Hassan", "2026-10-15", EV, SUMMIT)
 responsibility("Book Lunch & Learn speakers for Q4", "admin", "comms", "Priya Shah", "2026-09-18", EV, LUNCH)
 responsibility("Response to the local media consultation", "report", "gapp", "Daniel Mensah", "2026-09-12", PP, POLICY, status="done", completed="2026-09-11")
 responsibility("Prepare evidence pack for the parliamentary committee", "report", "gapp", "Daniel Mensah", "2026-10-09", PP, POLICY, status="in-progress")
@@ -333,16 +333,16 @@ risk("Low weekly use means partners lose interest", 3, 3, "Tom Reeves", PT, "Too
 risk("Product teams deprioritise newsroom requests", 3, 3, "Tom Reeves", PT, "Agree two newsroom features per quarter with product leadership.", "2026-10-31", FEEDBACK)
 risk("Report launch misses the policy window", 2, 4, "Tom Reeves", RI, "Publish briefs early and share embargoed findings with GAPP.", "2026-10-10", STUDY)
 risk("Summit registrations fall short of 800", 3, 4, "Sofia Lindqvist", EV, "Phase 2 campaign through partner newsletters; group discounts for newsrooms.", "2026-10-01", SUMMIT)
-risk("Sponsor shortfall leaves a budget gap", 4, 3, "Amira Okafor", EV, "Scale the online track; approach two additional foundations.", "2026-09-20", SUMMIT)
+risk("Sponsor shortfall leaves a budget gap", 4, 3, "Nadia Hassan", EV, "Scale the online track; approach two additional foundations.", "2026-09-20", SUMMIT)
 risk("Election period limits access to officials", 3, 3, "Daniel Mensah", PP, "Front-load briefings before the pre-election period; focus on officials, not ministers.", "2026-11-01", POLICY)
 
 decision("2026-06-05", "Choose the summit city", "The summit will be held in Lisbon, with an online track.", "Best mix of cost, access for global attendees and a venue partner offering a discount.", "Programme board", EV, SUMMIT)
 decision("2026-07-22", "Publish research as briefs first", "Findings will be released as six short briefs before the full report.", "Policy and press interest is highest now; briefs keep the study in the news for longer.", "Tom Reeves", RI, STUDY)
 decision("2026-08-12", "Prioritise transcription over analytics integrations", "Phase 3 integration budget goes to transcription tools.", "Transcription saves the most time in the user survey; analytics setup needs more support than budget allows.", "Programme board", PT, TOOLS)
-decision("2026-09-02", "Lead the consultation response jointly with GAPP", "GAPP leads the consultation response; the programme supplies data and case studies.", "GAPP owns relationships with officials; the programme owns the evidence.", "Amira Okafor (Global lead) and GAPP", PP, POLICY)
+decision("2026-09-02", "Lead the consultation response jointly with GAPP", "GAPP leads the consultation response; the programme supplies data and case studies.", "GAPP owns relationships with officials; the programme owns the evidence.", "Nadia Hassan (Global lead) and GAPP", PP, POLICY)
 
 # The frozen board snapshot from the original example.
-ds["snapshots"] = [{"initiative": DIGITAL, "label": "Q2 2026 as reported to the board", "asOf": "2026-06-30", "by": "Amira Okafor", "frozenOn": "2026-07-03"}]
+ds["snapshots"] = [{"initiative": DIGITAL, "label": "Q2 2026 as reported to the board", "asOf": "2026-06-30", "by": "Nadia Hassan", "frozenOn": "2026-07-03"}]
 
 # ---------------------------------------------------------------------------
 # Checks: every reference must resolve, and budgets must add up.
