@@ -197,7 +197,10 @@ async function main() {
   });
 
   // Campaigns with monthly metrics.
-  const campaigns = [
+  const campaigns: {
+    name: string; channel: string; startDate: string; endDate: string; spend: number;
+    trackingTag: string; notes: string; metrics: Record<string, Record<string, number>>;
+  }[] = [
     {
       name: "Local News Matters (YouTube series)", channel: "youtube", startDate: "2026-04-15", endDate: "2026-06-30",
       spend: 12000, trackingTag: "utm_campaign=lnm_youtube_2026",
