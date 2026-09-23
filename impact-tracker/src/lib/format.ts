@@ -2,15 +2,18 @@
 
 const compact = new Intl.NumberFormat("en-GB", { notation: "compact", maximumFractionDigits: 1 });
 const plain = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 });
+const rounded = [0, 1, 2].map((d) => new Intl.NumberFormat("en-GB", { maximumFractionDigits: d }));
 
-export function formatNumber(n: number | null | undefined, opts: { compact?: boolean } = {}): string {
+/** `round` trims derived figures (e.g. expected values) to a sensible precision. */
+export function formatNumber(n: number | null | undefined, opts: { compact?: boolean; round?: boolean } = {}): string {
   if (n === null || n === undefined || Number.isNaN(n)) return "–";
   if (opts.compact && Math.abs(n) >= 10000) return compact.format(n);
+  if (opts.round) return rounded[Math.abs(n) >= 100 ? 0 : Math.abs(n) >= 10 ? 1 : 2].format(n);
   return plain.format(n);
 }
 
 /** Value with its unit: "£180K", "33%", "148 people". */
-export function formatValue(n: number | null | undefined, unit: string, opts: { compact?: boolean } = {}): string {
+export function formatValue(n: number | null | undefined, unit: string, opts: { compact?: boolean; round?: boolean } = {}): string {
   const v = formatNumber(n, opts);
   if (v === "–") return v;
   if (unit === "£" || unit === "$" || unit === "€") return `${unit}${v}`;
@@ -64,4 +67,8 @@ function utc(y: number, mo: number, day: number): Date | null {
 export function today(): Date {
   const n = new Date();
   return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate()));
+}
+
+export function currencySymbol(code: string): string {
+  return ({ GBP: "£", EUR: "€", USD: "$" } as Record<string, string>)[code] ?? code;
 }

@@ -36,7 +36,7 @@ const STATUS_META: Record<Status, { label: string; className: string; icon: Reac
 export function StatusBadge({ status, size = "sm" }: { status: Status; size?: "sm" | "lg" }) {
   const meta = STATUS_META[status];
   return (
-    <span className={`inline-flex items-center gap-1.5 font-medium ${meta.className} ${size === "lg" ? "text-base" : "text-xs"}`}>
+    <span className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-medium ${meta.className} ${size === "lg" ? "text-base" : "text-xs"}`}>
       <svg width={size === "lg" ? 14 : 12} height={size === "lg" ? 14 : 12} viewBox="0 0 12 12" aria-hidden>
         {meta.icon}
       </svg>
@@ -48,6 +48,8 @@ export function StatusBadge({ status, size = "sm" }: { status: Status; size?: "s
 export function statusLabel(status: Status) {
   return STATUS_META[status].label;
 }
+
+export const sentence = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s);
 
 const CONFIDENCE_DOTS: Record<string, number> = { measured: 4, "self-reported": 3, estimated: 2, modelled: 2 };
 
@@ -65,7 +67,7 @@ export function ConfidenceBadge({ confidence }: { confidence: string | null }) {
           <span key={i} className={`w-0.5 rounded-sm ${i <= n ? "bg-ink-2" : "bg-line-strong"}`} style={{ height: 3 + i * 2 }} />
         ))}
       </span>
-      <span className="capitalize">{confidence}</span>
+      <span>{sentence(confidence)}</span>
     </span>
   );
 }
@@ -97,7 +99,7 @@ export function ProgressBar({ progress, expected }: { progress: number | null; e
     <div className="relative h-2 w-full rounded-full bg-accent-soft/60" role="presentation">
       <div className="h-2 rounded-full bg-accent" style={{ width: `${pct}%` }} />
       {exp !== null && (
-        <div className="absolute -top-1 h-4 w-0.5 rounded bg-ink" style={{ left: `calc(${exp}% - 1px)` }} title="Expected by now" />
+        <div className="absolute -top-1 h-4 w-0.5 rounded bg-ink" style={{ left: `calc(${exp}% - 1px)` }} title="Expected at the latest update" />
       )}
     </div>
   );
