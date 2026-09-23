@@ -1,0 +1,207 @@
+// Impact Tracker data model.
+//
+// Portability notes (SQLite now, Postgres later):
+// - Enum-like fields are plain strings, validated against the constants in
+//   src/lib/constants.ts. Switching provider needs no schema rewrite.
+// - Structured blobs (snapshot payloads) are stored as JSON text.
+// - Dates are stored as DateTime at UTC midnight for day-level values.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      String   @default("member") // member | admin
+  createdAt DateTime @default(now())
+
+  ownedProjects      Project[]   @relation("ProjectOwner")
+  entries            Entry[]
+  snapshots          Snapshot[]
+  approvedParameters Parameter[] @relation("ParameterApprover")
+  approvedEvidence   Evidence[]  @relation("EvidenceApprover")
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String
+  description String    @default("")
+  ownerId     String?
+  owner       User?     @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  startDate   DateTime
+  endDate     DateTime
+  budget      Float?
+  currency    String    @default("GBP")
+  region      String    @default("")
+  status      String    @default("planning") // planning | active | paused | completed
+
+  // Theory of change
+  tocInputs     String @default("")
+  tocActivities String @default("")
+  tocOutputs    String @default("")
+  tocOutcomes   String @default("")
+  tocImpact     String @default("")
+
+  archivedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  parameters Parameter[]
+  campaigns  Campaign[]
+  evidence   Evidence[]
+  snapshots  Snapshot[]
+}
+
+model Parameter {
+  id          String  @id @default(cuid())
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name        String
+  definition  String  @default("")
+  level       String // input | activity | output | outcome | impact
+  unit        String  @default("")
+  direction   String  @default("increase") // increase | decrease
+  measureType String  @default("point") // point (latest value) | cumulative (entries are added up)
+  baseline    Float   @default(0)
+  target      Float
+  targetDate  DateTime? // falls back to the project end date
+  frequency   String  @default("monthly") // weekly | monthly | quarterly | annually | ad-hoc
+  dataSource  String  @default("")
+  isKey       Boolean @default(false) // shown on the portfolio view
+
+  leadingIndicatorForId String?
+  leadingIndicatorFor   Parameter?  @relation("LeadingIndicator", fields: [leadingIndicatorForId], references: [id], onDelete: SetNull)
+  leadingIndicators     Parameter[] @relation("LeadingIndicator")
+
+  libraryItemId String?
+  libraryItem   LibraryParameter? @relation(fields: [libraryItemId], references: [id], onDelete: SetNull)
+
+  // AI governance: AI-drafted parameters need approval before stakeholder views.
+  origin       String    @default("human") // human | ai
+  approvedById String?
+  approvedBy   User?     @relation("ParameterApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  approvedAt   DateTime?
+
+  sortOrder  Int       @default(0)
+  archivedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  entries  Entry[]
+  evidence Evidence[]
+
+  @@index([projectId])
+}
+
+// Reusable definitions. Copied into projects (not linked live), so editing the
+// library never silently changes a running project's metric.
+model LibraryParameter {
+  id          String   @id @default(cuid())
+  name        String
+  definition  String   @default("")
+  level       String
+  unit        String   @default("")
+  direction   String   @default("increase")
+  measureType String   @default("point")
+  frequency   String   @default("monthly")
+  dataSource  String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  parameters Parameter[]
+}
+
+model Entry {
+  id          String    @id @default(cuid())
+  parameterId String
+  parameter   Parameter @relation(fields: [parameterId], references: [id], onDelete: Cascade)
+  date        DateTime
+  value       Float
+  note        String    @default("")
+  confidence  String    @default("measured") // measured | self-reported | estimated | modelled
+  loggedById  String?
+  loggedBy    User?     @relation(fields: [loggedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // One value per parameter per date: grid cells and CSV re-imports upsert.
+  @@unique([parameterId, date])
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name        String
+  channel     String // youtube | social | email | events | paid-search | press | other
+  startDate   DateTime
+  endDate     DateTime?
+  spend       Float    @default(0)
+  trackingTag String   @default("") // UTM campaign or other ID
+  notes       String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  metrics CampaignMetric[]
+
+  @@index([projectId])
+}
+
+// Long format so new metric types (views, RSVPs, ...) need no schema change.
+model CampaignMetric {
+  id         String   @id @default(cuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  date       DateTime
+  metric     String // impressions | clicks | sign-ups | ...
+  value      Float
+
+  @@unique([campaignId, date, metric])
+}
+
+model Evidence {
+  id          String     @id @default(cuid())
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  parameterId String?
+  parameter   Parameter? @relation(fields: [parameterId], references: [id], onDelete: SetNull)
+  type        String // quote | survey | case-study | link
+  title       String
+  body        String     @default("")
+  source      String     @default("")
+  url         String     @default("")
+  date        DateTime
+  tags        String     @default("") // comma-separated
+
+  origin       String    @default("human") // human | ai
+  approvedById String?
+  approvedBy   User?     @relation("EvidenceApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  approvedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+// Frozen dashboard data. Written once, never updated.
+model Snapshot {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  label       String
+  asOfDate    DateTime
+  payload     String // JSON
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
+}
