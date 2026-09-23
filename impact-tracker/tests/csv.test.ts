@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCampaignCsv, parseEntriesCsv } from "@/lib/csv";
+import { parseCampaignCsv, parseEntriesCsv, parseSpendCsv } from "@/lib/csv";
 
 const params = [
   { id: "p1", name: "Journalists trained" },
@@ -52,5 +52,23 @@ describe("parseCampaignCsv", () => {
 
   it("requires the four columns", () => {
     expect(parseCampaignCsv("campaign,date\nx,2026-01-01", campaigns).error).toMatch(/header/);
+  });
+});
+
+describe("parseSpendCsv", () => {
+  const projects = [{ id: "i1", name: "Newsroom Digital Skills Training" }];
+  const cats = ["staff", "grants", "other"] as const;
+  it("reads a finance export and defaults category and status", () => {
+    const r = parseSpendCsv("Date,Initiative,Amount,Category,Status\n2026-09-30,newsroom digital skills training,\"$12,500\",Grants,committed\n2026-09-30,Newsroom Digital Skills Training,300,,", projects, cats);
+    expect(r.rows[0]).toMatchObject({ projectId: "i1", amount: 12500, category: "grants", status: "committed", error: null });
+    expect(r.rows[1]).toMatchObject({ category: "other", status: "actual", error: null });
+  });
+  it("reports unknown initiatives, categories and statuses", () => {
+    const r = parseSpendCsv("date,initiative,amount,category,status\n2026-09-30,Nope,1,,\n2026-09-30,Newsroom Digital Skills Training,1,food,\n2026-09-30,Newsroom Digital Skills Training,1,,paid", projects, cats);
+    expect(r.rows.map((x) => x.error)).toEqual([
+      expect.stringContaining("Unknown initiative"),
+      expect.stringContaining("Unknown category"),
+      expect.stringContaining("actual or committed"),
+    ]);
   });
 });

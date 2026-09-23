@@ -33,14 +33,14 @@ const STATUS_META: Record<Status, { label: string; className: string; icon: Reac
 };
 
 /** Status always shows a shape and a word, never colour alone. */
-export function StatusBadge({ status, size = "sm" }: { status: Status; size?: "sm" | "lg" }) {
+export function StatusBadge({ status, size = "sm", label }: { status: Status; size?: "sm" | "lg"; label?: string }) {
   const meta = STATUS_META[status];
   return (
     <span className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-medium ${meta.className} ${size === "lg" ? "text-base" : "text-xs"}`}>
       <svg width={size === "lg" ? 14 : 12} height={size === "lg" ? 14 : 12} viewBox="0 0 12 12" aria-hidden>
         {meta.icon}
       </svg>
-      {meta.label}
+      {label ?? meta.label}
     </span>
   );
 }

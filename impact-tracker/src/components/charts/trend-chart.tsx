@@ -9,7 +9,7 @@ import type { MetricView } from "@/lib/dashboard";
 import { formatDate, formatMonth, formatNumber, formatValue } from "@/lib/format";
 
 /** Round tick values (0, 5, 10...) covering lo..hi; never below zero for non-negative data. */
-function niceTicks(lo: number, hi: number, count = 4): number[] {
+export function niceTicks(lo: number, hi: number, count = 4): number[] {
   if (lo === hi) {
     const d = Math.abs(lo) || 1;
     lo -= d / 2;

@@ -75,3 +75,35 @@ export const TEAM_LABELS: Record<Team, string> = {
   gapp: "Government Affairs & Public Policy",
   marketing: "Marketing",
 };
+
+export const SPEND_CATEGORIES = ["staff", "grants", "events", "marketing", "travel", "vendors", "other"] as const;
+export const SPEND_CATEGORY_LABELS: Record<string, string> = {
+  staff: "Staff",
+  grants: "Grants",
+  events: "Events",
+  marketing: "Marketing",
+  travel: "Travel",
+  vendors: "Vendors & contractors",
+  other: "Other",
+};
+export const SPEND_STATUSES = ["actual", "committed"] as const;
+
+export const RESPONSIBILITY_TYPES = ["report", "contract", "approval", "compliance", "admin", "other"] as const;
+export const RESPONSIBILITY_TYPE_LABELS: Record<string, string> = {
+  report: "Report",
+  contract: "Contract",
+  approval: "Approval",
+  compliance: "Compliance",
+  admin: "Admin",
+  other: "Other",
+};
+export const RESPONSIBILITY_STATUSES = ["open", "in-progress", "blocked", "done"] as const;
+export const RECURRENCES = ["none", "monthly", "quarterly", "annually"] as const;
+export const OWNER_TEAMS = ["programme", "comms", "gapp", "marketing"] as const;
+export const OWNER_TEAM_LABELS: Record<string, string> = {
+  programme: "Programme team",
+  comms: "Comms",
+  gapp: "GAPP",
+  marketing: "Marketing",
+};
+export const RISK_STATUSES = ["open", "mitigating", "closed"] as const;

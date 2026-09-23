@@ -23,6 +23,10 @@ async function main() {
   }
   await prisma.$transaction([
     prisma.session.deleteMany(),
+    prisma.spendEntry.deleteMany(),
+    prisma.responsibility.deleteMany(),
+    prisma.risk.deleteMany(),
+    prisma.decision.deleteMany(),
     prisma.shareLink.deleteMany(),
     prisma.snapshot.deleteMany(),
     prisma.evidence.deleteMany(),
@@ -41,9 +45,9 @@ async function main() {
   const person = (name: string, email: string, role: string, team = "") => prisma.user.create({ data: { name, email, role, team, passwordHash } });
   const lead = await person("Amira Okafor", "lead@example.org", "admin");
   const mel = await person("Tom Reeves", "programme@example.org", "programme");
-  await person("Priya Shah", "comms@example.org", "partner", "comms");
-  await person("Daniel Mensah", "gapp@example.org", "partner", "gapp");
-  await person("Sofia Lindqvist", "marketing@example.org", "partner", "marketing");
+  const priya = await person("Priya Shah", "comms@example.org", "partner", "comms");
+  const daniel = await person("Daniel Mensah", "gapp@example.org", "partner", "gapp");
+  const sofia = await person("Sofia Lindqvist", "marketing@example.org", "partner", "marketing");
 
   const programme = await prisma.programme.create({
     data: {
@@ -431,6 +435,69 @@ async function main() {
       source: "Champion, Government Affairs & Public Policy", tags: "gapp,champions",
     },
   });
+
+  // Operations: spend, responsibilities, risks and decisions.
+  const month = (m: string) => d(`2026-${m}-28`);
+  const spendRows: { projectId: string; date: Date; amount: number; category: string; status?: string; description: string; reference?: string }[] = [];
+  const months = ["03", "04", "05", "06", "07", "08", "09"];
+  months.forEach((m, i) => {
+    spendRows.push({ projectId: project.id, date: month(m), amount: 10000, category: "staff", description: "Programme staff and trainers", reference: `PAY-${m}` });
+    spendRows.push({ projectId: internal.id, date: month(m), amount: 2000, category: "staff", description: "Session facilitation" });
+    if (i > 0) spendRows.push({ projectId: project.id, date: month(m), amount: [20000, 17000, 23000, 20000, 17000, 23000][i - 1], category: "grants", description: "Newsroom training grants", reference: `GR-${m}` });
+  });
+  spendRows.push(
+    { projectId: project.id, date: d("2026-06-30"), amount: 12000, category: "marketing", description: "Local News Matters YouTube series production", reference: "PO-4410" },
+    { projectId: project.id, date: d("2026-05-31"), amount: 1500, category: "marketing", description: "Toolkit launch email series" },
+    { projectId: project.id, date: d("2026-07-31"), amount: 9000, category: "events", description: "Newsroom Futures roadshow: venues and catering (July)" },
+    { projectId: project.id, date: d("2026-08-31"), amount: 9000, category: "events", description: "Newsroom Futures roadshow: venues and catering (August)" },
+    { projectId: project.id, date: d("2026-04-15"), amount: 24000, category: "vendors", description: "Analytics and CMS toolkit licence (annual)", reference: "PO-4102" },
+    { projectId: project.id, date: d("2026-06-15"), amount: 6000, category: "travel", description: "Trainer travel, cohorts 1-3" },
+    { projectId: project.id, date: d("2026-10-20"), amount: 15000, category: "events", status: "committed", description: "Cohort 7 venue booking", reference: "PO-5530" },
+    { projectId: project.id, date: d("2026-11-01"), amount: 10000, category: "vendors", status: "committed", description: "Toolkit support contract (Q4)", reference: "PO-5541" },
+    { projectId: internal.id, date: d("2026-04-30"), amount: 3500, category: "events", description: "Internal launch town hall" },
+    { projectId: internal.id, date: d("2026-06-30"), amount: 1000, category: "other", description: "Champions certificates and materials" },
+  );
+  await prisma.spendEntry.createMany({ data: spendRows.map((r) => ({ ...r, status: r.status ?? "actual", reference: r.reference ?? "", createdById: lead.id })) });
+
+  const resp = (x: { title: string; type: string; team: string; ownerId: string; dueDate: string; recurrence?: string; status?: string; projectId?: string; description?: string; completedAt?: string }) =>
+    prisma.responsibility.create({
+      data: {
+        title: x.title, type: x.type, team: x.team, ownerId: x.ownerId, dueDate: d(x.dueDate), recurrence: x.recurrence ?? "none",
+        status: x.status ?? "open", projectId: x.projectId ?? null, focusAreaId: trainings.id, description: x.description ?? "",
+        completedAt: x.completedAt ? d(x.completedAt) : null,
+      },
+    });
+  await resp({ title: "Q2 report to funders", type: "report", team: "programme", ownerId: mel.id, dueDate: "2026-07-15", recurrence: "quarterly", status: "done", completedAt: "2026-07-14" });
+  await resp({ title: "Q3 report to funders", type: "report", team: "programme", ownerId: mel.id, dueDate: "2026-10-15", recurrence: "quarterly", description: "Progress against targets, spend and case studies. Use the Q3 snapshot." });
+  await resp({ title: "Approve monthly expenses", type: "approval", team: "programme", ownerId: lead.id, dueDate: "2026-09-30", recurrence: "monthly" });
+  await resp({ title: "Renew analytics toolkit vendor contract", type: "contract", team: "programme", ownerId: lead.id, dueDate: "2026-09-20", status: "in-progress", projectId: project.id, description: "Current licence ends in October. Vendor has proposed a 12% increase." });
+  await resp({ title: "Grant agreements for cohort 4 newsrooms", type: "contract", team: "programme", ownerId: mel.id, dueDate: "2026-10-31", projectId: project.id });
+  await resp({ title: "Safeguarding and data protection review", type: "compliance", team: "programme", ownerId: lead.id, dueDate: "2026-11-30", recurrence: "annually" });
+  await resp({ title: "Policy briefing: local news and democracy", type: "report", team: "gapp", ownerId: daniel.id, dueDate: "2026-10-02", status: "in-progress", description: "Briefing for the ministry roundtable, using headline figures and newsroom case studies." });
+  await resp({ title: "Impact figures for the corporate annual report", type: "report", team: "comms", ownerId: priya.id, dueDate: "2026-09-15", description: "Five headline stats and two case studies, cleared for external use." });
+  await resp({ title: "Q4 recruitment plan for training cohorts", type: "admin", team: "marketing", ownerId: sofia.id, dueDate: "2026-10-10", projectId: project.id });
+  await resp({ title: "Sign off champions certification", type: "approval", team: "programme", ownerId: mel.id, dueDate: "2026-09-26", projectId: internal.id });
+
+  const risk = (x: { title: string; l: number; i: number; ownerId: string; mitigation: string; review?: string; status?: string; projectId?: string; description?: string }) =>
+    prisma.risk.create({
+      data: {
+        title: x.title, likelihood: x.l, impact: x.i, ownerId: x.ownerId, mitigation: x.mitigation, reviewDate: x.review ? d(x.review) : null,
+        status: x.status ?? "open", projectId: x.projectId ?? null, focusAreaId: trainings.id, description: x.description ?? "",
+      },
+    });
+  await risk({ title: "Digital audience growth misses target", l: 4, i: 4, ownerId: mel.id, projectId: project.id, review: "2026-10-01", description: "Audience growth is off track and its leading indicator (weekly analytics use) is behind.", mitigation: "One-to-one analytics coaching for the 18 newsrooms not yet using the dashboard weekly." });
+  await risk({ title: "Partner newsrooms drop out before cohort 4", l: 3, i: 4, ownerId: mel.id, projectId: project.id, review: "2026-10-15", mitigation: "Monthly check-ins; grant tranches tied to attendance; peer mentoring pairs." });
+  await risk({ title: "Toolkit vendor price rise at renewal", l: 4, i: 3, ownerId: lead.id, projectId: project.id, review: "2026-09-15", mitigation: "Negotiate a two-year rate; price an alternative supplier by end of September." });
+  await risk({ title: "Data protection issue with shared newsroom analytics", l: 2, i: 5, ownerId: lead.id, status: "mitigating", review: "2026-11-30", mitigation: "Data processing agreements signed with all newsrooms; access reviewed quarterly." });
+  await risk({ title: "Internal budget underspent and returned at year end", l: 3, i: 2, ownerId: lead.id, projectId: internal.id, review: "2026-10-31", mitigation: "Extend champions sessions to regional offices from October." });
+  await risk({ title: "Ministry roundtable postponed", l: 2, i: 3, ownerId: daniel.id, review: "2026-10-01", mitigation: "Prepare a written briefing that can be sent if the meeting slips." });
+
+  const decision = (x: { date: string; title: string; decision: string; rationale: string; madeBy: string; projectId?: string }) =>
+    prisma.decision.create({ data: { ...x, date: d(x.date), focusAreaId: trainings.id, projectId: x.projectId ?? null } });
+  await decision({ date: "2026-05-12", title: "Move revenue training earlier in each cohort", decision: "Revenue sessions move from week 6 to week 2.", rationale: "Early cohorts said they needed revenue ideas before planning audience work.", madeBy: "Programme board", projectId: project.id });
+  await decision({ date: "2026-06-20", title: "Fund a memberships pilot", decision: "Up to $15k of grant budget goes to five newsrooms piloting memberships.", rationale: "Memberships were the most common new revenue stream; a pilot tests whether support speeds it up.", madeBy: "Amira Okafor (Global lead)", projectId: project.id });
+  await decision({ date: "2026-07-08", title: "Report Q2 from a frozen snapshot", decision: "Board and funder reports use the Q2 snapshot, not live figures.", rationale: "Figures shared with the board shouldn't change when late data arrives.", madeBy: "Programme board" });
+  await decision({ date: "2026-09-10", title: "Extend champions sessions to regional offices", decision: "Run champions sessions in four regional offices from October.", rationale: "Internal spend is well behind the timeline and demand from regional teams is high.", madeBy: "Amira Okafor (Global lead)", projectId: internal.id });
 
   console.log(`Seeded "${project.name}" in focus area "${trainings.name}", plus the internal initiative "${internal.name}". Sign in with any @example.org demo account; password: ${PASSWORD}`);
 }

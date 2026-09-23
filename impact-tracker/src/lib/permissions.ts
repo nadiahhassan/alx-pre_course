@@ -8,7 +8,8 @@ export type Ability =
   | "edit-campaigns" // campaigns and their metrics
   | "edit-evidence" // quotes, case studies, links
   | "approve-ai" // approve AI-generated items for stakeholder views
-  | "share"; // create and revoke read-only links
+  | "share" // create and revoke read-only links
+  | "edit-operations"; // spend, responsibilities, risks, decisions
 
 export interface Actor {
   role: string;
@@ -29,4 +30,10 @@ export function can(user: Actor | null | undefined, ability: Ability): boolean {
     default:
       return false;
   }
+}
+
+/** Partners can update the status of responsibilities assigned to their own team. */
+export function canUpdateResponsibility(user: Actor | null | undefined, responsibilityTeam: string): boolean {
+  if (can(user, "edit-operations")) return true;
+  return !!user && user.role === "partner" && user.team === responsibilityTeam;
 }

@@ -60,6 +60,26 @@ The Global lead adds and manages people under **People**.
   - metrics grouped by logic-model level: impact and outcomes get large cards, outputs medium cards, activities and inputs compact rows
 - **User picker**: there's no login yet. Pick who you are in the header; entries record who logged them.
 
+## Operations (Stage 2)
+
+Under **Operations** the Global lead sees budget, responsibilities, risks and decisions across focus areas.
+
+- **Budget & spend:**
+  - paid and committed spend per initiative, rolled up to focus areas and the programme
+  - a cumulative spend chart against an even-pace line, and spend by category
+  - a spend log, with CSV import from finance (`date, initiative, amount` plus optional `category, status, description, reference`)
+- **Budget health** (`budgetHealth` in `src/lib/operations.ts`) compares spend with time elapsed, and projects year-end spend at the current pace:
+
+  | Status | When |
+  | --- | --- |
+  | Red | Paid + committed is over budget, or the forecast is over 110% of budget |
+  | Amber | The forecast is 100–110% of budget, or paid spend is more than 20 points behind the timeline (underspending) |
+  | Green | Otherwise |
+
+- **Responsibilities:** reports, contracts, approvals and compliance tasks, each with an owner, a team and a due date. Items are flagged overdue, or due soon (within 14 days). Marking a repeating item done creates the next one. Partner teams can update the status of items assigned to them.
+- **Risks:** score = likelihood × impact (1–5 each). High is 15 or more, medium 8–14, low below 8. A 5×5 grid shows where the open risks sit, and past review dates are flagged.
+- **Decisions:** what was decided, when, by whom and why.
+
 ## How status is calculated
 
 The logic lives in `src/lib/status.ts`, with tests in `tests/status.test.ts`.

@@ -9,6 +9,8 @@ import { countStatuses, overallRag } from "@/lib/status";
 import { PageHeader, StatusBadge } from "@/components/ui";
 import { AudienceSplit, InitiativeTable, NeedsAttention, RagStrip } from "@/components/programme-panels";
 import { getProgramme } from "@/server/queries";
+import { getOperations } from "@/server/operations-queries";
+import { BudgetBadge, BudgetSummary } from "@/components/operations/ops-ui";
 
 export default async function FocusAreaPage({ params }: { params: Promise<{ fid: string }> }) {
   const user = await requireUser();
@@ -24,6 +26,8 @@ export default async function FocusAreaPage({ params }: { params: Promise<{ fid:
     }),
   ]);
   if (!focusArea) notFound();
+  const ops = await getOperations();
+  const area = ops.areas.find((a) => a.focusArea.id === fid);
   const sym = currencySymbol(programme.currency);
   const rows = focusArea.projects.map((p) => ({ project: p, dash: buildDashboard(p, p.parameters) }));
   const metrics = rows.flatMap((r) => r.dash.metrics);
@@ -76,7 +80,12 @@ export default async function FocusAreaPage({ params }: { params: Promise<{ fid:
             {focusArea.budget - toInitiatives > 0 && ` · ${formatValue(focusArea.budget - toInitiatives, sym, { compact: true })} unassigned`}
             {focusArea.budget - toInitiatives < 0 && ` · over by ${formatValue(toInitiatives - focusArea.budget, sym, { compact: true })}`}
           </p>
-          <p className="mt-1 text-xs text-muted">Spend tracking arrives with the Operations step.</p>
+          {area && (
+            <div className="mt-3 space-y-2">
+              <BudgetBadge health={area.health} />
+              <BudgetSummary health={area.health} currency={sym} />
+            </div>
+          )}
         </div>
         <AudienceSplit metrics={metrics} />
       </section>

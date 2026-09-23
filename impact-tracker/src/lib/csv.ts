@@ -164,3 +164,55 @@ export function parseCampaignCsv(
   });
   return { rows, error: null };
 }
+
+export interface SpendCsvRow {
+  line: number;
+  initiative: string;
+  projectId: string | null;
+  date: string | null;
+  amount: number | null;
+  category: string;
+  status: string;
+  description: string;
+  reference: string;
+  error: string | null;
+}
+
+/**
+ * Spend CSV, e.g. a finance export: date, initiative, amount, and optionally
+ * category, status (actual | committed), description, reference.
+ */
+export function parseSpendCsv(
+  text: string,
+  projects: { id: string; name: string }[],
+  categories: readonly string[],
+): { rows: SpendCsvRow[]; error: string | null } {
+  const parsed = Papa.parse<string[]>(text.trim(), { skipEmptyLines: "greedy" });
+  const [header, ...body] = parsed.data;
+  const cols = (header ?? []).map(norm);
+  const col = (...names: string[]) => cols.findIndex((c) => names.includes(c));
+  const iD = col("date"), iP = col("initiative", "project"), iA = col("amount", "value"), iC = col("category"), iS = col("status"), iT = col("description"), iR = col("reference", "ref", "po");
+  if (iD < 0 || iP < 0 || iA < 0) return { rows: [], error: "The header must include date, initiative and amount columns." };
+  const byName = new Map(projects.map((p) => [norm(p.name), p.id]));
+  const rows = body.map((r, i): SpendCsvRow => {
+    const initiative = (r[iP] ?? "").trim();
+    const projectId = byName.get(norm(initiative)) ?? null;
+    const date = parseDate(r[iD] ?? "");
+    const raw = (r[iA] ?? "").trim().replace(/[,£$€\s]/g, "");
+    const amount = raw === "" ? null : Number(raw);
+    const category = iC >= 0 && (r[iC] ?? "").trim() ? norm(r[iC]) : "other";
+    const status = iS >= 0 && (r[iS] ?? "").trim() ? norm(r[iS]) : "actual";
+    let error: string | null = null;
+    if (!projectId) error = `Unknown initiative “${initiative}”`;
+    else if (!date) error = `Invalid date “${r[iD] ?? ""}”`;
+    else if (amount === null || !Number.isFinite(amount)) error = `Invalid amount “${r[iA] ?? ""}”`;
+    else if (!categories.includes(category)) error = `Unknown category “${r[iC]}” (use ${categories.join(", ")})`;
+    else if (status !== "actual" && status !== "committed") error = `Status must be actual or committed`;
+    return {
+      line: i + 2, initiative, projectId, date: date?.toISOString() ?? null,
+      amount: amount !== null && Number.isFinite(amount) ? amount : null,
+      category, status, description: iT >= 0 ? (r[iT] ?? "").trim() : "", reference: iR >= 0 ? (r[iR] ?? "").trim() : "", error,
+    };
+  });
+  return { rows, error: null };
+}

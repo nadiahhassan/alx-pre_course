@@ -29,6 +29,9 @@ model User {
   createdAt    DateTime  @default(now())
 
   sessions           Session[]
+  responsibilities   Responsibility[]
+  risks              Risk[]
+  spendEntries       SpendEntry[]
   ownedFocusAreas    FocusArea[] @relation("FocusAreaOwner")
   ownedProjects      Project[]   @relation("ProjectOwner")
   entries            Entry[]
@@ -79,7 +82,10 @@ model FocusArea {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  projects Project[]
+  projects         Project[]
+  responsibilities Responsibility[]
+  risks            Risk[]
+  decisions        Decision[]
 }
 
 // An initiative within a focus area. (Named Project in the database.)
@@ -114,6 +120,10 @@ model Project {
   evidence   Evidence[]
   snapshots  Snapshot[]
   shareLinks ShareLink[]
+  spend      SpendEntry[]
+  responsibilities Responsibility[]
+  risks      Risk[]
+  decisions  Decision[]
 }
 
 model Parameter {
@@ -282,4 +292,82 @@ model ShareLink {
   revokedAt  DateTime?
 
   @@index([projectId])
+}
+
+// ---------------------------------------------------------------------------
+// Operations: budget spend, responsibilities, risks and decisions.
+
+// Money spent or committed against an initiative's budget.
+model SpendEntry {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  date        DateTime
+  amount      Float
+  category    String   @default("other") // staff | grants | events | marketing | travel | vendors | other
+  status      String   @default("actual") // actual (paid) | committed (contracted, not yet paid)
+  description String   @default("")
+  reference   String   @default("") // PO, invoice or finance ID
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+// Administrative obligations: reports, contracts, approvals, compliance.
+model Responsibility {
+  id          String     @id @default(cuid())
+  title       String
+  description String     @default("")
+  type        String     @default("admin") // report | contract | approval | compliance | admin | other
+  team        String     @default("programme") // programme | comms | gapp | marketing
+  ownerId     String?
+  owner       User?      @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  focusAreaId String?
+  focusArea   FocusArea? @relation(fields: [focusAreaId], references: [id], onDelete: SetNull)
+  projectId   String?
+  project     Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  dueDate     DateTime
+  recurrence  String     @default("none") // none | monthly | quarterly | annually
+  status      String     @default("open") // open | in-progress | blocked | done
+  completedAt DateTime?
+  notes       String     @default("")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Risk {
+  id          String     @id @default(cuid())
+  title       String
+  description String     @default("")
+  likelihood  Int // 1 (rare) to 5 (almost certain)
+  impact      Int // 1 (minor) to 5 (severe)
+  mitigation  String     @default("")
+  status      String     @default("open") // open | mitigating | closed
+  ownerId     String?
+  owner       User?      @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  focusAreaId String?
+  focusArea   FocusArea? @relation(fields: [focusAreaId], references: [id], onDelete: SetNull)
+  projectId   String?
+  project     Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  reviewDate  DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Decision {
+  id          String     @id @default(cuid())
+  date        DateTime
+  title       String
+  decision    String
+  rationale   String     @default("")
+  madeBy      String     @default("") // person or forum, e.g. "Programme board"
+  focusAreaId String?
+  focusArea   FocusArea? @relation(fields: [focusAreaId], references: [id], onDelete: SetNull)
+  projectId   String?
+  project     Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }

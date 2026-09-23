@@ -20,6 +20,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <Link href="/" className={navLink}>
               Programme
             </Link>
+            <Link href="/operations" className={navLink}>
+              Operations
+            </Link>
             <Link href="/library" className={navLink}>
               Parameter library
             </Link>

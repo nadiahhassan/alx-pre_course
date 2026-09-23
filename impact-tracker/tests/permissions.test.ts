@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { can } from "@/lib/permissions";
+import { can, canUpdateResponsibility } from "@/lib/permissions";
 import { hashPassword, verifyPassword } from "@/lib/passwords";
 
 describe("permissions", () => {
@@ -27,6 +27,15 @@ describe("permissions", () => {
     expect(can(marketing, "edit-campaigns")).toBe(true);
     expect(can(marketing, "edit-data")).toBe(false);
     expect(can(marketing, "approve-ai")).toBe(false);
+  });
+  it("keeps operations with the Global lead and programme team; partners update their own team's items", () => {
+    expect(can(admin, "edit-operations")).toBe(true);
+    expect(can(programme, "edit-operations")).toBe(true);
+    expect(can(gapp, "edit-operations")).toBe(false);
+    expect(canUpdateResponsibility(gapp, "gapp")).toBe(true);
+    expect(canUpdateResponsibility(gapp, "comms")).toBe(false);
+    expect(canUpdateResponsibility(viewer, "programme")).toBe(false);
+    expect(canUpdateResponsibility(programme, "marketing")).toBe(true);
   });
   it("gives viewers and signed-out users read-only access", () => {
     expect(can(viewer, "edit-evidence")).toBe(false);
