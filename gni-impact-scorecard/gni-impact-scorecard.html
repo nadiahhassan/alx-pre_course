@@ -1,0 +1,729 @@
+<title>GNI Impact Scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --surface-2:#EBEFF4; --ink:#14202B; --ink-2:#465665; --muted:#6B7A88; --line:#D9E0E7;
+  --accent:#2366A8; --accent-ink:#1B558E; --accent-soft:#E2ECF7; --internal:#D0557F; --plan:#8C99A6;
+  --good:#1B7F4C; --good-soft:#E1F2E8; --warn:#9A6400; --warn-soft:#FBEFD6; --crit:#B93A32; --crit-soft:#F9E3E1;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#0E151C; --surface:#16212B; --surface-2:#1E2B37; --ink:#E5ECF2; --ink-2:#AAB7C3; --muted:#8494A2; --line:#2A3845;
+  --accent:#4C8FD6; --accent-ink:#8DBBEA; --accent-soft:#1B3148; --internal:#D95F93; --plan:#7D8B98;
+  --good:#52C28B; --good-soft:#15352A; --warn:#E1A83E; --warn-soft:#3A2E14; --crit:#EF7A6F; --crit-soft:#3E1F1D;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#0E151C; --surface:#16212B; --surface-2:#1E2B37; --ink:#E5ECF2; --ink-2:#AAB7C3; --muted:#8494A2; --line:#2A3845;
+  --accent:#4C8FD6; --accent-ink:#8DBBEA; --accent-soft:#1B3148; --internal:#D95F93; --plan:#7D8B98;
+  --good:#52C28B; --good-soft:#15352A; --warn:#E1A83E; --warn-soft:#3A2E14; --crit:#EF7A6F; --crit-soft:#3E1F1D;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:650;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:30px;line-height:1.15}
+h2{font-size:22px}
+h3{font-size:17px}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sub{color:var(--ink-2);font-size:14px}
+.small{font-size:13px;color:var(--ink-2)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* masthead */
+.mast{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;align-items:flex-end;padding-block:28px 16px;border-bottom:1px solid var(--line)}
+.mast .meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--ink-2);margin-top:6px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
+.tag.demo{background:var(--warn-soft);color:var(--warn)}
+.yearbar{min-width:220px}
+.yearbar .track{height:6px;border-radius:3px;background:var(--surface-2);margin-top:6px;position:relative}
+.yearbar .fill{height:6px;border-radius:3px;background:var(--ink-2)}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding-block:10px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+nav.tabs button{border:0;background:none;padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;color:var(--ink-2);font-weight:500}
+nav.tabs button:hover{background:var(--surface-2);color:var(--ink)}
+nav.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+main{padding-top:24px}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.panel-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:12px}
+.grid{display:grid;gap:16px}
+.g-kpi{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.g-2{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+@media (max-width:860px){.g-2{grid-template-columns:minmax(0,1fr)}}
+.kpi{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.kpi .v{font-family:var(--serif);font-size:30px;font-weight:650;line-height:1.1;margin-top:4px}
+.kpi .n{font-size:12.5px;color:var(--ink-2);margin-top:4px}
+
+/* status */
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.pill i{font-style:normal;font-size:11px}
+.s-good{background:var(--good-soft);color:var(--good)}
+.s-warn{background:var(--warn-soft);color:var(--warn)}
+.s-crit{background:var(--crit-soft);color:var(--crit)}
+.chip{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:5px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:baseline;margin-right:5px}
+
+/* tables */
+.tscroll{overflow-x:auto;margin-inline:-4px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--surface-2)}
+.iname{font-weight:600}
+.iname small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+
+/* bullet bar */
+.bullet{position:relative;height:10px;background:var(--surface-2);border-radius:5px;min-width:120px}
+.bullet .b{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:var(--accent)}
+.bullet .exp{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);border-radius:1px}
+.bullet-label{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink-2);margin-top:4px}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer;color:var(--ink-2)}
+.filters button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+
+/* initiative page */
+.ilist{display:flex;flex-direction:column;gap:6px}
+.ilist button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 12px;cursor:pointer}
+.ilist button:hover{background:var(--surface-2)}
+.ilist button[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.g-init{grid-template-columns:260px minmax(0,1fr)}
+@media (max-width:860px){.g-init{grid-template-columns:minmax(0,1fr)}.ilist{flex-direction:row;overflow-x:auto}.ilist button{min-width:220px}}
+.logic{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.logic{grid-template-columns:minmax(0,1fr)}}
+.logic div{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--ink-2);position:relative}
+.logic b{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink);margin-bottom:4px}
+.quote{border-left:3px solid var(--accent);padding:4px 0 4px 14px;font-family:var(--serif);font-size:18px;line-height:1.4}
+.quote cite{display:block;font-family:var(--sans);font-style:normal;font-size:12.5px;color:var(--muted);margin-top:6px}
+.next{background:var(--accent-soft);border-radius:8px;padding:12px 14px;font-size:14px}
+.next b{color:var(--accent-ink)}
+
+/* forms */
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;align-items:end}
+label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:500;color:var(--ink-2)}
+input,select,textarea{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:7px 9px;font-size:14px;min-width:0;width:100%}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:7px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:14px}
+:root[data-theme="dark"] .btn{color:#0E151C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0E151C}}
+.btn.ghost{background:transparent;color:var(--accent-ink)}
+.btn:disabled{opacity:.55;cursor:default}
+.log{font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+.log div{padding:8px 10px;background:var(--surface-2);border-radius:6px}
+.flash{color:var(--good);font-size:13px;font-weight:500}
+
+/* charts */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--sans)}
+.chart .lbl{fill:var(--ink-2);font-size:11.5px;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.swatch{width:14px;height:3px;border-radius:2px;display:inline-block}
+.swatch.box{height:10px;width:10px;border-radius:3px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;padding:7px 10px;border-radius:7px;z-index:50;max-width:260px;line-height:1.4;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:8px}
+.frow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center;font-size:13px}
+@media (max-width:520px){.frow{grid-template-columns:minmax(0,1fr)}}
+.fbar{height:26px;border-radius:0 5px 5px 0;display:flex;align-items:center;padding-left:8px;color:#fff;font-weight:600;font-size:12.5px;min-width:4px;white-space:nowrap}
+.fval{font-size:12.5px;color:var(--ink-2);margin-left:8px;white-space:nowrap}
+
+/* budget */
+.bbar{position:relative;height:14px;background:var(--surface-2);border-radius:4px;min-width:160px}
+.bbar .sp{position:absolute;top:0;bottom:0;left:0;background:var(--accent);border-radius:4px 0 0 4px}
+.bbar .cm{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--accent) 0 2px,transparent 2px 5px);opacity:.75;border-left:2px solid var(--surface)}
+.bbar .fc{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.bbar .over{position:absolute;top:-4px;bottom:-4px;right:0;width:2px;background:var(--crit)}
+
+/* briefings */
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:8px 14px;cursor:pointer;color:var(--ink-2);font-weight:500;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.brief{font-size:14.5px;line-height:1.6;max-width:72ch}
+.brief h4{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:18px 0 6px}
+.brief h4:first-child{margin-top:0}
+.brief ul{margin:0;padding-left:20px}
+.brief li{margin-bottom:4px}
+.ai-out{white-space:pre-wrap;font-size:14.5px;line-height:1.6;max-width:72ch}
+.note{font-size:12.5px;color:var(--muted)}
+footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+@media (prefers-reduced-motion:no-preference){.fade{animation:fade .25s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div>
+      <div class="row" style="gap:8px"><span class="eyebrow">Google News Initiative · Programme year 2026</span><span class="tag demo">Illustrative data</span></div>
+      <h1 style="margin-top:6px">GNI Impact Scorecard</h1>
+      <div class="meta"><span>Six initiatives across four pillars</span><span id="asof"></span></div>
+    </div>
+    <div class="yearbar" aria-label="Share of programme year elapsed">
+      <div class="row" style="justify-content:space-between"><span class="small">Year elapsed</span><strong class="num" id="elapsed"></strong></div>
+      <div class="track"><div class="fill" id="elapsedFill"></div></div>
+    </div>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="portfolio">Portfolio</button>
+    <button role="tab" data-tab="initiatives">Initiatives</button>
+    <button role="tab" data-tab="events">Events &amp; marketing</button>
+    <button role="tab" data-tab="budget">Budget</button>
+    <button role="tab" data-tab="briefings">Partner briefings</button>
+  </nav>
+  <main id="main"></main>
+  <footer>
+    <span>Portfolio concept by Nadia Hassan. Not an official Google product. All figures, quotes and names are illustrative.</span>
+    <button class="btn ghost" id="resetAll" style="padding:4px 10px;font-size:12.5px">Reset sample data</button>
+  </footer>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+// ---------- Dates ----------
+const START = new Date("2026-01-01T00:00:00"), END = new Date("2026-12-31T00:00:00"), ASOF = new Date("2026-09-26T00:00:00");
+const DAY = 86400000;
+const ELAPSED = Math.min(1, Math.max(0, (ASOF - START) / (END - START + DAY)));
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+// ---------- Illustrative data ----------
+// mode: "cumulative" counts build over the year and are judged against where they should be by today;
+//       "rate" is a level (a % or score) judged against its target directly.
+const PILLARS = ["Skills & training", "Innovation & AI", "Trust & information quality", "Business sustainability"];
+const INITIATIVES = [
+  { id:"skills", name:"Digital Skills Training", short:"News Lab training for journalists", pillar:"Skills & training", lead:"Programme lead, EMEA", regions:"EMEA · APAC · LATAM · North America", countries:42,
+    budget:900000, spent:610000, committed:120000, costPer:{metric:"trained", per:1, label:"per journalist trained"},
+    logic:{inputs:"Trainer network, course library, $900k", activities:"Live and self-paced courses on verification, data and audience skills", outputs:"12,000 journalists trained; 1,500 newsrooms reached", outcomes:"Journalists apply new skills in their daily work", impact:"More accurate, better-verified local reporting"},
+    metrics:[
+      {id:"trained", name:"Journalists trained", kind:"Output", mode:"cumulative", unit:"", baseline:0, target:12000, actual:8650, audience:"External", source:"Learning platform records", confidence:"High", key:true},
+      {id:"newsrooms", name:"Newsrooms reached", kind:"Output", mode:"cumulative", unit:"", baseline:0, target:1500, actual:1180, audience:"External", source:"Registration data", confidence:"High", roll:"newsrooms"},
+      {id:"apply", name:"Applying skills after 90 days", kind:"Outcome", mode:"rate", unit:"%", baseline:45, target:60, actual:61, audience:"External", source:"90-day follow-up survey, n=1,240", confidence:"Medium", key:true},
+      {id:"csat", name:"Learner satisfaction", kind:"Outcome", mode:"rate", unit:"/5", baseline:4.0, target:4.5, actual:4.6, audience:"External", source:"End-of-course survey", confidence:"High"},
+    ],
+    history:{metric:"trained", values:[420,1150,2100,3050,3900,4800,6100,7400,8650]},
+    quote:{text:"After the verification course our desk cut the time to check a viral video from hours to about twenty minutes.", who:"News editor, regional daily, Kenya"},
+    next:"Keep pace. Promote the verification course to APAC newsrooms, where completion is highest." },
+  { id:"ai", name:"AI in the Newsroom", short:"Hands-on AI tools training", pillar:"Innovation & AI", lead:"Innovation lead, Global", regions:"EMEA · APAC · LATAM", countries:18,
+    budget:700000, spent:380000, committed:150000, costPer:{metric:"aitrained", per:1, label:"per newsroom trained"},
+    logic:{inputs:"AI tools, expert trainers, $700k", activities:"Workshops and 3-month clinics on responsible AI workflows", outputs:"800 newsrooms trained", outcomes:"Newsrooms adopt at least one AI workflow and save staff time", impact:"Newsrooms spend more time on original journalism"},
+    metrics:[
+      {id:"aitrained", name:"Newsrooms trained on AI tools", kind:"Output", mode:"cumulative", unit:"", baseline:0, target:800, actual:450, audience:"External", source:"Workshop attendance", confidence:"High", key:true, roll:"newsrooms"},
+      {id:"adopt", name:"Using an AI workflow after 3 months", kind:"Outcome", mode:"rate", unit:"%", baseline:20, target:50, actual:43, audience:"External", source:"3-month follow-up survey, n=210", confidence:"Medium", key:true},
+      {id:"hours", name:"Staff hours saved per week", kind:"Outcome", mode:"rate", unit:" hrs", baseline:0, target:6, actual:4.8, audience:"External", source:"Self-reported, follow-up survey", confidence:"Low"},
+      {id:"policy", name:"Newsrooms with responsible-AI guidelines", kind:"Outcome", mode:"rate", unit:"%", baseline:10, target:40, actual:35, audience:"External", source:"Follow-up survey", confidence:"Medium"},
+    ],
+    quote:{text:"We now draft first-pass transcripts with AI and spend the time we save on original reporting.", who:"Digital lead, local publisher, Brazil"},
+    next:"Add 3-month follow-up clinics for every cohort. Adoption is highest where newsrooms get follow-up support." },
+  { id:"fact", name:"Fact-Check & Verification Fund", short:"Grants for fact-checking organisations", pillar:"Trust & information quality", lead:"Trust & safety partnerships", regions:"Global", countries:31,
+    budget:1200000, spent:950000, committed:180000, costPer:{metric:"reach", per:1000000, label:"per million people reached"},
+    logic:{inputs:"Grant fund, $1.2m; partner network", activities:"Grants, verification tools and training for 40 fact-checkers", outputs:"18,000 fact-checks published", outcomes:"Audiences see accurate information; grantees become financially sustainable", impact:"A healthier information ecosystem"},
+    metrics:[
+      {id:"grantees", name:"Organisations funded", kind:"Output", mode:"rate", unit:"", baseline:0, target:40, actual:40, audience:"External", source:"Grant agreements", confidence:"High", roll:"newsrooms"},
+      {id:"checks", name:"Fact-checks published", kind:"Output", mode:"cumulative", unit:"", baseline:0, target:18000, actual:14200, audience:"External", source:"Grantee quarterly reports", confidence:"Medium", key:true},
+      {id:"reach", name:"Audience reached", kind:"Outcome", mode:"cumulative", unit:"m", baseline:0, target:60, actual:41, audience:"External", source:"Grantee analytics", confidence:"Medium", roll:"reach", scale:1000000},
+      {id:"sustain", name:"Grantees with a sustainable revenue line", kind:"Impact", mode:"rate", unit:"%", baseline:15, target:40, actual:24, audience:"External", source:"Annual grantee survey", confidence:"Medium", key:true},
+    ],
+    quote:{text:"The fund let us cover the election in three more languages.", who:"Director, fact-checking organisation, India"},
+    next:"Add a revenue-coaching track to the next grant round. Reach is on target, but grantees are not yet sustainable." },
+  { id:"startups", name:"Startups Lab", short:"Accelerator for digital news startups", pillar:"Business sustainability", lead:"Business programmes lead", regions:"EMEA · LATAM", countries:12,
+    budget:800000, spent:520000, committed:90000, costPer:{metric:"cohort", per:1, label:"per publisher supported"},
+    logic:{inputs:"Coaches, curriculum, $800k", activities:"16-week accelerator with revenue and product coaching", outputs:"30 publishers complete the programme", outcomes:"New revenue streams and revenue growth", impact:"More independent news businesses survive and hire"},
+    metrics:[
+      {id:"cohort", name:"Publishers in cohort", kind:"Output", mode:"rate", unit:"", baseline:0, target:30, actual:30, audience:"External", source:"Programme records", confidence:"High", roll:"newsrooms"},
+      {id:"growth", name:"Median revenue growth", kind:"Outcome", mode:"rate", unit:"%", baseline:0, target:20, actual:12, audience:"External", source:"Publisher financials, 6 months after", confidence:"Medium", key:true},
+      {id:"stream", name:"Launched a new revenue stream", kind:"Outcome", mode:"rate", unit:"%", baseline:0, target:70, actual:57, audience:"External", source:"Exit interviews", confidence:"High", key:true},
+      {id:"jobs", name:"Jobs created", kind:"Impact", mode:"cumulative", unit:"", baseline:0, target:90, actual:58, audience:"External", source:"Publisher reports", confidence:"Low"},
+    ],
+    quote:{text:"Our membership revenue grew, but ad income fell faster than we expected.", who:"Founder, digital news startup, Nigeria"},
+    next:"Agree a revenue-diversification sprint for this cohort before Q4 funding is released." },
+  { id:"local", name:"Local News Sustainability", short:"Reader-revenue support for local publishers", pillar:"Business sustainability", lead:"Partnerships lead, UK & Ireland", regions:"UK & Ireland · North America", countries:9,
+    budget:600000, spent:400000, committed:60000, costPer:{metric:"localsupported", per:1, label:"per newsroom supported"},
+    logic:{inputs:"Consultants, data tools, $600k", activities:"Reader-revenue consulting and subscription analytics", outputs:"120 local newsrooms supported", outcomes:"Subscribers and reader revenue grow", impact:"Communities keep a local news source"},
+    metrics:[
+      {id:"localsupported", name:"Local newsrooms supported", kind:"Output", mode:"cumulative", unit:"", baseline:0, target:120, actual:96, audience:"External", source:"Programme records", confidence:"High", key:true, roll:"newsrooms"},
+      {id:"rrgrowth", name:"Reader-revenue growth", kind:"Outcome", mode:"rate", unit:"%", baseline:0, target:15, actual:16, audience:"External", source:"Publisher dashboards", confidence:"High", key:true},
+      {id:"subs", name:"Digital subscribers added", kind:"Outcome", mode:"cumulative", unit:"k", baseline:0, target:45, actual:30, audience:"External", source:"Publisher dashboards", confidence:"High", scale:1000},
+    ],
+    quote:{text:"Subscriptions now cover the salaries of our two newest reporters.", who:"Publisher, local weekly, UK"},
+    next:"Package the reader-revenue playbook so the model can scale to more markets in 2027." },
+  { id:"media", name:"Media Literacy for Young People", short:"Classroom programme with schools", pillar:"Trust & information quality", lead:"Trust programmes lead", regions:"APAC · EMEA", countries:6,
+    budget:400000, spent:210000, committed:40000, costPer:{metric:"young", per:1000, label:"per 1,000 young people"},
+    logic:{inputs:"Teacher toolkits, NGO partners, $400k", activities:"Teacher training and classroom sessions", outputs:"250,000 young people reached", outcomes:"Young people can spot false claims", impact:"A generation that questions what it shares"},
+    metrics:[
+      {id:"young", name:"Young people reached", kind:"Output", mode:"cumulative", unit:"k", baseline:0, target:250, actual:190, audience:"External", source:"Partner NGO reports", confidence:"Medium", key:true, roll:"reach", scale:1000},
+      {id:"spot", name:"Can spot a false claim (post-test)", kind:"Outcome", mode:"rate", unit:"%", baseline:41, target:60, actual:56, audience:"External", source:"Pre/post quiz, n=3,800", confidence:"High", key:true},
+      {id:"teachers", name:"Teachers trained", kind:"Output", mode:"cumulative", unit:"", baseline:0, target:3000, actual:2300, audience:"External", source:"Training records", confidence:"High"},
+    ],
+    quote:{text:"Students now ask 'who made this and why?' before they share.", who:"Teacher, secondary school, Indonesia"},
+    next:"Move unspent budget into teacher-led sessions, which show the biggest pre/post gains." },
+];
+const EVENTS = [
+  { id:"summit", name:"GNI Summit, EMEA", audience:"External", format:"In person", date:"2026-05-14", cost:180000, satisfaction:4.5,
+    stages:[["Reached",48000],["Registered",2400],["Attended",1650],["Applied to a programme",520]] },
+  { id:"webinar", name:"AI in the Newsroom webinar series", audience:"External", format:"Online", date:"2026-03-10", cost:35000, satisfaction:4.3,
+    stages:[["Reached",120000],["Registered",9800],["Attended",5200],["Enrolled in a course",1400]] },
+  { id:"bootcamp", name:"Verification bootcamp at a journalism festival", audience:"External", format:"In person", date:"2026-04-18", cost:40000, satisfaction:4.7,
+    stages:[["Reached",15000],["Registered",900],["Attended",780],["Used a verification tool in 30 days",310]] },
+  { id:"email", name:"Startups Lab application campaign", audience:"External", format:"Email & social", date:"2026-02-02", cost:22000, satisfaction:null,
+    stages:[["Reached",260000],["Clicked",11400],["Started application",1900],["Submitted application",640]] },
+  { id:"lunch", name:"Lunch & learn: the news ecosystem", audience:"Internal", format:"Hybrid", date:"2026-06-11", cost:6000, satisfaction:4.4,
+    stages:[["Invited",3000],["Registered",620],["Attended",410],["Joined the mentor pool",95]] },
+  { id:"sales", name:"Partner-team briefing on GNI impact", audience:"Internal", format:"Online", date:"2026-07-22", cost:2000, satisfaction:4.2,
+    stages:[["Invited",450],["Registered",330],["Attended",300],["Used proof points with partners",120]] },
+];
+
+// ---------- State (per-viewer edits, saved in this browser only) ----------
+const KEY = "gni-scorecard-v1";
+let state = { overrides:{}, log:[] };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.overrides) state = s; } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const actual = (i, m) => state.overrides[i.id + "." + m.id] ?? m.actual;
+
+// ---------- Scoring ----------
+const STATUS = { good:{label:"On track", icon:"✓"}, warn:{label:"Behind", icon:"▲"}, crit:{label:"Off track", icon:"✕"} };
+function progress(i, m) { const span = m.target - m.baseline; return span ? (actual(i, m) - m.baseline) / span : 1; }
+function ratio(i, m) { const p = progress(i, m); return m.mode === "cumulative" ? p / ELAPSED : p; }
+function statusOf(r) { return r >= 0.9 ? "good" : r >= 0.7 ? "warn" : "crit"; }
+const mStatus = (i, m) => statusOf(ratio(i, m));
+const rank = { good:0, warn:1, crit:2 };
+function iStatus(i) { return i.metrics.filter(m => m.key).map(m => mStatus(i, m)).reduce((a, b) => rank[b] > rank[a] ? b : a, "good"); }
+function budgetHealth(i) {
+  const forecast = i.spent / ELAPSED;
+  if (i.spent + i.committed > i.budget || forecast > i.budget * 1.1) return { s:"crit", label:"Overspend risk", forecast };
+  if (forecast > i.budget) return { s:"warn", label:"Spending fast", forecast };
+  if (forecast < i.budget * 0.85) return { s:"warn", label:"Underspend risk", forecast };
+  return { s:"good", label:"On pace", forecast };
+}
+
+// ---------- Formatting ----------
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nf = new Intl.NumberFormat("en-GB");
+function fmt(v, unit) {
+  const n = Math.abs(v) < 10 && v % 1 ? v.toFixed(1) : nf.format(Math.round(v));
+  if (unit === "%") return n + "%";
+  if (unit === "/5") return (+v).toFixed(1) + " / 5";
+  return n + (unit || "");
+}
+function money(v) {
+  if (v >= 1e6) return "$" + (v / 1e6).toFixed(v >= 1e7 ? 0 : 2).replace(/\.?0+$/, "") + "m";
+  if (v >= 1e3) return "$" + Math.round(v / 1e3) + "k";
+  return "$" + (v >= 10 ? Math.round(v) : v.toFixed(2));
+}
+const pct = v => Math.round(v * 100) + "%";
+const pill = s => `<span class="pill s-${s}"><i aria-hidden="true">${STATUS[s].icon}</i>${STATUS[s].label}</span>`;
+const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" });
+
+// ---------- Tooltip ----------
+const tip = document.getElementById("tip");
+function showTip(html, x, y) { tip.innerHTML = html; tip.hidden = false; const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(innerWidth - w - 8, Math.max(8, x + 14)) + "px"; tip.style.top = Math.max(8, y - h - 12) + "px"; }
+const hideTip = () => { tip.hidden = true; };
+document.addEventListener("pointermove", e => { const t = e.target.closest("[data-tip]"); if (t) showTip(t.dataset.tip, e.clientX, e.clientY); else if (!e.target.closest("[data-chart]")) hideTip(); });
+
+// ---------- Components ----------
+function bullet(i, m, compact) {
+  const p = Math.max(0, Math.min(1, progress(i, m)));
+  const exp = m.mode === "cumulative" ? ELAPSED : null;
+  const s = mStatus(i, m);
+  const tipText = `${esc(m.name)}: ${fmt(actual(i, m), m.unit)} of ${fmt(m.target, m.unit)} target` + (exp ? `<br>Expected by today: ${fmt(m.baseline + (m.target - m.baseline) * exp, m.unit)}` : `<br>Baseline ${fmt(m.baseline, m.unit)}`);
+  return `<div data-tip="${esc(tipText)}"><div class="bullet"><div class="b" style="width:${p * 100}%;background:var(--${s === "good" ? "accent" : s})"></div>${exp ? `<div class="exp" style="left:calc(${exp * 100}% - 1px)"></div>` : ""}</div>
+    ${compact ? "" : `<div class="bullet-label"><span class="num">${fmt(actual(i, m), m.unit)}</span><span class="num">target ${fmt(m.target, m.unit)}</span></div>`}</div>`;
+}
+
+function lineChart(labels, series, opts = {}) {
+  const W = 640, H = 230, L = 48, R = 70, T = 14, B = 28;
+  const max = Math.max(...series.flatMap(s => s.values.filter(v => v != null)));
+  const raw = max / 4, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const tstep = [1, 2, 2.5, 5, 10].map(f => f * mag).find(v => v >= raw);
+  const top = Math.ceil(max / tstep) * tstep;
+  const ticks = []; for (let t = 0; t <= top + 1e-9; t += tstep) ticks.push(t);
+  const x = k => L + (W - L - R) * k / (labels.length - 1), y = v => T + (H - T - B) * (1 - v / top);
+  let g = ticks.map(t => `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${nf.format(t)}</text>`).join("");
+  g += labels.map((l, k) => `<text x="${x(k)}" y="${H - 8}" text-anchor="middle">${l}</text>`).join("");
+  for (const s of series) {
+    const pts = s.values.map((v, k) => v == null ? null : [x(k), y(v)]).filter(Boolean);
+    const d = pts.map((p, k) => (k ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+    if (s.area) g += `<path d="${d} L ${pts.at(-1)[0]} ${y(0)} L ${pts[0][0]} ${y(0)} Z" fill="${s.color}" opacity=".10"/>`;
+    g += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" ${s.dash ? 'stroke-dasharray="5 4"' : ""} stroke-linejoin="round" stroke-linecap="round"/>`;
+    const last = pts.at(-1);
+    if (s.endDot) g += `<circle cx="${last[0]}" cy="${last[1]}" r="4.5" fill="${s.color}" stroke="var(--surface)" stroke-width="2"/>`;
+    g += `<text class="lbl" x="${last[0] + 8}" y="${last[1] + 4}">${s.name}</text>`;
+  }
+  g += `<g class="hover" visibility="hidden"><line class="hx" y1="${T}" y2="${H - B}" stroke="var(--ink-2)" stroke-width="1"/>${series.map((s, n) => `<circle class="hd${n}" r="4" fill="${s.color}" stroke="var(--surface)" stroke-width="2"/>`).join("")}</g>`;
+  g += `<rect x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}" fill="transparent" class="hit"/>`;
+  const id = "c" + Math.random().toString(36).slice(2, 8);
+  setTimeout(() => {
+    const svg = document.getElementById(id); if (!svg) return;
+    const hover = svg.querySelector(".hover");
+    svg.querySelector(".hit").addEventListener("pointermove", e => {
+      const r = svg.getBoundingClientRect(); const px = (e.clientX - r.left) * W / r.width;
+      const k = Math.max(0, Math.min(labels.length - 1, Math.round((px - L) / (W - L - R) * (labels.length - 1))));
+      hover.setAttribute("visibility", "visible");
+      hover.querySelector(".hx").setAttribute("x1", x(k)); hover.querySelector(".hx").setAttribute("x2", x(k));
+      series.forEach((s, n) => { const c = hover.querySelector(".hd" + n); const v = s.values[k]; if (v == null) c.setAttribute("visibility", "hidden"); else { c.setAttribute("visibility", "visible"); c.setAttribute("cx", x(k)); c.setAttribute("cy", y(v)); } });
+      showTip(`<strong>${labels[k]} 2026</strong><br>` + series.filter(s => s.values[k] != null).map(s => `${s.name}: ${nf.format(Math.round(s.values[k]))}`).join("<br>"), e.clientX, e.clientY);
+    });
+    svg.querySelector(".hit").addEventListener("pointerleave", () => { hover.setAttribute("visibility", "hidden"); hideTip(); });
+  });
+  return `<svg class="chart" id="${id}" data-chart viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.label || "")}">${g}</svg>`;
+}
+
+// ---------- Views ----------
+let tab = "portfolio", pillarFilter = "All", currentInit = "skills", currentEvent = "summit", audience = "Leadership";
+const main = document.getElementById("main");
+
+function kpis() {
+  let newsrooms = 0, reach = 0, onTrack = 0, total = 0;
+  for (const i of INITIATIVES) for (const m of i.metrics) {
+    const v = actual(i, m) * (m.scale || 1);
+    if (m.roll === "newsrooms") newsrooms += v;
+    if (m.roll === "reach") reach += v;
+    total++; if (mStatus(i, m) === "good") onTrack++;
+  }
+  const trained = actual(INITIATIVES[0], INITIATIVES[0].metrics[0]);
+  const budget = INITIATIVES.reduce((n, i) => n + i.budget, 0), spent = INITIATIVES.reduce((n, i) => n + i.spent, 0);
+  return { trained, newsrooms, reach, onTrack, total, budget, spent };
+}
+
+function viewPortfolio() {
+  const k = kpis();
+  const counts = { good:0, warn:0, crit:0 }; INITIATIVES.forEach(i => counts[iStatus(i)]++);
+  const list = INITIATIVES.filter(i => pillarFilter === "All" || i.pillar === pillarFilter);
+  const skills = INITIATIVES[0], hm = skills.metrics[0];
+  const hist = skills.history.values.slice(); hist[hist.length - 1] = actual(skills, hm);
+  const plan = MONTHS.map((_, n) => hm.target * (n + 1) / 12);
+  const attention = INITIATIVES.flatMap(i => i.metrics.filter(m => mStatus(i, m) === "crit").map(m => ({ i, m })));
+  return `
+  <div class="stack fade">
+    <section class="grid g-kpi" aria-label="Headline results">
+      <div class="kpi"><div class="eyebrow">Journalists trained</div><div class="v num">${nf.format(k.trained)}</div><div class="n">of 12,000 target this year</div></div>
+      <div class="kpi"><div class="eyebrow">Newsrooms supported</div><div class="v num">${nf.format(Math.round(k.newsrooms))}</div><div class="n">across all six initiatives</div></div>
+      <div class="kpi"><div class="eyebrow">People reached</div><div class="v num">${(k.reach / 1e6).toFixed(1)}m</div><div class="n">through fact-checks and classrooms</div></div>
+      <div class="kpi"><div class="eyebrow">Metrics on track</div><div class="v num">${k.onTrack} / ${k.total}</div><div class="n">${counts.good} initiatives on track, ${counts.warn} behind, ${counts.crit} off track</div></div>
+      <div class="kpi"><div class="eyebrow">Budget spent</div><div class="v num">${pct(k.spent / k.budget)}</div><div class="n">${money(k.spent)} of ${money(k.budget)}, with ${pct(ELAPSED)} of the year gone</div></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><h2>Initiatives</h2><p class="small">Status is the worst of each initiative's key metrics. Click a row for the detail.</p></div>
+        <div class="filters" role="group" aria-label="Filter by pillar">${["All", ...PILLARS].map(p => `<button data-pillar="${esc(p)}" aria-pressed="${p === pillarFilter}">${esc(p)}</button>`).join("")}</div></div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Initiative</th><th>Status</th><th style="min-width:190px">Key outcome</th><th class="r">Budget used</th><th class="r">Cost per result</th></tr></thead>
+        <tbody>${list.map(i => {
+          const km = i.metrics.find(m => m.key && m.kind !== "Output") || i.metrics.find(m => m.key);
+          const cm = i.metrics.find(m => m.id === i.costPer.metric);
+          const units = actual(i, cm) * (cm.scale || 1) / i.costPer.per;
+          return `<tr class="click" data-open="${i.id}" tabindex="0">
+            <td><div class="iname">${esc(i.name)}<small>${esc(i.pillar)}</small></div></td>
+            <td>${pill(iStatus(i))}</td>
+            <td><div class="small" style="margin-bottom:4px">${esc(km.name)}</div>${bullet(i, km)}</td>
+            <td class="r num">${pct(i.spent / i.budget)}<div class="note">${money(i.spent)} of ${money(i.budget)}</div></td>
+            <td class="r num">${money(i.spent / units)}<div class="note">${esc(i.costPer.label)}</div></td></tr>`; }).join("")}
+        </tbody></table></div>
+    </section>
+
+    <div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><div><h2>Journalists trained vs plan</h2><p class="small">Digital Skills Training, cumulative by month</p></div>
+          <div class="legend"><span><i class="swatch" style="background:var(--accent)"></i>Actual</span><span><i class="swatch" style="background:repeating-linear-gradient(90deg,var(--plan) 0 5px,transparent 5px 8px)"></i>Plan</span></div></div>
+        ${lineChart(MONTHS, [
+          { name:"Plan", values:plan, color:"var(--plan)", dash:true },
+          { name:"Actual", values:hist.concat(Array(12 - hist.length).fill(null)), color:"var(--accent)", area:true, endDot:true },
+        ], { label:"Journalists trained per month, actual against plan" })}
+      </section>
+      <section class="panel">
+        <h2 style="margin-bottom:10px">Needs attention</h2>
+        ${attention.length ? `<div class="stack" style="gap:12px">${attention.map(({ i, m }) => `
+          <div><div class="row" style="justify-content:space-between;gap:8px"><strong style="font-size:14px">${esc(m.name)}</strong>${pill("crit")}</div>
+          <p class="small">${esc(i.name)}: ${fmt(actual(i, m), m.unit)} against a target of ${fmt(m.target, m.unit)}.</p>
+          <p class="small" style="margin-top:4px"><b style="color:var(--ink)">Next step:</b> ${esc(i.next)}</p></div>`).join("")}</div>` : `<p class="small">Nothing is off track.</p>`}
+        <details style="margin-top:16px"><summary class="small" style="cursor:pointer;font-weight:600">How status is scored</summary>
+          <div class="small" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+            <p><b>Counts</b> (people trained, fact-checks) are compared with where they should be by today, assuming steady progress through the year. The black tick on each bar marks that point.</p>
+            <p><b>Rates and scores</b> (% applying skills, revenue growth) are compared with their target directly, measured from the baseline.</p>
+            <p>At 90% or more of the expected level, a metric is <b>on track</b>. From 70% to 90% it is <b>behind</b>, and below 70% it is <b>off track</b>.</p>
+          </div></details>
+      </section>
+    </div>
+  </div>`;
+}
+
+function viewInitiatives() {
+  const i = INITIATIVES.find(x => x.id === currentInit);
+  const h = budgetHealth(i);
+  const logs = state.log.filter(l => l.init === i.id).slice(-5).reverse();
+  return `
+  <div class="grid g-init fade">
+    <div class="ilist" role="list">${INITIATIVES.map(x => `<button data-init="${x.id}" aria-current="${x.id === i.id}"><span><span style="font-weight:600;font-size:14px;display:block">${esc(x.name)}</span><span class="note">${esc(x.pillar)}</span></span>${pill(iStatus(x))}</button>`).join("")}</div>
+    <div class="stack">
+      <section class="panel stack">
+        <div class="row" style="justify-content:space-between;align-items:flex-start">
+          <div><div class="eyebrow">${esc(i.pillar)}</div><h2 style="margin-top:4px">${esc(i.name)}</h2><p class="sub">${esc(i.short)} · ${esc(i.regions)} · ${i.countries} countries · ${esc(i.lead)}</p></div>
+          ${pill(iStatus(i))}
+        </div>
+        <div><div class="eyebrow" style="margin-bottom:8px">Theory of change</div>
+          <div class="logic">${[["Inputs", i.logic.inputs], ["Activities", i.logic.activities], ["Outputs", i.logic.outputs], ["Outcomes", i.logic.outcomes], ["Impact", i.logic.impact]].map(([k, v]) => `<div><b>${k}</b>${esc(v)}</div>`).join("")}</div></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h3>Metrics</h3><span class="note">Black tick: where a count should be by today</span></div>
+        <div class="tscroll"><table>
+          <thead><tr><th>Metric</th><th>Type</th><th style="min-width:180px">Progress</th><th>Status</th><th>Source and confidence</th></tr></thead>
+          <tbody>${i.metrics.map(m => `<tr>
+            <td><strong>${esc(m.name)}</strong>${m.key ? ' <span class="chip">Key</span>' : ""}</td>
+            <td class="small">${m.kind}</td>
+            <td>${bullet(i, m)}</td>
+            <td>${pill(mStatus(i, m))}</td>
+            <td class="small">${esc(m.source)}<div class="note">${m.confidence} confidence</div></td></tr>`).join("")}</tbody></table></div>
+      </section>
+
+      <div class="grid g-2">
+        <section class="panel stack">
+          <h3>Evidence</h3>
+          <blockquote class="quote" style="margin:0">“${esc(i.quote.text)}”<cite>${esc(i.quote.who)} · illustrative quote</cite></blockquote>
+          <div class="next"><b>Recommended next step:</b> ${esc(i.next)}</div>
+        </section>
+        <section class="panel stack">
+          <h3>Budget</h3>
+          <div class="row" style="justify-content:space-between"><span class="num" style="font-family:var(--serif);font-size:26px;font-weight:650">${money(i.spent)}</span>${pill(h.s).replace(STATUS[h.s].label, h.label)}</div>
+          <p class="small">spent of ${money(i.budget)}, plus ${money(i.committed)} committed. At the current pace the year ends at <b>${money(h.forecast)}</b> (${pct(h.forecast / i.budget)} of budget).</p>
+        </section>
+      </div>
+
+      <section class="panel stack">
+        <div><h3>Log a new result</h3><p class="small">Updates the scorecard straight away. Changes are saved in this browser only.</p></div>
+        <form class="form" id="logForm">
+          <label for="lgMetric">Metric<select id="lgMetric">${i.metrics.map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join("")}</select></label>
+          <label for="lgValue">New value<input id="lgValue" type="number" step="any" required></label>
+          <label for="lgSource">Source<input id="lgSource" placeholder="e.g. September survey"></label>
+          <button class="btn" type="submit">Save result</button>
+        </form>
+        <span class="flash" id="lgFlash" role="status"></span>
+        ${logs.length ? `<div class="log">${logs.map(l => `<div><b>${esc(l.metric)}</b> updated to ${esc(l.value)}${l.source ? ` · ${esc(l.source)}` : ""} <span class="note">· ${esc(l.when)}</span></div>`).join("")}</div>` : ""}
+      </section>
+    </div>
+  </div>`;
+}
+
+function viewEvents() {
+  const ev = EVENTS.find(e => e.id === currentEvent);
+  const top = ev.stages[0][1];
+  const color = e => e.audience === "External" ? "var(--accent)" : "var(--internal)";
+  const agg = aud => { const es = EVENTS.filter(e => e.audience === aud); const cost = es.reduce((n, e) => n + e.cost, 0), act = es.reduce((n, e) => n + e.stages[3][1], 0), att = es.reduce((n, e) => n + e.stages[2][1], 0); return { n:es.length, cost, act, att, cpa:cost / act, rate:act / att }; };
+  const ext = agg("External"), int = agg("Internal");
+  const cpaMax = Math.max(...EVENTS.map(e => e.cost / e.stages[3][1]));
+  return `
+  <div class="stack fade">
+    <div class="grid g-kpi">
+      <div class="kpi"><div class="eyebrow"><span class="dot" style="background:var(--accent)"></span>External events and campaigns</div><div class="v num">${nf.format(ext.act)}</div><div class="n">people took a next step, at ${money(ext.cpa)} each</div></div>
+      <div class="kpi"><div class="eyebrow"><span class="dot" style="background:var(--internal)"></span>Internal events</div><div class="v num">${nf.format(int.act)}</div><div class="n">colleagues took a next step, at ${money(int.cpa)} each</div></div>
+      <div class="kpi"><div class="eyebrow">Best conversion</div><div class="v num">${(() => { const b = EVENTS.slice().sort((a, b) => b.stages[3][1] / b.stages[2][1] - a.stages[3][1] / a.stages[2][1])[0]; return pct(b.stages[3][1] / b.stages[2][1]); })()}</div><div class="n">of attendees acted: ${esc(EVENTS.slice().sort((a, b) => b.stages[3][1] / b.stages[2][1] - a.stages[3][1] / a.stages[2][1])[0].name)}</div></div>
+    </div>
+
+    <div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><div><h2>Funnel</h2><p class="small">From first contact to the action we wanted</p></div>
+          <label for="evSel" style="min-width:220px">Event or campaign<select id="evSel">${EVENTS.map(e => `<option value="${e.id}" ${e.id === ev.id ? "selected" : ""}>${esc(e.name)}</option>`).join("")}</select></label></div>
+        <div class="row small" style="margin-bottom:14px"><span class="chip">${ev.audience}</span><span>${esc(ev.format)}</span><span>${fmtDate(ev.date)}</span><span>Cost ${money(ev.cost)}</span>${ev.satisfaction ? `<span>Satisfaction ${ev.satisfaction.toFixed(1)} / 5</span>` : ""}</div>
+        <div class="funnel">${ev.stages.map(([label, v], n) => {
+          const w = Math.max(1.5, Math.sqrt(v / top) * 100);
+          const conv = n ? `${pct(v / ev.stages[n - 1][1])} of previous step` : "starting audience";
+          return `<div class="frow"><span class="small">${esc(label)}</span><div style="display:flex;align-items:center;min-width:0" data-tip="${esc(label)}: ${nf.format(v)}<br>${conv}"><div class="fbar" style="width:${w}%;background:${color(ev)}">${w > 22 ? nf.format(v) : ""}</div><span class="fval">${w > 22 ? "" : nf.format(v) + " · "}${conv}</span></div></div>`; }).join("")}</div>
+        <p class="note" style="margin-top:10px">Bar widths use a square-root scale so the later, smaller steps stay visible.</p>
+      </section>
+      <section class="panel">
+        <h2 style="margin-bottom:4px">Cost per action</h2><p class="small" style="margin-bottom:12px">Total cost divided by people who took the final step. Lower is better.</p>
+        <div class="legend" style="margin-bottom:10px"><span><i class="swatch box" style="background:var(--accent)"></i>External</span><span><i class="swatch box" style="background:var(--internal)"></i>Internal</span></div>
+        <div class="stack" style="gap:10px">${EVENTS.slice().sort((a, b) => a.cost / a.stages[3][1] - b.cost / b.stages[3][1]).map(e => { const c = e.cost / e.stages[3][1]; return `
+          <div data-tip="${esc(e.name)}<br>${money(e.cost)} ÷ ${nf.format(e.stages[3][1])} = ${money(c)} per action"><div class="row small" style="justify-content:space-between;gap:8px"><span>${esc(e.name)}</span><span class="num" style="color:var(--ink);font-weight:600">${money(c)}</span></div>
+          <div style="height:8px;background:var(--surface-2);border-radius:4px;margin-top:4px"><div style="height:8px;border-radius:4px;width:${Math.max(2, c / cpaMax * 100)}%;background:${color(e)}"></div></div></div>`; }).join("")}</div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2 style="margin-bottom:10px">All events and campaigns</h2>
+      <div class="tscroll"><table>
+        <thead><tr><th>Name</th><th>Audience</th><th class="r">Reached</th><th class="r">Attended</th><th class="r">Show-up rate</th><th class="r">Acted after</th><th class="r">Satisfaction</th><th class="r">Cost per action</th></tr></thead>
+        <tbody>${EVENTS.map(e => `<tr class="click" data-event="${e.id}" tabindex="0"><td><strong>${esc(e.name)}</strong><div class="note">${esc(e.format)} · ${fmtDate(e.date)}</div></td>
+          <td style="white-space:nowrap"><span class="dot" style="background:${color(e)}"></span>${e.audience}</td>
+          <td class="r num">${nf.format(e.stages[0][1])}</td><td class="r num">${nf.format(e.stages[2][1])}</td>
+          <td class="r num">${pct(e.stages[2][1] / e.stages[1][1])}</td><td class="r num">${pct(e.stages[3][1] / e.stages[2][1])}</td>
+          <td class="r num">${e.satisfaction ? e.satisfaction.toFixed(1) : "–"}</td><td class="r num">${money(e.cost / e.stages[3][1])}</td></tr>`).join("")}</tbody></table></div>
+      <p class="note" style="margin-top:8px">For the email campaign, “Attended” means started an application. It has no satisfaction score.</p>
+    </section>
+  </div>`;
+}
+
+function viewBudget() {
+  const tot = INITIATIVES.reduce((a, i) => ({ budget:a.budget + i.budget, spent:a.spent + i.spent, committed:a.committed + i.committed, forecast:a.forecast + i.spent / ELAPSED }), { budget:0, spent:0, committed:0, forecast:0 });
+  const scale = Math.max(...INITIATIVES.map(i => Math.max(i.budget, i.spent + i.committed, i.spent / ELAPSED)));
+  const byPillar = PILLARS.map(p => { const is = INITIATIVES.filter(i => i.pillar === p); return { p, budget:is.reduce((n, i) => n + i.budget, 0), spent:is.reduce((n, i) => n + i.spent, 0) }; });
+  return `
+  <div class="stack fade">
+    <div class="grid g-kpi">
+      <div class="kpi"><div class="eyebrow">Total budget</div><div class="v num">${money(tot.budget)}</div><div class="n">Programme year 2026</div></div>
+      <div class="kpi"><div class="eyebrow">Spent</div><div class="v num">${money(tot.spent)}</div><div class="n">${pct(tot.spent / tot.budget)} used, with ${pct(ELAPSED)} of the year gone</div></div>
+      <div class="kpi"><div class="eyebrow">Committed</div><div class="v num">${money(tot.committed)}</div><div class="n">signed but not yet paid</div></div>
+      <div class="kpi"><div class="eyebrow">Year-end forecast</div><div class="v num">${money(tot.forecast)}</div><div class="n">${pct(tot.forecast / tot.budget)} of budget at the current pace</div></div>
+    </div>
+    <section class="panel">
+      <div class="panel-head"><div><h2>By initiative</h2><p class="small">Forecast = spend so far ÷ share of the year gone.</p></div>
+        <div class="legend"><span><i class="swatch box" style="background:var(--accent)"></i>Spent</span><span><i class="swatch box" style="background:repeating-linear-gradient(135deg,var(--accent) 0 2px,transparent 2px 5px)"></i>Committed</span><span><i class="swatch" style="background:var(--ink);width:2px;height:12px"></i>Year-end forecast</span><span><i class="swatch" style="background:var(--crit);width:2px;height:12px"></i>Budget limit</span></div></div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Initiative</th><th style="min-width:220px">Spend against budget</th><th class="r">Budget</th><th class="r">Forecast</th><th>Health</th><th class="r">Cost per result</th></tr></thead>
+        <tbody>${INITIATIVES.map(i => { const h = budgetHealth(i); const cm = i.metrics.find(m => m.id === i.costPer.metric); const units = actual(i, cm) * (cm.scale || 1) / i.costPer.per; const w = v => v / scale * 100;
+          return `<tr><td><div class="iname">${esc(i.name)}<small>${esc(i.pillar)}</small></div></td>
+          <td><div class="bbar" data-tip="${esc(i.name)}<br>Spent ${money(i.spent)} · committed ${money(i.committed)}<br>Forecast ${money(h.forecast)} of ${money(i.budget)}"><div class="sp" style="width:${w(i.spent)}%"></div><div class="cm" style="left:${w(i.spent)}%;width:${w(i.committed)}%"></div><div class="over" style="left:calc(${w(i.budget)}% - 1px);right:auto"></div><div class="fc" style="left:calc(${w(h.forecast)}% - 1px)"></div></div></td>
+          <td class="r num">${money(i.budget)}</td><td class="r num">${money(h.forecast)}<div class="note">${pct(h.forecast / i.budget)}</div></td>
+          <td>${pill(h.s).replace(STATUS[h.s].label, h.label)}</td>
+          <td class="r num">${money(i.spent / units)}<div class="note">${esc(i.costPer.label)}</div></td></tr>`; }).join("")}</tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2 style="margin-bottom:10px">By pillar</h2>
+      <div class="tscroll"><table><thead><tr><th>Pillar</th><th class="r">Budget</th><th class="r">Spent</th><th class="r">Used</th><th class="r">Share of total budget</th></tr></thead>
+      <tbody>${byPillar.map(b => `<tr><td><strong>${esc(b.p)}</strong></td><td class="r num">${money(b.budget)}</td><td class="r num">${money(b.spent)}</td><td class="r num">${pct(b.spent / b.budget)}</td><td class="r num">${pct(b.budget / tot.budget)}</td></tr>`).join("")}</tbody></table></div>
+    </section>
+  </div>`;
+}
+
+// ---------- Briefings ----------
+const AUDIENCES = {
+  Leadership:"GNI leadership", Comms:"Communications", GAPP:"Government Affairs & Public Policy", Marketing:"Marketing",
+};
+function briefing(aud) {
+  const good = [], behind = [], off = [];
+  for (const i of INITIATIVES) for (const m of i.metrics) { const s = mStatus(i, m); (s === "good" ? good : s === "warn" ? behind : off).push({ i, m }); }
+  const line = ({ i, m }) => `${m.name}: ${fmt(actual(i, m), m.unit)} against a target of ${fmt(m.target, m.unit)} (${i.name})`;
+  const k = kpis();
+  const sections = [];
+  if (aud === "Leadership") {
+    const counts = { good:0, warn:0, crit:0 }; INITIATIVES.forEach(i => counts[iStatus(i)]++);
+    sections.push(["Summary", [`${counts.good} of 6 initiatives are on track, ${counts.warn} are behind and ${counts.crit} are off track.`, `${k.onTrack} of ${k.total} metrics are on track with ${pct(ELAPSED)} of the year gone.`, `${pct(k.spent / k.budget)} of the ${money(k.budget)} budget is spent.`]]);
+    sections.push(["Off track", off.map(line)]);
+    sections.push(["Decisions needed", INITIATIVES.filter(i => iStatus(i) !== "good").map(i => `${i.name}: ${i.next}`)]);
+    sections.push(["Budget flags", INITIATIVES.map(i => [i, budgetHealth(i)]).filter(([, h]) => h.s !== "good").map(([i, h]) => `${i.name}: ${h.label.toLowerCase()}, forecast ${money(h.forecast)} of ${money(i.budget)}.`)]);
+  }
+  if (aud === "Comms") {
+    sections.push(["Proof points you can use", good.filter(x => x.m.kind !== "Output" || x.m.key).slice(0, 6).map(line)]);
+    sections.push(["Stories", INITIATIVES.filter(i => iStatus(i) === "good").map(i => `“${i.quote.text}” (${i.quote.who}, ${i.name})`)]);
+    sections.push(["Hold for now", [...off, ...behind.filter(x => x.m.kind !== "Output")].map(x => `${x.m.name} (${x.i.name}) is not yet at target. Don't make claims about it until it is.`)]);
+  }
+  if (aud === "GAPP") {
+    const pol = INITIATIVES.filter(i => i.pillar === "Trust & information quality" || i.pillar === "Business sustainability");
+    sections.push(["Headline for policymakers", [`${nf.format(Math.round(k.newsrooms))} newsrooms supported and ${(k.reach / 1e6).toFixed(1)}m people reached this year.`, `${nf.format(k.trained)} journalists trained across ${INITIATIVES[0].countries} countries.`]]);
+    sections.push(["Information quality and local news", pol.flatMap(i => i.metrics.filter(m => m.kind !== "Output").map(m => `${line({ i, m })}. ${STATUS[mStatus(i, m)].label}.`))]);
+    sections.push(["Where we work", pol.map(i => `${i.name}: ${i.regions}, ${i.countries} countries`)]);
+    sections.push(["Be careful with", off.map(x => `${x.m.name} (${x.i.name}) is off track. Present it as work in progress.`)]);
+  }
+  if (aud === "Marketing") {
+    const byConv = EVENTS.slice().sort((a, b) => b.stages[3][1] / b.stages[2][1] - a.stages[3][1] / a.stages[2][1]);
+    const byCpa = EVENTS.slice().sort((a, b) => a.cost / a.stages[3][1] - b.cost / b.stages[3][1]);
+    sections.push(["Best performers", [`Highest conversion: ${byConv[0].name}. ${pct(byConv[0].stages[3][1] / byConv[0].stages[2][1])} of attendees acted.`, `Lowest cost per action: ${byCpa[0].name}, at ${money(byCpa[0].cost / byCpa[0].stages[3][1])}.`]]);
+    sections.push(["Funnels", EVENTS.map(e => `${e.name} (${e.audience.toLowerCase()}): ${e.stages.map(s => nf.format(s[1])).join(" → ")}. ${money(e.cost / e.stages[3][1])} per action.`)]);
+    sections.push(["Growth to support", INITIATIVES.filter(i => iStatus(i) !== "good").map(i => `${i.name}: ${i.next}`)]);
+  }
+  return sections.filter(([, items]) => items.length);
+}
+const briefText = aud => `Briefing for ${AUDIENCES[aud]}, as of ${fmtDate("2026-09-26")}\n\n` + briefing(aud).map(([h, items]) => h.toUpperCase() + "\n" + items.map(t => "- " + t).join("\n")).join("\n\n");
+
+function viewBriefings() {
+  const b = briefing(audience);
+  return `
+  <div class="stack fade">
+    <section class="panel stack">
+      <div class="row" style="justify-content:space-between">
+        <div><h2>Partner briefings</h2><p class="small">One source of truth, written for each partner team. Built automatically from the scorecard.</p></div>
+        <div class="seg" role="group" aria-label="Choose audience">${Object.keys(AUDIENCES).map(a => `<button data-aud="${a}" aria-pressed="${a === audience}">${a}</button>`).join("")}</div>
+      </div>
+      <div class="brief">${b.map(([h, items]) => `<h4>${esc(h)}</h4><ul>${items.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`).join("")}</div>
+      <div class="row"><button class="btn ghost" id="copyBrief">Copy briefing</button><span class="flash" id="copyFlash" role="status"></span></div>
+    </section>
+    <section class="panel stack" id="aiPanel" hidden>
+      <div><h3>Draft it with AI</h3><p class="small">Turns the briefing above into a short note in the right tone for ${esc(AUDIENCES[audience])}. Uses only the figures on this page. Check them before sending.</p></div>
+      <div class="row"><button class="btn" id="aiGo">Write the note</button><button class="btn ghost" id="aiStop" hidden>Stop</button></div>
+      <div class="ai-out" id="aiOut"></div>
+    </section>
+  </div>`;
+}
+
+// ---------- AI (optional; hidden when the viewer cannot use it) ----------
+let sample = null, aiCtl = null;
+(async () => { try { sample = window.claude?.use ? await window.claude.use("sample") : null; } catch { sample = null; } if (tab === "briefings") wireAI(); })();
+const TONE = { Leadership:"a crisp executive update: 3 short paragraphs, lead with overall status, end with the decisions needed", Comms:"a comms-ready summary with 3 headline proof points and one human story; flag what must not be claimed yet", GAPP:"policy talking points for a meeting with a government official: neutral, factual, 5 bullets", Marketing:"a marketing performance note: what worked, what to double down on, what to fix, 5 bullets" };
+function wireAI() {
+  const panel = document.getElementById("aiPanel"); if (!panel) return;
+  panel.hidden = !sample;
+  const go = document.getElementById("aiGo"), stop = document.getElementById("aiStop"), out = document.getElementById("aiOut");
+  if (!sample || !go) return;
+  go.onclick = async () => {
+    aiCtl = new AbortController(); go.disabled = true; stop.hidden = false; out.textContent = "Thinking...";
+    try {
+      await sample(`You are helping an impact and measurement programme manager at the Google News Initiative. Write ${TONE[audience]}. Use only the figures below and do not invent any numbers. Plain text, no markdown headings. The data is illustrative.\n\n${briefText(audience)}`, { signal:aiCtl.signal, onText:({ text }) => { out.textContent = text; } });
+    } catch (e) {
+      if (e.code === "not_granted" || e.code === "sampling_disabled" || e.code === "not_declared" || e.code === "capability_disabled") { panel.hidden = true; }
+      else if (e.code !== "cancelled") { out.textContent = (e.text || "") + (e.code === "rate_limited" ? "\n\nToo many requests right now. Try again in a minute." : "\n\nThe draft was interrupted. Try again."); }
+      else out.textContent = e.text || "";
+    } finally { go.disabled = false; stop.hidden = true; }
+  };
+  stop.onclick = () => aiCtl?.abort();
+}
+
+// ---------- Render and events ----------
+function render() {
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === tab));
+  main.innerHTML = { portfolio:viewPortfolio, initiatives:viewInitiatives, events:viewEvents, budget:viewBudget, briefings:viewBriefings }[tab]();
+  hideTip();
+  if (tab === "briefings") wireAI();
+}
+function go(t) { tab = t; try { history.replaceState(null, "", "#" + t); } catch {} render(); window.scrollTo({ top:0 }); }
+
+document.querySelector("nav.tabs").addEventListener("click", e => { const b = e.target.closest("button[data-tab]"); if (b) go(b.dataset.tab); });
+main.addEventListener("click", e => {
+  const t = e.target;
+  const open = t.closest("[data-open]"); if (open) { currentInit = open.dataset.open; go("initiatives"); return; }
+  const f = t.closest("[data-pillar]"); if (f) { pillarFilter = f.dataset.pillar; render(); return; }
+  const ini = t.closest("[data-init]"); if (ini) { currentInit = ini.dataset.init; render(); return; }
+  const ev = t.closest("[data-event]"); if (ev) { currentEvent = ev.dataset.event; render(); return; }
+  const a = t.closest("[data-aud]"); if (a) { aiCtl?.abort(); audience = a.dataset.aud; render(); return; }
+  if (t.id === "copyBrief") {
+    const txt = briefText(audience), flash = document.getElementById("copyFlash");
+    navigator.clipboard.writeText(txt).then(() => { flash.textContent = "Copied"; }).catch(() => { flash.textContent = "Couldn't copy. Select the text above instead."; });
+  }
+});
+main.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("tr[data-open],tr[data-event]")) e.target.click(); });
+main.addEventListener("change", e => { if (e.target.id === "evSel") { currentEvent = e.target.value; render(); } });
+main.addEventListener("submit", e => {
+  if (e.target.id !== "logForm") return;
+  e.preventDefault();
+  const i = INITIATIVES.find(x => x.id === currentInit), m = i.metrics.find(x => x.id === document.getElementById("lgMetric").value);
+  const v = parseFloat(document.getElementById("lgValue").value); if (!isFinite(v)) return;
+  const before = mStatus(i, m);
+  state.overrides[i.id + "." + m.id] = v;
+  state.log.push({ init:i.id, metric:m.name, value:fmt(v, m.unit), source:document.getElementById("lgSource").value.trim(), when:new Date().toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" }) });
+  save(); render();
+  const after = mStatus(i, m);
+  document.getElementById("lgFlash").textContent = `Saved. ${m.name} is now ${STATUS[after].label.toLowerCase()}` + (before !== after ? ` (was ${STATUS[before].label.toLowerCase()}).` : ".");
+});
+let resetArmed = false;
+document.getElementById("resetAll").addEventListener("click", e => {
+  if (!resetArmed) { resetArmed = true; e.target.textContent = "Click again to reset"; setTimeout(() => { resetArmed = false; e.target.textContent = "Reset sample data"; }, 4000); return; }
+  resetArmed = false; e.target.textContent = "Reset sample data";
+  state = { overrides:{}, log:[] }; save(); render();
+});
+
+document.getElementById("asof").textContent = "Data as of " + fmtDate("2026-09-26");
+document.getElementById("elapsed").textContent = pct(ELAPSED);
+document.getElementById("elapsedFill").style.width = ELAPSED * 100 + "%";
+const start = (location.hash || "").slice(1);
+if (["portfolio", "initiatives", "events", "budget", "briefings"].includes(start)) tab = start;
+render();
+</script>
