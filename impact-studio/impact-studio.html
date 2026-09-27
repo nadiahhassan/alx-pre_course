@@ -1,0 +1,696 @@
+<title>Impact Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --surface-2:#EBEFF4; --ink:#14202B; --ink-2:#465665; --muted:#6B7A88; --line:#D9E0E7;
+  --accent:#2366A8; --accent-ink:#1B558E; --accent-soft:#E2ECF7; --plan:#8C99A6;
+  --good:#1B7F4C; --good-soft:#E1F2E8; --warn:#9A6400; --warn-soft:#FBEFD6; --crit:#B93A32; --crit-soft:#F9E3E1; --none:#6B7A88; --none-soft:#EBEFF4;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#0E151C; --surface:#16212B; --surface-2:#1E2B37; --ink:#E5ECF2; --ink-2:#AAB7C3; --muted:#8494A2; --line:#2A3845;
+  --accent:#4C8FD6; --accent-ink:#8DBBEA; --accent-soft:#1B3148; --plan:#7D8B98;
+  --good:#52C28B; --good-soft:#15352A; --warn:#E1A83E; --warn-soft:#3A2E14; --crit:#EF7A6F; --crit-soft:#3E1F1D; --none:#8494A2; --none-soft:#1E2B37;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#0E151C; --surface:#16212B; --surface-2:#1E2B37; --ink:#E5ECF2; --ink-2:#AAB7C3; --muted:#8494A2; --line:#2A3845;
+  --accent:#4C8FD6; --accent-ink:#8DBBEA; --accent-soft:#1B3148; --plan:#7D8B98;
+  --good:#52C28B; --good-soft:#15352A; --warn:#E1A83E; --warn-soft:#3A2E14; --crit:#EF7A6F; --crit-soft:#3E1F1D; --none:#8494A2; --none-soft:#1E2B37;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1140px;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:650;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:32px;line-height:1.15}
+h2{font-size:22px;line-height:1.25}
+h3{font-size:17px}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sub{color:var(--ink-2);font-size:14.5px}
+.small{font-size:13px;color:var(--ink-2)}
+.note{font-size:12.5px;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.between{justify-content:space-between}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:18px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:10px;border:0;background:none;cursor:pointer;padding:0}
+.brand .mark{width:28px;height:28px;border-radius:7px;background:var(--ink);display:grid;place-items:center}
+.brand span{font-family:var(--serif);font-weight:650;font-size:20px}
+
+/* buttons */
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:8px 15px;font-weight:600;cursor:pointer;font-size:14px;white-space:nowrap}
+:root[data-theme="dark"] .btn{color:#0E151C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0E151C}}
+.btn.ghost{background:transparent;color:var(--accent-ink)}
+.btn.quiet{background:transparent;border-color:var(--line);color:var(--ink-2)}
+.btn.danger{background:transparent;border-color:var(--line);color:var(--crit)}
+.btn:disabled{opacity:.5;cursor:default}
+.link{border:0;background:none;color:var(--accent-ink);cursor:pointer;padding:0;font-weight:600;font-size:13px}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.panel-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:14px}
+.grid{display:grid;gap:16px}
+.g-kpi{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.g-cards{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.g-2{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+@media (max-width:860px){.g-2{grid-template-columns:minmax(0,1fr)}}
+.kpi{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.kpi .v{font-family:var(--serif);font-size:28px;font-weight:650;line-height:1.1;margin-top:4px}
+.kpi .n{font-size:12.5px;color:var(--ink-2);margin-top:4px}
+
+/* status */
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.pill i{font-style:normal;font-size:11px}
+.s-good{background:var(--good-soft);color:var(--good)}
+.s-warn{background:var(--warn-soft);color:var(--warn)}
+.s-crit{background:var(--crit-soft);color:var(--crit)}
+.s-none{background:var(--none-soft);color:var(--none)}
+.chip{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:5px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.chip.due{border-color:var(--warn);color:var(--warn)}
+.chip.late{border-color:var(--crit);color:var(--crit)}
+.chip.example{background:var(--surface-2);border-color:transparent}
+
+/* flow strip */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.flow div{padding:14px 16px;border-right:1px solid var(--line)}
+.flow div:last-child{border-right:0}
+.flow b{display:block;font-size:14px;margin-bottom:2px}
+.flow .n{font-family:var(--serif);font-size:22px;font-weight:650;color:var(--accent-ink);line-height:1}
+@media (max-width:820px){.flow{grid-template-columns:minmax(0,1fr)}.flow div{border-right:0;border-bottom:1px solid var(--line)}.flow div:last-child{border-bottom:0}}
+
+/* project cards */
+.pcard{display:flex;flex-direction:column;gap:12px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:18px;cursor:pointer}
+.pcard:hover{border-color:var(--accent)}
+.pcard h3{font-size:19px}
+.track{height:6px;border-radius:3px;background:var(--surface-2);position:relative}
+.track .fill{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--ink-2)}
+.newcard{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;border:1.5px dashed var(--line);border-radius:10px;padding:18px;background:transparent;cursor:pointer;text-align:left;min-height:180px}
+.newcard:hover{border-color:var(--accent);background:var(--accent-soft)}
+.newcard .plus{font-family:var(--serif);font-size:30px;line-height:1;color:var(--accent-ink)}
+
+/* wizard */
+.stepper{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px}
+.stepper button{flex:1 0 150px;border:0;background:none;text-align:left;padding:10px 0 0;border-top:3px solid var(--line);cursor:pointer;color:var(--muted)}
+.stepper button b{display:block;font-size:13.5px;color:inherit}
+.stepper button span{font-size:12px}
+.stepper button[aria-current="step"]{border-top-color:var(--accent);color:var(--ink)}
+.stepper button.done{border-top-color:var(--ink-2);color:var(--ink-2)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.form .wide{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--ink)}
+label .hint{font-weight:400;color:var(--muted);font-size:12.5px}
+input,select,textarea{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:8px 10px;font-size:14.5px;font-weight:400;min-width:0;width:100%}
+textarea{resize:vertical;min-height:64px;line-height:1.45}
+.tpls{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.tpl{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.tpl b{font-size:14px}
+.tpl span{font-size:12.5px;color:var(--muted)}
+.tpl[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:7px 14px;cursor:pointer;color:var(--ink-2);font-weight:500;border-right:1px solid var(--line);font-size:14px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:860px){.chain{grid-template-columns:minmax(0,1fr)}}
+.chain label{background:var(--surface-2);border-radius:9px;padding:12px}
+.chain textarea{background:var(--surface)}
+.sentence{background:var(--accent-soft);border-radius:9px;padding:14px 16px;font-family:var(--serif);font-size:17px;line-height:1.5}
+.sentence em{font-style:normal;color:var(--accent-ink);font-weight:650}
+.suggest{display:flex;flex-wrap:wrap;gap:8px}
+.suggest button{border:1px dashed var(--accent);background:transparent;color:var(--accent-ink);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+.suggest button:hover{background:var(--accent-soft)}
+.suggest button small{color:var(--muted);font-weight:400}
+.mrow{display:grid;grid-template-columns:minmax(170px,2fr) 115px 150px 105px 95px 95px 36px;gap:8px;align-items:end;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+.mrow.plan{grid-template-columns:minmax(160px,1.6fr) 150px minmax(160px,1.6fr) 140px 36px}
+@media (max-width:900px){.mrow,.mrow.plan{grid-template-columns:repeat(2,minmax(0,1fr))}.mrow label:first-child{grid-column:1/-1}}
+.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px;height:38px;border-radius:6px}
+.x:hover{background:var(--crit-soft);color:var(--crit)}
+.coverage{display:flex;flex-wrap:wrap;gap:8px}
+.checklist{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--ink-2)}
+.checklist div{display:flex;gap:8px}
+.checklist i{font-style:normal;color:var(--accent-ink);font-weight:700}
+.wiz-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.err{color:var(--crit);font-size:13.5px;font-weight:500}
+
+/* dashboard */
+.logic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.logic{grid-template-columns:minmax(0,1fr)}}
+.logic div{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--ink-2)}
+.logic b{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink);margin-bottom:4px}
+.tscroll{overflow-x:auto;margin-inline:-4px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer}
+tr.click:hover td,tr.sel td{background:var(--surface-2)}
+.bullet{position:relative;height:10px;background:var(--surface-2);border-radius:5px;min-width:120px}
+.bullet .b{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
+.bullet .exp{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);border-radius:1px}
+.bullet-label{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink-2);margin-top:4px}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--sans)}
+.chart .lbl{fill:var(--ink-2);font-size:11.5px;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.swatch{width:16px;height:3px;border-radius:2px;display:inline-block}
+.hist{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.hist div{display:flex;justify-content:space-between;gap:10px;padding:7px 10px;background:var(--surface-2);border-radius:6px}
+.report{font-size:14.5px;line-height:1.6;max-width:72ch}
+.report h4{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:16px 0 6px}
+.report h4:first-child{margin-top:0}
+.report ul{margin:0;padding-left:20px}
+.report li{margin-bottom:3px}
+.ai-out{white-space:pre-wrap;font-size:14.5px;line-height:1.6;max-width:72ch}
+.flash{color:var(--good);font-size:13px;font-weight:500}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;padding:7px 10px;border-radius:7px;z-index:50;max-width:260px;line-height:1.4}
+footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:center}
+@media (prefers-reduced-motion:no-preference){.fade{animation:fade .22s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <button class="brand" data-home aria-label="Impact Studio home"><span class="mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 13 L6 8 L9 10 L14 3" fill="none" stroke="var(--bg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Impact Studio</span></button>
+    <button class="btn" data-new>New project</button>
+  </header>
+  <main id="main"></main>
+  <footer>
+    <span>Portfolio concept by Nadia Hassan. Example projects are illustrative. Your projects are saved in this browser only.</span>
+    <button class="btn quiet" id="resetAll" style="padding:4px 10px;font-size:12.5px">Reset to examples</button>
+  </footer>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+// ---------- Dates ----------
+const DAY = 86400000;
+const TODAY = (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; })();
+const iso = d => { const x = new Date(d); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); };
+const parse = s => new Date(s + "T00:00:00");
+const addDays = (d, n) => new Date(+d + n * DAY);
+const fmtDate = s => parse(s).toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" });
+const shortDate = s => parse(s).toLocaleDateString("en-GB", { day:"numeric", month:"short" });
+const uid = () => Math.random().toString(36).slice(2, 10);
+
+// ---------- Work-stream templates ----------
+// Each template suggests a theory of change and metrics. Everything is editable.
+// mode "count": builds up over the project and is judged against where it should be by today.
+// mode "rate": a level (%, score, cost) judged against its target directly. Lower-is-better works too: set the target below the baseline.
+const M = (name, level, mode, unit, baseline, target, frequency, source) => ({ name, level, mode, unit, baseline, target, frequency, source });
+const TEMPLATES = {
+  training:{ label:"Training or skills", blurb:"Courses, workshops, coaching", example:"Data skills for 200 managers",
+    toc:{ activities:"Run workshops and online courses; offer coaching", outputs:"People trained; sessions delivered", outcomes:"Participants use new skills in their work", impact:"Better decisions and performance across the team" },
+    metrics:[ M("People trained","Output","count","",0,200,"Monthly","Attendance records"), M("Course completion rate","Output","rate","%",0,80,"Monthly","Learning platform"), M("Satisfaction score","Outcome","rate","/5",0,4.5,"Monthly","End-of-session survey"), M("Applying skills after 90 days","Outcome","rate","%",0,60,"Quarterly","Follow-up survey"), M("Improvement in performance measure","Impact","rate","%",0,10,"Quarterly","Manager review") ] },
+  marketing:{ label:"Marketing campaign", blurb:"Awareness, leads, sign-ups", example:"Spring launch campaign",
+    toc:{ activities:"Paid, social and email campaigns; partner promotion", outputs:"People reached; content published", outcomes:"People click, sign up and buy", impact:"Sustained growth in customers and revenue" },
+    metrics:[ M("People reached","Output","count","",0,1000000,"Weekly","Ad and email platforms"), M("Click-through rate","Outcome","rate","%",0,1.5,"Weekly","Ad platform"), M("Sign-ups","Outcome","count","",0,10000,"Weekly","CRM"), M("Cost per sign-up","Outcome","rate","$",12,7,"Weekly","Finance and CRM"), M("Revenue from new customers","Impact","count","$",0,250000,"Monthly","Finance") ] },
+  event:{ label:"Event or conference", blurb:"Summits, webinars, meet-ups", example:"Annual partner summit",
+    toc:{ activities:"Plan programme; promote; host sessions", outputs:"Registrations; attendees; sessions held", outcomes:"Attendees learn, connect and take a next step", impact:"Stronger community and more partnerships" },
+    metrics:[ M("Registrations","Output","count","",0,1500,"Weekly","Registration platform"), M("Attendance rate","Output","rate","%",0,70,"Once","Check-in data"), M("Satisfaction score","Outcome","rate","/5",0,4.5,"Once","Post-event survey"), M("Attendees who took a next step","Outcome","count","",0,400,"Monthly","CRM follow-up"), M("New partnerships started","Impact","count","",0,10,"Quarterly","Partnership log") ] },
+  product:{ label:"Product or feature launch", blurb:"Adoption, retention, satisfaction", example:"New onboarding flow",
+    toc:{ activities:"Design, build and release the feature; in-app guidance", outputs:"Feature live; users reached", outcomes:"Users adopt it and succeed faster", impact:"Higher retention and lower support costs" },
+    metrics:[ M("Active users of the feature","Output","count","",0,5000,"Weekly","Product analytics"), M("Adoption rate","Outcome","rate","%",0,40,"Weekly","Product analytics"), M("Task success rate","Outcome","rate","%",60,85,"Monthly","Usability testing"), M("Support tickets per 100 users","Outcome","rate","",30,15,"Monthly","Help desk"), M("90-day retention","Impact","rate","%",70,80,"Quarterly","Product analytics") ] },
+  partnership:{ label:"Partnership", blurb:"Joint programmes with partners", example:"University research partnership",
+    toc:{ activities:"Agree shared goals; co-deliver activities; regular check-ins", outputs:"Partners signed; joint activities delivered", outcomes:"Partners reach shared goals and want to continue", impact:"Lasting relationships that extend our reach" },
+    metrics:[ M("Partners signed","Output","count","",0,8,"Monthly","Contracts"), M("Joint activities delivered","Output","count","",0,20,"Monthly","Activity log"), M("Partner satisfaction","Outcome","rate","/5",0,4.3,"Quarterly","Partner survey"), M("Shared goals met","Outcome","rate","%",0,75,"Quarterly","Joint review"), M("Value created with partners","Impact","count","$",0,500000,"Quarterly","Finance") ] },
+  process:{ label:"Internal change", blurb:"New process, tool or way of working", example:"New approvals process",
+    toc:{ activities:"Redesign the process; train teams; retire the old way", outputs:"Teams switched to the new process", outcomes:"Work moves faster with fewer errors", impact:"Time and money saved across the organisation" },
+    metrics:[ M("Teams using the new process","Output","count","",0,12,"Monthly","Rollout tracker"), M("Staff adoption","Outcome","rate","%",0,90,"Monthly","System logs"), M("Average cycle time (days)","Outcome","rate"," days",10,4,"Monthly","System logs"), M("Error rate","Outcome","rate","%",8,2,"Monthly","Quality checks"), M("Cost saved","Impact","count","$",0,120000,"Quarterly","Finance") ] },
+  community:{ label:"Community programme", blurb:"Outreach, education, wellbeing", example:"Youth digital safety workshops",
+    toc:{ activities:"Deliver sessions with local partners", outputs:"People reached; sessions delivered", outcomes:"Participants gain knowledge and change behaviour", impact:"Safer, more confident communities" },
+    metrics:[ M("People reached","Output","count","",0,2000,"Monthly","Sign-in sheets"), M("Sessions delivered","Output","count","",0,60,"Monthly","Partner reports"), M("Knowledge score after sessions","Outcome","rate","%",45,70,"Monthly","Pre/post quiz"), M("Changed a behaviour after 3 months","Outcome","rate","%",0,40,"Quarterly","Follow-up survey"), M("Wellbeing score","Impact","rate","/10",6,7.5,"End of project","Wellbeing survey") ] },
+  custom:{ label:"Something else", blurb:"Start from a blank plan", example:"Your project",
+    toc:{ activities:"", outputs:"", outcomes:"", impact:"" }, metrics:[] },
+};
+const FREQ = { "Weekly":7, "Monthly":30, "Quarterly":91, "Once":null, "End of project":null };
+
+// ---------- Example projects (dates move with today, so they are always mid-flight) ----------
+function example(tpl, name, owner, audience, startAgo, endIn, budget, spent, problem, metrics) {
+  const start = addDays(TODAY, -startAgo), t = TEMPLATES[tpl];
+  return { id:uid(), example:true, tpl, name, owner, audience, start:iso(start), end:iso(addDays(TODAY, endIn)), budget, spent, problem, toc:{ ...t.toc },
+    reportTo:"Leadership team", metrics:metrics.map(([k, owner, hist, over]) => ({ id:uid(), ...t.metrics[k], ...(over || {}), owner,
+      history:hist.map(([d, v, note]) => ({ date:iso(addDays(start, d)), value:v, note:note || "" })) })) };
+}
+function examples() {
+  return [
+    example("product", "Customer onboarding revamp", "Priya Shah", "External", 120, 90, 150000, 82000,
+      "New customers take two weeks to get value from the product, and half never finish setting up.",
+      [[0, "Product analytics team", [[30, 250], [60, 610], [90, 900], [118, 1080]], { name:"New customers onboarded", target:2000 }],
+       [1, "Product analytics team", [[30, 52], [60, 58], [90, 63], [118, 66]], { name:"Onboarding completion rate", baseline:48, target:75, level:"Outcome" }],
+       [2, "Design research", [[30, 12], [55, 9], [80, 7]], { name:"Days to first value", unit:" days", baseline:14, target:5 }],
+       [3, "Support lead", [[45, 26], [90, 20], [118, 17]]],
+       [4, "Product analytics team", [[90, 77]]]]),
+    example("training", "Graduate leadership programme", "Tom Reeves", "Internal", 200, 110, 60000, 38000,
+      "Graduates are promoted into team-lead roles without any leadership training.",
+      [[0, "Programme coordinator", [[10, 40]], { name:"Graduates enrolled", target:40, frequency:"Once" }],
+       [0, "Programme coordinator", [[30, 2], [60, 4], [90, 5], [120, 7], [150, 8], [190, 8]], { name:"Sessions delivered", target:12 }],
+       [2, "Programme coordinator", [[60, 4.3], [120, 4.4], [190, 4.5]], { baseline:3.8 }],
+       [3, "HR business partner", [[90, 48], [180, 62]], { baseline:30, target:70 }],
+       [4, "HR business partner", [], { name:"Ready for promotion", baseline:20, target:50, frequency:"End of project" }]]),
+    example("marketing", "Spring launch campaign", "Sofia Lindqvist", "External", 70, 14, 90000, 71000,
+      "We need 12,000 sign-ups for the new plan before the summer.",
+      [[0, "Marketing ops", [[7, 180000], [14, 390000], [28, 800000], [42, 1180000], [56, 1500000], [69, 1750000]], { target:2000000 }],
+       [1, "Marketing ops", [[14, 0.9], [28, 1.2], [42, 1.4], [56, 1.5], [69, 1.6]], { baseline:0.8 }],
+       [2, "CRM manager", [[14, 1200], [28, 3900], [42, 6500], [56, 8600], [69, 10400]], { target:12000 }],
+       [3, "Finance partner", [[28, 9.5], [42, 8.1], [56, 7.2], [69, 6.8]]]]),
+  ];
+}
+
+// ---------- State ----------
+const KEY = "impact-studio-v1";
+let projects;
+try { projects = JSON.parse(localStorage.getItem(KEY)); } catch {}
+if (!Array.isArray(projects)) projects = examples();
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(projects)); } catch {} };
+let view = { name:"home" }, draft = null, step = 0, selMetric = null;
+
+// ---------- Scoring ----------
+const STATUS = { good:{ label:"On track", icon:"✓" }, warn:{ label:"Behind", icon:"▲" }, crit:{ label:"Off track", icon:"✕" }, none:{ label:"No data yet", icon:"○" } };
+const rank = { none:-1, good:0, warn:1, crit:2 };
+function elapsed(p) { const s = parse(p.start), e = parse(p.end); return Math.min(1, Math.max(0, (TODAY - s) / Math.max(DAY, e - s))); }
+const latest = m => m.history.length ? m.history[m.history.length - 1] : null;
+function progress(m) { const l = latest(m); if (!l) return null; const span = m.target - m.baseline; return span ? (l.value - m.baseline) / span : 1; }
+function mStatus(p, m) {
+  const pr = progress(m); if (pr == null) return "none";
+  const r = m.mode === "count" ? pr / Math.max(0.02, elapsed(p)) : pr;
+  return r >= 0.9 ? "good" : r >= 0.7 ? "warn" : "crit";
+}
+// Overall status follows outcome and impact metrics, because they show whether the work makes a difference.
+function pStatus(p) {
+  const pick = ms => ms.map(m => mStatus(p, m)).filter(s => s !== "none").reduce((a, b) => rank[b] > rank[a] ? b : a, "none");
+  const o = pick(p.metrics.filter(m => m.level !== "Output"));
+  return o !== "none" ? o : pick(p.metrics);
+}
+function nextDue(p, m) {
+  const l = latest(m), end = parse(p.end);
+  if (m.frequency === "End of project") return l ? null : end;
+  if (m.frequency === "Once") return l ? null : addDays(parse(p.start), 14);
+  const d = addDays(l ? parse(l.date) : parse(p.start), FREQ[m.frequency] || 30);
+  return l && parse(l.date) >= end ? null : (d > end ? end : d);
+}
+function dueState(p, m) { const d = nextDue(p, m); if (!d) return null; return d < TODAY ? "late" : (d - TODAY) / DAY <= 7 ? "due" : "later"; }
+
+// ---------- Formatting ----------
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const nf = new Intl.NumberFormat("en-GB");
+function fmt(v, unit) {
+  if (v == null || !isFinite(v)) return "–";
+  const n = Math.abs(v) < 100 && v % 1 ? (+v).toFixed(Math.abs(v) < 10 ? 1 : 0) : nf.format(Math.round(v));
+  if (unit === "$") return "$" + (Math.abs(v) < 100 && v % 1 ? (+v).toFixed(2) : nf.format(Math.round(v)));
+  if (unit === "%") return n + "%";
+  if (unit === "/5" || unit === "/10") return (+v).toFixed(1) + " " + unit.replace("/", "/ ");
+  return n + (unit || "");
+}
+function money(v) { if (v >= 1e6) return "$" + (v / 1e6).toFixed(1).replace(/\.0$/, "") + "m"; if (v >= 1e3) return "$" + Math.round(v / 1e3) + "k"; return "$" + Math.round(v); }
+function axisFmt(v, unit) {
+  const a = Math.abs(v), n = a >= 1e6 ? +(v / 1e6).toFixed(1) + "m" : a >= 1e4 ? Math.round(v / 1e3) + "k" : nf.format(+v.toFixed(2));
+  return unit === "$" ? "$" + n : unit === "%" ? n + "%" : n;
+}
+const pct = v => Math.round(v * 100) + "%";
+const pill = s => `<span class="pill s-${s}"><i aria-hidden="true">${STATUS[s].icon}</i>${STATUS[s].label}</span>`;
+const dueChip = (p, m) => { const s = dueState(p, m), d = nextDue(p, m); if (!s) return `<span class="note">Complete</span>`; if (s === "late") return `<span class="chip late">Overdue since ${shortDate(iso(d))}</span>`; if (s === "due") return `<span class="chip due">Due ${shortDate(iso(d))}</span>`; return `<span class="note">Next ${shortDate(iso(d))}</span>`; };
+
+// ---------- Tooltip ----------
+const tip = document.getElementById("tip");
+function showTip(html, x, y) { tip.innerHTML = html; tip.hidden = false; const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(innerWidth - w - 8, Math.max(8, x + 14)) + "px"; tip.style.top = Math.max(8, y - h - 12) + "px"; }
+const hideTip = () => { tip.hidden = true; };
+document.addEventListener("pointermove", e => { const t = e.target.closest("[data-tip]"); if (t) showTip(t.dataset.tip, e.clientX, e.clientY); else if (!e.target.closest("[data-chart]")) hideTip(); });
+
+// ---------- Charts ----------
+function bullet(p, m) {
+  const pr = progress(m), s = mStatus(p, m), l = latest(m);
+  const w = pr == null ? 0 : Math.max(0, Math.min(1, pr));
+  const exp = m.mode === "count" ? elapsed(p) : null;
+  const t = `${esc(m.name)}: ${l ? fmt(l.value, m.unit) : "no data"} · target ${fmt(m.target, m.unit)}` + (exp != null ? `<br>Expected by today: ${fmt(m.baseline + (m.target - m.baseline) * exp, m.unit)}` : `<br>Baseline ${fmt(m.baseline, m.unit)}`);
+  return `<div data-tip="${esc(t)}"><div class="bullet"><div class="b" style="width:${w * 100}%;background:var(--${s === "good" ? "accent" : s === "none" ? "line" : s})"></div>${exp != null ? `<div class="exp" style="left:calc(${exp * 100}% - 1px)"></div>` : ""}</div>
+    <div class="bullet-label"><span class="num">${l ? fmt(l.value, m.unit) : "No data yet"}</span><span class="num">target ${fmt(m.target, m.unit)}</span></div></div>`;
+}
+function metricChart(p, m) {
+  const W = 620, H = 220, L = 58, R = 64, T = 14, B = 28;
+  const s = parse(p.start), e = parse(p.end);
+  const pts = m.history.map(h => [parse(h.date), h.value]);
+  const vals = [m.baseline, m.target, ...pts.map(q => q[1])];
+  let lo = Math.min(...vals), hi = Math.max(...vals); if (m.mode === "count" || lo >= 0) lo = Math.min(0, lo); if (hi === lo) hi = lo + 1;
+  const raw = (hi - lo) / 4, mag = Math.pow(10, Math.floor(Math.log10(raw))); const st = [1, 2, 2.5, 5, 10].map(f => f * mag).find(v => v >= raw);
+  const y0 = Math.floor(lo / st) * st, y1 = Math.ceil(hi / st) * st;
+  const x = d => L + (W - L - R) * Math.min(1, Math.max(0, (d - s) / (e - s))), y = v => T + (H - T - B) * (1 - (v - y0) / (y1 - y0));
+  let g = "";
+  for (let t = y0; t <= y1 + st / 1e6; t += st) g += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${esc(axisFmt(+t.toFixed(4), m.unit))}</text>`;
+  g += `<text x="${L}" y="${H - 8}">${shortDate(p.start)}</text><text x="${W - R}" y="${H - 8}" text-anchor="end">${shortDate(p.end)}</text>`;
+  const tx = x(TODAY); g += `<line x1="${tx}" x2="${tx}" y1="${T}" y2="${H - B}" stroke="var(--muted)" stroke-dasharray="2 3"/><text x="${tx}" y="${H - 8}" text-anchor="middle">Today</text>`;
+  // plan: counts climb steadily from baseline to target; rates aim for the target level
+  if (m.mode === "count") g += `<path d="M${x(s)} ${y(m.baseline)} L${x(e)} ${y(m.target)}" stroke="var(--plan)" stroke-width="2" stroke-dasharray="5 4" fill="none"/><text class="lbl" x="${x(e) + 6}" y="${y(m.target) + 4}">Plan</text>`;
+  else g += `<path d="M${x(s)} ${y(m.target)} L${x(e)} ${y(m.target)}" stroke="var(--plan)" stroke-width="2" stroke-dasharray="5 4" fill="none"/><text class="lbl" x="${x(e) + 6}" y="${y(m.target) + 4}">Target</text>`;
+  if (pts.length) {
+    const line = [[s, m.baseline], ...pts];
+    g += `<path d="${line.map((q, k) => (k ? "L" : "M") + x(q[0]).toFixed(1) + " " + y(q[1]).toFixed(1)).join(" ")}" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
+    g += pts.map((q, k) => `<circle cx="${x(q[0])}" cy="${y(q[1])}" r="${k === pts.length - 1 ? 5 : 3.5}" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" data-tip="${esc(shortDate(iso(q[0])) + ": " + fmt(q[1], m.unit))}"/>`).join("");
+    const lq = pts.at(-1); g += `<text class="lbl" x="${x(lq[0]) + 8}" y="${y(lq[1]) - 8}">${esc(fmt(lq[1], m.unit))}</text>`;
+  } else g += `<text x="${(L + W - R) / 2}" y="${H / 2}" text-anchor="middle">No updates yet. Log the first one below.</text>`;
+  return `<svg class="chart" data-chart viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)} over time against plan">${g}</svg>`;
+}
+
+// ---------- Home ----------
+function viewHome() {
+  const mine = projects;
+  const all = mine.flatMap(p => p.metrics.map(m => ({ p, m })));
+  const due = all.filter(({ p, m }) => ["late", "due"].includes(dueState(p, m)));
+  return `<div class="stack fade" style="gap:24px">
+    <section class="stack" style="gap:10px;max-width:760px">
+      <div class="eyebrow">For any project, team or work stream</div>
+      <h1>Plan what success looks like, then track whether you're getting there.</h1>
+      <p class="sub">Set up a project in five short steps: describe the change you want, choose the metrics that prove it, decide how you'll collect them, and track progress with automatic status and reports.</p>
+    </section>
+    <section class="flow" aria-label="How it works">
+      ${[["Set up", "Name, dates, budget, audience"], ["Define the change", "From activities to impact"], ["Choose metrics", "Baselines and targets"], ["Plan the data", "Source, owner, how often"], ["Track and report", "Log updates, see status, share"]].map(([t, d], n) => `<div><span class="n">${n + 1}</span><b style="margin-top:6px">${t}</b><span class="small">${d}</span></div>`).join("")}
+    </section>
+    <div class="grid g-kpi">
+      <div class="kpi"><div class="eyebrow">Projects</div><div class="v num">${mine.length}</div><div class="n">${mine.filter(p => pStatus(p) === "good").length} on track</div></div>
+      <div class="kpi"><div class="eyebrow">Metrics tracked</div><div class="v num">${all.length}</div><div class="n">${all.filter(({ p, m }) => mStatus(p, m) === "good").length} on track</div></div>
+      <div class="kpi"><div class="eyebrow">Updates due</div><div class="v num">${due.length}</div><div class="n">${due.filter(({ p, m }) => dueState(p, m) === "late").length} overdue</div></div>
+    </div>
+    <section>
+      <div class="panel-head"><h2>Projects</h2><span class="note">Click a project to track it</span></div>
+      <div class="grid g-cards">
+        <button class="newcard" data-new><span class="plus" aria-hidden="true">+</span><b style="font-size:16px">Start a new project</b><span class="small">Pick a template for your type of work, or start blank.</span></button>
+        ${mine.map(p => { const s = pStatus(p), el = elapsed(p), d = p.metrics.filter(m => ["late", "due"].includes(dueState(p, m))).length;
+          return `<button class="pcard" data-open="${p.id}">
+            <div class="row between"><span class="chip">${esc(TEMPLATES[p.tpl]?.label || "Project")}</span>${p.example ? '<span class="chip example">Example</span>' : ""}</div>
+            <div><h3>${esc(p.name)}</h3><p class="small" style="margin-top:2px">${esc(p.owner || "No owner")} · ${esc(p.audience)} audience</p></div>
+            <div class="row between">${pill(s)}<span class="small num">${p.metrics.filter(m => mStatus(p, m) === "good").length} of ${p.metrics.length} metrics on track</span></div>
+            <div><div class="row between note"><span>${fmtDate(p.start)}</span><span>${pct(el)} through</span><span>${fmtDate(p.end)}</span></div><div class="track" style="margin-top:4px"><div class="fill" style="width:${el * 100}%"></div></div></div>
+            ${d ? `<span class="chip due" style="align-self:flex-start">${d} update${d > 1 ? "s" : ""} due</span>` : ""}
+          </button>`; }).join("")}
+      </div>
+    </section>
+  </div>`;
+}
+
+// ---------- Wizard ----------
+const STEPS = [["Set up", "The basics"], ["Define the change", "Theory of change"], ["Choose metrics", "What you'll measure"], ["Plan the data", "How you'll collect it"], ["Review", "Check and create"]];
+function newDraft() { return { id:null, tpl:"", name:"", owner:"", audience:"External", start:iso(TODAY), end:iso(addDays(TODAY, 180)), budget:"", spent:0, problem:"", toc:{ activities:"", outputs:"", outcomes:"", impact:"" }, reportTo:"", metrics:[] }; }
+function applyTemplate(key) {
+  const t = TEMPLATES[key]; draft.tpl = key;
+  for (const k of ["activities", "outputs", "outcomes", "impact"]) if (!draft.toc[k] || Object.values(TEMPLATES).some(x => x.toc[k] === draft.toc[k])) draft.toc[k] = t.toc[k];
+}
+function viewWizard() {
+  const d = draft, t = TEMPLATES[d.tpl] || TEMPLATES.custom;
+  const body = [stepSetup, stepChange, stepMetrics, stepPlan, stepReview][step](d, t);
+  return `<div class="fade">
+    <div class="row between" style="margin-bottom:16px"><div><div class="eyebrow">${d.id ? "Edit project plan" : "New project"}</div><h1 style="font-size:28px;margin-top:4px">${esc(d.name || "Untitled project")}</h1></div><button class="btn quiet" data-cancel>Cancel</button></div>
+    <nav class="stepper" aria-label="Steps">${STEPS.map(([a, b], n) => `<button data-step="${n}" ${n === step ? 'aria-current="step"' : ""} class="${n < step ? "done" : ""}"><b>${n + 1}. ${a}</b><span>${b}</span></button>`).join("")}</nav>
+    <section class="panel">${body}
+      <div class="wiz-foot"><div>${step ? `<button class="btn quiet" data-back>Back</button>` : ""}</div><div class="row"><span class="err" id="wizErr" role="alert"></span>${step < 4 ? `<button class="btn" data-next>Next: ${STEPS[step + 1][0]}</button>` : `<button class="btn" data-create>${d.id ? "Save changes" : "Create project"}</button>`}</div></div>
+    </section></div>`;
+}
+function stepSetup(d) {
+  return `<div class="stack" style="gap:20px">
+    <div><h2>What's the project?</h2><p class="small">Start with the basics. You can change any of this later.</p></div>
+    <div class="form">
+      <label class="wide" for="fName">Project name<input id="fName" data-f="name" value="${esc(d.name)}" placeholder="e.g. ${esc((TEMPLATES[d.tpl] || TEMPLATES.training).example)}"></label>
+    </div>
+    <div class="stack" style="gap:8px"><b style="font-size:13px">Type of work</b><span class="note" style="margin-top:-6px">Choosing a type fills in suggested outcomes and metrics for you.</span>
+      <div class="tpls" role="group" aria-label="Type of work">${Object.entries(TEMPLATES).map(([k, t]) => `<button class="tpl" data-tpl="${k}" aria-pressed="${d.tpl === k}"><b>${t.label}</b><span>${t.blurb}</span></button>`).join("")}</div></div>
+    <div class="form">
+      <label for="fOwner">Project owner<input id="fOwner" data-f="owner" value="${esc(d.owner)}" placeholder="Name or team"></label>
+      <label for="fStart">Start date<input id="fStart" type="date" data-f="start" value="${esc(d.start)}"></label>
+      <label for="fEnd">End date<input id="fEnd" type="date" data-f="end" value="${esc(d.end)}"></label>
+      <label for="fBudget">Budget ($)<span class="hint">Optional</span><input id="fBudget" type="number" min="0" step="any" data-f="budget" value="${esc(d.budget)}" placeholder="e.g. 50000"></label>
+    </div>
+    <div class="stack" style="gap:8px"><b style="font-size:13px">Who is it for?</b>
+      <div class="seg" role="group" aria-label="Audience">${["External", "Internal", "Both"].map(a => `<button data-aud="${a}" aria-pressed="${d.audience === a}">${a}</button>`).join("")}</div></div>
+  </div>`;
+}
+function stepChange(d, t) {
+  const v = k => d.toc[k] ? `<em>${esc(d.toc[k].toLowerCase().replace(/\.$/, ""))}</em>` : `<span class="note">[${k}]</span>`;
+  return `<div class="stack" style="gap:20px">
+    <div><h2>What change do you want to see?</h2><p class="small">A theory of change links what you do to the difference it makes. ${d.tpl && d.tpl !== "custom" ? "We've filled in suggestions for this type of work. Edit them to fit." : ""}</p></div>
+    <label for="fProblem">What problem are you solving?<span class="hint">One or two sentences. This goes at the top of every report.</span><textarea id="fProblem" data-f="problem" placeholder="e.g. New managers feel unprepared to use data in decisions.">${esc(d.problem)}</textarea></label>
+    <div class="chain">
+      ${[["activities", "Activities", "What you'll do"], ["outputs", "Outputs", "What you'll deliver"], ["outcomes", "Outcomes", "What changes for people"], ["impact", "Impact", "The long-term difference"]].map(([k, l, h]) => `<label for="toc-${k}">${l}<span class="hint">${h}</span><textarea id="toc-${k}" data-toc="${k}" rows="3">${esc(d.toc[k])}</textarea></label>`).join("")}
+    </div>
+    <div><div class="eyebrow" style="margin-bottom:6px">Read it back</div>
+      <p class="sentence" id="sentence">If we ${v("activities")}, we'll deliver ${v("outputs")}. That should mean ${v("outcomes")}, and over time, ${v("impact")}.</p></div>
+  </div>`;
+}
+function coverage(d) {
+  return `<div class="coverage">${["Output", "Outcome", "Impact"].map(l => { const n = d.metrics.filter(m => m.level === l).length; return `<span class="pill ${n ? "s-good" : l === "Impact" ? "s-none" : "s-warn"}"><i aria-hidden="true">${n ? "✓" : "○"}</i>${n} ${l.toLowerCase()} metric${n === 1 ? "" : "s"}</span>`; }).join("")}</div>`;
+}
+function stepMetrics(d, t) {
+  const suggestions = t.metrics.filter(s => !d.metrics.some(m => m.name === s.name));
+  return `<div class="stack" style="gap:20px">
+    <div class="row between" style="align-items:flex-start"><div><h2>How will you know it's working?</h2><p class="small">Pick 3 to 6 metrics. Include at least one output (what you deliver) and one outcome (what changes).</p></div>${coverage(d)}</div>
+    ${suggestions.length ? `<div class="stack" style="gap:8px"><b style="font-size:13px">Suggested for ${esc(t.label.toLowerCase())}</b><div class="suggest">${suggestions.map(s => `<button data-addsug="${esc(s.name)}">+ ${esc(s.name)} <small>${s.level}</small></button>`).join("")}</div></div>` : ""}
+    <div class="stack" style="gap:10px">${d.metrics.length ? d.metrics.map((m, n) => `
+      <div class="mrow">
+        <label for="mn${n}">Metric<input id="mn${n}" data-m="${n}" data-k="name" value="${esc(m.name)}" placeholder="e.g. People trained"></label>
+        <label for="ml${n}">Level<select id="ml${n}" data-m="${n}" data-k="level">${["Output", "Outcome", "Impact"].map(o => `<option ${m.level === o ? "selected" : ""}>${o}</option>`).join("")}</select></label>
+        <label for="mt${n}">Type<select id="mt${n}" data-m="${n}" data-k="mode"><option value="count" ${m.mode === "count" ? "selected" : ""}>Running total</option><option value="rate" ${m.mode === "rate" ? "selected" : ""}>Rate or score</option></select></label>
+        <label for="mu${n}">Unit<select id="mu${n}" data-m="${n}" data-k="unit">${[["", "Number"], ["%", "%"], ["$", "$"], ["/5", "/ 5"], ["/10", "/ 10"], [" days", "Days"], [" hrs", "Hours"]].map(([v, l]) => `<option value="${v}" ${m.unit === v ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+        <label for="mb${n}">Baseline<input id="mb${n}" type="number" step="any" data-m="${n}" data-k="baseline" value="${esc(m.baseline)}"></label>
+        <label for="mg${n}">Target<input id="mg${n}" type="number" step="any" data-m="${n}" data-k="target" value="${esc(m.target)}"></label>
+        <button class="x" data-delm="${n}" aria-label="Remove ${esc(m.name)}">×</button>
+      </div>`).join("") : `<p class="small">No metrics yet. Add a suggestion above or your own below.</p>`}</div>
+    <div><button class="btn ghost" data-addm>+ Add your own metric</button></div>
+    <div class="grid g-2">
+      <div class="checklist"><b style="color:var(--ink);font-size:13px">A good metric is…</b>
+        <div><i>✓</i><span><b>Specific:</b> one clear number, like “% of trainees applying skills after 90 days”.</span></div>
+        <div><i>✓</i><span><b>Baselined:</b> you know where you're starting from.</span></div>
+        <div><i>✓</i><span><b>Time-bound:</b> the target is for the end date of this project.</span></div>
+        <div><i>✓</i><span><b>Collectable:</b> someone can realistically gather it.</span></div></div>
+      <div class="checklist"><b style="color:var(--ink);font-size:13px">Running total or rate?</b>
+        <div><i>→</i><span><b>Running total</b> builds up over time (people trained, sign-ups). It's judged against where it should be by today.</span></div>
+        <div><i>→</i><span><b>Rate or score</b> is a level (completion %, satisfaction, cost per sign-up). For “lower is better”, set a target below the baseline.</span></div></div>
+    </div>
+  </div>`;
+}
+function stepPlan(d) {
+  return `<div class="stack" style="gap:20px">
+    <div><h2>How will you collect the data?</h2><p class="small">A metric without an owner and a source doesn't get measured. This becomes your data collection plan and your update reminders.</p></div>
+    <div class="stack" style="gap:10px">${d.metrics.map((m, n) => `
+      <div class="mrow plan">
+        <div><div class="note">${m.level}</div><b style="font-size:14px">${esc(m.name || "Untitled metric")}</b><div class="note">Target ${fmt(+m.target, m.unit)}</div></div>
+        <label for="pf${n}">How often<select id="pf${n}" data-m="${n}" data-k="frequency">${Object.keys(FREQ).map(f => `<option ${m.frequency === f ? "selected" : ""}>${f}</option>`).join("")}</select></label>
+        <label for="ps${n}">Data source<input id="ps${n}" data-m="${n}" data-k="source" value="${esc(m.source)}" placeholder="e.g. Survey, CRM, analytics"></label>
+        <label for="po${n}">Who collects it<input id="po${n}" data-m="${n}" data-k="owner" value="${esc(m.owner)}" placeholder="Name or team"></label>
+        <span></span>
+      </div>`).join("")}</div>
+    <div class="form">
+      <label for="fReport">Who gets the progress report?<span class="hint">e.g. Leadership team, funders, partner teams</span><input id="fReport" data-f="reportTo" value="${esc(d.reportTo)}"></label>
+    </div>
+  </div>`;
+}
+function stepReview(d, t) {
+  return `<div class="stack" style="gap:20px">
+    <div><h2>Check your plan</h2><p class="small">This is what you'll track. Go back to any step to change it.</p></div>
+    <div class="grid g-kpi">
+      <div class="kpi"><div class="eyebrow">Type</div><div style="font-weight:600;margin-top:6px">${esc(t.label)}</div></div>
+      <div class="kpi"><div class="eyebrow">Dates</div><div style="font-weight:600;margin-top:6px">${fmtDate(d.start)} – ${fmtDate(d.end)}</div></div>
+      <div class="kpi"><div class="eyebrow">Budget</div><div style="font-weight:600;margin-top:6px">${d.budget ? money(+d.budget) : "Not set"}</div></div>
+      <div class="kpi"><div class="eyebrow">Owner and audience</div><div style="font-weight:600;margin-top:6px">${esc(d.owner || "Not set")} · ${esc(d.audience)}</div></div>
+    </div>
+    ${d.problem ? `<p class="sub"><b style="color:var(--ink)">Problem:</b> ${esc(d.problem)}</p>` : ""}
+    <div class="logic">${[["Activities", d.toc.activities], ["Outputs", d.toc.outputs], ["Outcomes", d.toc.outcomes], ["Impact", d.toc.impact]].map(([k, v]) => `<div><b>${k}</b>${esc(v || "Not set")}</div>`).join("")}</div>
+    <div class="tscroll"><table><thead><tr><th>Metric</th><th>Level</th><th>Baseline → target</th><th>How often</th><th>Source</th><th>Owner</th></tr></thead>
+      <tbody>${d.metrics.map(m => `<tr><td><b>${esc(m.name)}</b></td><td class="small">${m.level}</td><td class="num">${fmt(+m.baseline, m.unit)} → ${fmt(+m.target, m.unit)}</td><td class="small">${m.frequency}</td><td class="small">${esc(m.source || "–")}</td><td class="small">${esc(m.owner || "–")}</td></tr>`).join("")}</tbody></table></div>
+    ${coverage(d)}
+  </div>`;
+}
+function validate() {
+  const d = draft;
+  if (step === 0) { if (!d.name.trim()) return "Give the project a name."; if (!d.tpl) return "Choose the type of work (or “Something else”)."; if (!d.start || !d.end || d.end <= d.start) return "The end date must be after the start date."; }
+  if (step === 2) { if (!d.metrics.length) return "Add at least one metric."; const bad = d.metrics.find(m => !m.name.trim() || m.target === "" || !isFinite(+m.target) || !isFinite(+m.baseline)); if (bad) return "Every metric needs a name, a baseline and a target."; if (d.metrics.some(m => +m.target === +m.baseline)) return "A target can't equal its baseline."; }
+  return "";
+}
+function saveDraft() {
+  const d = draft;
+  const clean = { ...d, budget:+d.budget || 0, metrics:d.metrics.map(m => ({ ...m, baseline:+m.baseline, target:+m.target, history:m.history || [] })) };
+  if (d.id) { const i = projects.findIndex(p => p.id === d.id); projects[i] = { ...projects[i], ...clean }; }
+  else { clean.id = uid(); projects.unshift(clean); }
+  save(); return clean.id;
+}
+
+// ---------- Project dashboard ----------
+function viewProject() {
+  const p = projects.find(x => x.id === view.id); if (!p) { view = { name:"home" }; return viewHome(); }
+  const s = pStatus(p), el = elapsed(p);
+  if (!p.metrics.some(m => m.id === selMetric)) selMetric = p.metrics[0]?.id;
+  const m = p.metrics.find(x => x.id === selMetric);
+  const due = p.metrics.filter(x => ["late", "due"].includes(dueState(p, x)));
+  const onTrack = p.metrics.filter(x => mStatus(p, x) === "good").length;
+  return `<div class="stack fade" style="gap:20px">
+    <div class="row between" style="align-items:flex-start">
+      <div><button class="link" data-home>← All projects</button>
+        <div class="row" style="margin-top:8px;gap:8px"><span class="chip">${esc(TEMPLATES[p.tpl]?.label)}</span>${p.example ? '<span class="chip example">Example</span>' : ""}</div>
+        <h1 style="margin-top:6px">${esc(p.name)}</h1>
+        <p class="sub" style="margin-top:4px">${esc(p.owner || "No owner")} · ${esc(p.audience)} audience · ${fmtDate(p.start)} – ${fmtDate(p.end)}</p></div>
+      <div class="row"><button class="btn quiet" data-edit>Edit plan</button><button class="btn danger" data-del>Delete</button></div>
+    </div>
+    ${p.problem ? `<p class="sub" style="max-width:75ch"><b style="color:var(--ink)">Problem:</b> ${esc(p.problem)}</p>` : ""}
+    <div class="grid g-kpi">
+      <div class="kpi"><div class="eyebrow">Overall status</div><div style="margin-top:8px">${pill(s)}</div><div class="n">Follows the outcome and impact metrics</div></div>
+      <div class="kpi"><div class="eyebrow">Metrics on track</div><div class="v num">${onTrack} / ${p.metrics.length}</div><div class="n">${p.metrics.filter(x => mStatus(p, x) === "none").length} waiting for data</div></div>
+      <div class="kpi"><div class="eyebrow">Time elapsed</div><div class="v num">${pct(el)}</div><div class="track" style="margin-top:8px"><div class="fill" style="width:${el * 100}%"></div></div></div>
+      <div class="kpi"><div class="eyebrow">Budget used</div>${p.budget ? `<div class="v num">${pct(p.spent / p.budget)}</div><div class="n">${money(p.spent)} of ${money(p.budget)}${p.spent / p.budget > el + 0.1 ? " · spending ahead of time" : ""}</div>` : `<div class="n" style="margin-top:8px">No budget set</div>`}</div>
+      <div class="kpi"><div class="eyebrow">Updates due</div><div class="v num">${due.length}</div><div class="n">${due.length ? esc(due.map(x => x.name).slice(0, 2).join(", ")) + (due.length > 2 ? "…" : "") : "All data is up to date"}</div></div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head"><div><h2>Metrics</h2><p class="small">Click a metric to see its trend and log an update. The black tick marks where a running total should be by today.</p></div></div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Metric</th><th>Level</th><th style="min-width:200px">Progress</th><th>Status</th><th>Next update</th></tr></thead>
+        <tbody>${p.metrics.map(x => `<tr class="click ${x.id === selMetric ? "sel" : ""}" data-metric="${x.id}" tabindex="0"><td><b>${esc(x.name)}</b><div class="note">${esc(x.source || "No source set")}</div></td><td class="small">${x.level}</td><td>${bullet(p, x)}</td><td>${pill(mStatus(p, x))}</td><td>${dueChip(p, x)}</td></tr>`).join("")}</tbody></table></div>
+    </section>
+
+    ${m ? `<div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><div><h3>${esc(m.name)}</h3><p class="small">${m.level} · ${m.mode === "count" ? "running total" : "rate or score"} · collected ${m.frequency.toLowerCase()} by ${esc(m.owner || "no owner")}</p></div>
+          <div class="legend"><span><i class="swatch" style="background:var(--accent)"></i>Actual</span><span><i class="swatch" style="background:repeating-linear-gradient(90deg,var(--plan) 0 5px,transparent 5px 8px)"></i>${m.mode === "count" ? "Plan" : "Target"}</span></div></div>
+        ${metricChart(p, m)}
+      </section>
+      <section class="panel stack">
+        <div><h3>Log an update</h3><p class="small">Enter the latest figure. Status and reports update straight away.</p></div>
+        <form class="form" id="logForm" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+          <label for="lgValue">New value${m.unit ? ` (${esc(m.unit.trim())})` : ""}<input id="lgValue" type="number" step="any" required></label>
+          <label for="lgDate">Date<input id="lgDate" type="date" value="${iso(TODAY)}" max="${iso(TODAY)}" required></label>
+          <label class="wide" for="lgNote">Note<span class="hint">Optional: what's behind the number</span><input id="lgNote" placeholder="e.g. Survey closed with 240 responses"></label>
+          <div><button class="btn" type="submit">Save update</button></div>
+        </form>
+        <span class="flash" id="lgFlash" role="status"></span>
+        <div class="hist">${m.history.length ? m.history.slice().reverse().slice(0, 5).map(h => `<div><span>${shortDate(h.date)}${h.note ? ` · <span class="note">${esc(h.note)}</span>` : ""}</span><b class="num">${fmt(h.value, m.unit)}</b></div>`).join("") : `<p class="note">No updates yet.</p>`}</div>
+      </section>
+    </div>` : ""}
+
+    <div class="grid g-2">
+      <section class="panel stack">
+        <h2>Theory of change</h2>
+        <div class="logic">${[["Activities", p.toc.activities], ["Outputs", p.toc.outputs], ["Outcomes", p.toc.outcomes], ["Impact", p.toc.impact]].map(([k, v]) => `<div><b>${k}</b>${esc(v || "Not set")}</div>`).join("")}</div>
+        <h3 style="margin-top:6px">Data collection plan</h3>
+        <div class="tscroll"><table><thead><tr><th>Metric</th><th>Source</th><th>How often</th><th>Owner</th></tr></thead>
+          <tbody>${p.metrics.map(x => `<tr><td><b>${esc(x.name)}</b></td><td class="small">${esc(x.source || "–")}</td><td class="small">${x.frequency}</td><td class="small">${esc(x.owner || "–")}</td></tr>`).join("")}</tbody></table></div>
+        ${p.budget ? `<form class="row" id="spendForm" style="align-items:flex-end"><label for="spIn" style="flex:1 1 180px">Spent to date ($)<input id="spIn" type="number" min="0" step="any" value="${p.spent}"></label><button class="btn quiet" type="submit">Update spend</button></form>` : ""}
+      </section>
+      <section class="panel stack">
+        <div class="row between"><div><h2>Progress report</h2><p class="small">For ${esc(p.reportTo || "stakeholders")}. Written automatically from your data.</p></div></div>
+        <div class="report">${report(p).map(([h, items]) => `<h4>${esc(h)}</h4><ul>${items.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`).join("")}</div>
+        <div class="row"><button class="btn ghost" id="copyRep">Copy report</button><button class="btn" id="aiGo" hidden>Draft an email with AI</button><button class="btn quiet" id="aiStop" hidden>Stop</button><span class="flash" id="copyFlash" role="status"></span></div>
+        <div class="ai-out" id="aiOut"></div>
+      </section>
+    </div>
+  </div>`;
+}
+function report(p) {
+  const by = s => p.metrics.filter(m => mStatus(p, m) === s);
+  const line = m => `${m.name}: ${fmt(latest(m).value, m.unit)} against a target of ${fmt(m.target, m.unit)}`;
+  const out = [["Summary", [`Overall: ${STATUS[pStatus(p)].label.toLowerCase()}. ${by("good").length} of ${p.metrics.length} metrics on track, ${pct(elapsed(p))} of the way through.`, ...(p.budget ? [`Budget: ${money(p.spent)} of ${money(p.budget)} spent (${pct(p.spent / p.budget)}).`] : [])]]];
+  if (by("good").length) out.push(["Going well", by("good").map(line)]);
+  if (by("warn").length || by("crit").length) out.push(["Needs attention", [...by("crit"), ...by("warn")].map(m => `${line(m)} (${STATUS[mStatus(p, m)].label.toLowerCase()})`)]);
+  const waiting = p.metrics.filter(m => ["late", "due"].includes(dueState(p, m)) || !latest(m));
+  if (waiting.length) out.push(["Data to collect", waiting.map(m => `${m.name}: ${dueState(p, m) === "late" ? "overdue" : latest(m) ? "due soon" : "no data yet"} (${m.owner || "no owner"})`)]);
+  return out;
+}
+const reportText = p => `${p.name}: progress report, ${fmtDate(iso(TODAY))}\n${p.problem ? "Problem: " + p.problem + "\n" : ""}\n` + report(p).map(([h, items]) => h.toUpperCase() + "\n" + items.map(t => "- " + t).join("\n")).join("\n\n");
+
+// ---------- AI (optional; hidden when the viewer can't use it) ----------
+let sample = null, aiCtl = null;
+(async () => { try { sample = window.claude?.use ? await window.claude.use("sample") : null; } catch { sample = null; } wireAI(); })();
+function wireAI() {
+  const go = document.getElementById("aiGo"), stop = document.getElementById("aiStop"), out = document.getElementById("aiOut");
+  if (!go) return; go.hidden = !sample; if (!sample) return;
+  const p = projects.find(x => x.id === view.id);
+  go.onclick = async () => {
+    aiCtl = new AbortController(); go.disabled = true; stop.hidden = false; out.textContent = "Thinking...";
+    try {
+      await sample(`Write a short progress-update email from the project owner to ${p.reportTo || "stakeholders"}. Plain text, under 180 words, friendly and direct. Lead with overall status, then what's going well, what needs attention and what we'll do next. Use only these figures; do not invent numbers.\n\n${reportText(p)}`, { signal:aiCtl.signal, onText:({ text }) => { out.textContent = text; } });
+    } catch (e) {
+      if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled"].includes(e.code)) { go.hidden = true; out.textContent = ""; }
+      else if (e.code !== "cancelled") out.textContent = (e.text || "") + (e.code === "rate_limited" ? "\n\nToo many requests right now. Try again in a minute." : "\n\nThe draft was interrupted. Try again.");
+      else out.textContent = e.text || "";
+    } finally { go.disabled = false; stop.hidden = true; }
+  };
+  stop.onclick = () => aiCtl?.abort();
+}
+
+// ---------- Render ----------
+const main = document.getElementById("main");
+function render() {
+  main.innerHTML = view.name === "wizard" ? viewWizard() : view.name === "project" ? viewProject() : viewHome();
+  hideTip(); wireAI();
+}
+function go(v) { view = v; render(); window.scrollTo({ top:0 }); }
+function startWizard(existing) {
+  draft = existing ? JSON.parse(JSON.stringify(existing)) : newDraft();
+  if (existing) draft.metrics.forEach(m => { m.baseline = String(m.baseline); m.target = String(m.target); });
+  step = 0; go({ name:"wizard" });
+}
+function refreshWizardBits() {
+  const t = TEMPLATES[draft.tpl] || TEMPLATES.custom;
+  const s = document.getElementById("sentence"); if (s && step === 1) s.outerHTML = stepChange(draft, t).match(/<p class="sentence"[\s\S]*?<\/p>/)[0];
+  const cov = document.querySelector(".coverage"); if (cov && step === 2) cov.outerHTML = coverage(draft);
+  const h = main.querySelector("h1"); if (h) h.textContent = draft.name || "Untitled project";
+}
+
+document.addEventListener("click", e => {
+  const t = e.target;
+  if (t.closest("[data-home]")) return go({ name:"home" });
+  if (t.closest("[data-new]")) return startWizard();
+  const open = t.closest("[data-open]"); if (open) { selMetric = null; return go({ name:"project", id:open.dataset.open }); }
+  // wizard
+  if (t.closest("[data-cancel]")) return go(draft.id ? { name:"project", id:draft.id } : { name:"home" });
+  const tp = t.closest("[data-tpl]"); if (tp) { applyTemplate(tp.dataset.tpl); return render(); }
+  const au = t.closest("[data-aud]"); if (au) { draft.audience = au.dataset.aud; return render(); }
+  const sg = t.closest("[data-addsug]"); if (sg) { const s = TEMPLATES[draft.tpl].metrics.find(x => x.name === sg.dataset.addsug); draft.metrics.push({ id:uid(), ...s, baseline:String(s.baseline), target:String(s.target), owner:draft.owner || "", history:[] }); return render(); }
+  if (t.closest("[data-addm]")) { draft.metrics.push({ id:uid(), name:"", level:"Outcome", mode:"rate", unit:"%", baseline:"0", target:"", frequency:"Monthly", source:"", owner:draft.owner || "", history:[] }); render(); const last = main.querySelectorAll('[data-k="name"]'); last[last.length - 1]?.focus(); return; }
+  const dm = t.closest("[data-delm]"); if (dm) { draft.metrics.splice(+dm.dataset.delm, 1); return render(); }
+  const st = t.closest("[data-step]"); if (st) { const n = +st.dataset.step; for (let k = step; k < n; k++) { step = k; const err = validate(); if (err) { render(); document.getElementById("wizErr").textContent = err; return; } } step = n; return render(); }
+  if (t.closest("[data-back]")) { step--; return render(); }
+  if (t.closest("[data-next]")) { const err = validate(); if (err) { document.getElementById("wizErr").textContent = err; return; } step++; return render(); }
+  if (t.closest("[data-create]")) { for (step = 0; step < 4; step++) { const err = validate(); if (err) { render(); document.getElementById("wizErr").textContent = err; return; } } step = 4; const id = saveDraft(); selMetric = null; return go({ name:"project", id }); }
+  // project
+  const mr = t.closest("[data-metric]"); if (mr) { selMetric = mr.dataset.metric; return render(); }
+  if (t.closest("[data-edit]")) return startWizard(projects.find(x => x.id === view.id));
+  const del = t.closest("[data-del]");
+  if (del) { if (del.dataset.armed) { projects = projects.filter(x => x.id !== view.id); save(); return go({ name:"home" }); } del.dataset.armed = "1"; del.textContent = "Click again to delete"; setTimeout(() => { if (del.isConnected) { delete del.dataset.armed; del.textContent = "Delete"; } }, 4000); return; }
+  if (t.id === "copyRep") { const f = document.getElementById("copyFlash"); navigator.clipboard.writeText(reportText(projects.find(x => x.id === view.id))).then(() => { f.textContent = "Copied"; }).catch(() => { f.textContent = "Couldn't copy. Select the report text instead."; }); }
+});
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("tr[data-metric]")) e.target.click(); });
+document.addEventListener("input", e => {
+  if (view.name !== "wizard") return;
+  const t = e.target;
+  if (t.dataset.f) draft[t.dataset.f] = t.value;
+  else if (t.dataset.toc) draft.toc[t.dataset.toc] = t.value;
+  else if (t.dataset.m != null) draft.metrics[+t.dataset.m][t.dataset.k] = t.value;
+  else return;
+  document.getElementById("wizErr").textContent = "";
+  refreshWizardBits();
+});
+document.addEventListener("submit", e => {
+  e.preventDefault();
+  const p = projects.find(x => x.id === view.id); if (!p) return;
+  if (e.target.id === "logForm") {
+    const m = p.metrics.find(x => x.id === selMetric), v = parseFloat(document.getElementById("lgValue").value), date = document.getElementById("lgDate").value;
+    if (!isFinite(v) || !date) return;
+    const before = mStatus(p, m);
+    m.history.push({ date, value:v, note:document.getElementById("lgNote").value.trim() }); m.history.sort((a, b) => a.date < b.date ? -1 : 1);
+    save(); render();
+    const after = mStatus(p, m);
+    document.getElementById("lgFlash").textContent = `Saved. ${m.name} is ${STATUS[after].label.toLowerCase()}` + (before !== after ? ` (was ${STATUS[before].label.toLowerCase()}).` : ".");
+  }
+  if (e.target.id === "spendForm") { const v = parseFloat(document.getElementById("spIn").value); if (isFinite(v) && v >= 0) { p.spent = v; save(); render(); } }
+});
+let resetArmed = false;
+document.getElementById("resetAll").addEventListener("click", e => {
+  if (!resetArmed) { resetArmed = true; e.target.textContent = "Click again to reset"; setTimeout(() => { resetArmed = false; e.target.textContent = "Reset to examples"; }, 4000); return; }
+  resetArmed = false; e.target.textContent = "Reset to examples"; projects = examples(); save(); go({ name:"home" });
+});
+render();
+</script>
