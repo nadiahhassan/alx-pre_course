@@ -372,8 +372,7 @@
     return `
     <section class="auth">
       <div class="auth-side">
-        <div class="tomato" style="top:-30px;right:-30px;width:140px;height:140px"></div>
-        <div class="tomato" style="bottom:-40px;left:-20px;width:160px;height:160px"></div>
+        ${C.authImage ? `<img class="auth-bg" src="${esc(C.authImage)}" alt="">` : ""}
         <img src="assets/logo.svg" alt="Bole Friday" style="width:180px;background:#fff;border-radius:18px;padding:8px;margin-bottom:24px">
         <h1>${signup ? "JOIN THE <span>BOLE</span> FAMILY" : "WELCOME <span>BACK</span>"}</h1>
         <p style="max-width:380px;opacity:.9">${signup ? "Create an account to order faster, save your address and track every order." : "Log in to finish your order and see your order history."}</p>

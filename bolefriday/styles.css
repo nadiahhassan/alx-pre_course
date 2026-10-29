@@ -259,6 +259,10 @@ section.block { padding: 72px 0; }
 .panel { background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: 28px; }
 .auth { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 67px); }
 .auth-side { background: linear-gradient(160deg, var(--maroon-2), var(--maroon)); color: #fff; padding: 60px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+.auth-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.auth-side::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(20,10,8,.95) 0%, rgba(20,10,8,.6) 55%, rgba(20,10,8,.25) 100%); }
+.auth-side > *:not(.auth-bg) { position: relative; z-index: 2; }
+.auth-side { justify-content: flex-end; }
 .auth-side h1 { font-size: 64px; }
 .auth-side h1 span { color: var(--yellow); }
 .auth-side .tomato { opacity: .9; }
@@ -355,6 +359,7 @@ section.block { padding: 72px 0; }
   .sticky { position: static; }
 }
 @media (max-width: 640px) {
+  .auth-side img:not(.auth-bg) { width: 110px !important; margin-bottom: 14px !important; }
   .th-hero-inner { padding-top: 100px; padding-bottom: 48px; }
   .th-hero::before { background: linear-gradient(0deg, rgba(20,10,8,.95) 0%, rgba(20,10,8,.75) 60%, rgba(20,10,8,.55) 100%); }
   .th-search { padding-left: 14px; }
