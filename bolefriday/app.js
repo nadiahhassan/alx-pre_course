@@ -134,7 +134,9 @@
         </div>
         <div class="hero-art">
           <div class="tomato t1"></div>
-          <div class="plate">${C.heroImage ? `<img class="dish" src="${esc(C.heroImage)}" alt="Roasted bole with signature pepper sauce">` : dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>
+          ${C.heroImage
+            ? `<div class="hero-photo"><img src="${esc(C.heroImage)}" alt="Roasted bole with signature pepper sauce"></div>`
+            : `<div class="plate">${dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>`}
           <div class="tomato t2"></div>
           <div class="float-card fc1"><div class="ico">★</div><div><b>${esc(best.name)}</b>Our bestseller</div></div>
           <div class="float-card fc2"><div class="ico">⏱</div><div><b>Hot &amp; fresh</b>Packed with love</div></div>
