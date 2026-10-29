@@ -20,6 +20,9 @@ window.BOLE_CONFIG = {
     { id: "zone-c", name: "10km+", fee: 3500 },
   ],
 
+  // Food photos: add image: "assets/food/your-photo.jpg" to any main or extra.
+  heroImage: "assets/food/dline.jpg",
+
   // Main courses: customers pick a base and a protein; sauce is included.
   mains: [
     {
@@ -30,6 +33,7 @@ window.BOLE_CONFIG = {
       bases: ["Plantain"],
       proteins: ["Fish", "Kponmo"],
       tag: "Bestseller",
+      image: "assets/food/dline.jpg",
     },
     {
       id: "elekahia",
@@ -38,6 +42,7 @@ window.BOLE_CONFIG = {
       desc: "Plantain plus yam or potato, fish or kponmo, and sauce.",
       bases: ["Plantain + Yam", "Plantain + Potato"],
       proteins: ["Fish", "Kponmo"],
+      image: "assets/food/elekahia.jpg",
     },
     {
       id: "fimie",
@@ -51,7 +56,7 @@ window.BOLE_CONFIG = {
 
   extras: [
     { id: "fish", name: "Fish", price: 4000 },
-    { id: "kponmo", name: "Kponmo", price: 1800 },
+    { id: "kponmo", name: "Kponmo", price: 1800, image: "assets/food/kponmo.jpg" },
     { id: "sauce", name: "Sauce", price: 2000 },
     { id: "yam", name: "Yam", price: 1300 },
     { id: "potato", name: "Potato", price: 1300 },

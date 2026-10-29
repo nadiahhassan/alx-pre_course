@@ -134,7 +134,7 @@
         </div>
         <div class="hero-art">
           <div class="tomato t1"></div>
-          <div class="plate">${dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>
+          <div class="plate">${C.heroImage ? `<img class="dish" src="${esc(C.heroImage)}" alt="Roasted bole with signature pepper sauce">` : dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>
           <div class="tomato t2"></div>
           <div class="float-card fc1"><div class="ico">★</div><div><b>${esc(best.name)}</b>Our bestseller</div></div>
           <div class="float-card fc2"><div class="ico">⏱</div><div><b>Hot &amp; fresh</b>Packed with love</div></div>
@@ -221,7 +221,8 @@
           <div class="extras-grid">
             ${C.extras.map((x) => `
               <div class="extra">
-                <div><b>${esc(x.name)}</b><span>${money(x.price)}</span></div>
+                ${x.image ? `<img class="extra-img" src="${esc(x.image)}" alt="${esc(x.name)}" loading="lazy">` : ""}
+                <div class="extra-info"><b>${esc(x.name)}</b><span>${money(x.price)}</span></div>
                 <button class="add-round" data-add-extra="${x.id}" aria-label="Add ${esc(x.name)}">+</button>
               </div>`).join("")}
           </div>
@@ -246,7 +247,7 @@
         const protein = $('[data-group="protein"] .on', card).dataset.val;
         addToCart({
           key: `${m.id}|${base}|${protein}`,
-          id: m.id, name: m.name, price: m.price, type: "main",
+          id: m.id, name: m.name, price: m.price, type: "main", image: m.image,
           options: `${base} · ${protein} · Sauce`,
         });
       };
@@ -254,7 +255,7 @@
     $$("[data-add-extra]").forEach((btn) => {
       btn.onclick = () => {
         const x = C.extras.find((e) => e.id === btn.dataset.addExtra);
-        addToCart({ key: `extra|${x.id}`, id: x.id, name: x.name, price: x.price, type: "extra", options: "Extra" });
+        addToCart({ key: `extra|${x.id}`, id: x.id, name: x.name, price: x.price, type: "extra", options: "Extra", image: x.image });
       };
     });
     $$("[data-tab]").forEach((tab) => {
@@ -345,7 +346,7 @@
           <h2 class="section-title" style="font-size:36px;margin-top:0">Your Bag</h2>
           ${cart.map((l, i) => `
             <div class="line">
-              <div class="thumb">${esc(l.name[0])}</div>
+              <div class="thumb">${l.image ? `<img src="${esc(l.image)}" alt="">` : esc(l.name[0])}</div>
               <div class="info"><b>${esc(l.name)}</b><small>${esc(l.options)}</small>
                 <small>${money(l.price)} each</small>
                 <button class="remove" data-rm="${i}">Remove</button></div>
