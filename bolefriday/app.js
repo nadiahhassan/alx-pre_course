@@ -143,7 +143,7 @@
             ${[best.name, "Kponmo", "Fish", "Sauce"].map((t) => `<a href="#/menu?q=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}
           </div>
         </div>
-        <div class="th-script th-script-hero">Good Bole,<br>Happy Belle</div>
+        <div class="th-script th-script-hero">A Taste<br>Of Home</div>
       </div>
     </section>
 
