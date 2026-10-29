@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bole Friday — A Taste of Home</title>
+  <meta name="description" content="Portharcourt bole in Abuja. Order roasted plantain, fish and kponmo from Bole Friday, delivered hot to your door." />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a href="#/" class="brand">
+      <img src="assets/logo.svg" alt="Bole Friday" class="brand-logo" id="brandLogo" />
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#/">Home</a>
+      <a href="#/menu">Menu</a>
+      <a href="#/orders">My Orders</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#/cart" class="cart-btn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 2H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        <span class="badge" id="cartCount">0</span>
+      </a>
+      <span id="authSlot"></span>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand footer-brand"><img src="assets/logo.svg" alt="Bole Friday" class="brand-logo footer-logo" /></div>
+        <p>Portharcourt bole in Abuja — roasted plantain, yam, fish &amp; kponmo with our signature sauce.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="tel:+2348067270850">0806 727 0850</a></p>
+        <p><a href="https://www.instagram.com/bolefriday/" target="_blank" rel="noopener">@bolefriday</a></p>
+      </div>
+      <div>
+        <h4>Order</h4>
+        <p><a href="#/menu">Full menu</a></p>
+        <p><a href="#/orders">Track an order</a></p>
+      </div>
+    </div>
+    <p class="copy">© <span id="year"></span> Bole Friday. Made with love &amp; palm oil.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
