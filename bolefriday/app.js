@@ -223,7 +223,7 @@
           <div class="extras-grid">
             ${C.extras.map((x) => `
               <div class="extra">
-                ${x.image ? `<img class="extra-img" src="${esc(x.image)}" alt="${esc(x.name)}" loading="lazy">` : ""}
+                ${x.image ? `<img class="extra-img" src="${esc(x.image)}" alt="${esc(x.name)}" loading="lazy"${x.imagePosition ? ` style="object-position:${esc(x.imagePosition)}"` : ""}>` : ""}
                 <div class="extra-info"><b>${esc(x.name)}</b><span>${money(x.price)}</span></div>
                 <button class="add-round" data-add-extra="${x.id}" aria-label="Add ${esc(x.name)}">+</button>
               </div>`).join("")}
