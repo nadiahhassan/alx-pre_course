@@ -21,7 +21,7 @@ window.BOLE_CONFIG = {
   ],
 
   // Food photos: add image: "assets/food/your-photo.jpg" to any main or extra.
-  heroImage: "assets/food/dline.jpg",
+  heroImage: "assets/food/hero.jpg",
 
   // Main courses: customers pick a base and a protein; sauce is included.
   mains: [

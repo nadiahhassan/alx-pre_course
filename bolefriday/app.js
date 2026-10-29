@@ -89,7 +89,7 @@
     const u = currentUser();
     const slot = $("#authSlot");
     if (!u) {
-      slot.innerHTML = `<a class="btn btn-primary btn-sm" href="#/signup">Sign up</a>`;
+      slot.innerHTML = `<a class="btn btn-sm nav-login" href="#/login">Log in</a><a class="btn btn-primary btn-sm" href="#/signup">Sign up</a>`;
       return;
     }
     slot.innerHTML = `
@@ -113,71 +113,162 @@
   document.addEventListener("click", () => $(".user-menu")?.classList.remove("open"));
 
   // ---------- views ----------
+  // Everything with a photo, for the category row and featured slider.
+  const showcase = () => [
+    ...C.mains.map((m) => ({ ...m, kind: "main", sub: m.bases.join(" / ") })),
+    ...C.extras.filter((x) => x.image).map((x) => ({ ...x, kind: "extra", sub: "Extra" })),
+  ];
+  const favs = () => store.get("favs", []);
+  const heart = (on) => `<svg viewBox="0 0 24 24" width="18" height="18" fill="${on ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg>`;
+
   function viewHome() {
-    const best = C.mains[0];
+    const best = C.mains.find((m) => m.tag) || C.mains[0];
+    const items = showcase();
+    const banner = C.mains.find((m) => m.id !== best.id && m.image) || best;
+    const minPrice = Math.min(...C.mains.map((m) => m.price));
     return `
-    <section class="hero ${C.heroImage ? "hero-full" : ""}">
-      ${C.heroImage ? `<img class="hero-bg" src="${esc(C.heroImage)}" alt="Roasted bole with signature pepper sauce">` : ""}
-      <div class="wrap">
+    <section class="th-hero">
+      ${C.heroImage ? `<img class="th-hero-bg" src="${esc(C.heroImage)}" alt="">` : ""}
+      <div class="wrap th-hero-inner">
+        <div class="th-hero-copy">
+          <div class="th-eyebrow">A taste of <span>home</span> · Portharcourt bole</div>
+          <h1>Real Bole,<br>Now In <span>Abuja</span></h1>
+          <p>Roasted plantain, yam and potato with fish or kponmo and our signature pepper sauce. Delivered hot, from ${money(minPrice)}.</p>
+          <form class="th-search" id="heroSearch" role="search">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input name="q" placeholder="Search bole, fish…" aria-label="Search the menu">
+            <button class="btn btn-primary" type="submit">Find Food →</button>
+          </form>
+          <div class="th-popular"><span>Popular:</span>
+            ${[best.name, "Kponmo", "Fish", "Sauce"].map((t) => `<a href="#/menu?q=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}
+          </div>
+        </div>
+        <div class="th-script th-script-hero">Good Bole,<br>Happy Belle</div>
+      </div>
+    </section>
+
+    <section class="wrap th-cats">
+      <a class="th-cat active" href="#/menu"><span class="th-cat-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="2"/><rect x="14" y="4" width="6" height="6" rx="2"/><rect x="4" y="14" width="6" height="6" rx="2"/><rect x="14" y="14" width="6" height="6" rx="2"/></svg></span>All</a>
+      ${items.map((it) => `<a class="th-cat" href="#/menu?q=${encodeURIComponent(it.name)}"><span class="th-cat-ic">${it.image ? `<img src="${esc(it.image)}" alt="" loading="lazy">` : esc(it.name[0])}</span>${esc(it.name)}</a>`).join("")}
+    </section>
+
+    <section class="wrap th-section">
+      <div class="th-head">
+        <div><h2>Featured Dishes</h2><p>Handpicked favourites, fresh off the grill.</p></div>
+        <div class="th-head-actions">
+          <a href="#/menu" class="th-link">View all</a>
+          <button class="th-arrow" data-slide="-1" aria-label="Previous">‹</button>
+          <button class="th-arrow" data-slide="1" aria-label="Next">›</button>
+        </div>
+      </div>
+      <div class="th-slider" id="featured">
+        ${items.map((it) => `
+        <article class="th-card">
+          <div class="th-card-media">
+            <img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy"${it.imagePosition ? ` style="object-position:${esc(it.imagePosition)}"` : ""}>
+            <button class="th-fav ${favs().includes(it.id) ? "on" : ""}" data-fav="${it.id}" aria-label="Save ${esc(it.name)}">${heart(favs().includes(it.id))}</button>
+            ${it.tag ? `<span class="th-badge">${esc(it.tag)}</span>` : ""}
+          </div>
+          <div class="th-card-body">
+            <h3>${esc(it.name)}</h3>
+            <p>${esc(it.sub)}</p>
+            <div class="th-card-foot">
+              <b>${money(it.price)}</b>
+              <button class="th-add" data-quick="${it.kind}:${it.id}">Add +</button>
+            </div>
+          </div>
+        </article>`).join("")}
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="th-banner">
+        ${banner.image ? `<img class="th-banner-bg" src="${esc(banner.image)}" alt="">` : ""}
+        <div class="th-banner-copy">
+          <div class="th-eyebrow">Our bestseller</div>
+          <h2>${esc(best.name)} <span>${money(best.price)}</span></h2>
+          <p>${esc(best.desc)}</p>
+          <div class="hero-cta" style="margin-top:18px">
+            <button class="btn btn-primary" data-quick="main:${best.id}">Add to bag →</button>
+            <a class="btn th-btn-outline" href="#/menu?q=${encodeURIComponent(best.name)}">Customise</a>
+          </div>
+        </div>
+        <div class="th-script th-script-banner">Good Bole<br>Better Days</div>
+      </div>
+    </section>
+
+    <section class="wrap th-section th-why">
+      <div>
+        <h2>Why Choose Bole Friday?</h2>
+        <p class="muted">More than food. A taste of home.</p>
+        <div class="th-why-grid">
+          <div><span class="th-why-ic" style="background:#fde3d4">🔥</span><b>Charcoal Roasted</b><small>The proper Portharcourt way</small></div>
+          <div><span class="th-why-ic" style="background:#fdeccc">🌶️</span><b>Signature Sauce</b><small>Made fresh every batch</small></div>
+          <div><span class="th-why-ic" style="background:#fbe0dc">🛵</span><b>Delivered Hot</b><small>Packed with your name on it</small></div>
+          <div><span class="th-why-ic" style="background:#e3f3e4">🔒</span><b>Secure Payment</b><small>Card, transfer or on delivery</small></div>
+        </div>
+      </div>
+      <div class="th-why-art"><div class="tomato" style="top:6%;left:4%;width:56px;height:56px"></div><div class="th-script">Good Food<br>Good Bole<br>Good Life</div><div class="tomato" style="bottom:4%;right:8%;width:70px;height:70px"></div></div>
+    </section>
+
+    <section class="wrap th-duo">
+      <div class="th-chat">
         <div>
-          <span class="pill">🔥 Portharcourt bole in Abuja</span>
-          <h1>BOLE FRIDAY <span>MENU</span></h1>
-          <p class="lead">A taste of home. Authentic Portharcourt bole, now in Abuja. Roasted plantain, yam and potato with fish or kponmo, smothered in our signature pepper sauce and delivered hot.</p>
-          <div class="hero-cta">
-            <a href="#/menu" class="btn btn-yellow">Order now →</a>
-            <a href="#/signup" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.35)">Create account</a>
-          </div>
-          <div class="hero-stats">
-            <div><b>${money(C.mains[C.mains.length - 1].price)}</b><small>Meals from</small></div>
-            <div><b>3</b><small>Signature combos</small></div>
-            <div><b>100%</b><small>Homemade sauce</small></div>
+          <h3>Prefer To Chat?</h3>
+          <p>Send your order straight to us on WhatsApp, or follow along on Instagram for new drops.</p>
+          <div class="hero-cta" style="margin-top:14px">
+            <a class="btn th-btn-dark" href="https://wa.me/${C.whatsapp}" target="_blank" rel="noopener">WhatsApp us</a>
+            <a class="btn th-btn-outline-dark" href="https://www.instagram.com/bolefriday/" target="_blank" rel="noopener">@bolefriday</a>
           </div>
         </div>
-        ${C.heroImage ? `<div class="hero-tag"><div class="ico">★</div><div><b>${esc(best.name)}</b>Our bestseller · ${money(best.price)}</div></div>` : `
-        <div class="hero-art">
-          <div class="tomato t1"></div>
-          <div class="plate">${dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>
-          <div class="tomato t2"></div>
-          <div class="float-card fc1"><div class="ico">★</div><div><b>${esc(best.name)}</b>Our bestseller</div></div>
-          <div class="float-card fc2"><div class="ico">⏱</div><div><b>Hot &amp; fresh</b>Packed with love</div></div>
-        </div>`}
+        <img src="assets/logo.svg" alt="" class="th-chat-logo">
       </div>
-    </section>
-
-    <section class="block">
-      <div class="wrap center">
-        <div class="eyebrow">• Why Bole Friday •</div>
-        <h2 class="section-title">Your Favourite Bole Spot</h2>
-        <div class="features">
-          <div class="feature"><div class="ico">🔥</div><h3>Charcoal Roasted</h3><p>Plantain, yam and potato roasted the proper Portharcourt way, right here in Abuja.</p></div>
-          <div class="feature"><div class="ico">🌶️</div><h3>Signature Sauce</h3><p>Rich pepper sauce made fresh for every batch.</p></div>
-          <div class="feature"><div class="ico">🛵</div><h3>Delivered Hot</h3><p>Sealed, labelled with your name and on its way to you.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" style="padding-top:0">
-      <div class="wrap">
-        <div class="menu-head">
-          <div><div class="eyebrow">Explore our menu</div><h2 class="section-title">Main Course</h2></div>
-          <a href="#/menu" class="btn btn-ghost">See full menu →</a>
-        </div>
-        <div class="grid">${C.mains.map(mainCard).join("")}</div>
-      </div>
-    </section>
-
-    <section class="block" style="padding-top:0">
-      <div class="wrap center">
-        <div class="eyebrow">How it works</div>
-        <h2 class="section-title">Four Steps To Bole</h2>
-        <div class="steps" style="text-align:left">
-          <div class="step"><h4>Sign up</h4><p>Create your account in seconds.</p></div>
-          <div class="step"><h4>Pick your combo</h4><p>Choose a main, your protein, and extras.</p></div>
-          <div class="step"><h4>Pay securely</h4><p>Card, bank transfer or pay on delivery.</p></div>
-          <div class="step"><h4>Enjoy</h4><p>We roast, pack and deliver to your door.</p></div>
-        </div>
+      <div class="th-steps">
+        <h3>How It Works</h3>
+        <ol>
+          <li><b>Sign up</b><span>Create your account in seconds</span></li>
+          <li><b>Pick your combo</b><span>Main, protein and extras</span></li>
+          <li><b>Pay securely</b><span>Card, transfer or on delivery</span></li>
+          <li><b>Enjoy</b><span>We roast, pack and deliver</span></li>
+        </ol>
       </div>
     </section>`;
+  }
+
+  function bindHome() {
+    $("#heroSearch").onsubmit = (e) => {
+      e.preventDefault();
+      const q = e.target.q.value.trim();
+      location.hash = "#/menu" + (q ? "?q=" + encodeURIComponent(q) : "");
+    };
+    $$("[data-slide]").forEach((b) => {
+      b.onclick = () => { const s = $("#featured"); s.scrollBy({ left: Number(b.dataset.slide) * s.clientWidth * 0.8, behavior: "smooth" }); };
+    });
+    $$("[data-fav]").forEach((b) => {
+      b.onclick = () => {
+        const list = favs();
+        const on = !list.includes(b.dataset.fav);
+        store.set("favs", on ? [...list, b.dataset.fav] : list.filter((x) => x !== b.dataset.fav));
+        b.classList.toggle("on", on);
+        b.innerHTML = heart(on);
+      };
+    });
+    $$("[data-quick]").forEach((b) => {
+      b.onclick = () => {
+        const [kind, id] = b.dataset.quick.split(":");
+        if (kind === "main") {
+          const m = C.mains.find((x) => x.id === id);
+          addToCart({ key: `${m.id}|${m.bases[0]}|${m.proteins[0]}`, id: m.id, name: m.name, price: m.price, type: "main", image: m.image, options: `${m.bases[0]} · ${m.proteins[0]} · Sauce` });
+        } else {
+          const x = C.extras.find((e) => e.id === id);
+          addToCart({ key: `extra|${x.id}`, id: x.id, name: x.name, price: x.price, type: "extra", options: "Extra", image: x.image });
+        }
+      };
+    });
+    const nav = $(".nav");
+    const onScroll = () => nav.classList.toggle("scrolled", scrollY > 40);
+    window.onscroll = onScroll;
+    onScroll();
   }
 
   function mainCard(m, i) {
@@ -202,26 +293,32 @@
     </article>`;
   }
 
-  function viewMenu() {
+  function viewMenu(q = "") {
+    const needle = q.trim().toLowerCase();
+    const hit = (...fields) => !needle || fields.join(" ").toLowerCase().includes(needle);
+    const mains = C.mains.filter((m) => hit(m.name, m.desc, m.bases.join(" "), m.proteins.join(" ")));
+    const extras = C.extras.filter((x) => hit(x.name));
     return `
     <section class="block">
       <div class="wrap">
         <div class="menu-head">
           <div><div class="eyebrow">A taste of home</div><h1 class="section-title" style="font-size:clamp(44px,6vw,72px)">Our Menu</h1></div>
+          ${needle ? `<p class="muted" style="width:100%;order:3;margin:0">Results for “${esc(q)}” · <a href="#/menu" style="color:var(--tomato);font-weight:700">Clear</a></p>` : ""}
           <div class="tabs" role="tablist">
             <button class="tab active" data-tab="all">All</button>
             <button class="tab" data-tab="mains">Main Course</button>
             <button class="tab" data-tab="extras">Extras</button>
           </div>
         </div>
-        <div data-sec="mains">
-          <div class="grid">${C.mains.map(mainCard).join("")}</div>
+        <div data-sec="mains" ${mains.length ? "" : 'style="display:none"'}>
+          <div class="grid">${mains.map(mainCard).join("")}</div>
         </div>
-        <div data-sec="extras" style="margin-top:48px">
+        ${!mains.length && !extras.length ? `<div class="panel empty"><div class="big">NOTHING FOUND</div><p class="muted">Try “fish”, “yam” or “kponmo”.</p><a class="btn btn-primary" href="#/menu">See full menu</a></div>` : ""}
+        <div data-sec="extras" style="margin-top:48px${extras.length ? "" : ";display:none"}">
           <h2 class="section-title" style="font-size:40px">Extras</h2>
           <p class="muted" style="margin-top:0">Make it bigger. Add more protein, sauce or sides.</p>
           <div class="extras-grid">
-            ${C.extras.map((x) => `
+            ${extras.map((x) => `
               <div class="extra">
                 ${x.image ? `<img class="extra-img" src="${esc(x.image)}" alt="${esc(x.name)}" loading="lazy"${x.imagePosition ? ` style="object-position:${esc(x.imagePosition)}"` : ""}>` : ""}
                 <div class="extra-info"><b>${esc(x.name)}</b><span>${money(x.price)}</span></div>
@@ -622,8 +719,8 @@
     if (page === "checkout" && !cart.length) { location.hash = "#/cart"; return; }
 
     const views = {
-      "": [viewHome, bindMenu],
-      menu: [viewMenu, bindMenu],
+      "": [viewHome, bindHome],
+      menu: [() => viewMenu(params.get("q") || ""), bindMenu],
       signup: [() => viewAuth("signup", params.get("next")), () => bindAuth("signup", params.get("next"))],
       login: [() => viewAuth("login", params.get("next")), () => bindAuth("login", params.get("next"))],
       cart: [viewCart, bindCart],
@@ -632,6 +729,9 @@
       orders: [viewOrders, null],
     };
     const [view, bind] = views[page] || views[""];
+    window.onscroll = null;
+    document.body.classList.toggle("is-home", !views[page] || page === "");
+    $(".nav").classList.remove("scrolled");
     app.innerHTML = view();
     bind?.();
     if (hasPngLogo) $$('img[src="assets/logo.svg"]').forEach((i) => (i.src = "assets/logo.png"));
