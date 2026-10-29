@@ -61,8 +61,8 @@ window.BOLE_CONFIG = {
     { id: "kponmo", name: "Kponmo", price: 1800, image: "assets/food/kponmo.jpg" },
     { id: "sauce", name: "Sauce", price: 2000, image: "assets/food/sauce.jpg" },
     { id: "yam", name: "Yam", price: 1300, image: "assets/food/yam.jpg" },
-    { id: "potato", name: "Potato", price: 1300 },
-    { id: "turkey", name: "Turkey", price: 7000 },
+    { id: "potato", name: "Potato", price: 1300, image: "assets/food/potato.jpg" },
+    { id: "turkey", name: "Turkey", price: 7000, image: "assets/food/turkey.jpg" },
     { id: "vegetable", name: "Vegetable", price: 1000, image: "assets/food/vegetable.jpg" },
   ],
 };
