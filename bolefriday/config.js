@@ -51,6 +51,8 @@ window.BOLE_CONFIG = {
       desc: "Roasted yam or potato, fish or kponmo, and sauce.",
       bases: ["Yam", "Potato"],
       proteins: ["Fish", "Kponmo"],
+      image: "assets/food/fimie.jpg",
+      imagePosition: "center 70%",
     },
   ],
 

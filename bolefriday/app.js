@@ -184,7 +184,7 @@
     return `
     <article class="card" data-main="${m.id}">
       <div class="card-media">
-        ${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}" loading="lazy">` : dishArt(i % 3)}
+        ${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}" loading="lazy"${m.imagePosition ? ` style="object-position:${esc(m.imagePosition)}"` : ""}>` : dishArt(i % 3)}
         ${m.tag ? `<span class="tag">${esc(m.tag)}</span>` : ""}
       </div>
       <div class="card-body">
