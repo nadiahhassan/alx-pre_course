@@ -116,7 +116,8 @@
   function viewHome() {
     const best = C.mains[0];
     return `
-    <section class="hero">
+    <section class="hero ${C.heroImage ? "hero-full" : ""}">
+      ${C.heroImage ? `<img class="hero-bg" src="${esc(C.heroImage)}" alt="Roasted bole with signature pepper sauce">` : ""}
       <div class="wrap">
         <div>
           <span class="pill">🔥 Portharcourt bole in Abuja</span>
@@ -132,15 +133,14 @@
             <div><b>100%</b><small>Homemade sauce</small></div>
           </div>
         </div>
+        ${C.heroImage ? `<div class="hero-tag"><div class="ico">★</div><div><b>${esc(best.name)}</b>Our bestseller · ${money(best.price)}</div></div>` : `
         <div class="hero-art">
           <div class="tomato t1"></div>
-          ${C.heroImage
-            ? `<div class="hero-photo"><img src="${esc(C.heroImage)}" alt="Roasted bole with signature pepper sauce"></div>`
-            : `<div class="plate">${dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>`}
+          <div class="plate">${dishArt(1).replace('class="dish-art"', 'class="dish-art" style="width:70%;box-shadow:none"')}</div>
           <div class="tomato t2"></div>
           <div class="float-card fc1"><div class="ico">★</div><div><b>${esc(best.name)}</b>Our bestseller</div></div>
           <div class="float-card fc2"><div class="ico">⏱</div><div><b>Hot &amp; fresh</b>Packed with love</div></div>
-        </div>
+        </div>`}
       </div>
     </section>
 
