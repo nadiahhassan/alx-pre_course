@@ -1,0 +1,6 @@
+Risk ID,Project,Risk,Category,Likelihood (1-5),Impact (1-5),Owner,Mitigation,Status,Review date
+R-01,Fintech licensing support,Licence decision delayed by regulator backlog,Regulatory,4,4,Adaeze Okonkwo,Weekly calls with the regulator,Open,2026-11-28
+R-02,Trade mission: tech investors,Venue and travel costs over budget,Financial,5,3,Daniel Price,Agree a cost cap with the client,Open,2026-11-24
+R-03,Retail market entry: Lagos and Abuja,Product registration queue times rising,Regulatory,3,4,Adaeze Okonkwo,Use a local registration agent,Monitoring,2026-12-05
+R-04,Distributor search: medical devices,No recent contact from distributor longlist,Delivery,4,3,Kwame Mensah,Escalate to client; book visits,Open,2026-11-23
+R-05,Cocoa supply-chain compliance,Smallholder land titles incomplete,Partner,3,4,Kwame Mensah,Work with cooperatives on proof of land use,Open,2026-12-01

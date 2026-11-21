@@ -1,0 +1,51 @@
+# Example only. To use it, copy this file into .github/workflows/ of a PRIVATE repository that
+# holds etk-automation, add the secrets below under Settings > Secrets and variables > Actions,
+# and add config/boards.json. The portfolio (data/) is kept between runs on the "etk-data" branch.
+name: ETK automation
+on:
+  schedule:
+    - cron: "0 * * * *"   # hourly: sync, read emails, warnings, dashboard file
+    - cron: "0 7 * * 1"   # Monday 07:00 UTC: weekly report
+  workflow_dispatch: {}
+concurrency: etk-automation
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: etk-automation } }
+    env:
+      MONDAY_TOKEN: ${{ secrets.MONDAY_TOKEN }}
+      ASANA_TOKEN: ${{ secrets.ASANA_TOKEN }}
+      TRELLO_KEY: ${{ secrets.TRELLO_KEY }}
+      TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+      JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+      JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      SMTP_FROM: ${{ secrets.SMTP_FROM }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { ref: etk-data, path: etk-automation/data }
+        continue-on-error: true   # first run: no data branch yet
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: etk-automation/package-lock.json }
+      - run: npm ci
+      - if: github.event.schedule != '0 7 * * 1'
+        run: npm run etk -- run
+      - if: github.event.schedule == '0 7 * * 1'
+        run: npm run etk -- report --ai --send
+      - uses: actions/upload-artifact@v4
+        with: { name: dashboard-data, path: etk-automation/exports/dashboard-data.json, if-no-files-found: ignore }
+      - name: Save the portfolio to the etk-data branch
+        run: |
+          cd data
+          git init -q 2>/dev/null || true
+          git config user.name "etk-automation"; git config user.email "etk-automation@users.noreply.github.com"
+          git add -A && git commit -qm "Portfolio $(date -u +%FT%TZ)" || exit 0
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" HEAD:etk-data

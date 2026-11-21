@@ -1,0 +1,8 @@
+node_modules/
+data/
+exports/
+reports/
+inbox/
+config/boards.json
+.env
+demo-output/

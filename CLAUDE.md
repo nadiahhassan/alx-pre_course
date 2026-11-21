@@ -13,6 +13,7 @@ Guidance for Claude Code when working in this repository.
 | `gni-impact-scorecard/` | One-page impact scorecard tailored to Google News Initiative programmes. |
 | `impact-studio/` | General impact planner and tracker for any project: a guided five-step setup, then tracking and reporting. |
 | `portfolio-tracker/` | Multi-country projects dashboard concept for ETK Group: world map, people, budget, risk register, update inbox with AI extraction, reports. |
+| `etk-automation/` | The automation behind the ETK dashboard (TypeScript, Node 20+): board adapters (Monday.com, Asana, Trello, Jira, sheets), sync into one portfolio, AI email intake with an approval queue, alerts, weekly report, and the `dashboard-data.json` export the dashboard loads. See its README and PLAYBOOK. |
 
 The owner is Nadia Hassan. She is also the "Global lead" persona (lead@example.org) in the sample data.
 
@@ -64,6 +65,15 @@ Rules for these pages:
   Bump the key, or migrate the stored data, if the stored shape changes.
 - **AI features** use the artifact `sample` capability. Hide the feature when it isn't available.
 - **Label all example figures, quotes and names as illustrative.** Never present them as real results, and never style a page as an official Google product.
+
+## ETK automation (`etk-automation/`)
+
+- **Commands** (run inside `etk-automation/`): `npm run demo` (offline, example boards), `npm run lint`, `npm test`, `npm run etk -- help`.
+- The standard board columns live in `src/standard.ts`. The Excel templates in `templates/` are generated from it with `npm run templates`, so change the code, not the files.
+- `src/rules.ts` must stay identical in behaviour to the dashboard's scoring. If one changes, change the other.
+- The export format (`src/export.ts`, `kind: "etk-portfolio"`) is what the dashboard's "Live data file" loader accepts. Keep the two in step.
+- AI calls use `claude-opus-5-5` with structured output and `fallbacks: "default"`. Nothing the AI reads is saved without approval.
+- Tokens are only ever read from environment variables. `config/boards.json`, `data/`, `inbox/`, `exports/` and `reports/` are gitignored.
 
 ## Status logic (shared idea across the tools)
 

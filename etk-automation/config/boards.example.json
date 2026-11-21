@@ -1,0 +1,16 @@
+{
+  "organisation": "ETK Group",
+  "boards": [
+    { "id": "nigeria", "name": "Nigeria projects", "source": { "tool": "monday", "boardId": "1234567890", "tokenEnv": "MONDAY_TOKEN" } },
+    { "id": "kenya", "name": "Kenya projects", "source": { "tool": "asana", "projectGid": "1200000000000000", "tokenEnv": "ASANA_TOKEN" } },
+    { "id": "ghana", "name": "Ghana projects", "source": { "tool": "trello", "boardId": "AbCdEf12", "keyEnv": "TRELLO_KEY", "tokenEnv": "TRELLO_TOKEN" } },
+    { "id": "south-africa", "name": "South Africa projects", "source": { "tool": "jira", "site": "etk.atlassian.net", "jql": "project = ZA AND issuetype = Project", "emailEnv": "JIRA_EMAIL", "tokenEnv": "JIRA_TOKEN" } },
+    { "id": "rwanda", "name": "Rwanda projects", "source": { "tool": "sheet", "url": "https://docs.google.com/spreadsheets/d/e/PUBLISHED-ID/pub?output=csv" } },
+    { "id": "risks", "name": "Risk register", "kind": "risks", "source": { "tool": "sheet", "path": "boards/risk-register.xlsx", "sheet": "Risks" } }
+  ],
+  "people": [
+    { "name": "Adaeze Okonkwo", "role": "Country Director, Nigeria", "base": "Nigeria", "capacity": 4, "email": "adaeze@example.com" }
+  ],
+  "reports": { "recipients": ["leadership@example.com"], "from": "projects@example.com" },
+  "ai": { "model": "claude-opus-5-5" }
+}

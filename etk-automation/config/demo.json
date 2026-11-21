@@ -1,0 +1,29 @@
+{
+  "organisation": "ETK Group (example data)",
+  "boards": [
+    { "id": "nigeria", "name": "Nigeria projects", "source": { "tool": "sheet", "path": "examples/boards/nigeria.csv" } },
+    {
+      "id": "kenya", "name": "Kenya projects (Monday.com export)", "source": { "tool": "sheet", "path": "examples/boards/kenya-monday-export.csv" },
+      "fields": {
+        "project": "Name", "country": "Location", "client": "Customer", "sector": "Category", "lead": "Owner",
+        "start": "Timeline start", "end": "Timeline end", "budget": "Value", "spent": "Actual spend", "frequency": "Cadence", "note": "Notes", "updated": "Updated",
+        "metric1": "KPI 1", "metric1_unit": "KPI 1 unit", "metric1_baseline": "KPI 1 start", "metric1_target": "KPI 1 goal", "metric1_actual": "KPI 1 now",
+        "metric2": "KPI 2", "metric2_unit": "KPI 2 unit", "metric2_baseline": "KPI 2 start", "metric2_target": "KPI 2 goal", "metric2_actual": "KPI 2 now",
+        "milestone1": "Stage 1", "milestone1_due": "Stage 1 due", "milestone1_done": "Stage 1 done",
+        "milestone2": "Stage 2", "milestone2_due": "Stage 2 due", "milestone2_done": "Stage 2 done"
+      }
+    },
+    { "id": "ghana", "name": "Ghana projects", "source": { "tool": "sheet", "path": "examples/boards/ghana.csv" } },
+    { "id": "risks", "name": "Risk register", "kind": "risks", "source": { "tool": "sheet", "path": "examples/boards/risks.csv" } }
+  ],
+  "people": [
+    { "name": "Adaeze Okonkwo", "role": "Country Director, Nigeria", "base": "Nigeria", "capacity": 4 },
+    { "name": "Tunde Bakare", "role": "Programme Manager", "base": "Nigeria", "capacity": 3 },
+    { "name": "Kwame Mensah", "role": "Country Lead, Ghana", "base": "Ghana", "capacity": 3 },
+    { "name": "Wanjiru Kamau", "role": "Country Lead, East Africa", "base": "Kenya", "capacity": 3 },
+    { "name": "Brian Otieno", "role": "Training Manager", "base": "Kenya", "capacity": 3 },
+    { "name": "Grace Adeyemi", "role": "Head of Business Development", "base": "United Kingdom", "capacity": 4 },
+    { "name": "Daniel Price", "role": "Finance & Compliance Manager", "base": "United Kingdom", "capacity": 6 }
+  ],
+  "reports": { "recipients": [] }
+}

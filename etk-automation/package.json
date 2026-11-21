@@ -1,0 +1,30 @@
+{
+  "name": "etk-automation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pulls every project board into one portfolio, reads email updates with AI, and sends alerts and weekly reports.",
+  "scripts": {
+    "etk": "tsx src/cli.ts",
+    "demo": "tsx src/cli.ts demo",
+    "templates": "tsx src/cli.ts templates",
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.12.0",
+    "exceljs": "^4.4.0",
+    "nodemailer": "^10.6.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/nodemailer": "^8.0.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  }
+}

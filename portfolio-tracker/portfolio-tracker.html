@@ -195,7 +195,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 2
 
 <header class="band">
   <div class="wrap">
-    <div><div class="sub">Concept prepared for ETK Group · illustrative data</div><h1>Projects Dashboard</h1></div>
+    <div><div class="sub" id="bandSub">Concept prepared for ETK Group · illustrative data</div><h1>Projects Dashboard</h1></div>
     <div class="row"><span class="live" aria-live="polite"><i aria-hidden="true"></i><span id="liveText">Live</span></span><button class="btn" id="playBtn">Play live updates</button></div>
   </div>
 </header>
@@ -209,7 +209,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 2
   <button role="tab" data-tab="reports">Reports &amp; Ask</button>
 </div></nav>
 <main class="wrap" id="main"></main>
-<footer><div class="wrap"><span>Concept by Nadia Hassan for ETK Group. All projects, clients, people and figures are illustrative. All amounts in US dollars.</span><button class="btn ghost small" id="resetAll">Reset sample data</button></div></footer>
+<footer><div class="wrap"><span id="footNote">Concept by Nadia Hassan for ETK Group. All projects, clients, people and figures are illustrative. All amounts in US dollars.</span><button class="btn ghost small" id="resetAll">Reset sample data</button></div></footer>
 <div id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -238,6 +238,7 @@ const COUNTRIES = {
 };
 // Countries with partner networks but no active project (lighter shading on the map)
 const REACH = ["818", "834", "800", "686", "894", "504", "072"];
+const reach = () => (S.live ? [] : REACH); // partner networks are only known for the sample
 const STAFF = [
   { id:"s1", name:"Adaeze Okonkwo", role:"Country Director, Nigeria", base:"566", cap:4 },
   { id:"s2", name:"Tunde Bakare", role:"Programme Manager", base:"566", cap:3 },
@@ -251,7 +252,13 @@ const STAFF = [
   { id:"s10", name:"Selam Tesfaye", role:"Consultant", base:"231", cap:2 },
   { id:"s11", name:"Aya Kouassi", role:"Consultant", base:"384", cap:2 },
 ];
-const SECTORS = ["Market entry", "Regulatory compliance", "Trade missions", "Partner search", "Capacity building", "Investment"];
+// Sample people and places, kept so "Reset sample data" can restore them after a live data file is loaded.
+const SAMPLE_STAFF = STAFF.map(s => ({ ...s })), SAMPLE_COUNTRIES = JSON.parse(JSON.stringify(COUNTRIES));
+function applyIdentity() {
+  STAFF.splice(0, STAFF.length, ...(S.staff || SAMPLE_STAFF).map(s => ({ ...s })));
+  for (const k of Object.keys(COUNTRIES)) delete COUNTRIES[k];
+  Object.assign(COUNTRIES, JSON.parse(JSON.stringify(SAMPLE_COUNTRIES)), S.countries || {});
+}
 
 // Compact builders. Days are relative to today, so the sample always looks mid-flight.
 // metric: [id, name, mode, unit, baseline, target, frequency, source, history [[daysAgo, value]]]
@@ -364,9 +371,10 @@ let S;
 function fresh() { return { projects:sampleProjects(), risks:sampleRisks(), feed:sampleFeed(), liveIdx:0 }; }
 try { S = JSON.parse(localStorage.getItem(KEY)); } catch {}
 if (!S || !Array.isArray(S.projects)) S = fresh();
+applyIdentity();
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
 const proj = id => S.projects.find(p => p.id === id);
-const staff = id => STAFF.find(s => s.id === id);
+const staff = id => STAFF.find(s => s.id === id) || { id, name:"Unassigned", role:"", base:"", cap:1 };
 const cname = c => COUNTRIES[c]?.name || c;
 
 // ---------- Scoring (same rules as Impact Studio) ----------
@@ -451,14 +459,14 @@ function mapSvg() {
   const vb = mapView === "world" ? `0 0 ${MAP.w} ${MAP.h}` : "405 95 230 300";
   const k = mapView === "world" ? 1 : 0.32; // keep markers a sensible size when zoomed in
   let g = MAP.countries.map(c => {
-    const act = byC[c.id], cls = act ? "active" + (mapCountry === c.id ? " sel" : "") : REACH.includes(c.id) ? "reach" : "";
-    const t = act ? `<b>${esc(cname(c.id))}</b><br>${act.length} active project${act.length > 1 ? "s" : ""}` : REACH.includes(c.id) ? `<b>${esc(c.n)}</b><br>Partner network, no active project` : "";
+    const act = byC[c.id], cls = act ? "active" + (mapCountry === c.id ? " sel" : "") : reach().includes(c.id) ? "reach" : "";
+    const t = act ? `<b>${esc(cname(c.id))}</b><br>${act.length} active project${act.length > 1 ? "s" : ""}` : reach().includes(c.id) ? `<b>${esc(c.n)}</b><br>Partner network, no active project` : "";
     return `<path d="${c.d}" class="${cls}" ${act ? `data-country="${c.id}"` : ""} ${t ? `data-tip="${esc(t)}"` : ""}/>`;
   }).join("");
   for (const [id, list] of Object.entries(byC)) {
     const c = MAP.centroids[id]; if (!c) continue;
     const s = worst(list.map(pStatus)), r = (5 + list.length * 2.2) * k;
-    const t = `<b>${esc(cname(id))}</b> · ${esc(COUNTRIES[id].city)}<br>${list.length} project${list.length > 1 ? "s" : ""}: ${list.filter(p => pStatus(p) === "good").length} on track, ${list.filter(p => pStatus(p) === "warn").length} behind, ${list.filter(p => pStatus(p) === "crit").length} off track<br>Budget ${money(list.reduce((n, p) => n + p.budget, 0))}`;
+    const t = `<b>${esc(cname(id))}</b> · ${esc(COUNTRIES[id]?.city || cname(id))}<br>${list.length} project${list.length > 1 ? "s" : ""}: ${list.filter(p => pStatus(p) === "good").length} on track, ${list.filter(p => pStatus(p) === "warn").length} behind, ${list.filter(p => pStatus(p) === "crit").length} off track<br>Budget ${money(list.reduce((n, p) => n + p.budget, 0))}`;
     g += id === "826" ? `<rect class="hq m" x="${c[0] - 5 * k}" y="${c[1] - 5 * k}" width="${10 * k}" height="${10 * k}" stroke-width="${2 * k}" data-country="${id}" data-tip="${esc(t)}"/>`
       : `<circle class="m" cx="${c[0]}" cy="${c[1]}" r="${r}" fill="var(--${s === "good" ? "good" : s})" stroke="var(--surface)" stroke-width="${1.5 * k}" data-country="${id}" data-tip="${esc(t)}"/><text x="${c[0]}" y="${c[1] + 3.6 * k}" text-anchor="middle" font-size="${10 * k}" font-weight="800" fill="#fff" pointer-events="none">${list.length}</text>`;
   }
@@ -488,7 +496,7 @@ function viewOverview() {
   return `<div class="stack">
     <section class="grid kpis" aria-label="Headline figures">
       <div class="kpi" id="k-n"><div class="eyebrow">Active projects</div><div class="v num">${t.n}</div><div class="n">${t.st.good} on track · ${t.st.warn} behind · ${t.st.crit} off track</div></div>
-      <div class="kpi"><div class="eyebrow">Countries</div><div class="v num">${t.countries}</div><div class="n">plus ${REACH.length} with partner networks</div></div>
+      <div class="kpi"><div class="eyebrow">Countries</div><div class="v num">${t.countries}</div><div class="n">${reach().length ? `plus ${reach().length} with partner networks` : "with active projects"}</div></div>
       <div class="kpi"><div class="eyebrow">Staff on projects</div><div class="v num">${t.staffOn}</div><div class="n">across ${new Set(STAFF.map(s => s.base)).size} offices</div></div>
       <div class="kpi"><div class="eyebrow">Budget managed</div><div class="v num">${money(t.budget)}</div><div class="n">${money(t.spent)} spent (${pct(t.spent / t.budget)})</div></div>
       <div class="kpi"><div class="eyebrow">High risks open</div><div class="v num" style="color:${t.high ? "var(--crit)" : "inherit"}">${t.high}</div><div class="n">${openRisks().length} open risks in total</div></div>
@@ -551,7 +559,7 @@ function viewProjects() {
   return `<div class="stack">
     <section class="panel">
       <div class="panel-head"><div><h2>Projects</h2><p class="small">${list.length} of ${S.projects.length} shown. Click a project for the full picture.</p></div>
-        <div class="filters">${opt("country", Object.entries(COUNTRIES).filter(([id]) => S.projects.some(p => p.country === id)).map(([id, c]) => [id, c.name]), "Country")}${opt("sector", SECTORS.map(s => [s, s]), "Type of work")}${opt("status", ["good", "warn", "crit"].map(s => [s, STATUS[s].label]), "Status")}${opt("staff", STAFF.map(s => [s.id, s.name]), "Person")}
+        <div class="filters">${opt("country", Object.entries(COUNTRIES).filter(([id]) => S.projects.some(p => p.country === id)).map(([id, c]) => [id, c.name]), "Country")}${opt("sector", [...new Set(S.projects.map(p => p.sector))].sort().map(s => [s, s]), "Type of work")}${opt("status", ["good", "warn", "crit"].map(s => [s, STATUS[s].label]), "Status")}${opt("staff", STAFF.map(s => [s.id, s.name]), "Person")}
         ${Object.values(F).some(Boolean) ? `<button class="btn ghost small" data-clear>Clear filters</button>` : ""}</div></div>
       <div class="tscroll"><table>
         <thead><tr><th>Project</th><th>Country</th><th>Lead</th><th>Status</th><th style="min-width:150px">Key result</th><th style="min-width:140px">Budget used vs time</th><th>Last update</th></tr></thead>
@@ -601,7 +609,7 @@ function viewPeople() {
     <div class="people">${STAFF.map(s => { const list = activeFor(s.id), lead = list.filter(p => p.lead === s.id), over = list.length > s.cap;
       const odue = list.reduce((n, p) => n + overdueMs(p).length, 0), risks = openRisks().filter(r => r.owner === s.id);
       return `<button class="person" data-person="${s.id}">
-        <div class="row" style="flex-wrap:nowrap"><span class="avatar" aria-hidden="true">${initials(s.name)}</span><div><div class="strong">${esc(s.name)}</div><div class="note">${esc(s.role)} · ${esc(COUNTRIES[s.base].city)}</div></div></div>
+        <div class="row" style="flex-wrap:nowrap"><span class="avatar" aria-hidden="true">${initials(s.name)}</span><div><div class="strong">${esc(s.name)}</div><div class="note">${esc(s.role)} · ${esc(COUNTRIES[s.base]?.city || cname(s.base) || "Base not set")}</div></div></div>
         <div><div class="row between small"><span>${list.length} active project${list.length === 1 ? "" : "s"} (${lead.length} leading)</span><span class="num ${over ? "err" : ""}">${list.length}/${s.cap}</span></div>
           <div class="cap" style="margin-top:5px"><span class="${over ? "over" : ""}" style="width:${Math.min(100, list.length / s.cap * 100)}%"></span></div></div>
         <div class="row" style="gap:6px">${list.map(p => `<i class="dot d-${pStatus(p)}" data-tip="${esc(p.name)}: ${STATUS[pStatus(p)].label}"></i>`).join("")}${!list.length ? '<span class="note">Available</span>' : ""}</div>
@@ -758,8 +766,8 @@ function applyBatch(changes, src, text) {
 function viewUpdates() {
   return `<div class="stack">
     <div class="row between"><div><h2>Bring in updates</h2><p class="small">Updates arrive however teams already work. Every change is checked by a person before it's saved.</p></div>
-      <div class="seg" role="group" aria-label="Source"><button data-upmode="sheet" aria-pressed="${upMode === "sheet"}">Spreadsheet or project tool</button><button data-upmode="email" aria-pressed="${upMode === "email"}">Email or report</button></div></div>
-    ${upMode === "sheet" ? `<section class="panel stack">
+      <div class="seg" role="group" aria-label="Source"><button data-upmode="sheet" aria-pressed="${upMode === "sheet"}">Spreadsheet or project tool</button><button data-upmode="email" aria-pressed="${upMode === "email"}">Email or report</button><button data-upmode="live" aria-pressed="${upMode === "live"}">Live data file</button></div></div>
+    ${upMode === "live" ? liveSection() : upMode === "sheet" ? `<section class="panel stack">
       <div><h3>Upload a spreadsheet or export</h3><p class="small">Excel or CSV, including exports from Asana, Monday.com or Jira. Columns are matched automatically and you can adjust them.</p></div>
       <div class="row"><label for="upFile" class="btn ghost" style="flex-direction:row;cursor:pointer">Choose file<input id="upFile" type="file" accept=".xlsx,.xls,.csv" hidden></label><button class="btn ghost" data-examplesheet>Use the example spreadsheet</button><button class="btn ghost small" data-copyheader>Copy template header row</button><span class="ok" id="hdrFlash" role="status"></span></div>
       <p class="note">Template columns: Project, Country, Metric, Value, Date, Spent to date, Milestone completed, Note</p>
@@ -780,6 +788,24 @@ function viewUpdates() {
       ${pending.miss?.length ? `<div class="note">${pending.miss.map(esc).join("<br>")}</div>` : ""}
     </section>` : ""}
   </div>`;
+}
+
+function liveSection() {
+  return `<section class="panel stack">
+    <div><h3>Load live data from the automation</h3><p class="small">The ETK automation pulls every country board, approved email updates and the risk register into one file, <b>dashboard-data.json</b>. Load it here to see the real portfolio. It replaces the sample data in this browser only.</p></div>
+    ${S.live ? `<p class="ok">Showing live data from ${esc(S.live.org)}, generated ${esc(new Date(S.live.at).toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" }))}: ${S.projects.length} projects.</p>` : `<p class="small">Showing the illustrative sample data.</p>`}
+    <div class="row"><label for="liveFile" class="btn" style="flex-direction:row;cursor:pointer">Choose dashboard-data.json<input id="liveFile" type="file" accept=".json,application/json" hidden></label>${S.live ? `<button class="btn ghost" data-backsample>Go back to the sample data</button>` : ""}</div>
+    <p class="note">Run <b>npm run etk -- export</b> in the automation folder to make a fresh file. On a schedule, the automation can write it to a shared folder after every sync.</p>
+  </section>`;
+}
+function loadLive(d) {
+  const ok = d && d.kind === "etk-portfolio" && Array.isArray(d.projects) && Array.isArray(d.risks) && Array.isArray(d.staff) && d.projects.every(p => Array.isArray(p.metrics) && Array.isArray(p.milestones) && p.start && p.end);
+  if (!ok) throw new Error("That isn't a dashboard file from the automation.");
+  stopLive();
+  S = { projects:d.projects.map(p => ({ ...p, team:p.team || [] })), risks:d.risks, feed:(d.feed || []).map(f => ({ ...f, fresh:false })), liveIdx:LIVE.length, live:{ at:d.generatedAt, org:d.organisation || "the automation" }, staff:d.staff, countries:d.countries || {} };
+  applyIdentity(); save();
+  F = { country:"", sector:"", status:"", staff:"" }; selProject = null; pending = []; sheet = null;
+  return `Loaded ${S.projects.length} projects, ${S.risks.length} risks and ${S.staff.length} people.`;
 }
 
 // ---------- Reports & Ask ----------
@@ -848,6 +874,9 @@ async function aiRun(out, prompt, json) {
 
 // ---------- Render ----------
 function render() {
+  document.getElementById("bandSub").textContent = S.live ? `Live data from ${S.live.org} · updated ${new Date(S.live.at).toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" })}` : "Concept prepared for ETK Group · illustrative data";
+  document.getElementById("playBtn").hidden = !!S.live;
+  document.getElementById("footNote").textContent = S.live ? `Built by Nadia Hassan for ETK Group. Live data from the project boards. All amounts in US dollars.` : "Concept by Nadia Hassan for ETK Group. All projects, clients, people and figures are illustrative. All amounts in US dollars.";
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === tab));
   const rc = openRisks().filter(r => riskRating(r) === "High").length;
   document.querySelector('[data-tab="risks"]').innerHTML = `Risk register${rc ? `<span class="count">${rc}</span>` : ""}`;
@@ -872,6 +901,7 @@ main.addEventListener("click", async e => {
   const ce = t.closest("[data-cell]"); if (ce) { const [l, i] = ce.dataset.cell.split(",").map(Number); riskCell = riskCell && riskCell[0] === l && riskCell[1] === i ? null : [l, i]; return render(); }
   if (t.closest("[data-cellclear]")) { riskCell = null; return render(); }
   // updates
+  if (t.closest("[data-backsample]")) { S = fresh(); applyIdentity(); save(); upMsg = "Back to the sample data."; return render(); }
   const um = t.closest("[data-upmode]"); if (um) { upMode = um.dataset.upmode; pending = []; upMsg = ""; return render(); }
   if (t.closest("[data-examplesheet]")) return loadSheet(parseCsv(EXAMPLE_CSV), "example-tracker.csv");
   if (t.closest("[data-copyheader]")) { const f = document.getElementById("hdrFlash"); navigator.clipboard.writeText("Project\tCountry\tMetric\tValue\tDate\tSpent to date\tMilestone completed\tNote").then(() => { f.textContent = "Copied. Paste it into row 1 of a sheet."; }).catch(() => { f.textContent = "Couldn't copy. Use the column list below."; }); return; }
@@ -912,6 +942,11 @@ main.addEventListener("change", e => {
   if (t.dataset.map) { mapping[t.dataset.map] = t.value === "" ? null : +t.value; return; }
   if (t.id === "repScope") { repScope = t.value; return render(); }
   if (t.id === "repAud") { repAud = t.value; return render(); }
+  if (t.id === "liveFile" && t.files[0]) {
+    const rd = new FileReader();
+    rd.onload = () => { try { upMsg = loadLive(JSON.parse(String(rd.result))); } catch (err) { upMsg = "!" + (err instanceof SyntaxError ? "That file isn't valid JSON." : err.message); } render(); };
+    rd.readAsText(t.files[0]); return;
+  }
   if (t.id === "upFile" && t.files[0]) {
     const f = t.files[0], rd = new FileReader();
     if (/\.csv$/i.test(f.name)) { rd.onload = () => loadSheet(parseCsv(String(rd.result)), f.name); rd.readAsText(f); }
@@ -958,7 +993,7 @@ document.getElementById("playBtn").addEventListener("click", e => {
 let resetArmed = false;
 document.getElementById("resetAll").addEventListener("click", e => {
   if (!resetArmed) { resetArmed = true; e.target.textContent = "Click again to reset"; setTimeout(() => { resetArmed = false; e.target.textContent = "Reset sample data"; }, 4000); return; }
-  resetArmed = false; e.target.textContent = "Reset sample data"; stopLive(); S = fresh(); save(); pending = []; sheet = null; upMsg = ""; selProject = null; F = { country:"", sector:"", status:"", staff:"" }; go("overview");
+  resetArmed = false; e.target.textContent = "Reset sample data"; stopLive(); S = fresh(); applyIdentity(); save(); pending = []; sheet = null; upMsg = ""; selProject = null; F = { country:"", sector:"", status:"", staff:"" }; go("overview");
 });
 render(); tick();
 </script>
