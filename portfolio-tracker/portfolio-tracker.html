@@ -15,22 +15,10 @@
   --on-brand:#FFFFFF;     /* text on the red */
 }
 :root{
-  --bg:#F2F5F8; --surface:#FFFFFF; --surface-2:#EAEFF4; --ink:#132231; --ink-2:#475867; --muted:#6C7C8A; --line:#D8E0E8;
+  color-scheme:light; --bg:#FFFFFF; --surface:#FFFFFF; --surface-2:#F1EEEB; --ink:#132231; --ink-2:#475867; --muted:#6C7C8A; --line:#D8E0E8;
   --land:#E6E1DC; --land-reach:#E7C9C6; --land-active:#C98C88; --sea:transparent; --plan:#8C99A6;
   --good:#1B7F4C; --good-soft:#E1F2E8; --warn:#9A6400; --warn-soft:#FBEFD6; --crit:#B93A32; --crit-soft:#F9E3E1; --none:#6C7C8A; --none-soft:#EAEFF4;
   --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  color-scheme:dark; --bg:#0C141C; --surface:#141F2A; --surface-2:#1C2935; --ink:#E4EBF2; --ink-2:#A9B6C2; --muted:#8393A1; --line:#283746;
-  --brand-ink:#F2918F; --brand-2:#D9B89A; --brand-soft:#3A1E1D;
-  --land:#2B3036; --land-reach:#4A3332; --land-active:#8E4B47; --plan:#7D8B98;
-  --good:#52C28B; --good-soft:#15352A; --warn:#E1A83E; --warn-soft:#3A2E14; --crit:#EF7A6F; --crit-soft:#3E1F1D; --none:#8393A1; --none-soft:#1C2935;
-}}
-:root[data-theme="dark"]{
-  color-scheme:dark; --bg:#0C141C; --surface:#141F2A; --surface-2:#1C2935; --ink:#E4EBF2; --ink-2:#A9B6C2; --muted:#8393A1; --line:#283746;
-  --brand-ink:#F2918F; --brand-2:#D9B89A; --brand-soft:#3A1E1D;
-  --land:#2B3036; --land-reach:#4A3332; --land-active:#8E4B47; --plan:#7D8B98;
-  --good:#52C28B; --good-soft:#15352A; --warn:#E1A83E; --warn-soft:#3A2E14; --crit:#EF7A6F; --crit-soft:#3E1F1D; --none:#8393A1; --none-soft:#1C2935;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -73,8 +61,6 @@ main{padding-block:20px 40px}
 .btn.ghost{background:transparent;color:var(--brand-ink);border-color:var(--line)}
 .btn.small{padding:4px 10px;font-size:12.5px}
 .btn:disabled{opacity:.5;cursor:default}
-:root[data-theme="dark"] .btn:not(.ghost){background:var(--brand-2);border-color:var(--brand-2);color:#0C141C}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn:not(.ghost){background:var(--brand-2);border-color:var(--brand-2);color:#0C141C}}
 .band .btn{background:var(--on-brand)!important;color:var(--brand)!important;border-color:var(--on-brand)!important}
 .band .btn.playing{background:transparent!important;color:var(--on-brand)!important}
 .link{border:0;background:none;color:var(--brand-ink);cursor:pointer;padding:0;font-weight:700;font-size:13px}

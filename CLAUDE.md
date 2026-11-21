@@ -54,7 +54,7 @@ Rules for these pages:
   - Its sample data sits in the page as `const ORIGINAL = {...}`. To refresh it, replace that line with the contents of `sample-data.json`.
 - **No build step and no external requests.** Fonts come only from Google Fonts. Scripts load only from cdnjs.cloudflare.com, pinned to an exact version (for example SheetJS `xlsx` 0.18.5).
 - **No `alert`, `confirm` or `prompt`.** They don't work in artifacts. For destructive actions, use the in-page "click again to confirm" pattern instead.
-- **Light and dark themes:** colours are CSS tokens on `:root`, redefined for dark mode. Keep both themes working.
+- **Light and dark themes:** colours are CSS tokens on `:root`, redefined for dark mode. Keep both themes working. Exception: the ETK dashboard (`portfolio-tracker/`) is light-only with a white background, at the owner's request.
 - **Saved state** goes in `localStorage`, wrapped in try/catch. The keys are:
   - `impact-tracker-demo-v4` (Impact Tracker demo)
   - `gni-scorecard-v1` (GNI scorecard)
