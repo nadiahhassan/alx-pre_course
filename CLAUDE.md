@@ -12,6 +12,7 @@ Guidance for Claude Code when working in this repository.
 | `impact-tracker/sample-data/` | Generators for the shared sample dataset and the Excel template. |
 | `gni-impact-scorecard/` | One-page impact scorecard tailored to Google News Initiative programmes. |
 | `impact-studio/` | General impact planner and tracker for any project: a guided five-step setup, then tracking and reporting. |
+| `portfolio-tracker/` | Multi-country projects dashboard concept for ETK Group: world map, people, budget, risk register, update inbox with AI extraction, reports. |
 
 The owner is Nadia Hassan. She is also the "Global lead" persona (lead@example.org) in the sample data.
 
@@ -44,6 +45,7 @@ These pages are all self-contained HTML files published as claude.ai artifacts:
 - `impact-tracker/demo/impact-tracker-demo.html`
 - `gni-impact-scorecard/gni-impact-scorecard.html`
 - `impact-studio/impact-studio.html`
+- `portfolio-tracker/portfolio-tracker.html` (brand colours sit in one block at the top of its CSS; the world map is pre-projected Natural Earth 110m paths embedded as `const MAP`)
 
 Rules for these pages:
 
@@ -57,6 +59,7 @@ Rules for these pages:
   - `impact-tracker-demo-v4` (Impact Tracker demo)
   - `gni-scorecard-v1` (GNI scorecard)
   - `impact-studio-v1` (Impact Studio)
+  - `portfolio-tracker-v1` (ETK projects dashboard)
 
   Bump the key, or migrate the stored data, if the stored shape changes.
 - **AI features** use the artifact `sample` capability. Hide the feature when it isn't available.
