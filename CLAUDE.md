@@ -14,6 +14,7 @@ Guidance for Claude Code when working in this repository.
 | `impact-studio/` | General impact planner and tracker for any project: a guided five-step setup, then tracking and reporting. |
 | `portfolio-tracker/` | Multi-country projects dashboard concept for ETK Group: world map, people, budget, risk register, update inbox with AI extraction, reports. |
 | `etk-automation/` | The automation behind the ETK dashboard (TypeScript, Node 20+): board adapters (Monday.com, Asana, Trello, Jira, sheets), sync into one portfolio, AI email intake with an approval queue, alerts, weekly report, and the `dashboard-data.json` export the dashboard loads. See its README and PLAYBOOK. |
+| `product-blueprint/` | ETK Projects product blueprint: stakeholders, wireframe list, worker / line manager / external journeys as low-fidelity wireframes, data protection, and the comparison with Power BI. A standalone page with one tab per section. |
 
 The owner is Nadia Hassan. She is also the "Global lead" persona (lead@example.org) in the sample data.
 

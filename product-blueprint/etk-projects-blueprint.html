@@ -1,0 +1,789 @@
+<title>ETK Projects Blueprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a blueprint binder. Sticky tab strip, one "place" per tab, wireframes in device frames with numbered callouts. */
+:root{
+  --paper:#F3F6F8; --sheet:#FFFFFF; --ink:#16232F; --ink-2:#4A5866; --muted:#6E7C89; --line:#D3DBE2;
+  --wire:#E6EBEF; --wire-2:#CBD4DC; --wire-ink:#7A8794; --accent:#C82227; --accent-soft:#FBE9E8; --brown:#392412;
+  --good:#1B7F4C; --warn:#9A6400; --crit:#B93A32;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E151B; --sheet:#151F28; --ink:#E3EAF0; --ink-2:#A5B3BF; --muted:#8293A1; --line:#2A3945;
+  --wire:#1E2A34; --wire-2:#34434F; --wire-ink:#8A99A6; --accent:#EF5A57; --accent-soft:#3A1D1C; --brown:#D8B796;
+  --good:#52C28B; --warn:#E1A83E; --crit:#EF7A6F; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0E151B; --sheet:#151F28; --ink:#E3EAF0; --ink-2:#A5B3BF; --muted:#8293A1; --line:#2A3945;
+  --wire:#1E2A34; --wire-2:#34434F; --wire-ink:#8A99A6; --accent:#EF5A57; --accent-soft:#3A1D1C; --brown:#D8B796;
+  --good:#52C28B; --warn:#E1A83E; --crit:#EF7A6F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:30px;line-height:1.15;font-weight:700}
+h2{font-size:22px;font-weight:700}
+h3{font-size:17px;font-weight:600}
+h4{font-size:14px;font-weight:600}
+p{margin:0}
+.lede{color:var(--ink-2);max-width:72ch;font-size:15.5px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header and tabs */
+header{padding-block:28px 18px}
+header .meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:13px;color:var(--ink-2)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto}
+nav.tabs a{flex:none;display:flex;gap:7px;align-items:baseline;padding:12px 12px 10px;color:var(--ink-2);text-decoration:none;font-weight:500;font-size:14px;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink)}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+main{padding-block:28px 56px}
+section.place{display:flex;flex-direction:column;gap:28px}
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:20px}
+.sheet-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:14px}
+
+/* tables */
+.tscroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:bottom}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:600;white-space:nowrap}
+.yes{color:var(--good);font-weight:700}.no{color:var(--crit);font-weight:700}.part{color:var(--warn);font-weight:700}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;padding:1px 7px;border-radius:4px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.tag.p1{border-color:var(--accent);color:var(--accent)}
+.tag.p2{border-color:var(--warn);color:var(--warn)}
+.cell-c{text-align:center}
+
+/* stakeholder groups */
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.groups{grid-template-columns:minmax(0,1fr)}}
+.group h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.person{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.person p{font-size:13.5px;color:var(--ink-2)}
+.person b{color:var(--ink);font-weight:600}
+.grid4{display:grid;grid-template-columns:28px repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(150px,auto)) 28px;gap:6px;max-width:760px}
+.grid4 .q{border:1px dashed var(--wire-2);border-radius:8px;padding:12px;background:var(--wire)}
+.grid4 .q b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.grid4 .q span{display:inline-block;font-size:13px;background:var(--sheet);border:1px solid var(--line);border-radius:5px;padding:2px 8px;margin:0 4px 6px 0}
+.grid4 .q.hot{border-color:var(--accent);background:var(--accent-soft)}
+.axis{font-family:var(--mono);font-size:11px;color:var(--muted);display:grid;place-items:center}
+.axis.v{writing-mode:vertical-rl;transform:rotate(180deg);grid-row:1/3}
+
+/* wireframes */
+.journey{display:flex;flex-direction:column;gap:28px}
+.screen{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:24px;align-items:start}
+.screen.phone-first{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+@media (max-width:900px){.screen,.screen.phone-first{grid-template-columns:minmax(0,1fr)}}
+.step{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.04em}
+.notes{display:flex;flex-direction:column;gap:10px;font-size:14px}
+.notes h3{margin-bottom:2px}
+.notes ol{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.notes li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;color:var(--ink-2)}
+.notes li b{color:var(--ink);font-weight:600}
+.co{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font:600 11px/1 var(--mono);flex:none}
+.device{background:var(--sheet);border:1.5px solid var(--wire-2);border-radius:10px;overflow:hidden;font-size:12.5px;color:var(--ink-2)}
+.device .chrome{display:flex;gap:5px;align-items:center;padding:7px 10px;border-bottom:1.5px solid var(--wire-2);background:var(--wire)}
+.device .chrome i{width:8px;height:8px;border-radius:50%;background:var(--wire-2)}
+.device .chrome span{margin-left:8px;font-family:var(--mono);font-size:10.5px;color:var(--wire-ink)}
+.phone{max-width:300px;width:100%;border-radius:26px;border-width:2px;margin-inline:auto}
+.phone .chrome{justify-content:center;padding:9px}
+.phone .chrome i{width:56px;height:6px;border-radius:3px}
+.ui{padding:12px;display:flex;flex-direction:column;gap:10px}
+.ui-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-bottom:1.5px solid var(--wire-2)}
+.logo{width:56px;height:14px;border-radius:3px;background:var(--wire-2)}
+.av{width:22px;height:22px;border-radius:50%;background:var(--wire-2);flex:none}
+.wt{font-weight:600;color:var(--ink);font-size:13.5px}
+.ws{font-size:11.5px;color:var(--wire-ink)}
+.box{border:1.5px dashed var(--wire-2);border-radius:7px;padding:9px;background:var(--wire);display:flex;flex-direction:column;gap:6px}
+.box.solid{border-style:solid;background:var(--sheet)}
+.box.alert{border-color:var(--accent);background:var(--accent-soft)}
+.line{height:7px;border-radius:4px;background:var(--wire-2)}
+.line.w40{width:40%}.line.w60{width:60%}.line.w80{width:80%}
+.field{display:flex;flex-direction:column;gap:3px}
+.field label{font-size:11px;color:var(--wire-ink);font-weight:500}
+.input{height:26px;border:1.5px solid var(--wire-2);border-radius:5px;background:var(--sheet);display:flex;align-items:center;padding:0 7px;font-size:11.5px;color:var(--ink-2);gap:6px}
+.input.pre{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:28px;padding:0 12px;border-radius:6px;border:1.5px solid var(--wire-2);font-size:12px;font-weight:600;color:var(--ink);background:var(--sheet);white-space:nowrap}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.full{width:100%}
+.chip{display:inline-block;font-size:10.5px;font-weight:600;border-radius:999px;padding:1px 8px;border:1.5px solid var(--wire-2);color:var(--ink-2);white-space:nowrap}
+.chip.g{border-color:var(--good);color:var(--good)}.chip.a{border-color:var(--warn);color:var(--warn)}.chip.r{border-color:var(--crit);color:var(--crit)}
+.bar{height:8px;border-radius:4px;background:var(--wire);border:1px solid var(--wire-2);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--ink-2)}
+.bar b{position:absolute;top:-1px;bottom:-1px;width:2px;background:var(--accent)}
+.cols{display:grid;gap:8px}
+.c2{grid-template-columns:repeat(2,minmax(0,1fr))}.c3{grid-template-columns:repeat(3,minmax(0,1fr))}.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.side{display:grid;grid-template-columns:110px minmax(0,1fr)}
+.side nav{border-right:1.5px solid var(--wire-2);padding:10px;display:flex;flex-direction:column;gap:7px;background:var(--wire)}
+.side nav span{font-size:11.5px;padding:3px 6px;border-radius:4px}
+.side nav span.on{background:var(--sheet);color:var(--ink);font-weight:600;border:1px solid var(--wire-2)}
+.kv{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.wtab{display:grid;gap:0;border:1.5px solid var(--wire-2);border-radius:6px;overflow:hidden;font-size:11px}
+.wtab div{display:grid;gap:6px;padding:5px 7px;border-top:1px solid var(--wire-2);align-items:center}
+.wtab div:first-child{border-top:0;background:var(--wire);font-weight:600;color:var(--wire-ink);font-family:var(--mono);font-size:10px;letter-spacing:.04em}
+.stepper{display:flex;gap:4px}
+.stepper span{flex:1;height:5px;border-radius:3px;background:var(--wire-2)}
+.stepper span.on{background:var(--accent)}
+.tl{display:flex;flex-direction:column;gap:8px;border-left:2px solid var(--wire-2);padding-left:10px;margin-left:4px}
+.tl div{position:relative}
+.tl div::before{content:"";position:absolute;left:-15px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--wire-2)}
+.tl div.done::before{background:var(--good)}
+.tl div.now::before{background:var(--accent)}
+.heat{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.heat span{aspect-ratio:1.6;border-radius:3px;background:var(--wire);border:1px solid var(--wire-2);display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--ink)}
+.heat span.m{background:color-mix(in srgb,var(--warn) 22%,var(--sheet))}
+.heat span.h{background:color-mix(in srgb,var(--crit) 25%,var(--sheet))}
+.strike{text-decoration:line-through;color:var(--wire-ink)}
+.mark{background:color-mix(in srgb,var(--warn) 25%,transparent);border-radius:3px;padding:0 3px;color:var(--ink)}
+
+/* checklists and misc */
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ticks li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px;font-size:14px;color:var(--ink-2)}
+.ticks li::before{content:"✓";color:var(--good);font-weight:700}
+.ticks li b{color:var(--ink)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.two{grid-template-columns:minmax(0,1fr)}}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 14px;font-size:16px;max-width:75ch}
+pre.mermaid{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:16px;margin:0;overflow-x:auto;text-align:center}
+footer{border-top:1px solid var(--line);padding-block:16px 32px;font-size:12.5px;color:var(--muted)}
+</style>
+
+<header class="wrap">
+  <div class="eyebrow">Product blueprint · prepared for ETK Group</div>
+  <h1 style="margin-top:8px">ETK Projects: who it serves, what they see, and why it beats a dashboard</h1>
+  <div class="meta"><span>Prepared by Nadia Hassan</span><span>Draft for discussion</span><span>Wireframes are low-fidelity. Names and figures are illustrative.</span></div>
+</header>
+
+<nav class="tabs" aria-label="Blueprint sections"><div class="wrap">
+  <a href="#overview"><span>1</span>Overview</a>
+  <a href="#stakeholders"><span>2</span>Stakeholders</a>
+  <a href="#screens"><span>3</span>Wireframe list</a>
+  <a href="#worker"><span>4</span>Project worker</a>
+  <a href="#manager"><span>5</span>Line manager</a>
+  <a href="#external"><span>6</span>External</a>
+  <a href="#privacy"><span>7</span>Data protection</a>
+  <a href="#powerbi"><span>8</span>vs Power BI</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ===================== 1. OVERVIEW ===================== -->
+<section class="place" id="p-overview" data-place="overview">
+  <div class="stack">
+    <h2>What the tool must solve</h2>
+    <p class="lede">ETK runs projects in many countries for clients and funders. Today the information lives in boards, spreadsheets and inboxes. Each of the six problems below gets a feature, a home screen and a named owner.</p>
+  </div>
+  <div class="sheet tscroll">
+    <table>
+      <thead><tr><th>Problem</th><th>What goes wrong today</th><th>How the tool solves it</th><th>Main screens</th><th>Who it's for</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Data reporting</td><td>Reports are rebuilt by hand each month. Figures differ between versions.</td><td>Reports write themselves from approved data, for each audience: leadership, client, funder. A person edits the story, then signs it off.</td><td>Report pack, Funder portal</td><td>Managers, leadership, funders</td></tr>
+        <tr><td class="k">Tracking</td><td>Nobody knows if a project is on track until it's late.</td><td>A one-screen monthly check-in, with last month's figures filled in. Status is scored automatically against where the project should be by today.</td><td>Monthly check-in, Team home</td><td>Project workers, managers</td></tr>
+        <tr><td class="k">Risk</td><td>Risks are raised in conversation and forgotten.</td><td>A risk register with scores, owners and review dates. A heat map, escalation to leadership, and a one-line "anything worrying you?" in every update.</td><td>Risk review, My risks</td><td>Everyone</td></tr>
+        <tr><td class="k">Projects</td><td>No single list of what ETK is delivering, where, and for whom.</td><td>One record per project or grant: client, funder, country, budget lines, milestones, metrics, team and documents.</td><td>New project, Project record</td><td>Workers, managers, finance</td></tr>
+        <tr><td class="k">Who is in charge</td><td>Unclear who owns a figure, a risk or a deadline.</td><td>Every project, metric, milestone and risk has a named owner and an approver. Reminders go to the owner, and escalation goes to the approver.</td><td>Approvals inbox, Team workload</td><td>Managers, leadership</td></tr>
+        <tr><td class="k">Data protection</td><td>Spreadsheets with personal data travel by email. Access is all-or-nothing.</td><td>Access is limited by role and by country. Personal data is kept to a minimum in a separate store. Outsiders only see approved snapshots. Every change is logged, and the tool follows each country's law.</td><td>Privacy centre, Access control</td><td>IT and data protection, everyone</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="stack">
+    <h3>How information moves, from the field to the funder</h3>
+    <pre class="mermaid">
+flowchart LR
+  A["Capture<br/>worker updates the project,<br/>forwards an email, or a board syncs"] --> B["Approve<br/>line manager checks<br/>what changed"]
+  B --> C["Track and flag<br/>status, budget pace,<br/>overdue items, risks"]
+  C --> D["Report<br/>written automatically<br/>for each audience"]
+  D --> E["Share<br/>approved snapshot to<br/>leadership, client or funder"]
+  B -. returned with a comment .-> A
+    </pre>
+    <p class="lede">Nothing reaches a report or an outsider without passing through approval. That single rule is what makes the numbers trustworthy and the data safe.</p>
+  </div>
+</section>
+
+<!-- ===================== 2. STAKEHOLDERS ===================== -->
+<section class="place" id="p-stakeholders" data-place="stakeholders" hidden>
+  <div class="stack">
+    <h2>Stakeholders, mapped by place</h2>
+    <p class="lede">There are three places people sit: inside ETK, outside ETK, and affected by the work without ever signing in. Each person below has a job to do in the tool, and a limit on what they can see.</p>
+  </div>
+  <div class="groups">
+    <div class="sheet group">
+      <h3>Inside ETK <span class="tag">7 roles</span></h3>
+      <div class="person"><h4>Project worker (country staff, consultants)</h4><p><b>Needs:</b> to log progress fast, often on a phone with weak signal. <b>Sees:</b> their own projects. <b>Does:</b> creates projects, sends the monthly check-in, raises risks, uploads evidence. <b>How often:</b> weekly to monthly. <b>Channel:</b> phone and web; can reply by email.</p></div>
+      <div class="person"><h4>Line manager / country lead</h4><p><b>Needs:</b> to know what's slipping before the client does. <b>Sees:</b> their team and their country. <b>Does:</b> approves or returns updates, reassigns work, reviews risks, signs off country reports. <b>How often:</b> daily approvals, monthly review.</p></div>
+      <div class="person"><h4>Global lead and leadership</h4><p><b>Needs:</b> one view of every project and the decisions due. <b>Sees:</b> everything, summarised. <b>Does:</b> reads the weekly report, decides on escalated risks, approves external sharing. <b>How often:</b> weekly.</p></div>
+      <div class="person"><h4>Finance and compliance</h4><p><b>Needs:</b> spend that matches the books, and grant rules met. <b>Sees:</b> budgets and spend across all projects. <b>Does:</b> confirms "spent to date" each month and flags ineligible costs. <b>How often:</b> monthly.</p></div>
+      <div class="person"><h4>Business development</h4><p><b>Needs:</b> proof points and case studies for new work. <b>Sees:</b> approved results and stories. <b>Does:</b> exports approved figures. <b>How often:</b> as needed.</p></div>
+      <div class="person"><h4>Comms and marketing</h4><p><b>Needs:</b> stories and figures that are safe to publish. <b>Sees:</b> approved, anonymised highlights. <b>Does:</b> requests a story; never sees personal data.</p></div>
+      <div class="person"><h4>IT and data protection lead</h4><p><b>Needs:</b> control over who sees what, and evidence of compliance. <b>Sees:</b> access settings and the audit log, not project content. <b>Does:</b> manages users, approves new external access, handles requests from people to see or delete their data.</p></div>
+    </div>
+    <div class="sheet group">
+      <h3>Outside ETK <span class="tag">4 roles</span></h3>
+      <div class="person"><h4>Funders and grant-makers</h4><p><b>Needs:</b> progress against the agreed indicators, and spend by budget line. <b>Sees:</b> only their grants, as approved snapshots. <b>Does:</b> reads and downloads grant reports, asks questions. <b>How often:</b> quarterly, plus on demand.</p></div>
+      <div class="person"><h4>Clients (businesses entering African markets)</h4><p><b>Needs:</b> confidence their market entry is on track. <b>Sees:</b> their engagement's milestones, next steps and documents. <b>Does:</b> raises questions and approves deliverables. <b>How often:</b> monthly.</p></div>
+      <div class="person"><h4>In-country delivery partners</h4><p><b>Needs:</b> an easy way to report their part. <b>Sees:</b> only their own submissions. <b>Does:</b> fills in a short form for their indicators and uploads attendance lists with consent. <b>How often:</b> monthly.</p></div>
+      <div class="person"><h4>Government and trade bodies</h4><p><b>Needs:</b> totals for impact and trade, for policy and promotion. <b>Sees:</b> combined figures only, never individual projects unless agreed. <b>Does:</b> receives a summary pack. <b>How often:</b> twice a year.</p></div>
+    </div>
+    <div class="sheet group">
+      <h3>Affected, never signed in <span class="tag">protected</span></h3>
+      <div class="person"><h4>Beneficiaries (trainees, SMEs, communities)</h4><p><b>Why they matter:</b> their names, phone numbers and photos often sit in attendance lists and evidence. <b>What the tool does:</b> reports count people rather than naming them, records consent, keeps evidence in a locked store with a deletion date, and lets them ask to see or remove their data.</p></div>
+      <div class="person"><h4>Staff as data subjects</h4><p><b>Why they matter:</b> workload and performance can be read from the tool. <b>What the tool does:</b> workload views are for line managers only, and are not used for ratings without a separate HR process.</p></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="sheet">
+      <div class="sheet-head"><h3>Power and interest</h3><span class="tag">who to manage how</span></div>
+      <div class="grid4" role="img" aria-label="Power and interest grid">
+        <span class="axis v">More influence ↑</span>
+        <div class="q"><b>Keep satisfied</b><span>Government and trade bodies</span><span>IT and data protection</span></div>
+        <div class="q hot"><b>Manage closely</b><span>Global lead</span><span>Funders</span><span>Clients</span><span>Line managers</span><span>Finance</span></div>
+        <div class="q"><b>Monitor</b><span>Comms</span><span>Business development</span></div>
+        <div class="q"><b>Keep informed and make it easy</b><span>Project workers</span><span>Delivery partners</span><span>Beneficiaries (protect)</span></div>
+        <span></span><span class="axis" style="grid-column:2/4">More interest in day-to-day detail →</span>
+      </div>
+      <p class="lede" style="margin-top:12px;font-size:14px">Project workers have little power but supply all the data. If updating is slow for them, every view above them is wrong. That is why their journey is designed first.</p>
+    </div>
+    <div class="sheet">
+      <div class="sheet-head"><h3>Who can do what</h3><span class="tag">answers "who is in charge"</span></div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Role</th><th class="cell-c">Create</th><th class="cell-c">Update</th><th class="cell-c">Approve</th><th class="cell-c">View</th><th class="cell-c">Export / share</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Project worker</td><td class="cell-c yes">Own</td><td class="cell-c yes">Own</td><td class="cell-c no">–</td><td class="cell-c">Own</td><td class="cell-c no">–</td></tr>
+          <tr><td class="k">Line manager</td><td class="cell-c yes">Team</td><td class="cell-c yes">Team</td><td class="cell-c yes">Team</td><td class="cell-c">Country</td><td class="cell-c part">Internal</td></tr>
+          <tr><td class="k">Global lead</td><td class="cell-c yes">All</td><td class="cell-c yes">All</td><td class="cell-c yes">Escalations</td><td class="cell-c">All</td><td class="cell-c yes">External</td></tr>
+          <tr><td class="k">Finance</td><td class="cell-c no">–</td><td class="cell-c yes">Spend</td><td class="cell-c yes">Spend</td><td class="cell-c">Budgets</td><td class="cell-c part">Internal</td></tr>
+          <tr><td class="k">Data protection lead</td><td class="cell-c no">–</td><td class="cell-c part">Access</td><td class="cell-c yes">New external access</td><td class="cell-c">Audit log</td><td class="cell-c no">–</td></tr>
+          <tr><td class="k">Funder / client</td><td class="cell-c no">–</td><td class="cell-c no">–</td><td class="cell-c part">Deliverables</td><td class="cell-c">Their snapshot</td><td class="cell-c part">Their report</td></tr>
+          <tr><td class="k">Delivery partner</td><td class="cell-c part">Submissions</td><td class="cell-c part">Own</td><td class="cell-c no">–</td><td class="cell-c">Own</td><td class="cell-c no">–</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. WIREFRAME LIST ===================== -->
+<section class="place" id="p-screens" data-place="screens" hidden>
+  <div class="stack">
+    <h2>Which wireframes matter</h2>
+    <p class="lede">Nineteen screens cover the whole product. Priority 1 is the first release: without it, nobody can put data in or trust what comes out. Priority 2 and 3 follow once the first release is in use.</p>
+  </div>
+  <div class="sheet tscroll">
+    <table>
+      <thead><tr><th>Screen</th><th>Used by</th><th>Its one job</th><th>Problem solved</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Sign in</td><td>Everyone</td><td>Get in safely with a work account, on a phone or laptop.</td><td>Data protection</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">My work (home)</td><td>Project worker</td><td>Show what's due from me this week, and one button to do it.</td><td>Tracking, who is in charge</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">New project</td><td>Project worker</td><td>Set up a project and its grant in four short steps.</td><td>Projects</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Grant budget</td><td>Worker, manager, finance</td><td>Show each budget line: spent, committed and left, against time.</td><td>Reporting, tracking</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Monthly check-in</td><td>Project worker</td><td>Update figures, spend, milestones and risks on one screen.</td><td>Tracking, risk</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Submitted / returned</td><td>Project worker</td><td>Show where an update is, and exactly what to fix.</td><td>Who is in charge</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Team home</td><td>Line manager</td><td>Show approvals waiting, what's slipping, and who's overloaded.</td><td>Tracking, who is in charge</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Approvals inbox</td><td>Line manager</td><td>Check what changed, with evidence, then approve or return it.</td><td>Reporting, who is in charge</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Project record</td><td>Everyone inside</td><td>The single page for a project: owners, results, budget, risks, history.</td><td>Projects</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Risk register and review</td><td>Managers, risk owners</td><td>Score, own, review and escalate risks.</td><td>Risk</td><td><span class="tag p1">P1</span></td></tr>
+        <tr><td class="k">Report pack</td><td>Managers, leadership</td><td>Edit and sign off the report that writes itself.</td><td>Reporting</td><td><span class="tag p2">P2</span></td></tr>
+        <tr><td class="k">Team workload</td><td>Line manager</td><td>Balance people across projects.</td><td>Who is in charge</td><td><span class="tag p2">P2</span></td></tr>
+        <tr><td class="k">Funder portal</td><td>Funders</td><td>Approved progress and spend for their grants only.</td><td>Reporting, data protection</td><td><span class="tag p2">P2</span></td></tr>
+        <tr><td class="k">Client view</td><td>Clients</td><td>Milestones, next steps and documents for their engagement.</td><td>Reporting</td><td><span class="tag p2">P2</span></td></tr>
+        <tr><td class="k">Access control</td><td>Leadership, data protection lead</td><td>Who outside ETK can see what, and until when.</td><td>Data protection</td><td><span class="tag p2">P2</span></td></tr>
+        <tr><td class="k">Audit log</td><td>Data protection lead, finance</td><td>Every change: who, what, when, from where.</td><td>Data protection, who is in charge</td><td><span class="tag p2">P2</span></td></tr>
+        <tr><td class="k">Partner submission form</td><td>Delivery partners</td><td>Report their own indicators, with consent for any personal data.</td><td>Tracking, data protection</td><td><span class="tag">P3</span></td></tr>
+        <tr><td class="k">Privacy centre</td><td>Data protection lead</td><td>Consent records, retention dates, and requests to see or delete data.</td><td>Data protection</td><td><span class="tag">P3</span></td></tr>
+        <tr><td class="k">Admin and templates</td><td>System owner</td><td>Countries, budget-line types, metric templates, users.</td><td>All</td><td><span class="tag">P3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== 4. WORKER ===================== -->
+<section class="place" id="p-worker" data-place="worker" hidden>
+  <div class="stack">
+    <h2>Project worker: from sign-in to the monthly update</h2>
+    <p class="lede">Meet Kwame, a project officer in Accra. He works mostly on his phone, between site visits, sometimes on a weak connection. The test for every screen: can Kwame finish it in under five minutes without training?</p>
+  </div>
+  <div class="journey">
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui" style="padding:20px 16px;gap:14px">
+          <div class="logo" style="width:80px;height:18px"></div>
+          <div class="wt" style="font-size:16px">Sign in to ETK Projects</div>
+          <div class="btn full">Continue with Microsoft <b class="co">1</b></div>
+          <div class="btn full">Continue with Google</div>
+          <div class="ws" style="text-align:center">Partner or client? Use the link in your invitation</div>
+          <div class="box solid"><div class="kv"><span>Enter the 6-digit code from your authenticator app</span><b class="co">2</b></div><div class="input">• • • • • •</div></div>
+          <div class="kv"><span class="ws">☐ Low-data mode <b class="co">3</b></span><span class="ws">English ▾ <b class="co">4</b></span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 1 · SIGN IN</span><h3>Sign in once, with the account he already has</h3><ol>
+        <li><b class="co">1</b><span><b>Single sign-on.</b> No new password to forget. When someone leaves ETK, IT switches off one account and their access ends everywhere.</span></li>
+        <li><b class="co">2</b><span><b>Two-step verification</b> on every account, because the tool holds client and grant data.</span></li>
+        <li><b class="co">3</b><span><b>Low-data mode</b> hides charts and images for slow connections. The tool also remembers the device for 30 days.</span></li>
+        <li><b class="co">4</b><span><b>English or French</b> from the first screen, for teams in Côte d'Ivoire and other French-speaking markets.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui-top"><div class="logo"></div><div class="av"></div></div>
+        <div class="ui">
+          <div class="wt" style="font-size:15px">Good morning, Kwame</div>
+          <div class="box alert"><div class="kv"><span class="wt">2 updates due this week</span><b class="co">1</b></div><span class="ws">Distributor search · due Fri<br>Cocoa compliance · due Sun</span><div class="btn primary full">Update now</div></div>
+          <div class="kv"><span class="wt">My projects</span><span class="ws">+ New <b class="co">2</b></span></div>
+          <div class="box solid"><div class="kv"><span>Distributor search</span><span class="chip a">Behind</span></div><div class="bar"><i style="width:47%"></i><b style="left:52%"></b></div><span class="ws">Helix Medical · Ghana</span></div>
+          <div class="box solid"><div class="kv"><span>Cocoa compliance</span><span class="chip g">On track</span></div><div class="bar"><i style="width:75%"></i><b style="left:67%"></b></div><span class="ws">Bramble · Ghana</span></div>
+          <div class="box"><div class="kv"><span>Returned to you: 1</span><b class="co">3</b></div><span class="ws">"Add the receipt for the venue"</span></div>
+          <div class="cols c4 ws" style="text-align:center;border-top:1.5px solid var(--wire-2);padding-top:8px"><span><b>Home</b></span><span>Projects</span><span>Risks</span><span>Me</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 2 · MY WORK</span><h3>Opens on what he owes, not on a dashboard</h3><ol>
+        <li><b class="co">1</b><span><b>The next action comes first.</b> Updates due, with dates, and one red button. Reminders are sent three days before.</span></li>
+        <li><b class="co">2</b><span><b>Only his projects.</b> The status pill and bar show progress (grey) against where it should be by today (red tick).</span></li>
+        <li><b class="co">3</b><span><b>Anything returned by his manager</b> shows here, with the comment, so nothing gets lost in email.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / new</span></div>
+        <div class="ui-top"><div class="logo"></div><div class="row"><span class="ws">Saved as draft</span><div class="av"></div></div></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">New project</span><span class="ws">Step 2 of 4 · Grant and budget</span></div>
+          <div class="stepper"><span class="on"></span><span class="on"></span><span></span><span></span></div>
+          <div class="cols c3"><div class="field"><label>Funder</label><div class="input pre">Foundation partner ▾ <b class="co">1</b></div></div><div class="field"><label>Grant reference</label><div class="input">e.g. FP-2026-014</div></div><div class="field"><label>Currency</label><div class="input pre">USD ▾</div></div></div>
+          <div class="wtab"><div style="grid-template-columns:2fr 1fr 1.4fr 24px"><span>BUDGET LINE</span><span>AMOUNT</span><span>RULE FROM GRANT</span><span></span></div>
+            <div style="grid-template-columns:2fr 1fr 1.4fr 24px"><span>Staff time</span><span>$24,000</span><span class="ws">max 40% of total</span><span>×</span></div>
+            <div style="grid-template-columns:2fr 1fr 1.4fr 24px"><span>Travel</span><span>$9,000</span><span class="ws">economy only</span><span>×</span></div>
+            <div style="grid-template-columns:2fr 1fr 1.4fr 24px"><span>Events and venues</span><span>$15,000</span><span class="ws">–</span><span>×</span></div>
+            <div style="grid-template-columns:2fr 1fr 1.4fr 24px"><span>Sub-grants to partners</span><span>$12,000</span><span class="ws">signed agreement needed</span><span>×</span></div>
+          </div>
+          <div class="kv"><span class="ws">+ Add budget line · Total <b>$60,000</b> <b class="co">2</b></span><span class="ws">Funder reports due: <b>quarterly</b>, first on 31 Mar <b class="co">3</b></span></div>
+          <div class="box"><span class="ws">Next: what you'll measure (pick from templates) → milestones and team. Your approver is <b>your line manager, Ama Owusu</b>, set automatically. <b class="co">4</b></span></div>
+          <div class="kv"><span class="btn">Back</span><span class="btn primary">Next: what you'll measure</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 3 · NEW PROJECT, 4 SHORT STEPS</span><h3>Set up a project and its grant in one sitting</h3><ol>
+        <li><b class="co">1</b><span><b>Pick, don't type.</b> Funders, clients and countries come from lists, so every project is named the same way and reports join up.</span></li>
+        <li><b class="co">2</b><span><b>Budget lines match the grant agreement.</b> The total checks itself against the award, and each line can carry the funder's rule.</span></li>
+        <li><b class="co">3</b><span><b>Reporting dates</b> are captured once. The tool then reminds the team and prepares each funder report on time.</span></li>
+        <li><b class="co">4</b><span><b>The approver is set automatically</b> from the org chart. Every project starts with a named owner and approver. Steps 3 and 4 reuse metric and milestone templates from similar projects.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / distributor-search / budget</span></div>
+        <div class="ui-top"><div class="logo"></div><div class="av"></div></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Grant budget · Distributor search, Ghana</span><span class="chip a">Spending fast</span></div>
+          <div class="cols c4"><div class="box solid"><span class="ws">Budget</span><span class="wt">$60,000</span></div><div class="box solid"><span class="ws">Spent</span><span class="wt">$27,000</span></div><div class="box solid"><span class="ws">Committed <b class="co">1</b></span><span class="wt">$8,500</span></div><div class="box solid"><span class="ws">Left</span><span class="wt">$24,500</span></div></div>
+          <div class="wtab"><div style="grid-template-columns:1.6fr 2.4fr 1fr"><span>LINE</span><span>SPENT VS TIME <b class="co">2</b></span><span>LEFT</span></div>
+            <div style="grid-template-columns:1.6fr 2.4fr 1fr"><span>Staff time</span><div class="bar"><i style="width:48%"></i><b style="left:50%"></b></div><span>$12,400</span></div>
+            <div style="grid-template-columns:1.6fr 2.4fr 1fr"><span>Travel</span><div class="bar"><i style="width:81%;background:var(--crit)"></i><b style="left:50%"></b></div><span class="mark">$1,700</span></div>
+            <div style="grid-template-columns:1.6fr 2.4fr 1fr"><span>Events</span><div class="bar"><i style="width:30%"></i><b style="left:50%"></b></div><span>$10,500</span></div>
+            <div style="grid-template-columns:1.6fr 2.4fr 1fr"><span>Sub-grants</span><div class="bar"><i style="width:0%"></i><b style="left:50%"></b></div><span>$12,000</span></div>
+          </div>
+          <div class="cols c2"><div class="box"><span class="wt">Next funder report: 31 Mar <b class="co">3</b></span><span class="ws">Draft ready 7 days before. Owner: Kwame</span></div><div class="box"><span class="wt">Grant rules <b class="co">4</b></span><span class="ws">Travel: economy only · Staff max 40%</span></div></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 4 · GRANT BUDGET</span><h3>Every budget line, against time</h3><ol>
+        <li><b class="co">1</b><span><b>Committed money counts.</b> Signed contracts that aren't paid yet are shown, so "left" is the real figure.</span></li>
+        <li><b class="co">2</b><span><b>Each bar shows spend against the share of time gone</b> (red tick). Travel is 81% spent at the halfway point, so it's flagged before the money runs out.</span></li>
+        <li><b class="co">3</b><span><b>The next report date and its owner</b> sit next to the money, so the report is never a surprise.</span></li>
+        <li><b class="co">4</b><span><b>The funder's rules</b> are visible where spending decisions are made. Finance confirms the figures each month against the books.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui-top"><span class="ws">← Distributor search</span><span class="ws">Draft saved ✓ <b class="co">6</b></span></div>
+        <div class="ui">
+          <div class="wt" style="font-size:15px">November update</div>
+          <div class="box solid"><span class="wt">Results <b class="co">1</b></span>
+            <div class="field"><label>Distributors screened · last month 14</label><div class="input pre">26</div></div>
+            <div class="field"><label>Distributors shortlisted · last month 2</label><div class="input pre">4</div></div></div>
+          <div class="box solid"><span class="wt">Spend this month <b class="co">2</b></span><div class="kv"><span>Travel</span><div class="input pre" style="width:90px">$1,200</div></div><span class="ws">📎 Add receipt (photo or PDF)</span></div>
+          <div class="box solid"><span class="wt">Milestones</span><span>☑ Shortlist presented</span><span class="ws">☐ Contracts signed · due 30 Jan</span></div>
+          <div class="box solid"><span class="wt">Anything worrying you? <b class="co">3</b></span><div class="input">e.g. two distributors want exclusivity</div></div>
+          <div class="box"><span class="ws">📎 Evidence · <b>Don't upload lists with names or phone numbers unless you have consent.</b> <b class="co">4</b></span></div>
+          <div class="ws" style="text-align:center">Easier to write it? <u>Paste an email instead</u> <b class="co">5</b></div>
+          <div class="btn primary full">Send to Ama for approval</div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 5 · MONTHLY CHECK-IN</span><h3>One screen, about three minutes</h3><ol>
+        <li><b class="co">1</b><span><b>Last month's figures are shown.</b> He only types what changed. Running totals can't go backwards without a note.</span></li>
+        <li><b class="co">2</b><span><b>Spend by budget line,</b> with a receipt photo straight from the phone. Finance sees it in their monthly check.</span></li>
+        <li><b class="co">3</b><span><b>Raising a risk takes one line.</b> The manager scores it during approval, so the worker doesn't need to know the risk matrix.</span></li>
+        <li><b class="co">4</b><span><b>Data protection at the point of upload.</b> A plain warning, and a consent tick when a list holds personal data.</span></li>
+        <li><b class="co">5</b><span><b>Paste an email instead:</b> AI fills in the form from his usual email update. He checks it before sending.</span></li>
+        <li><b class="co">6</b><span><b>Saves as he goes,</b> even offline, and sends when the signal returns.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui">
+          <div class="wt" style="font-size:15px">November update</div>
+          <div class="tl"><div class="done"><span class="wt">Sent</span> <span class="ws">Mon 09:12</span></div><div class="now"><span class="wt">Returned by Ama</span> <span class="ws">Mon 14:40 <b class="co">1</b></span></div><div><span class="ws">Approved</span></div><div><span class="ws">In the December report</span></div></div>
+          <div class="box alert"><span class="wt">Ama: "Please add the receipt for the Kumasi trip."</span></div>
+          <div class="box solid"><span class="wt">Spend this month</span><div class="kv"><span class="mark">Travel $1,200</span><span class="ws">📎 Receipt needed <b class="co">2</b></span></div></div>
+          <div class="btn primary full">Fix and send again</div>
+        </div></div>
+      <div class="notes"><span class="step">STEPS 6–7 · SUBMITTED, THEN RETURNED</span><h3>He always knows where his update is</h3><ol>
+        <li><b class="co">1</b><span><b>A simple timeline:</b> sent, approved or returned, then in the report. No more "did you get my email?"</span></li>
+        <li><b class="co">2</b><span><b>A returned update shows the exact field to fix,</b> with the manager's comment, so it's corrected in one go.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui">
+          <div class="wt" style="font-size:15px">My risks and actions</div>
+          <div class="box solid"><div class="kv"><span>Distributors want exclusivity</span><span class="chip a">12</span></div><span class="ws">Review by 2 Dec · Owner: you <b class="co">1</b></span></div>
+          <div class="box solid"><div class="kv"><span>Smallholder land titles incomplete</span><span class="chip a">12</span></div><span class="ws">Escalated to Ama on 14 Nov <b class="co">2</b></span></div>
+          <div class="box"><span class="wt">Actions</span><span>☐ Send the shortlist pack to Helix · Fri</span><span>☐ Book the Kumasi visit · next week</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 8 · MY RISKS AND ACTIONS</span><h3>Ownership is personal and visible</h3><ol>
+        <li><b class="co">1</b><span><b>Each risk has an owner and a review date.</b> He gets a reminder before it lapses.</span></li>
+        <li><b class="co">2</b><span><b>Escalation is a button, not an email.</b> He can see it has moved to his manager.</span></li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. MANAGER ===================== -->
+<section class="place" id="p-manager" data-place="manager" hidden>
+  <div class="stack">
+    <h2>Line manager: approve, spot what's slipping, balance the team</h2>
+    <p class="lede">Meet Ama, country lead for Ghana, with four project officers and eleven projects. She works on a laptop. Her test: in ten minutes each morning, does she know what needs her and what's going wrong?</p>
+  </div>
+  <div class="journey">
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / team</span></div>
+        <div class="side"><nav><span class="on">Team</span><span>Approvals · 5</span><span>Projects</span><span>Risks</span><span>Workload</span><span>Reports</span></nav>
+          <div class="ui">
+            <div class="kv"><span class="wt">Ghana team</span><span class="ws">Today</span></div>
+            <div class="cols c4"><div class="box alert"><span class="ws">Approvals waiting <b class="co">1</b></span><span class="wt">5</span></div><div class="box solid"><span class="ws">Updates overdue</span><span class="wt">2</span></div><div class="box solid"><span class="ws">Budget pace</span><span class="wt">2 fast</span></div><div class="box solid"><span class="ws">Rising risks</span><span class="wt">3</span></div></div>
+            <div class="wtab"><div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>PROJECT</span><span>OWNER</span><span>STATUS <b class="co">2</b></span><span>WHY</span></div>
+              <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>Distributor search</span><span>Kwame</span><span class="chip a">Behind</span><span class="ws">2 of 5 shortlisted</span></div>
+              <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>Port logistics study</span><span>Efua</span><span class="chip r">Off track</span><span class="ws">Milestone 21 days late</span></div>
+              <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>Cocoa compliance</span><span>Kwame</span><span class="chip g">On track</span><span class="ws">–</span></div>
+            </div>
+            <div class="box"><span class="ws">Gone quiet: <b>Trade fair prep</b>, no update for 34 days (Kojo). <u>Send reminder</u> <b class="co">3</b></span></div>
+          </div></div></div>
+      <div class="notes"><span class="step">STEP 1 · TEAM HOME</span><h3>What needs her, then what's slipping</h3><ol>
+        <li><b class="co">1</b><span><b>Approvals come first,</b> because nothing reaches a report until she approves it.</span></li>
+        <li><b class="co">2</b><span><b>Status comes with the reason,</b> in words. She doesn't need to open the project to know why it's red.</span></li>
+        <li><b class="co">3</b><span><b>Silence is a signal.</b> Projects with no update for 30 days surface on their own, with a one-click reminder.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / approvals</span></div>
+        <div class="ui-top"><div class="logo"></div><div class="av"></div></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Kwame · Distributor search · November</span><span class="ws">1 of 5</span></div>
+          <div class="wtab"><div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>WHAT CHANGED <b class="co">1</b></span><span>BEFORE</span><span>AFTER</span><span>CHECK <b class="co">2</b></span></div>
+            <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>Distributors screened</span><span>14</span><span>26</span><span class="ws">✓ normal</span></div>
+            <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>Shortlisted</span><span>2</span><span>4</span><span class="ws">✓ normal</span></div>
+            <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>Travel spend</span><span>$5,900</span><span>$7,100</span><span class="mark">over 80% of line</span></div>
+            <div style="grid-template-columns:2fr 1fr 1fr 1.6fr"><span>New risk</span><span>–</span><span>Exclusivity</span><span class="ws">score it: L3 × I4</span></div>
+          </div>
+          <div class="cols c2"><div class="box"><span class="ws">📎 2 receipts · shortlist.pdf <b class="co">3</b></span></div><div class="box"><span class="ws">From Kwame's email of 18 Nov (read by AI)</span></div></div>
+          <div class="field"><label>Comment (needed to return)</label><div class="input">Please add the receipt for the Kumasi trip.</div></div>
+          <div class="kv"><span class="btn">Return to Kwame</span><span class="row"><span class="btn">Approve all clean items (3) <b class="co">4</b></span><span class="btn primary">Approve</span></span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 2 · APPROVALS INBOX</span><h3>Check what changed, not the whole project</h3><ol>
+        <li><b class="co">1</b><span><b>Before and after, side by side.</b> She reviews only the changes, so an approval takes seconds.</span></li>
+        <li><b class="co">2</b><span><b>Automatic checks</b> highlight what deserves a second look: big jumps, totals going backwards, spend nearing a line's limit, missing receipts.</span></li>
+        <li><b class="co">3</b><span><b>The evidence and its source</b> sit next to the figures, including updates the AI read from email.</span></li>
+        <li><b class="co">4</b><span><b>Bulk-approve the clean items</b> and leave the flagged ones open. Every approval is recorded with her name and the time.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / workload</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Team workload</span><span class="ws">Projects each person carries against their capacity <b class="co">1</b></span></div>
+          <div class="wtab"><div style="grid-template-columns:1fr 2.5fr .8fr"><span>PERSON</span><span>PROJECTS</span><span>LOAD</span></div>
+            <div style="grid-template-columns:1fr 2.5fr .8fr"><span>Kwame</span><div class="bar"><i style="width:67%"></i></div><span>2 / 3</span></div>
+            <div style="grid-template-columns:1fr 2.5fr .8fr"><span>Efua</span><div class="bar"><i style="width:100%;background:var(--crit)"></i></div><span class="mark">4 / 3</span></div>
+            <div style="grid-template-columns:1fr 2.5fr .8fr"><span>Kojo</span><div class="bar"><i style="width:33%"></i></div><span>1 / 3</span></div>
+          </div>
+          <div class="box"><span class="ws">Move <b>Port logistics study</b> from Efua to Kojo? Owner, approver and reminders all change together. <b class="co">2</b></span><div class="row"><span class="btn">Reassign</span></div></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 3 · TEAM WORKLOAD</span><h3>Fix the cause, not the symptom</h3><ol>
+        <li><b class="co">1</b><span><b>Overload explains lateness.</b> Efua's off-track project sits on an over-capacity desk.</span></li>
+        <li><b class="co">2</b><span><b>Reassigning moves ownership cleanly:</b> the history stays with the project, and the new owner gets the reminders.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / port-logistics-study</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Port logistics study · Ghana</span><span class="chip r">Off track</span></div>
+          <div class="cols c4 ws"><span>Owner <b>Efua</b> <b class="co">1</b></span><span>Approver <b>Ama</b></span><span>Client <b>Atlas Freight</b></span><span>Funder <b>–</b></span></div>
+          <div class="cols c2"><div class="box solid"><span class="wt">Results</span><div class="line w80"></div><div class="line w60"></div></div><div class="box solid"><span class="wt">Budget</span><div class="bar"><i style="width:58%"></i><b style="left:62%"></b></div></div></div>
+          <div class="box alert"><span class="wt">Milestone "Draft report" is 21 days late</span><div class="row"><span class="btn">Change date with a reason</span><span class="btn primary">Escalate to leadership <b class="co">2</b></span></div></div>
+          <div class="box"><span class="wt">History <b class="co">3</b></span><span class="ws">14 Nov · Ama approved November update · 02 Nov · Efua changed due date (reason: client delay)</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 4 · PROJECT DEEP-DIVE</span><h3>Every item answers "who is in charge?"</h3><ol>
+        <li><b class="co">1</b><span><b>Owner and approver on every project,</b> metric, milestone and risk.</span></li>
+        <li><b class="co">2</b><span><b>Escalation is explicit,</b> and goes to leadership's decision list with the context attached.</span></li>
+        <li><b class="co">3</b><span><b>History can't be edited.</b> Changed dates need a reason, so slipped deadlines can't quietly disappear.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / risks</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Monthly risk review · Ghana</span><span class="ws">6 due for review <b class="co">1</b></span></div>
+          <div class="cols" style="grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)">
+            <div class="heat"><span></span><span></span><span class="m">1</span><span class="h"></span><span class="h">1</span><span></span><span></span><span class="m">2</span><span class="h">1</span><span class="h"></span><span></span><span class="m">1</span><span class="m">2</span><span class="m"></span><span class="h"></span><span></span><span></span><span></span><span class="m"></span><span class="m"></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="wtab"><div style="grid-template-columns:2fr .7fr .8fr"><span>RISK</span><span>SCORE</span><span>TREND</span></div>
+              <div style="grid-template-columns:2fr .7fr .8fr"><span>Port strike</span><span>20</span><span>↑ <b class="co">2</b></span></div>
+              <div style="grid-template-columns:2fr .7fr .8fr"><span>Exclusivity demands</span><span>12</span><span>new</span></div>
+              <div style="grid-template-columns:2fr .7fr .8fr"><span>Land titles</span><span>12</span><span>→</span></div></div>
+          </div>
+          <div class="row"><span class="btn">Keep</span><span class="btn">Close</span><span class="btn primary">Escalate</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 5 · MONTHLY RISK REVIEW</span><h3>A ten-minute ritual, not a spreadsheet</h3><ol>
+        <li><b class="co">1</b><span><b>Only the risks due for review appear,</b> on a likelihood × impact heat map. Scores of 15 or more are high.</span></li>
+        <li><b class="co">2</b><span><b>The trend shows direction.</b> High risks that are rising go straight to leadership.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / reports / ghana-november</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Ghana · November report</span><span class="ws">For: ETK leadership ▾ <b class="co">1</b></span></div>
+          <div class="box solid"><span class="wt">Summary (written for you, edit freely) <b class="co">2</b></span><div class="line"></div><div class="line w80"></div><div class="line w60"></div></div>
+          <div class="cols c3"><div class="box"><span class="ws">By project</span></div><div class="box"><span class="ws">Budget watch</span></div><div class="box"><span class="ws">High risks</span></div></div>
+          <div class="kv"><span class="ws">Uses approved data only, as at 30 Nov <b class="co">3</b></span><span class="row"><span class="btn">Download</span><span class="btn primary">Sign off and send</span></span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 6 · COUNTRY REPORT PACK</span><h3>The report writes itself; she adds judgement</h3><ol>
+        <li><b class="co">1</b><span><b>One click switches the audience.</b> Leadership sees risks and budget. A client version hides internal notes.</span></li>
+        <li><b class="co">2</b><span><b>AI drafts the summary</b> from the figures. She edits it, and her edits are kept.</span></li>
+        <li><b class="co">3</b><span><b>The report is frozen at a date</b> and signed off by name, so it matches the numbers anyone checks later.</span></li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. EXTERNAL ===================== -->
+<section class="place" id="p-external" data-place="external" hidden>
+  <div class="stack">
+    <h2>External stakeholders: see what was agreed, and nothing else</h2>
+    <p class="lede">Funders, clients and delivery partners sign in to their own small corner. They see approved snapshots, never drafts, and every view is logged. ETK decides who is invited and when access ends.</p>
+  </div>
+  <div class="journey">
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui" style="padding:20px 16px;gap:14px">
+          <div class="logo" style="width:80px;height:18px"></div>
+          <div class="wt" style="font-size:15px">ETK has shared the "Youth digital skills" grant with you</div>
+          <span class="ws">Invited by Grace Adeyemi · access until 31 Mar 2027 <b class="co">1</b></span>
+          <div class="field"><label>Work email</label><div class="input pre">programmes@funder.org</div></div>
+          <div class="btn primary full">Email me a sign-in link</div>
+          <div class="box"><span class="ws">You'll see approved progress and spend for this grant. ETK records when you view it. <u>How we use data</u> <b class="co">2</b></span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 1 · INVITATION AND SIGN-IN</span><h3>No new password, no shared logins</h3><ol>
+        <li><b class="co">1</b><span><b>Personal invitations that expire.</b> A sign-in link goes to their work email, plus a code for two-step verification.</span></li>
+        <li><b class="co">2</b><span><b>A plain data notice</b> explains what they'll see and that views are logged.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / funder / youth-digital-skills</span></div>
+        <div class="ui-top"><div class="logo"></div><span class="ws">Foundation partner · read-only</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Youth digital skills programme · Nigeria</span><span class="ws">Approved as at 30 Sep 2026 <b class="co">1</b></span></div>
+          <div class="cols c3"><div class="box solid"><span class="ws">Young people trained</span><span class="wt">2,700 of 5,000</span><div class="bar"><i style="width:54%"></i><b style="left:55%"></b></div></div><div class="box solid"><span class="ws">In work within 6 months</span><span class="wt">41% (target 45%)</span></div><div class="box solid"><span class="ws">Grant spent</span><span class="wt">$330k of $650k</span></div></div>
+          <div class="wtab"><div style="grid-template-columns:2fr 1fr 1fr"><span>BUDGET LINE <b class="co">2</b></span><span>BUDGET</span><span>SPENT</span></div>
+            <div style="grid-template-columns:2fr 1fr 1fr"><span>Training delivery</span><span>$380k</span><span>$205k</span></div>
+            <div style="grid-template-columns:2fr 1fr 1fr"><span>Employer partnerships</span><span>$120k</span><span>$48k</span></div></div>
+          <div class="cols c2"><div class="box"><span class="wt">Story: "From trainee to junior developer"</span><span class="ws">Shared with consent <b class="co">3</b></span></div><div class="box"><span class="wt">Next report due 31 Dec</span><div class="row"><span class="btn primary">Download grant report</span><span class="btn">Ask a question</span></div></div></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 2 · FUNDER PORTAL</span><h3>The grant, as agreed, without chasing</h3><ol>
+        <li><b class="co">1</b><span><b>Snapshots, not live drafts.</b> Funders see what ETK approved at a date, so numbers never shift under them.</span></li>
+        <li><b class="co">2</b><span><b>Spend by budget line,</b> in the format of the grant agreement.</span></li>
+        <li><b class="co">3</b><span><b>Stories appear only with consent,</b> and use first names or none.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / client / northbridge</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">Northbridge Foods · market entry, Nigeria</span><span class="chip a">Behind on registration</span></div>
+          <div class="tl"><div class="done"><span class="wt">Market study</span> <span class="ws">delivered 1 Aug</span></div><div class="done"><span class="wt">Distributor shortlist</span> <span class="ws">delivered 14 Oct</span></div><div class="now"><span class="wt">Product registration</span> <span class="ws">5 of 12 products · due 11 Dec <b class="co">1</b></span></div><div><span class="ws">First shipment · Feb</span></div></div>
+          <div class="cols c2"><div class="box"><span class="wt">Waiting for you <b class="co">2</b></span><span class="ws">Approve the distributor terms sheet</span></div><div class="box"><span class="wt">Documents</span><span class="ws">market-study.pdf · shortlist.pdf</span></div></div>
+          <div class="row"><span class="btn primary">Approve deliverable</span><span class="btn">Raise a question</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 3 · CLIENT VIEW</span><h3>Progress in their language: milestones and next steps</h3><ol>
+        <li><b class="co">1</b><span><b>A milestone timeline</b> with the honest status, without ETK's internal budget or staff notes.</span></li>
+        <li><b class="co">2</b><span><b>What's waiting on the client</b> is shown too, so delays are shared openly.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen phone-first">
+      <div class="device phone"><div class="chrome"><i></i></div>
+        <div class="ui">
+          <div class="wt" style="font-size:15px">Lagos Tech Hub · October return</div>
+          <div class="field"><label>Sessions delivered</label><div class="input pre">12</div></div>
+          <div class="field"><label>Young people attending (count) <b class="co">1</b></label><div class="input pre">186</div></div>
+          <div class="box"><span class="ws">📎 Attendance list (optional)</span><span>☑ Everyone on this list agreed to share their details with ETK <b class="co">2</b></span></div>
+          <div class="btn primary full">Send to ETK</div>
+          <span class="ws">You can see your past returns only.</span>
+        </div></div>
+      <div class="notes"><span class="step">STEP 4 · DELIVERY PARTNER FORM</span><h3>Partners report their part, and nothing more</h3><ol>
+        <li><b class="co">1</b><span><b>Counts first, names only if needed.</b> The form asks for numbers, so most returns hold no personal data.</span></li>
+        <li><b class="co">2</b><span><b>Consent is confirmed at upload.</b> Lists go to the protected evidence store with a deletion date.</span></li>
+      </ol></div>
+    </div>
+
+    <div class="screen">
+      <div class="device"><div class="chrome"><i></i><i></i><i></i><span>etk-projects / admin / external-access</span></div>
+        <div class="ui">
+          <div class="kv"><span class="wt">External access</span><span class="ws">ETK only · leadership and data protection lead</span></div>
+          <div class="wtab"><div style="grid-template-columns:1.6fr 1.6fr 1fr 1fr .9fr"><span>WHO</span><span>CAN SEE</span><span>UNTIL <b class="co">1</b></span><span>LAST VIEW</span><span></span></div>
+            <div style="grid-template-columns:1.6fr 1.6fr 1fr 1fr .9fr"><span>programmes@funder.org</span><span>Youth digital skills</span><span>31 Mar 27</span><span>2 days ago</span><span class="ws">Revoke</span></div>
+            <div style="grid-template-columns:1.6fr 1.6fr 1fr 1fr .9fr"><span>ops@northbridge.co.uk</span><span>Northbridge engagement</span><span>30 Jun 27</span><span>today</span><span class="ws">Revoke</span></div>
+            <div style="grid-template-columns:1.6fr 1.6fr 1fr 1fr .9fr"><span>data@lagostechhub.ng</span><span>Own returns</span><span>31 Dec 26</span><span class="mark">never</span><span class="ws">Revoke</span></div></div>
+          <div class="kv"><span class="ws">New external access needs approval by the data protection lead <b class="co">2</b></span><span class="btn primary">Invite someone</span></div>
+        </div></div>
+      <div class="notes"><span class="step">STEP 5 · ACCESS CONTROL (ETK SIDE)</span><h3>ETK stays in control of what leaves the building</h3><ol>
+        <li><b class="co">1</b><span><b>Every outside account expires</b> and shows its last view. Unused access is easy to spot and revoke.</span></li>
+        <li><b class="co">2</b><span><b>A second pair of eyes</b> approves new external access before an invitation goes out.</span></li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7. DATA PROTECTION ===================== -->
+<section class="place" id="p-privacy" data-place="privacy" hidden>
+  <div class="stack">
+    <h2>Data protection, built in from the start</h2>
+    <p class="lede">ETK holds client, staff and beneficiary data across several countries, each with its own law. The safest approach is to design the tool so most of it never needs personal data at all, and to protect tightly the little that does.</p>
+  </div>
+  <div class="two">
+    <div class="sheet">
+      <div class="sheet-head"><h3>Laws that apply where ETK works</h3><span class="tag">confirm with legal counsel</span></div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Country</th><th>Main law</th></tr></thead>
+        <tbody>
+          <tr><td class="k">United Kingdom</td><td>UK GDPR and the Data Protection Act 2018</td></tr>
+          <tr><td class="k">Nigeria</td><td>Nigeria Data Protection Act 2023</td></tr>
+          <tr><td class="k">Kenya</td><td>Data Protection Act 2019</td></tr>
+          <tr><td class="k">Ghana</td><td>Data Protection Act 2012 (Act 843)</td></tr>
+          <tr><td class="k">South Africa</td><td>Protection of Personal Information Act (POPIA)</td></tr>
+          <tr><td class="k">Rwanda</td><td>Law No. 058/2021 on the protection of personal data and privacy</td></tr>
+          <tr><td class="k">Côte d'Ivoire</td><td>Law No. 2013-450 on the protection of personal data</td></tr>
+          <tr><td class="k">Ethiopia</td><td>Personal Data Protection Proclamation No. 1321/2024</td></tr>
+        </tbody>
+      </table></div>
+      <p class="lede" style="font-size:13.5px;margin-top:10px">Several of these limit sending personal data across borders. Keeping personal data out of reports, and storing evidence in one controlled place, makes this much simpler.</p>
+    </div>
+    <div class="sheet">
+      <h3 style="margin-bottom:12px">How the tool protects data</h3>
+      <ul class="ticks">
+        <li><span><b>Collect less.</b> Results are counts and percentages, not lists of names. Forms ask for numbers first.</span></li>
+        <li><span><b>A separate evidence store</b> for anything personal (attendance lists, photos), with consent recorded and a deletion date.</span></li>
+        <li><span><b>Access by role and by country:</b> a worker sees their projects, a manager their country, and outsiders their snapshot.</span></li>
+        <li><span><b>Work accounts with two-step verification.</b> Access ends when IT switches off the account.</span></li>
+        <li><span><b>An audit log</b> of every change, approval, export and external view. It can't be edited.</span></li>
+        <li><span><b>Approved snapshots only</b> leave ETK, through expiring personal links. No email attachments full of raw data.</span></li>
+        <li><span><b>AI with limits:</b> names and contact details are removed before AI reads an update. ETK's data is not used to train models. A person approves every AI suggestion.</span></li>
+        <li><span><b>Hosting and encryption:</b> data stored in the UK or EU, encrypted in transit and at rest. Daily backups.</span></li>
+        <li><span><b>People's rights:</b> the privacy centre finds, exports or deletes someone's data on request (a subject access or erasure request).</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="sheet">
+    <h3 style="margin-bottom:12px">Before launch: data protection checklist</h3>
+    <div class="two">
+      <ul class="ticks">
+        <li><span>Complete a data protection impact assessment (DPIA) for the tool.</span></li>
+        <li><span>Record the lawful basis for each kind of data: contract, legitimate interest or consent.</span></li>
+        <li><span>Sign data processing agreements with hosting, email and AI providers.</span></li>
+        <li><span>Set retention periods, e.g. evidence 2 years after the grant closes unless the funder requires longer.</span></li>
+      </ul>
+      <ul class="ticks">
+        <li><span>Name the data protection lead, and each country's contact.</span></li>
+        <li><span>Update privacy notices for staff, partners and beneficiaries.</span></li>
+        <li><span>Agree a breach response: who decides, and the deadlines to notify regulators.</span></li>
+        <li><span>Train country leads on what may be uploaded, in a 20-minute session.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 8. POWER BI ===================== -->
+<section class="place" id="p-powerbi" data-place="powerbi" hidden>
+  <div class="stack">
+    <h2>How this differs from Power BI</h2>
+    <p class="callout">Power BI shows data that already exists somewhere else. ETK Projects is where project data is <b>captured, owned, approved, tracked and shared</b>. It can still feed Power BI for anyone who wants to analyse further.</p>
+  </div>
+  <div class="sheet tscroll">
+    <table>
+      <thead><tr><th style="min-width:170px">What ETK needs</th><th style="min-width:250px">Power BI</th><th style="min-width:250px">ETK Projects</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Getting data in</td><td><span class="no">Not built for it.</span> It needs data that already sits in a spreadsheet, list or database somewhere else.</td><td><span class="yes">Built in.</span> A monthly check-in on a phone, email updates read by AI, and syncing from existing boards.</td></tr>
+        <tr><td class="k">Approval before it counts</td><td><span class="no">None.</span> Whatever is in the source appears in the report.</td><td><span class="yes">Every change is approved</span> by a named manager, with the before and after.</td></tr>
+        <tr><td class="k">Who is in charge</td><td><span class="no">Not tracked.</span></td><td><span class="yes">An owner and approver</span> on every project, metric, milestone and risk, with reminders and escalation.</td></tr>
+        <tr><td class="k">Risk register</td><td><span class="part">Only as a chart</span> of a list kept elsewhere.</td><td><span class="yes">A working register:</span> scoring, review dates, trend and escalation.</td></tr>
+        <tr><td class="k">Grant budgets</td><td><span class="part">Possible</span> if someone builds the data model.</td><td><span class="yes">Ready-made:</span> budget lines, committed spend, funder rules and report dates.</td></tr>
+        <tr><td class="k">Reports for each audience</td><td><span class="part">Dashboards,</span> built by an analyst for each audience.</td><td><span class="yes">Written automatically</span> for leadership, clients and funders, then edited and signed off.</td></tr>
+        <tr><td class="k">Sharing with funders and clients</td><td><span class="part">Hard and costly.</span> Viewers typically need a paid licence. "Publish to web" makes a report public to anyone with the link.</td><td><span class="yes">A private portal</span> per funder or client: approved snapshots, expiring invitations, every view logged.</td></tr>
+        <tr><td class="k">AI</td><td><span class="part">Copilot</span> helps build and summarise reports, on higher-tier capacity.</td><td><span class="yes">AI puts data in:</span> it turns emails into structured updates, drafts reports and answers questions. A person approves every change.</td></tr>
+        <tr><td class="k">Who can build and change it</td><td><span class="part">A trained analyst</span> (data models, the DAX formula language).</td><td><span class="yes">Anyone:</span> templates for projects, metrics and budget lines. No formulas.</td></tr>
+        <tr><td class="k">Phones and weak signal</td><td><span class="part">Mobile app for viewing.</span> Not designed for entering data in the field.</td><td><span class="yes">Phone-first updates,</span> low-data mode and offline drafts.</td></tr>
+        <tr><td class="k">Audit trail</td><td><span class="part">Who viewed reports.</span> Changes happen in the source systems.</td><td><span class="yes">Every change, approval, export and external view</span> in one log.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="two">
+    <div class="sheet">
+      <h3 style="margin-bottom:10px">Where Power BI is stronger, and how they work together</h3>
+      <ul class="ticks">
+        <li><span><b>Open-ended analysis</b> across many data sources (finance, CRM, HR) and very large datasets.</span></li>
+        <li><span><b>Custom visuals</b> and deep slicing for analysts.</span></li>
+        <li><span><b>Recommendation:</b> run both. ETK Projects is where the data is created and governed. A "Connect to Power BI" export gives analysts clean, approved data, with no copying spreadsheets.</span></li>
+      </ul>
+    </div>
+    <div class="sheet">
+      <h3 style="margin-bottom:10px">Built for everyone at ETK, not just analysts</h3>
+      <ul class="ticks">
+        <li><span><b>No training needed.</b> Every screen has one job and plain words.</span></li>
+        <li><span><b>The home page fits the person:</b> the worker sees what they owe, the manager what needs approval, leadership the decisions due.</span></li>
+        <li><span><b>Works on a phone</b> with a weak signal.</span></li>
+        <li><span><b>English and French,</b> with room for more languages.</span></li>
+        <li><span><b>Accessible:</b> built to the WCAG 2.2 AA standard, with keyboard use, readable contrast and screen-reader labels.</span></li>
+        <li><span><b>Data you can trust,</b> because every number has an owner, an approver and a history.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Prepared by Nadia Hassan for ETK Group. A design proposal for discussion. Wireframes are low-fidelity, and all names, organisations and figures in them are illustrative. Data protection laws are listed for orientation; confirm requirements with legal counsel.</div></footer>
+
+<script>
+// One "place" per tab. The hash names the tab, so any section can be linked on its own.
+const PLACES = ["overview", "stakeholders", "screens", "worker", "manager", "external", "privacy", "powerbi"];
+function show() {
+  const h = location.hash.slice(1);
+  const place = PLACES.includes(h) ? h : "overview";
+  document.querySelectorAll("section.place").forEach(s => { s.hidden = s.dataset.place !== place; });
+  document.querySelectorAll("nav.tabs a").forEach(a => { if (a.getAttribute("href") === "#" + place) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+}
+document.querySelectorAll("nav.tabs a").forEach(a => a.addEventListener("click", () => { setTimeout(() => window.scrollTo({ top: 0 }), 0); }));
+window.addEventListener("hashchange", show);
+show();
+</script>
