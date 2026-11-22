@@ -251,7 +251,7 @@ const riskScore = r => r.l * r.i;
 const riskRating = r => riskScore(r) >= 15 ? "High" : riskScore(r) >= 8 ? "Medium" : "Low";
 
 // ---------- Store: shared database, or practice mode in this browser ----------
-const COLS = ["projects", "updates", "risks", "snapshots", "access", "questions", "audit"];
+const COLS = ["projects", "updates", "risks", "snapshots", "access", "questions", "audit", "messages", "settings"];
 const LOCAL_KEY = "projects-hub-practice-v1";
 const S = { mode:"connecting", readOnly:false, data:Object.fromEntries(COLS.map(c => [c, {}])), loaded:false, db:null, pendingRefresh:false };
 const all = c => Object.values(S.data[c]);
@@ -304,7 +304,7 @@ async function connect() {
 let rt = null;
 function remoteChanged() {
   clearTimeout(rt);
-  rt = setTimeout(() => { if (FORM_VIEWS.includes(V.view) && S.loaded && V.formTouched) { S.pendingRefresh = true; renderBanner(); } else render(); }, 120);
+  rt = setTimeout(() => { if ((FORM_VIEWS.includes(V.view) && V.formTouched || V.cmp) && S.loaded) { S.pendingRefresh = true; renderBanner(); } else render(); }, 120);
 }
 
 // ---------- Optional AI (hidden when the viewer can't use it) ----------
@@ -322,16 +322,16 @@ try { V.meId = localStorage.getItem("projects-hub-me"); } catch {}
 const me = () => person(V.meId);
 const FORM_VIEWS = ["new", "checkin", "reports", "access", "returns"];
 const NAV = {
-  staff:[["home", "My work"], ["projects", "My projects"], ["new", "New project"], ["portfolio", "All projects"], ["risks", "My risks"]],
-  manager:[["team", "My team"], ["approvals", "Approvals"], ["projects", "Team projects"], ["risks", "Risk review"], ["reports", "Reports"], ["portfolio", "All projects"], ["access", "External access"]],
-  lead:[["portfolio", "All projects"], ["approvals", "Approvals"], ["team", "My team"], ["risks", "Risks"], ["reports", "Reports"], ["access", "External access"], ["audit", "Audit log"]],
-  finance:[["budgets", "Budgets"], ["portfolio", "All projects"], ["audit", "Audit log"]],
-  bd:[["portfolio", "All projects"], ["shared", "Shared reports"]],
+  staff:[["home", "My work"], ["portfolio", "Overall dashboard"], ["projects", "My projects"], ["new", "New project"], ["inbox", "Messages"], ["risks", "My risks"]],
+  manager:[["team", "My team"], ["portfolio", "Overall dashboard"], ["approvals", "Approvals"], ["inbox", "Messages"], ["projects", "Team projects"], ["risks", "Risk review"], ["reports", "Reports"], ["access", "External access"]],
+  lead:[["portfolio", "Overall dashboard"], ["approvals", "Approvals"], ["inbox", "Messages"], ["team", "My team"], ["risks", "Risks"], ["reports", "Reports"], ["access", "External access"], ["audit", "Audit log"]],
+  finance:[["budgets", "Budgets"], ["portfolio", "Overall dashboard"], ["inbox", "Messages"], ["audit", "Audit log"]],
+  bd:[["portfolio", "Overall dashboard"], ["inbox", "Messages"], ["shared", "Shared reports"]],
   funder:[["grants", "Your grants"]],
   client:[["engagement", "Your project"]],
   partner:[["returns", "Monthly return"]],
 };
-function go(view, params = {}) { V.view = view; V.params = params; V.formTouched = false; S.pendingRefresh = false; if (view !== "new") V.wiz = null; render(); window.scrollTo({ top:0 }); }
+function go(view, params = {}) { if (view !== "project" || params.id !== V.cmp?.pid) V.cmp = null; V.view = view; V.params = params; V.formTouched = false; S.pendingRefresh = false; if (view !== "new") V.wiz = null; render(); window.scrollTo({ top:0 }); }
 
 // ---------- Visibility (what each role may see) ----------
 function teamIds(u = me()) { return PEOPLE.filter(p => p.manager === u.id).map(p => p.id); }
@@ -342,6 +342,10 @@ function visibleProjects(u = me()) {
   if (u.role === "staff") return ps.filter(p => p.ownerId === u.id || (p.members || []).includes(u.id));
   return [];
 }
+// Overall dashboard access: everyone inside the organisation by default; the Global lead can limit it to chosen people.
+const dashSettings = () => ({ id:"dashboard", mode:"everyone", allowed:[], requests:[], ...(S.data.settings?.dashboard || {}) });
+function hasDashboard(u = me()) { if (!INTERNAL.includes(u.role)) return false; if (u.role === "lead") return true; const d = dashSettings(); return d.mode === "everyone" || d.allowed.includes(u.id); }
+const dashViewers = () => PEOPLE.filter(x => INTERNAL.includes(x.role) && hasDashboard(x));
 const activeProjects = () => all("projects").filter(p => p.status === "active");
 function externalAccess(u = me()) { return all("access").filter(a => a.org === u.id && a.status === "active" && a.expires >= todayIso); }
 function canSeeProjectDetail(p, u = me()) { return u.role === "lead" || u.role === "finance" || visibleProjects(u).some(x => x.id === p.id); }
@@ -418,8 +422,9 @@ function render() {
   tip.hidden = true;
   if (!V.meId) { app.innerHTML = viewSignin(); return; }
   const u = me(), nav = NAV[u.role] || [];
+  if (location.hash === "#dashboard" && nav.some(n => n[0] === "portfolio") && !V.hashUsed) { V.hashUsed = true; V.view = "portfolio"; }
   if (!V.view || !nav.some(n => n[0] === V.view) && !["project", "checkin", "update"].includes(V.view)) V.view = nav[0][0];
-  const appr = pendingApprovals(u).length;
+  const appr = pendingApprovals(u).length, unread = unreadCount(u);
   app.innerHTML = `
     <header class="bar"><div class="in"><span class="brand"><i>PH</i>Projects Hub</span>
       <div class="who"><span class="name">${esc(u.name)} · ${esc(ROLE_LABEL[u.role])}</span><span class="av">${esc(initials(u.name))}</span><button data-act="signout">Switch account</button></div></div></header>
@@ -427,13 +432,14 @@ function render() {
     <div class="shell">
       <nav class="menu" aria-label="Main">
         <div class="role"><div class="strong">${esc(u.name)}</div><div class="note">${esc(u.title)}${u.team && u.team !== "External" ? "<br>" + esc(u.team) : ""}</div></div>
-        ${nav.map(([k, l]) => `<button data-nav="${k}" ${V.view === k ? 'aria-current="page"' : ""}><span>${l}</span>${k === "approvals" && appr ? `<span class="count">${appr}</span>` : ""}</button>`).join("")}
+        ${nav.map(([k, l]) => `<button data-nav="${k}" ${V.view === k ? 'aria-current="page"' : ""}><span>${l}</span>${k === "approvals" && appr ? `<span class="count">${appr}</span>` : ""}${k === "inbox" && unread ? `<span class="count">${unread}</span>` : ""}${k === "portfolio" && u.role === "lead" && dashSettings().requests.length ? `<span class="count">${dashSettings().requests.length}</span>` : ""}</button>`).join("")}
       </nav>
       <main class="content" id="main"><div class="stack">${S.loaded ? viewFor(u) : `<div class="empty">Loading projects…</div>`}</div></main>
     </div>`;
   renderBanner();
   document.querySelectorAll("[data-ai]").forEach(e => { e.hidden = !sample; });
   afterRender();
+  if (S.loaded && !V.autoRan?.[V.meId]) { V.autoRan = { ...(V.autoRan || {}), [V.meId]:true }; runAutoAlerts(); }
 }
 function renderBanner() {
   const b = document.getElementById("modeBar"); if (!b) return;
@@ -443,7 +449,7 @@ function renderBanner() {
 }
 function viewFor(u) {
   const v = V.view;
-  const map = { home:vHome, projects:vProjects, new:vWizard, portfolio:vPortfolio, risks:vRisks, team:vTeam, approvals:vApprovals, reports:vReports, access:vAccess, audit:vAudit, budgets:vBudgets, shared:vShared, grants:vGrants, engagement:vEngagement, returns:vReturns, project:vProject, checkin:vCheckin };
+  const map = { inbox:vInbox, home:vHome, projects:vProjects, new:vWizard, portfolio:vPortfolio, risks:vRisks, team:vTeam, approvals:vApprovals, reports:vReports, access:vAccess, audit:vAudit, budgets:vBudgets, shared:vShared, grants:vGrants, engagement:vEngagement, returns:vReturns, project:vProject, checkin:vCheckin };
   return (map[v] || vPortfolio)(u);
 }
 let after = [];
@@ -465,6 +471,7 @@ function vHome(u) {
       <div class="stack" style="gap:8px">${due.map(p => `<div class="row between" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px"><div><div class="strong">${esc(p.name)}</div><div class="note">${esc(p.client || p.funder || "")} · last update ${shortDate(p.lastUpdate)}</div></div><button class="btn" data-act="checkin" data-id="${p.id}">Update now</button></div>`).join("")}</div></div>`
       : `<div class="panel"><p class="okmsg">You're up to date. Nothing is due this week.</p></div>`}
     ${returned.length ? `<div class="panel"><h2 style="margin-bottom:10px">Returned to you</h2>${returned.map(x => `<div class="row between" style="padding:8px 0;border-top:1px solid var(--line)"><div><div class="strong">${esc(x.p.name)} · ${esc(x.what)}</div><div class="small">“${esc(x.comment || "Please check and resend.")}”</div></div><button class="btn ghost" ${x.go}>Fix and send again</button></div>`).join("")}</div>` : ""}
+    ${dashTeaser(u)}
     <div class="grid wide">
       <div class="panel"><div class="panel-head"><h2>My projects</h2><button class="link" data-nav="projects">All →</button></div>${projectTable(mine, true)}</div>
       <div class="stack">
@@ -472,6 +479,11 @@ function vHome(u) {
         <div class="panel"><div class="panel-head"><h3>My risks</h3><button class="link" data-nav="risks">All →</button></div>${myRisks.length ? myRisks.map(r => `<div class="row between" style="padding:6px 0;border-top:1px solid var(--line)"><span class="small">${esc(r.title)}</span>${r.needsScoring ? `<span class="chip">Being scored</span>` : rpill(r)}</div>`).join("") : `<p class="small">No open risks.</p>`}</div>
       </div>
     </div>`;
+}
+function dashTeaser(u) {
+  if (!INTERNAL.includes(u.role)) return "";
+  const ps = activeProjects(), st = { good:0, warn:0, crit:0, none:0 }; ps.forEach(p => st[pStatus(p)]++);
+  return `<button class="acct" data-nav="portfolio" style="border-color:var(--brand)"><span style="flex:1"><b>Overall dashboard</b><span>${hasDashboard(u) ? `${ps.length} projects across every team · <i class="dot d-good"></i>${st.good} on track · <i class="dot d-warn"></i>${st.warn} behind · <i class="dot d-crit"></i>${st.crit} off track` : "See every team's projects in one place. Ask for access."}</span></span><span class="strong" style="color:var(--brand)">Open →</span></button>`;
 }
 function projectTable(ps, compact) {
   if (!ps.length) return `<div class="empty">No projects yet. ${me().role === "staff" ? `<button class="link" data-nav="new">Set up your first project</button>` : ""}</div>`;
@@ -638,7 +650,7 @@ function vProject(u) {
   const pendingUp = ups.find(x => x.status === "pending");
   return `<div class="row between" style="align-items:flex-start"><div><div class="eyebrow">${esc(p.country)} · ${esc(p.team)} · ${esc(p.sector)}</div><h1 style="margin-top:4px">${esc(p.name)}</h1>
       <p class="small">${p.client ? "Client: " + esc(p.client) + " · " : ""}${p.funder ? "Funder: " + esc(p.funder) + (p.grantRef ? ` (${esc(p.grantRef)})` : "") + " · " : ""}${fmtDate(p.start)} – ${fmtDate(p.end)}</p></div>
-      <div class="row">${statusPill(p)}${isOwner && p.status === "active" ? `<button class="btn" data-act="checkin" data-id="${p.id}">${pendingUp ? "Update sent" : "Monthly update"}</button>` : ""}${isOwner && p.status === "returned" ? `<button class="btn" data-act="edit-project" data-id="${p.id}">Fix and resend</button>` : ""}</div></div>
+      <div class="row">${statusPill(p)}${(isOwner || isApprover) && p.status === "active" ? `<button class="btn ghost" data-act="email-team" data-id="${p.id}">Email the team</button>` : ""}${isOwner && p.status === "active" ? `<button class="btn" data-act="checkin" data-id="${p.id}">${pendingUp ? "Update sent" : "Monthly update"}</button>` : ""}${isOwner && p.status === "returned" ? `<button class="btn" data-act="edit-project" data-id="${p.id}">Fix and resend</button>` : ""}</div></div>
     <div class="grid kpis">
       <div class="kpi"><div class="eyebrow">Owner</div><div class="row" style="margin-top:6px;gap:8px">${av(p.ownerId)}<span class="strong">${esc(person(p.ownerId).name)}</span></div></div>
       <div class="kpi"><div class="eyebrow">Approver</div><div class="row" style="margin-top:6px;gap:8px">${av(p.approverId)}<span class="strong">${esc(person(p.approverId).name)}</span></div></div>
@@ -647,6 +659,7 @@ function vProject(u) {
     </div>
     ${p.status === "pending" ? `<div class="callout">Waiting for ${esc(person(p.approverId).name)} to approve the set-up. It goes on the dashboard once approved.</div>` : ""}
     ${p.status === "returned" ? `<div class="callout">Returned by ${esc(person(p.approverId).name)}: “${esc(p.returnComment)}”</div>` : ""}
+    ${V.cmp?.pid === p.id ? composePanel(p) : ""}
     ${fl.length ? `<div class="panel stack" style="gap:6px"><h3>Needs attention</h3>${fl.map(f => `<div class="row" style="flex-wrap:nowrap;gap:8px"><span class="pill s-${f.s}" style="flex:none">${f.kind}</span><span class="small">${esc(f.text)}</span></div>`).join("")}</div>` : ""}
     <div class="grid wide">
       <div class="stack">
@@ -658,6 +671,7 @@ function vProject(u) {
         <div class="panel"><h2 style="margin-bottom:8px">Milestones</h2>${p.milestones.map(m => `<div class="row between" style="padding:7px 0;border-top:1px solid var(--line)"><span class="small"><b style="color:var(--ink)">${esc(m.name)}</b><br>${m.done ? "Done " + shortDate(m.done) : (m.due < todayIso ? "Overdue, was due " : "Due ") + shortDate(m.due)}${m.clientSignoff === "pending" ? " · waiting for client sign-off" : m.clientSignoff === "approved" ? " · client signed off" : ""}</span>${m.done ? `<span class="pill s-good">Done</span>` : m.due < todayIso ? `<span class="pill s-crit">Late</span>` : ""}</div>`).join("") || `<p class="small">No milestones.</p>`}</div>
         <div class="panel"><h2 style="margin-bottom:8px">Risks</h2>${rs.map(r => `<div class="row between" style="padding:7px 0;border-top:1px solid var(--line)"><span class="small">${esc(r.title)}<br><span class="note">Owner ${esc(person(r.ownerId).name)} · ${esc(r.status)}</span></span>${r.needsScoring ? `<span class="chip">To be scored</span>` : rpill(r)}</div>`).join("") || `<p class="small">No open risks.</p>`}
           ${isApprover && p.status === "active" ? `<div class="row" style="margin-top:10px"><button class="btn ghost small" data-act="reassign" data-id="${p.id}">Reassign owner</button><button class="btn ghost small" data-nav="reports">Share a report</button></div>` : ""}</div>
+        ${p.status === "active" ? alertsPanel(p, isOwner || isApprover) : ""}
         <div class="panel"><h2 style="margin-bottom:8px">Questions from outside the organisation</h2>${qs.map(q => `<div style="padding:7px 0;border-top:1px solid var(--line)"><p class="small"><b style="color:var(--ink)">${esc(person(q.fromId).name)}:</b> ${esc(q.text)}</p>${q.answer ? `<p class="small" style="margin-top:4px">↳ ${esc(person(q.answeredBy).name)}: ${esc(q.answer)}</p>` : (isOwner || isApprover) ? `<div class="row" style="margin-top:6px;flex-wrap:nowrap"><input id="ans-${q.id}" placeholder="Write an answer"><button class="btn small" data-act="answer" data-id="${q.id}">Send</button></div>` : `<p class="note">Not answered yet.</p>`}</div>`).join("") || `<p class="small">No questions.</p>`}</div>
       </div>
     </div>`;
@@ -690,6 +704,111 @@ function vRisks(u) {
 }
 
 // ======================================================================
+// BEHIND-SCHEDULE EMAILS: automatic alerts and "Email the team"
+// Messages appear in each person's Messages inbox straight away, and are
+// queued for email. Real email goes out once an email account is connected.
+// ======================================================================
+const ALERT_DEFAULT = { on:true, behind:true, milestone:true, update:true, budget:true, toOwner:true, toTeam:true, ccManager:true, frequency:"Weekly" };
+const alertSettings = p => ({ ...ALERT_DEFAULT, ...(p.alerts || {}) });
+function alertReasons(p, a = alertSettings(p)) {
+  if (p.status !== "active") return [];
+  const out = [];
+  for (const f of flags(p)) {
+    if (f.kind === "Result" && a.behind) out.push(f.text);
+    if (f.kind === "Milestone" && a.milestone) out.push(f.text);
+    if (f.kind === "Budget" && a.budget) out.push(f.text);
+    if (f.kind === "Gone quiet" && a.update) out.push(f.text);
+  }
+  const waiting = all("updates").some(x => x.projectId === p.id && x.status === "pending");
+  if (a.update && updateDue(p) && !waiting && !out.some(t => t.startsWith("No update"))) out.push(`The ${periodLabel(period())} update is due.`);
+  return out;
+}
+function recipients(p, a = alertSettings(p)) {
+  const to = new Set(), cc = new Set();
+  if (a.toOwner) to.add(p.ownerId);
+  if (a.toTeam) (p.members || []).filter(id => INTERNAL.includes(person(id).role)).forEach(id => to.add(id));
+  if (a.ccManager && p.approverId) cc.add(p.approverId);
+  to.forEach(id => cc.delete(id));
+  return { to:[...to], cc:[...cc] };
+}
+const weekKey = () => { const d = new Date(TODAY); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return iso(d); };
+function draftEmail(p, reasons, from) {
+  const r = recipients(p), names = r.to.map(id => person(id).name.split(" ")[0]);
+  const due = iso(new Date(+TODAY + 5 * DAY)), needsUpdate = reasons.some(t => /update is due|No update/.test(t));
+  return { subject:`${p.name} is falling behind: action needed by ${shortDate(due)}`,
+    body:`Hi ${names.length ? names.join(" and ") : "team"},\n\n${p.name} is falling behind schedule:\n${reasons.map(t => "• " + t).join("\n")}\n\nPlease ${needsUpdate ? "send your monthly update" : "update the plan and the figures"} by ${fmtDate(due)}. If something is blocking you, reply and we'll agree a recovery plan together.\n\nYou can see the details in Projects Hub, under ${p.name}.\n\n${from ? person(from).name + "\n" + person(from).title : "Projects Hub (automatic alert)"}` };
+}
+async function sendMessage(p, { to, cc, subject, body, kind, reasons, id }) {
+  const u = me();
+  const m = { id:id || uid("msg"), kind, projectId:p.id, from:kind === "auto" ? "system" : u.id, onBehalfOf:kind === "auto" ? p.approverId : u.id, to, cc, subject, body, reasons:reasons || [], createdAt:new Date().toISOString(), readBy:[],
+    email:{ status:"waiting", to:to.map(x => person(x).email), cc:cc.map(x => person(x).email), sentAt:null } };
+  if (!(await put("messages", m))) return null;
+  await log(kind === "auto" ? `Automatic behind-schedule alert sent to the team` : `Emailed the team: ${subject}`, p.id);
+  return m;
+}
+/** Runs when someone opens the app: for each project they own or manage, sends one alert per week (or day) while it's behind. */
+async function runAutoAlerts() {
+  const u = me();
+  if (!["staff", "manager", "lead"].includes(u.role) || S.readOnly) return;
+  const mine = all("projects").filter(p => p.status === "active" && (p.ownerId === u.id || p.approverId === u.id || u.role === "lead"));
+  let n = 0;
+  for (const p of mine) {
+    const a = alertSettings(p); if (!a.on) continue;
+    const reasons = alertReasons(p, a); if (!reasons.length) continue;
+    const id = `auto-${p.id}-${a.frequency === "Daily" ? todayIso : weekKey()}`;
+    if (S.data.messages[id]) continue;
+    const r = recipients(p, a); if (!r.to.length) continue;
+    const d = draftEmail(p, reasons, null);
+    if (await sendMessage(p, { ...r, ...d, kind:"auto", reasons, id })) n++;
+    if (S.readOnly) return;
+  }
+  if (n) { toast(`${n} automatic behind-schedule alert${n > 1 ? "s" : ""} sent to project teams.`); render(); }
+}
+const myMessages = u => all("messages").filter(m => (m.to || []).includes(u.id) || (m.cc || []).includes(u.id));
+const unreadCount = u => myMessages(u).filter(m => !(m.readBy || []).includes(u.id)).length;
+function composePanel(p) {
+  const c = V.cmp, internal = PEOPLE.filter(x => INTERNAL.includes(x.role));
+  const pick = (list, key) => internal.map(x => `<label class="check"><input type="checkbox" data-cmp-${key}="${x.id}" ${list.includes(x.id) ? "checked" : ""}> ${esc(x.name)}</label>`).join("");
+  return `<div class="panel stack" style="border-color:var(--brand)"><div class="row between"><h2>Email the team</h2><button class="link" data-act="cmp-cancel">Cancel</button></div>
+    <p class="small">Written for you from what's behind. Edit anything before sending.</p>
+    <details><summary class="small strong" style="cursor:pointer">To: ${c.to.map(id => esc(person(id).name)).join(", ") || "nobody yet"}${c.cc.length ? ` · Copy: ${c.cc.map(id => esc(person(id).name)).join(", ")}` : ""} (change)</summary>
+      <div class="grid two" style="margin-top:10px"><div><div class="eyebrow" style="margin-bottom:6px">To</div><div class="stack" style="gap:4px">${pick(c.to, "to")}</div></div><div><div class="eyebrow" style="margin-bottom:6px">Copy</div><div class="stack" style="gap:4px">${pick(c.cc, "cc")}</div></div></div></details>
+    <label for="cmp-subject">Subject<input id="cmp-subject" data-cmp="subject" value="${esc(c.subject)}"></label>
+    <label for="cmp-body">Message<textarea id="cmp-body" rows="10" data-cmp="body">${esc(c.body)}</textarea></label>
+    <div class="row between"><span class="note">It appears in their Messages straight away, and is queued for email.</span><button class="btn" data-act="cmp-send" data-id="${p.id}">Send to ${c.to.length + c.cc.length} ${c.to.length + c.cc.length === 1 ? "person" : "people"}</button></div></div>`;
+}
+function alertsPanel(p, canEdit) {
+  const a = alertSettings(p), r = recipients(p, a), reasons = alertReasons(p, a);
+  const box = (k, label) => `<label class="check"><input type="checkbox" data-alert="${k}" data-id="${p.id}" ${a[k] ? "checked" : ""} ${canEdit ? "" : "disabled"}> ${label}</label>`;
+  const last = all("messages").filter(m => m.projectId === p.id).sort((x, y) => x.createdAt < y.createdAt ? 1 : -1)[0];
+  return `<div class="panel stack" style="gap:8px"><div class="row between"><h2>Automatic alerts</h2><span class="pill ${a.on ? "s-good" : "s-none"}">${a.on ? "On" : "Off"}</span></div>
+    <p class="small">When this project falls behind, the team gets an email automatically, ${a.frequency === "Daily" ? "once a day" : "once a week"} until it's back on track.</p>
+    ${box("on", "<b>Send automatic alerts</b>")}
+    <div class="eyebrow" style="margin-top:4px">When</div>${box("behind", "A result is behind or off track")}${box("milestone", "A milestone is overdue")}${box("update", "The monthly update is due or late")}${box("budget", "Spending runs ahead of time or over a line")}
+    <div class="eyebrow" style="margin-top:4px">Who</div>${box("toOwner", "Project owner")}${box("toTeam", "Team members")}${box("ccManager", "Copy the line manager")}
+    <label for="al-f-${p.id}" style="margin-top:4px">How often<select id="al-f-${p.id}" data-alert="frequency" data-id="${p.id}" ${canEdit ? "" : "disabled"}><option ${a.frequency === "Weekly" ? "selected" : ""}>Weekly</option><option ${a.frequency === "Daily" ? "selected" : ""}>Daily</option></select></label>
+    <p class="note">${reasons.length ? `Right now it would alert: ${r.to.map(id => esc(person(id).name)).join(", ")}${r.cc.length ? ", copying " + r.cc.map(id => esc(person(id).name)).join(", ") : ""}.` : "Nothing is behind, so no alert is due."}${last ? ` Last message: ${shortDate(last.createdAt)}.` : ""}</p></div>`;
+}
+function vInbox(u) {
+  const box = V.params.box || "in";
+  const rows = (box === "in" ? myMessages(u) : all("messages").filter(m => m.from === u.id || (m.kind === "auto" && m.onBehalfOf === u.id))).sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+  const open = rows.find(m => m.id === V.params.mid);
+  if (open && box === "in" && !(open.readBy || []).includes(u.id)) after.push(() => put("messages", { ...open, readBy:[...(open.readBy || []), u.id] }).then(ok => ok && S.mode === "local" && render()));
+  const pn = id => all("projects").find(p => p.id === id)?.name || "";
+  return `<div class="row between"><div><h1>Messages</h1><p class="small">Behind-schedule alerts and emails from your team. Each one is also sent by email.</p></div>
+      <div class="row"><button class="btn ${box === "in" ? "" : "ghost"} small" data-act="box" data-box="in">Received</button><button class="btn ${box === "sent" ? "" : "ghost"} small" data-act="box" data-box="sent">Sent by me</button></div></div>
+    <div class="callout"><b>Email delivery:</b> messages show here straight away. Sending them as real emails needs an email account connected (Gmail or Outlook). Until then each message is queued, and you can copy it into your own email.</div>
+    <div class="grid wide">
+      <div class="panel">${rows.length ? rows.map(m => `<button class="acct" style="margin-bottom:8px;${(m.readBy || []).includes(u.id) || box === "sent" ? "" : "border-color:var(--brand)"}" data-act="msg-open" data-id="${m.id}"><span style="flex:1;min-width:0"><b>${esc(m.subject)}</b><span>${m.kind === "auto" ? "Automatic alert" : "From " + esc(person(m.from).name)} · ${esc(pn(m.projectId))} · ${shortDate(m.createdAt)}</span></span>${(m.readBy || []).includes(u.id) || box === "sent" ? "" : `<span class="count">New</span>`}</button>`).join("") : `<div class="empty">${box === "in" ? "No messages. You'll get one here if a project you're on falls behind." : "You haven't sent any messages yet. Use “Email the team” on a project."}</div>`}</div>
+      <div class="panel">${open ? `<div class="stack" style="gap:10px"><div><div class="eyebrow">${open.kind === "auto" ? "Automatic alert" : "Message"} · ${new Date(open.createdAt).toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" })}</div><h2 style="margin-top:4px">${esc(open.subject)}</h2>
+          <p class="note" style="margin-top:4px">To ${open.to.map(id => esc(person(id).name)).join(", ")}${open.cc?.length ? " · copy " + open.cc.map(id => esc(person(id).name)).join(", ") : ""}</p></div>
+          <div class="ai-out" id="msgBody">${esc(open.body)}</div>
+          <p class="note">Email: ${open.email?.status === "sent" ? "sent " + shortDate(open.email.sentAt) : "queued, waiting for an email account to be connected"} · ${esc((open.email?.to || []).join(", "))}</p>
+          <div class="row"><button class="btn ghost small" data-act="open" data-id="${open.projectId}">Open the project</button><button class="btn ghost small" data-act="msg-copy" data-id="${open.id}">Copy as email</button></div></div>` : `<p class="small">Choose a message to read it.</p>`}</div>
+    </div>`;
+}
+
+// ======================================================================
 // LINE MANAGER
 // ======================================================================
 function vTeam(u) {
@@ -699,14 +818,15 @@ function vTeam(u) {
   const rising = all("risks").filter(r => act.some(p => p.id === r.projectId) && r.status !== "Closed" && (r.trend === "up" || r.needsScoring));
   const people = ids.filter(id => id !== u.id || u.role !== "lead").map(id => ({ p:person(id), n:all("projects").filter(x => x.status !== "closed" && (x.ownerId === id || (x.members || []).includes(id))).length }));
   return `<div><h1>${esc(u.team)}</h1><p class="small">What needs you first, then what's slipping.</p></div>
+    ${dashTeaser(u)}
     <div class="grid kpis">
       <button class="kpi ${appr ? "alert" : ""}" data-nav="approvals" style="text-align:left;cursor:pointer;font:inherit"><div class="eyebrow">Approvals waiting</div><div class="v num">${appr}</div><div class="n">Open the approvals inbox</div></button>
       <div class="kpi"><div class="eyebrow">Gone quiet</div><div class="v num">${overdue.length}</div><div class="n">no update for 30+ days</div></div>
       <div class="kpi"><div class="eyebrow">Spending fast</div><div class="v num">${fast.length}</div><div class="n">ahead of time by 10+ points</div></div>
       <div class="kpi"><div class="eyebrow">Risks to look at</div><div class="v num">${rising.length}</div><div class="n">new or getting worse</div></div>
     </div>
-    <div class="panel"><div class="panel-head"><h2>Projects</h2><span class="note">Status with the reason</span></div><div class="tscroll"><table><thead><tr><th>Project</th><th>Owner</th><th>Status</th><th>Why</th><th></th></tr></thead><tbody>
-      ${ps.map(p => { const f = flags(p)[0]; return `<tr class="click" data-act="open" data-id="${p.id}"><td class="strong">${esc(p.name)}</td><td class="small" style="white-space:nowrap">${esc(person(p.ownerId).name)}</td><td>${statusPill(p)}</td><td class="small">${p.status === "active" ? esc(f?.text || "No issues") : "–"}</td><td>${p.status === "active" && daysBetween(p.lastUpdate, todayIso) > 30 ? `<button class="btn ghost small" data-act="remind" data-id="${p.id}">Send reminder</button>` : ""}</td></tr>`; }).join("") || `<tr><td colspan="5"><div class="empty">No projects yet.</div></td></tr>`}</tbody></table></div></div>
+    <div class="panel"><div class="panel-head"><h2>Projects</h2>${act.filter(p => alertReasons(p).length).length ? `<button class="btn small" data-act="email-all-behind">Email every team that's behind (${act.filter(p => alertReasons(p).length).length})</button>` : `<span class="note">Status with the reason</span>`}</div><div class="tscroll"><table><thead><tr><th>Project</th><th>Owner</th><th>Status</th><th>Why</th><th></th></tr></thead><tbody>
+      ${ps.map(p => { const f = flags(p)[0]; return `<tr class="click" data-act="open" data-id="${p.id}"><td class="strong">${esc(p.name)}</td><td class="small" style="white-space:nowrap">${esc(person(p.ownerId).name)}</td><td>${statusPill(p)}</td><td class="small">${p.status === "active" ? esc(f?.text || "No issues") : "–"}</td><td>${p.status === "active" && alertReasons(p).length ? `<button class="btn ghost small" data-act="email-team" data-id="${p.id}">Email the team</button>` : ""}</td></tr>`; }).join("") || `<tr><td colspan="5"><div class="empty">No projects yet.</div></td></tr>`}</tbody></table></div></div>
     <div class="panel"><div class="panel-head"><h2>Workload</h2><span class="note">Projects each person owns or works on, against a capacity of 3</span></div>
       ${people.map(({ p, n }) => `<div class="row" style="flex-wrap:nowrap;padding:6px 0"><span style="width:160px;flex:none" class="small strong">${esc(p.name)}</span><div style="flex:1"><div class="bar2"><div class="f" style="width:${Math.min(100, n / 3 * 100)}%;${n > 3 ? "background:var(--crit)" : ""}"></div></div></div><span class="num small" style="width:48px;text-align:right;${n > 3 ? "color:var(--crit);font-weight:700" : ""}">${n} / 3</span></div>`).join("")}</div>`;
 }
@@ -879,6 +999,10 @@ function vShared() {
 // PORTFOLIO: the inclusive dashboard every internal team sees
 // ======================================================================
 function vPortfolio(u) {
+  if (!hasDashboard(u)) {
+    const asked = dashSettings().requests.some(r => r.id === u.id);
+    return `<h1>Overall dashboard</h1><div class="panel stack" style="max-width:560px"><h2>You don't have access yet</h2><p class="small">The overall dashboard shows every team's projects, budgets and risks in one place. The Global lead decides who can see it.</p>${asked ? `<p class="okmsg">Request sent. You'll see the dashboard here as soon as ${esc(PEOPLE.find(x => x.role === "lead").name)} gives you access.</p>` : `<button class="btn" data-act="dash-request" style="align-self:flex-start">Ask for access</button>`}</div>`;
+  }
   const f = V.params, ps0 = activeProjects();
   const teams = [...new Set(ps0.map(p => p.team))].sort(), countries = [...new Set(ps0.map(p => p.country))].sort();
   const ps = ps0.filter(p => (!f.team || p.team === f.team) && (!f.country || p.country === f.country) && (!f.status || pStatus(p) === f.status) && (!f.q || (p.name + " " + p.client + " " + p.funder).toLowerCase().includes(f.q.toLowerCase())));
@@ -890,7 +1014,10 @@ function vPortfolio(u) {
   const activity = all("audit").filter(e => !e.action.startsWith("Signed in")).sort((a, b) => a.at < b.at ? 1 : -1).slice(0, 7);
   const sentence = ps.length ? `We have ${ps.length} active project${ps.length > 1 ? "s" : ""} in ${new Set(ps.map(p => p.country)).size} countr${new Set(ps.map(p => p.country)).size > 1 ? "ies" : "y"}. ${st.good} ${st.good === 1 ? "is" : "are"} on track, ${st.warn} behind and ${st.crit} off track. ${pct(ts / (tb || 1))} of the ${money(tb)} budget is spent, and ${openRisks.filter(r => riskRating(r) === "High").length} high risk${openRisks.filter(r => riskRating(r) === "High").length === 1 ? " is" : "s are"} open.` : "";
   after.push(() => { const s = document.getElementById("pf-q"); if (s && f.q) { s.focus(); s.setSelectionRange(s.value.length, s.value.length); } });
-  return `<div class="row between"><div><h1>All projects</h1><p class="small">One view for every team. Only approved figures appear here.</p></div>${u.role === "staff" ? `<button class="btn" data-nav="new">+ New project</button>` : ""}</div>
+  const d = dashSettings(), viewers = dashViewers();
+  return `<div class="row between"><div><h1>Overall dashboard</h1><p class="small">Every team's projects in one place. Only approved figures appear here.</p></div><div class="row"><button class="btn ghost small" data-act="dash-link">Copy link to this dashboard</button>${u.role === "lead" ? `<button class="btn ghost small" data-act="dash-manage">${V.dashManage ? "Close" : "Who can see this"}${d.requests.length ? ` <span class="count">${d.requests.length}</span>` : ""}</button>` : ""}</div></div>
+    <p class="note">👁 ${d.mode === "everyone" ? `Open to everyone in the organisation (${viewers.length} people).` : `Shared with ${viewers.length} chosen people.`} External funders, clients and partners never see this page.</p>
+    ${u.role === "lead" && V.dashManage ? dashAccessPanel() : ""}
     ${!ps0.length ? `<div class="empty">No approved projects yet. Once a line manager approves a project, it appears here for everyone.</div>` : `
     <div class="callout" aria-live="polite"><b>In plain words:</b> ${esc(sentence)}</div>
     <div class="filters row" style="align-items:flex-end">
@@ -918,6 +1045,16 @@ function vPortfolio(u) {
     </div>
     <div class="panel"><div class="panel-head"><h2>Recent activity</h2></div>${activity.map(e => `<div class="row" style="padding:6px 0;border-top:1px solid var(--line);flex-wrap:nowrap">${av(e.who)}<span class="small"><b style="color:var(--ink)">${esc(person(e.who).name)}</b> ${esc(e.action.charAt(0).toLowerCase() + e.action.slice(1))}${e.target && all("projects").find(p => p.id === e.target) ? ": " + esc(all("projects").find(p => p.id === e.target).name) : ""} <span class="note">· ${new Date(e.at).toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" })}</span></span></div>`).join("") || `<p class="small">No activity yet.</p>`}</div>`}`;
 }
+function dashAccessPanel() {
+  const d = dashSettings(), people = PEOPLE.filter(x => INTERNAL.includes(x.role) && x.role !== "lead");
+  return `<div class="panel stack" style="border-color:var(--brand)"><h2>Who can see the overall dashboard</h2>
+    ${d.requests.length ? `<div class="stack" style="gap:6px"><div class="eyebrow">Asking for access</div>${d.requests.map(r => `<div class="row between" style="padding:6px 0;border-top:1px solid var(--line)"><span class="small"><b style="color:var(--ink)">${esc(person(r.id).name)}</b> · ${esc(person(r.id).title)} · asked ${shortDate(r.at)}</span><span class="row"><button class="btn small" data-act="dash-allow" data-id="${r.id}">Give access</button><button class="btn ghost small" data-act="dash-decline" data-id="${r.id}">Decline</button></span></div>`).join("")}</div>` : ""}
+    <label class="check"><input type="radio" name="dmode" data-dash-mode="everyone" ${d.mode === "everyone" ? "checked" : ""}> <span><b>Everyone in the organisation</b><br><span class="note">All staff, line managers, finance and business development.</span></span></label>
+    <label class="check"><input type="radio" name="dmode" data-dash-mode="chosen" ${d.mode === "chosen" ? "checked" : ""}> <span><b>Only the people I choose</b></span></label>
+    ${d.mode === "chosen" ? `<div class="grid two" style="gap:4px 16px">${people.map(x => `<label class="check"><input type="checkbox" data-dash-person="${x.id}" ${d.allowed.includes(x.id) ? "checked" : ""}> ${esc(x.name)} <span class="note">· ${esc(ROLE_LABEL[x.role])}</span></label>`).join("")}</div>` : ""}
+    <p class="note">Changes apply straight away and are recorded in the audit log.</p></div>`;
+}
+async function saveDash(next, what) { if (await put("settings", { ...dashSettings(), ...next })) { await log(what, "dashboard"); render(); } }
 function mapSvg(ps) {
   const byC = {}; ps.forEach(p => { if (p.countryCode) (byC[p.countryCode] = byC[p.countryCode] || []).push(p); });
   let g = MAP.countries.map(c => `<path d="${c.d}" class="${byC[c.id] ? "on" : ""}" ${byC[c.id] ? `data-tip="${esc(c.n)}: ${byC[c.id].length} project${byC[c.id].length > 1 ? "s" : ""}"` : ""}/>`).join("");
@@ -995,7 +1132,7 @@ app.addEventListener("click", async e => {
   if (act === "si-back") { V.signin = V.signin === "verify" ? (INTERNAL.includes(person(V.pick).role) ? "pick" : "pick-ext") : "start"; return render(); }
   if (act === "si-pick") { V.pick = id; V.signin = "verify"; return render(); }
   if (act === "si-verify") { if (!/^\d{6}$/.test(document.getElementById("code").value)) { toast("Enter the 6-digit code."); return; } V.meId = V.pick; try { localStorage.setItem("projects-hub-me", V.meId); } catch {} V.view = ""; V.params = {}; V.signin = "start"; render(); if (S.loaded) log(INTERNAL.includes(me().role) ? "Signed in" : "Signed in from outside the organisation"); return; }
-  if (act === "signout") { V.meId = null; V.wiz = null; V.ci = null; try { localStorage.removeItem("projects-hub-me"); } catch {} V.signin = "pick"; return render(); }
+  if (act === "signout") { V.meId = null; V.wiz = null; V.ci = null; V.cmp = null; V.dashManage = false; V.view = ""; try { localStorage.removeItem("projects-hub-me"); } catch {} V.signin = "pick"; return render(); }
   if (act === "reset") { if (a.dataset.armed) { try { localStorage.removeItem(LOCAL_KEY); } catch {} return loadPractice(true); } a.dataset.armed = "1"; a.textContent = "Click again to wipe your practice changes"; return; }
   if (act === "refresh") { S.pendingRefresh = false; return render(); }
   // navigation
@@ -1024,6 +1161,18 @@ app.addEventListener("click", async e => {
   if (act === "risk-decide") { const d = document.getElementById("dec-" + id).value.trim(); if (!d) return toast("Write the decision first."); const r = { ...S.data.risks[id], status:"Monitoring", decision:d, decidedBy:me().id }; if (await put("risks", r)) { await log(`Decided on an escalated risk: ${r.title}`, r.projectId); toast("Decision recorded and shared with the risk owner."); render(); } return; }
   if (act === "access-ok" || act === "access-deny") { const x = { ...S.data.access[id], status:act === "access-ok" ? "active" : "revoked", approvedBy:me().id }; if (await put("access", x)) { await log(`${act === "access-ok" ? "Approved" : "Declined"} external access for ${person(x.org).name}`, x.projectIds.join(",")); render(); } return; }
   if (act === "escalate") { const r = { ...S.data.risks[id], status:"Escalated", escalatedBy:me().id, escalatedAt:new Date().toISOString() }; if (await put("risks", r)) { await log(`Escalated a risk to leadership: ${r.title}`, r.projectId); toast("Escalated. Leadership will see it in their approvals."); render(); } return; }
+  if (act === "dash-manage") { V.dashManage = !V.dashManage; return render(); }
+  if (act === "dash-request") { const d = dashSettings(); return saveDash({ requests:[...d.requests.filter(r => r.id !== me().id), { id:me().id, at:new Date().toISOString() }] }, "Asked for access to the overall dashboard"); }
+  if (act === "dash-allow") { const d = dashSettings(); toast(`${person(id).name} can now see the overall dashboard.`); return saveDash({ allowed:[...new Set([...d.allowed, id])], requests:d.requests.filter(r => r.id !== id) }, `Gave ${person(id).name} access to the overall dashboard`); }
+  if (act === "dash-decline") { const d = dashSettings(); return saveDash({ requests:d.requests.filter(r => r.id !== id) }, `Declined ${person(id).name}'s dashboard request`); }
+  if (act === "dash-link") { const url = location.href.split("#")[0] + "#dashboard"; navigator.clipboard.writeText(url).then(() => toast("Link copied. Anyone with access opens the dashboard straight away after signing in.")).catch(() => toast("Link: " + url)); return; }
+  if (act === "email-team") { const p = S.data.projects[id], r = recipients(p), reasons = alertReasons(p); V.cmp = { pid:id, ...r, ...draftEmail(p, reasons.length ? reasons : ["Please check the plan and send your latest figures."], me().id), reasons }; if (V.view !== "project" || V.params.id !== id) go("project", { id }); else render(); return; }
+  if (act === "cmp-cancel") { V.cmp = null; return render(); }
+  if (act === "cmp-send") { const c = V.cmp, p = S.data.projects[id]; if (!c.to.length) return toast("Choose at least one person to send to."); if (!c.subject.trim() || !c.body.trim()) return toast("Add a subject and a message."); const m = await sendMessage(p, { to:c.to, cc:c.cc, subject:c.subject.trim(), body:c.body, kind:"manual", reasons:c.reasons }); if (m) { V.cmp = null; toast(`Sent to ${[...c.to, ...c.cc].map(x => person(x).name.split(" ")[0]).join(", ")}. It's in their Messages now.`); render(); } return; }
+  if (act === "email-all-behind") { const ps = visibleProjects(me()).filter(p => alertReasons(p).length); if (!a.dataset.armed) { a.dataset.armed = "1"; a.textContent = `Click again to email ${ps.length} project teams`; return; } let n = 0; for (const p of ps) { const r = recipients(p), reasons = alertReasons(p); if (r.to.length && await sendMessage(p, { ...r, ...draftEmail(p, reasons, me().id), kind:"manual", reasons })) n++; } toast(`Emailed ${n} project team${n === 1 ? "" : "s"}.`); return render(); }
+  if (act === "box") { V.params = { box:a.dataset.box }; return render(); }
+  if (act === "msg-open") { V.params = { ...V.params, mid:id }; return render(); }
+  if (act === "msg-copy") { const m = S.data.messages[id], txt = `To: ${(m.email?.to || []).join(", ")}${m.email?.cc?.length ? "\nCc: " + m.email.cc.join(", ") : ""}\nSubject: ${m.subject}\n\n${m.body}`; navigator.clipboard.writeText(txt).then(() => toast("Copied. Paste it into a new email.")).catch(() => { const r = document.createRange(); r.selectNodeContents(document.getElementById("msgBody")); getSelection().removeAllRanges(); getSelection().addRange(r); toast("Couldn't copy automatically. The message is selected: press Ctrl+C."); }); return; }
   if (act === "remind") { await log("Sent an update reminder", id); toast(`Reminder sent to ${person(S.data.projects[id].ownerId).name}.`); return; }
   if (act === "reassign") { const p = S.data.projects[id], opts = PEOPLE.filter(x => ["staff", "manager"].includes(x.role) && x.id !== p.ownerId); a.outerHTML = `<span class="row" style="flex-wrap:nowrap"><select id="ra-${id}" aria-label="New owner">${opts.map(o => `<option value="${o.id}">${esc(o.name)}</option>`).join("")}</select><button class="btn small" data-act="reassign-do" data-id="${id}">Move</button></span>`; return; }
   if (act === "reassign-do") { const to = document.getElementById("ra-" + id).value, p = { ...S.data.projects[id], ownerId:to }; if (await put("projects", p)) { await log(`Reassigned the project to ${person(to).name}`, id); toast(`${person(to).name} now owns ${p.name}. Their reminders start now.`); render(); } return; }
@@ -1065,12 +1214,17 @@ app.addEventListener("input", e => {
   if (c && t.dataset.ci === "risk") { c.risk = { text:t.value }; V.formTouched = true; ciSaveDraft(); return; }
   if (c && t.dataset.ci === "note") { c.note = t.value; V.formTouched = true; ciSaveDraft(); return; }
   if (t.dataset.rp === "text") { V.params.text = t.value; V.formTouched = true; return; }
+  if (t.dataset.cmp && V.cmp) { V.cmp[t.dataset.cmp] = t.value; return; }
   if (t.dataset.pf === "q") { clearTimeout(t._d); t._d = setTimeout(() => { V.params = { ...V.params, q:t.value }; render(); }, 250); return; }
   if (t.closest("#main") && V.view === "access") V.formTouched = true;
 });
 app.addEventListener("change", async e => {
   const t = e.target, w = V.wiz, c = V.ci;
   if (t.dataset.w === "sector" && w) { if (!w.metrics.some(m => m.name.trim() && m.history?.length)) w.metrics = (TEMPLATES[t.value] || []).map(([n, mode, unit, b, tg], k) => ({ id:"k" + (k + 1), name:n, mode, unit, baseline:b, target:tg, frequency:"Monthly", history:[] })); return; }
+  for (const key of ["to", "cc"]) if (t.dataset["cmp" + key[0].toUpperCase() + key[1]] && V.cmp) { const pid = t.dataset["cmp" + key[0].toUpperCase() + key[1]]; V.cmp[key] = t.checked ? [...new Set([...V.cmp[key], pid])] : V.cmp[key].filter(x => x !== pid); return render(); }
+  if (t.dataset.dashMode) { const d = dashSettings(), mode = t.dataset.dashMode; return saveDash({ mode, allowed:mode === "chosen" && !d.allowed.length ? dashViewers().filter(x => x.role !== "lead").map(x => x.id) : d.allowed }, mode === "everyone" ? "Opened the overall dashboard to everyone" : "Limited the overall dashboard to chosen people"); }
+  if (t.dataset.dashPerson) { const d = dashSettings(), id = t.dataset.dashPerson; return saveDash({ allowed:t.checked ? [...new Set([...d.allowed, id])] : d.allowed.filter(x => x !== id) }, `${t.checked ? "Gave" : "Removed"} ${person(id).name} ${t.checked ? "access to" : "from"} the overall dashboard`); }
+  if (t.dataset.alert) { const p = S.data.projects[t.dataset.id], k = t.dataset.alert, alerts = { ...alertSettings(p), [k]:k === "frequency" ? t.value : t.checked }; if (await put("projects", { ...p, alerts })) { await log(`Changed automatic alert settings (${k})`, p.id); render(); } return; }
   if (t.dataset.member && w) { w.members = t.checked ? [...w.members, t.dataset.member] : w.members.filter(x => x !== t.dataset.member); return; }
   if (c && t.dataset.ciMs) { c.milestonesDone = t.checked ? [...c.milestonesDone, t.dataset.ciMs] : c.milestonesDone.filter(x => x !== t.dataset.ciMs); ciSaveDraft(); return; }
   if (c && t.dataset.ciPd != null) { c.evidence.personalData = t.checked; if (!t.checked) c.evidence.consent = false; ciSaveDraft(); return render(); }
@@ -1081,6 +1235,7 @@ app.addEventListener("change", async e => {
   if (t.dataset.pf && t.dataset.pf !== "q") { V.params = { ...V.params, [t.dataset.pf]:t.value }; return render(); }
 });
 
+addEventListener("hashchange", () => { if (location.hash === "#dashboard" && V.meId && (NAV[me().role] || []).some(n => n[0] === "portfolio")) go("portfolio"); });
 render();
 connect();
 </script>

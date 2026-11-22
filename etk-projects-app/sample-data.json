@@ -1268,5 +1268,14 @@
    "action": "Submitted a new project for approval",
    "target": "gh-agro"
   }
+ ],
+ "messages": [],
+ "settings": [
+  {
+   "id": "dashboard",
+   "mode": "everyone",
+   "allowed": [],
+   "requests": []
+  }
  ]
 }

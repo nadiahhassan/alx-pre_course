@@ -136,7 +136,7 @@ audit = [
     {"id": "e4", "at": ts(-1, 11), "who": "efua", "action": "Submitted a new project for approval", "target": "gh-agro"},
 ]
 
-data = {"base": BASE.isoformat(), "projects": projects, "updates": updates, "risks": risks, "snapshots": snapshots, "access": access, "questions": questions, "audit": audit}
+data = {"base": BASE.isoformat(), "projects": projects, "updates": updates, "risks": risks, "snapshots": snapshots, "access": access, "questions": questions, "audit": audit, "messages": [], "settings": [{"id": "dashboard", "mode": "everyone", "allowed": [], "requests": []}]}
 # Every project's spend must stay within its budget lines; every reference must resolve.
 ids = {p["id"] for p in projects}
 for col in ("updates", "risks", "snapshots", "questions"):
