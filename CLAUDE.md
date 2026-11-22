@@ -15,6 +15,7 @@ Guidance for Claude Code when working in this repository.
 | `portfolio-tracker/` | Multi-country projects dashboard concept for ETK Group: world map, people, budget, risk register, update inbox with AI extraction, reports. |
 | `etk-automation/` | The automation behind the ETK dashboard (TypeScript, Node 20+): board adapters (Monday.com, Asana, Trello, Jira, sheets), sync into one portfolio, AI email intake with an approval queue, alerts, weekly report, and the `dashboard-data.json` export the dashboard loads. See its README and PLAYBOOK. |
 | `product-blueprint/` | ETK Projects product blueprint: stakeholders, wireframe list, worker / line manager / external journeys as low-fidelity wireframes, data protection, and the comparison with Power BI. A standalone page with one tab per section. |
+| `etk-projects-app/` | Projects Hub, the full working app (company name removed at the owner's request): sign-in for staff, line managers, leadership, finance, business development, funders, clients and partners; project set-up with grant budgets; monthly updates; approvals; risks; reports; external access; audit log; and the all-teams dashboard. Uses the artifact `db` capability so everyone sees the same data, or a practice copy in the browser. `build_sample.py` makes `sample-data.json`. |
 
 The owner is Nadia Hassan. She is also the "Global lead" persona (lead@example.org) in the sample data.
 
@@ -62,6 +63,7 @@ Rules for these pages:
   - `gni-scorecard-v1` (GNI scorecard)
   - `impact-studio-v1` (Impact Studio)
   - `portfolio-tracker-v1` (ETK projects dashboard)
+  - `projects-hub-practice-v1`, `projects-hub-me`, `projects-hub-draft-*` (Projects Hub practice mode, signed-in person, update drafts)
 
   Bump the key, or migrate the stored data, if the stored shape changes.
 - **AI features** use the artifact `sample` capability. Hide the feature when it isn't available.

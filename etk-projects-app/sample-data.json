@@ -1,0 +1,1272 @@
+{
+ "base": "2026-11-21",
+ "projects": [
+  {
+   "id": "ng-retail",
+   "status": "active",
+   "currency": "USD",
+   "committed": 6000,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {
+    "client": "northbridge"
+   },
+   "members": [
+    "adaeze"
+   ],
+   "name": "Retail market entry: Lagos and Abuja",
+   "country": "Nigeria",
+   "countryCode": "566",
+   "team": "Nigeria programmes",
+   "sector": "Market entry",
+   "client": "Northbridge Foods (UK)",
+   "funder": "",
+   "grantRef": "",
+   "ownerId": "tunde",
+   "approverId": "adaeze",
+   "start": "2026-06-24",
+   "end": "2027-03-21",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Staff time",
+     "amount": 90000,
+     "spent": 52000,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Travel",
+     "amount": 30000,
+     "spent": 18000,
+     "rule": "Economy only"
+    },
+    {
+     "id": "l3",
+     "name": "Regulatory fees",
+     "amount": 40000,
+     "spent": 21000,
+     "rule": ""
+    },
+    {
+     "id": "l4",
+     "name": "Events",
+     "amount": 20000,
+     "spent": 5000,
+     "rule": ""
+    }
+   ],
+   "metrics": [
+    {
+     "id": "meetings",
+     "name": "Distributor meetings held",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 40,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-07-24",
+       "value": 6,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-08-23",
+       "value": 13,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-09-22",
+       "value": 19,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-10-22",
+       "value": 24,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-11-16",
+       "value": 27,
+       "by": "tunde"
+      }
+     ]
+    },
+    {
+     "id": "registered",
+     "name": "Products registered",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 12,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-09-22",
+       "value": 2,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-11-16",
+       "value": 5,
+       "by": "tunde"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Market study delivered",
+     "due": "2026-08-03",
+     "done": "2026-08-01",
+     "clientSignoff": "approved"
+    },
+    {
+     "id": "m2",
+     "name": "Distributor shortlist",
+     "due": "2026-10-12",
+     "done": "2026-10-14",
+     "clientSignoff": "pending"
+    },
+    {
+     "id": "m3",
+     "name": "Product registration complete",
+     "due": "2026-12-11",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m4",
+     "name": "First shipment lands",
+     "due": "2027-02-19",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-11-16"
+  },
+  {
+   "id": "ng-youth",
+   "status": "active",
+   "currency": "USD",
+   "committed": 40000,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {
+    "funder": "funder",
+    "partner": "partner"
+   },
+   "members": [
+    "adaeze"
+   ],
+   "name": "Youth digital skills programme",
+   "country": "Nigeria",
+   "countryCode": "566",
+   "team": "Nigeria programmes",
+   "sector": "Capacity building",
+   "client": "",
+   "funder": "Foundation partner (education)",
+   "grantRef": "FP-2026-014",
+   "ownerId": "tunde",
+   "approverId": "adaeze",
+   "start": "2026-01-25",
+   "end": "2027-07-24",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Training delivery",
+     "amount": 380000,
+     "spent": 205000,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Employer partnerships",
+     "amount": 120000,
+     "spent": 48000,
+     "rule": ""
+    },
+    {
+     "id": "l3",
+     "name": "Sub-grants to partners",
+     "amount": 100000,
+     "spent": 52000,
+     "rule": "Signed agreement needed"
+    },
+    {
+     "id": "l4",
+     "name": "Monitoring and evaluation",
+     "amount": 50000,
+     "spent": 25000,
+     "rule": "Max 10% of total"
+    }
+   ],
+   "metrics": [
+    {
+     "id": "trained",
+     "name": "Young people trained",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 5000,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-02-24",
+       "value": 300,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-04-25",
+       "value": 1100,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-06-24",
+       "value": 1700,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-08-23",
+       "value": 2200,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-10-22",
+       "value": 2550,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-11-18",
+       "value": 2700,
+       "by": "tunde"
+      }
+     ]
+    },
+    {
+     "id": "jobs",
+     "name": "In work within 6 months",
+     "mode": "rate",
+     "unit": "%",
+     "baseline": 0,
+     "target": 45,
+     "frequency": "Quarterly",
+     "history": [
+      {
+       "date": "2026-07-24",
+       "value": 28,
+       "by": "tunde"
+      },
+      {
+       "date": "2026-10-22",
+       "value": 41,
+       "by": "tunde"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Cohort 3 graduation",
+     "due": "2026-10-22",
+     "done": "2026-10-24",
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Cohort 4 starts",
+     "due": "2026-12-01",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m3",
+     "name": "Employer partners signed",
+     "due": "2026-12-31",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-11-16"
+  },
+  {
+   "id": "ng-fintech",
+   "status": "active",
+   "currency": "USD",
+   "committed": 4000,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {},
+   "members": [
+    "daniel"
+   ],
+   "name": "Fintech licensing support",
+   "country": "Nigeria",
+   "countryCode": "566",
+   "team": "Nigeria programmes",
+   "sector": "Regulatory compliance",
+   "client": "Kestrel Pay",
+   "funder": "",
+   "grantRef": "",
+   "ownerId": "adaeze",
+   "approverId": "nadia",
+   "start": "2026-07-24",
+   "end": "2027-01-20",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Staff time",
+     "amount": 60000,
+     "spent": 58000,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Legal fees",
+     "amount": 30000,
+     "spent": 24000,
+     "rule": ""
+    }
+   ],
+   "metrics": [
+    {
+     "id": "compliance",
+     "name": "Compliance requirements met",
+     "mode": "rate",
+     "unit": "%",
+     "baseline": 30,
+     "target": 100,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-08-23",
+       "value": 45,
+       "by": "adaeze"
+      },
+      {
+       "date": "2026-09-22",
+       "value": 62,
+       "by": "adaeze"
+      },
+      {
+       "date": "2026-10-22",
+       "value": 70,
+       "by": "adaeze"
+      },
+      {
+       "date": "2026-11-12",
+       "value": 74,
+       "by": "adaeze"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Gap analysis",
+     "due": "2026-08-18",
+     "done": "2026-08-17",
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Licence application filed",
+     "due": "2026-11-01",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m3",
+     "name": "Licence decision",
+     "due": "2027-01-10",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-11-12"
+  },
+  {
+   "id": "gh-distributor",
+   "status": "active",
+   "currency": "USD",
+   "committed": 8500,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {},
+   "members": [],
+   "name": "Distributor search: medical devices",
+   "country": "Ghana",
+   "countryCode": "288",
+   "team": "Ghana programmes",
+   "sector": "Partner search",
+   "client": "Helix Medical",
+   "funder": "",
+   "grantRef": "",
+   "ownerId": "kwame",
+   "approverId": "ama",
+   "start": "2026-08-23",
+   "end": "2027-02-19",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Staff time",
+     "amount": 26000,
+     "spent": 12400,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Travel",
+     "amount": 9000,
+     "spent": 7100,
+     "rule": "Economy only"
+    },
+    {
+     "id": "l3",
+     "name": "Events and venues",
+     "amount": 15000,
+     "spent": 4500,
+     "rule": ""
+    },
+    {
+     "id": "l4",
+     "name": "Sub-grants to partners",
+     "amount": 10000,
+     "spent": 0,
+     "rule": "Signed agreement needed"
+    }
+   ],
+   "metrics": [
+    {
+     "id": "screened",
+     "name": "Distributors screened",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 30,
+     "frequency": "Weekly",
+     "history": [
+      {
+       "date": "2026-09-12",
+       "value": 5,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-09-27",
+       "value": 11,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-10-10",
+       "value": 14,
+       "by": "kwame"
+      }
+     ]
+    },
+    {
+     "id": "shortlisted",
+     "name": "Distributors shortlisted",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 5,
+     "frequency": "Weekly",
+     "history": [
+      {
+       "date": "2026-10-10",
+       "value": 2,
+       "by": "kwame"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Longlist agreed",
+     "due": "2026-09-22",
+     "done": "2026-09-21",
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Shortlist presented",
+     "due": "2026-11-11",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m3",
+     "name": "Contracts signed",
+     "due": "2027-01-30",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-10-10"
+  },
+  {
+   "id": "gh-cocoa",
+   "status": "active",
+   "currency": "USD",
+   "committed": 3000,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {},
+   "members": [
+    "daniel"
+   ],
+   "name": "Cocoa supply-chain compliance",
+   "country": "Ghana",
+   "countryCode": "288",
+   "team": "Ghana programmes",
+   "sector": "Regulatory compliance",
+   "client": "Bramble Chocolate",
+   "funder": "",
+   "grantRef": "",
+   "ownerId": "kwame",
+   "approverId": "ama",
+   "start": "2026-05-05",
+   "end": "2027-03-01",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Field mapping team",
+     "amount": 70000,
+     "spent": 48000,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Data tools",
+     "amount": 20000,
+     "spent": 15000,
+     "rule": ""
+    },
+    {
+     "id": "l3",
+     "name": "Travel",
+     "amount": 30000,
+     "spent": 15000,
+     "rule": ""
+    }
+   ],
+   "metrics": [
+    {
+     "id": "farms",
+     "name": "Farms mapped with GPS",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 3000,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-06-04",
+       "value": 200,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-08-03",
+       "value": 1100,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-09-24",
+       "value": 1850,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-10-23",
+       "value": 2250,
+       "by": "kwame"
+      }
+     ]
+    },
+    {
+     "id": "files",
+     "name": "Suppliers with due-diligence files",
+     "mode": "rate",
+     "unit": "%",
+     "baseline": 0,
+     "target": 100,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-08-13",
+       "value": 40,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-09-24",
+       "value": 62,
+       "by": "kwame"
+      },
+      {
+       "date": "2026-10-23",
+       "value": 71,
+       "by": "kwame"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Supplier survey",
+     "due": "2026-06-24",
+     "done": "2026-06-22",
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Farm mapping complete",
+     "due": "2026-12-21",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m3",
+     "name": "Due-diligence statement",
+     "due": "2027-02-24",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-10-23"
+  },
+  {
+   "id": "gh-port",
+   "status": "active",
+   "currency": "USD",
+   "committed": 0,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {},
+   "members": [],
+   "name": "Port logistics study",
+   "country": "Ghana",
+   "countryCode": "288",
+   "team": "Ghana programmes",
+   "sector": "Market entry",
+   "client": "Atlas Freight",
+   "funder": "",
+   "grantRef": "",
+   "ownerId": "efua",
+   "approverId": "ama",
+   "start": "2026-09-02",
+   "end": "2026-12-31",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Consultants",
+     "amount": 30000,
+     "spent": 21000,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Travel",
+     "amount": 8000,
+     "spent": 5500,
+     "rule": ""
+    }
+   ],
+   "metrics": [
+    {
+     "id": "interviews",
+     "name": "Shipper interviews",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 40,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-10-02",
+       "value": 10,
+       "by": "efua"
+      },
+      {
+       "date": "2026-11-01",
+       "value": 18,
+       "by": "efua"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Inception report",
+     "due": "2026-09-22",
+     "done": "2026-09-24",
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Draft report",
+     "due": "2026-10-31",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m3",
+     "name": "Final report",
+     "due": "2026-12-26",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-11-01"
+  },
+  {
+   "id": "ke-energy",
+   "status": "active",
+   "currency": "USD",
+   "committed": 10000,
+   "returnComment": "",
+   "createdAt": "2026-05-05T09:00:00Z",
+   "approvedAt": "2026-05-07T09:00:00Z",
+   "externals": {},
+   "members": [
+    "grace"
+   ],
+   "name": "Market entry: renewable energy",
+   "country": "Kenya",
+   "countryCode": "404",
+   "team": "Kenya programmes",
+   "sector": "Market entry",
+   "client": "Solano Energy",
+   "funder": "",
+   "grantRef": "",
+   "ownerId": "wanjiru",
+   "approverId": "nadia",
+   "start": "2026-05-25",
+   "end": "2027-05-20",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Staff time",
+     "amount": 120000,
+     "spent": 64000,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Travel",
+     "amount": 40000,
+     "spent": 25000,
+     "rule": ""
+    },
+    {
+     "id": "l3",
+     "name": "Partner events",
+     "amount": 40000,
+     "spent": 15000,
+     "rule": ""
+    }
+   ],
+   "metrics": [
+    {
+     "id": "sites",
+     "name": "Site visits completed",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 20,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-06-24",
+       "value": 3,
+       "by": "wanjiru"
+      },
+      {
+       "date": "2026-08-13",
+       "value": 8,
+       "by": "wanjiru"
+      },
+      {
+       "date": "2026-10-02",
+       "value": 11,
+       "by": "wanjiru"
+      },
+      {
+       "date": "2026-11-17",
+       "value": 12,
+       "by": "wanjiru"
+      }
+     ]
+    },
+    {
+     "id": "mous",
+     "name": "Partnership MoUs signed",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 4,
+     "frequency": "Monthly",
+     "history": [
+      {
+       "date": "2026-09-22",
+       "value": 1,
+       "by": "wanjiru"
+      },
+      {
+       "date": "2026-11-17",
+       "value": 2,
+       "by": "wanjiru"
+      }
+     ]
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Policy review",
+     "due": "2026-06-24",
+     "done": "2026-06-24",
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Site visits complete",
+     "due": "2026-11-01",
+     "done": "2026-10-27",
+     "clientSignoff": null
+    },
+    {
+     "id": "m3",
+     "name": "Partner MoUs signed",
+     "due": "2027-01-20",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-11-17"
+  },
+  {
+   "id": "gh-agro",
+   "status": "pending",
+   "currency": "USD",
+   "committed": 0,
+   "returnComment": "",
+   "createdAt": "2026-11-20T09:00:00Z",
+   "approvedAt": null,
+   "externals": {},
+   "members": [],
+   "name": "Agro-processing investor scoping",
+   "country": "Ghana",
+   "countryCode": "288",
+   "team": "Ghana programmes",
+   "sector": "Investment",
+   "client": "",
+   "funder": "Atlas Agri Fund",
+   "grantRef": "AAF-77",
+   "ownerId": "efua",
+   "approverId": "ama",
+   "start": "2026-12-01",
+   "end": "2027-05-30",
+   "budgetLines": [
+    {
+     "id": "l1",
+     "name": "Consultants",
+     "amount": 28000,
+     "spent": 0,
+     "rule": ""
+    },
+    {
+     "id": "l2",
+     "name": "Travel",
+     "amount": 7000,
+     "spent": 0,
+     "rule": "Economy only"
+    },
+    {
+     "id": "l3",
+     "name": "Investor event",
+     "amount": 15000,
+     "spent": 0,
+     "rule": ""
+    }
+   ],
+   "metrics": [
+    {
+     "id": "sites",
+     "name": "Processing sites assessed",
+     "mode": "count",
+     "unit": "",
+     "baseline": 0,
+     "target": 8,
+     "frequency": "Monthly",
+     "history": []
+    }
+   ],
+   "milestones": [
+    {
+     "id": "m1",
+     "name": "Site shortlist",
+     "due": "2027-01-20",
+     "done": null,
+     "clientSignoff": null
+    },
+    {
+     "id": "m2",
+     "name": "Investment memo",
+     "due": "2027-05-10",
+     "done": null,
+     "clientSignoff": null
+    }
+   ],
+   "lastUpdate": "2026-11-20"
+  }
+ ],
+ "updates": [
+  {
+   "id": "u-gh-distributor-2026-11",
+   "projectId": "gh-distributor",
+   "period": "2026-11",
+   "by": "kwame",
+   "submittedAt": "2026-11-20T09:00:00Z",
+   "status": "pending",
+   "source": "Email (AI, checked by Kwame)",
+   "metrics": [
+    {
+     "metricId": "screened",
+     "value": 26
+    },
+    {
+     "metricId": "shortlisted",
+     "value": 4
+    }
+   ],
+   "spend": [
+    {
+     "lineId": "l2",
+     "amount": 1200
+    },
+    {
+     "lineId": "l1",
+     "amount": 2400
+    }
+   ],
+   "milestonesDone": [
+    "m2"
+   ],
+   "risk": {
+    "text": "Two distributors want exclusivity for the whole of Ghana"
+   },
+   "note": "Back from the field. Shortlist presented to Helix on Tuesday.",
+   "evidence": {
+    "files": [
+     "shortlist.pdf",
+     "kumasi-receipts.jpg"
+    ],
+    "personalData": false,
+    "consent": false
+   },
+   "comment": "",
+   "decidedBy": null,
+   "decidedAt": null
+  }
+ ],
+ "risks": [
+  {
+   "id": "r1",
+   "projectId": "ng-fintech",
+   "title": "Licence decision delayed by regulator backlog",
+   "category": "Regulatory",
+   "l": 4,
+   "i": 4,
+   "ownerId": "adaeze",
+   "mitigation": "Weekly calls with the regulator",
+   "status": "Open",
+   "review": "2026-11-28",
+   "trend": "up",
+   "needsScoring": false
+  },
+  {
+   "id": "r2",
+   "projectId": "ng-retail",
+   "title": "Product registration queue times rising",
+   "category": "Regulatory",
+   "l": 3,
+   "i": 4,
+   "ownerId": "tunde",
+   "mitigation": "Use a local registration agent",
+   "status": "Monitoring",
+   "review": "2026-12-05",
+   "trend": "steady",
+   "needsScoring": false
+  },
+  {
+   "id": "r3",
+   "projectId": "gh-distributor",
+   "title": "No recent contact from distributor longlist",
+   "category": "Delivery",
+   "l": 4,
+   "i": 3,
+   "ownerId": "kwame",
+   "mitigation": "Book in-person visits",
+   "status": "Open",
+   "review": "2026-11-19",
+   "trend": "up",
+   "needsScoring": false
+  },
+  {
+   "id": "r4",
+   "projectId": "gh-cocoa",
+   "title": "Smallholder land titles incomplete",
+   "category": "Partner",
+   "l": 3,
+   "i": 4,
+   "ownerId": "kwame",
+   "mitigation": "Work with cooperatives on proof of land use",
+   "status": "Escalated",
+   "review": "2026-12-01",
+   "trend": "steady",
+   "needsScoring": false,
+   "escalatedBy": "ama",
+   "escalatedAt": "2026-11-14T09:00:00Z"
+  },
+  {
+   "id": "r5",
+   "projectId": "gh-port",
+   "title": "Port strike risk in December",
+   "category": "Political",
+   "l": 4,
+   "i": 5,
+   "ownerId": "efua",
+   "mitigation": "Prepare a second port option",
+   "status": "Open",
+   "review": "2026-11-24",
+   "trend": "up",
+   "needsScoring": false
+  },
+  {
+   "id": "r6",
+   "projectId": "ng-youth",
+   "title": "Employer partners slow to commit",
+   "category": "Partner",
+   "l": 2,
+   "i": 4,
+   "ownerId": "tunde",
+   "mitigation": "Bring the employer roundtable forward",
+   "status": "Monitoring",
+   "review": "2026-12-12",
+   "trend": "down",
+   "needsScoring": false
+  },
+  {
+   "id": "r7",
+   "projectId": "ke-energy",
+   "title": "Grid connection policy change",
+   "category": "Political",
+   "l": 2,
+   "i": 5,
+   "ownerId": "wanjiru",
+   "mitigation": "Track the draft regulation",
+   "status": "Monitoring",
+   "review": "2026-12-16",
+   "trend": "steady",
+   "needsScoring": false
+  }
+ ],
+ "snapshots": [
+  {
+   "id": "s-ng-youth-2026-09",
+   "projectId": "ng-youth",
+   "audience": "funder",
+   "org": "funder",
+   "title": "Youth digital skills programme: quarterly report",
+   "asOf": "2026-09-30",
+   "summary": "Training is on pace: 2,550 young people trained against a plan of about 2,600 by this point. 41% of graduates from cohort 2 were in work within six months, close to the 45% target. Spend is on budget.",
+   "kpis": [
+    {
+     "label": "Young people trained",
+     "value": "2,550 of 5,000"
+    },
+    {
+     "label": "In work within 6 months",
+     "value": "41% (target 45%)"
+    },
+    {
+     "label": "Grant spent",
+     "value": "$310k of $650k"
+    }
+   ],
+   "lines": [
+    {
+     "name": "Training delivery",
+     "amount": 380000,
+     "spent": 195000
+    },
+    {
+     "name": "Employer partnerships",
+     "amount": 120000,
+     "spent": 44000
+    },
+    {
+     "name": "Sub-grants to partners",
+     "amount": 100000,
+     "spent": 48000
+    },
+    {
+     "name": "Monitoring and evaluation",
+     "amount": 50000,
+     "spent": 23000
+    }
+   ],
+   "milestones": [
+    {
+     "name": "Cohort 3 graduation",
+     "due": "2026-10-22",
+     "done": null
+    },
+    {
+     "name": "Cohort 4 starts",
+     "due": "2026-12-01",
+     "done": null
+    }
+   ],
+   "story": "Amaka finished cohort 2 and now builds websites for three Lagos shops (shared with consent).",
+   "signedBy": "adaeze",
+   "signedAt": "2026-10-02T09:00:00Z",
+   "nextReport": "2026-12-31"
+  },
+  {
+   "id": "s-ng-retail-2026-10",
+   "projectId": "ng-retail",
+   "audience": "client",
+   "org": "northbridge",
+   "title": "Northbridge market entry: October update",
+   "asOf": "2026-10-22",
+   "summary": "The distributor shortlist was delivered. Product registration is slower than planned: 3 of 12 products are registered. We have engaged a local agent to speed this up.",
+   "kpis": [
+    {
+     "label": "Distributor meetings",
+     "value": "24"
+    },
+    {
+     "label": "Products registered",
+     "value": "3 of 12"
+    }
+   ],
+   "lines": [],
+   "milestones": [
+    {
+     "name": "Market study delivered",
+     "due": "2026-08-03",
+     "done": "2026-08-01"
+    },
+    {
+     "name": "Distributor shortlist",
+     "due": "2026-10-12",
+     "done": "2026-10-14"
+    },
+    {
+     "name": "Product registration complete",
+     "due": "2026-12-11",
+     "done": null
+    }
+   ],
+   "story": "",
+   "signedBy": "adaeze",
+   "signedAt": "2026-10-23T09:00:00Z",
+   "nextReport": "2026-12-01"
+  }
+ ],
+ "access": [
+  {
+   "id": "a-funder",
+   "org": "funder",
+   "email": "programmes@foundation.example",
+   "projectIds": [
+    "ng-youth"
+   ],
+   "expires": "2027-03-31",
+   "invitedBy": "nadia",
+   "approvedBy": "daniel",
+   "lastView": "2026-11-19T09:00:00Z",
+   "status": "active"
+  },
+  {
+   "id": "a-northbridge",
+   "org": "northbridge",
+   "email": "ops@northbridge.example",
+   "projectIds": [
+    "ng-retail"
+   ],
+   "expires": "2027-06-29",
+   "invitedBy": "adaeze",
+   "approvedBy": "nadia",
+   "lastView": "2026-11-21T09:00:00Z",
+   "status": "active"
+  },
+  {
+   "id": "a-partner",
+   "org": "partner",
+   "email": "data@lagostechhub.example",
+   "projectIds": [
+    "ng-youth"
+   ],
+   "expires": "2026-12-31",
+   "invitedBy": "tunde",
+   "approvedBy": "nadia",
+   "lastView": null,
+   "status": "active"
+  }
+ ],
+ "questions": [
+  {
+   "id": "q1",
+   "projectId": "ng-retail",
+   "fromId": "northbridge",
+   "text": "Can we see the list of products still waiting for registration?",
+   "at": "2026-11-18T09:00:00Z",
+   "answer": "",
+   "answeredBy": null
+  }
+ ],
+ "audit": [
+  {
+   "id": "e1",
+   "at": "2026-10-02T09:00:00Z",
+   "who": "adaeze",
+   "action": "Signed off and shared a report with Foundation partner",
+   "target": "ng-youth"
+  },
+  {
+   "id": "e2",
+   "at": "2026-11-14T09:00:00Z",
+   "who": "ama",
+   "action": "Escalated a risk to leadership: Smallholder land titles incomplete",
+   "target": "gh-cocoa"
+  },
+  {
+   "id": "e3",
+   "at": "2026-11-20T09:00:00Z",
+   "who": "kwame",
+   "action": "Sent the November update for approval",
+   "target": "gh-distributor"
+  },
+  {
+   "id": "e4",
+   "at": "2026-11-20T11:00:00Z",
+   "who": "efua",
+   "action": "Submitted a new project for approval",
+   "target": "gh-agro"
+  }
+ ]
+}
