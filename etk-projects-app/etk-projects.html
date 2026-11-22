@@ -322,11 +322,11 @@ try { V.meId = localStorage.getItem("projects-hub-me"); } catch {}
 const me = () => person(V.meId);
 const FORM_VIEWS = ["new", "checkin", "reports", "access", "returns"];
 const NAV = {
-  staff:[["home", "My work"], ["portfolio", "Overall dashboard"], ["projects", "My projects"], ["new", "New project"], ["inbox", "Messages"], ["risks", "My risks"]],
-  manager:[["team", "My team"], ["portfolio", "Overall dashboard"], ["approvals", "Approvals"], ["inbox", "Messages"], ["projects", "Team projects"], ["risks", "Risk review"], ["reports", "Reports"], ["access", "External access"]],
-  lead:[["portfolio", "Overall dashboard"], ["approvals", "Approvals"], ["inbox", "Messages"], ["team", "My team"], ["risks", "Risks"], ["reports", "Reports"], ["access", "External access"], ["audit", "Audit log"]],
-  finance:[["budgets", "Budgets"], ["portfolio", "Overall dashboard"], ["inbox", "Messages"], ["audit", "Audit log"]],
-  bd:[["portfolio", "Overall dashboard"], ["inbox", "Messages"], ["shared", "Shared reports"]],
+  staff:[["home", "My work"], ["portfolio", "Project dashboard"], ["projects", "My projects"], ["new", "New project"], ["inbox", "Messages"], ["risks", "My risks"]],
+  manager:[["team", "My team"], ["portfolio", "Project dashboard"], ["approvals", "Approvals"], ["inbox", "Messages"], ["projects", "Team projects"], ["risks", "Risk review"], ["reports", "Reports"], ["access", "External access"]],
+  lead:[["portfolio", "Project dashboard"], ["approvals", "Approvals"], ["inbox", "Messages"], ["team", "My team"], ["risks", "Risks"], ["reports", "Reports"], ["access", "External access"], ["audit", "Audit log"]],
+  finance:[["budgets", "Budgets"], ["portfolio", "Project dashboard"], ["inbox", "Messages"], ["audit", "Audit log"]],
+  bd:[["portfolio", "Project dashboard"], ["inbox", "Messages"], ["shared", "Shared reports"]],
   funder:[["grants", "Your grants"]],
   client:[["engagement", "Your project"]],
   partner:[["returns", "Monthly return"]],
@@ -342,7 +342,7 @@ function visibleProjects(u = me()) {
   if (u.role === "staff") return ps.filter(p => p.ownerId === u.id || (p.members || []).includes(u.id));
   return [];
 }
-// Overall dashboard access: everyone inside the organisation by default; the Global lead can limit it to chosen people.
+// Project dashboard access: everyone inside the organisation by default; the Global lead can limit it to chosen people.
 const dashSettings = () => ({ id:"dashboard", mode:"everyone", allowed:[], requests:[], ...(S.data.settings?.dashboard || {}) });
 function hasDashboard(u = me()) { if (!INTERNAL.includes(u.role)) return false; if (u.role === "lead") return true; const d = dashSettings(); return d.mode === "everyone" || d.allowed.includes(u.id); }
 const dashViewers = () => PEOPLE.filter(x => INTERNAL.includes(x.role) && hasDashboard(x));
@@ -483,7 +483,7 @@ function vHome(u) {
 function dashTeaser(u) {
   if (!INTERNAL.includes(u.role)) return "";
   const ps = activeProjects(), st = { good:0, warn:0, crit:0, none:0 }; ps.forEach(p => st[pStatus(p)]++);
-  return `<button class="acct" data-nav="portfolio" style="border-color:var(--brand)"><span style="flex:1"><b>Overall dashboard</b><span>${hasDashboard(u) ? `${ps.length} projects across every team · <i class="dot d-good"></i>${st.good} on track · <i class="dot d-warn"></i>${st.warn} behind · <i class="dot d-crit"></i>${st.crit} off track` : "See every team's projects in one place. Ask for access."}</span></span><span class="strong" style="color:var(--brand)">Open →</span></button>`;
+  return `<button class="acct" data-nav="portfolio" style="border-color:var(--brand)"><span style="flex:1"><b>Project dashboard</b><span>${hasDashboard(u) ? `${ps.length} projects across every team · <i class="dot d-good"></i>${st.good} on track · <i class="dot d-warn"></i>${st.warn} behind · <i class="dot d-crit"></i>${st.crit} off track` : "See every team's projects in one place. Ask for access."}</span></span><span class="strong" style="color:var(--brand)">Open →</span></button>`;
 }
 function projectTable(ps, compact) {
   if (!ps.length) return `<div class="empty">No projects yet. ${me().role === "staff" ? `<button class="link" data-nav="new">Set up your first project</button>` : ""}</div>`;
@@ -1001,7 +1001,7 @@ function vShared() {
 function vPortfolio(u) {
   if (!hasDashboard(u)) {
     const asked = dashSettings().requests.some(r => r.id === u.id);
-    return `<h1>Overall dashboard</h1><div class="panel stack" style="max-width:560px"><h2>You don't have access yet</h2><p class="small">The overall dashboard shows every team's projects, budgets and risks in one place. The Global lead decides who can see it.</p>${asked ? `<p class="okmsg">Request sent. You'll see the dashboard here as soon as ${esc(PEOPLE.find(x => x.role === "lead").name)} gives you access.</p>` : `<button class="btn" data-act="dash-request" style="align-self:flex-start">Ask for access</button>`}</div>`;
+    return `<h1>Project dashboard</h1><div class="panel stack" style="max-width:560px"><h2>You don't have access yet</h2><p class="small">The project dashboard shows every team's projects, budgets and risks in one place. The Global lead decides who can see it.</p>${asked ? `<p class="okmsg">Request sent. You'll see the dashboard here as soon as ${esc(PEOPLE.find(x => x.role === "lead").name)} gives you access.</p>` : `<button class="btn" data-act="dash-request" style="align-self:flex-start">Ask for access</button>`}</div>`;
   }
   const f = V.params, ps0 = activeProjects();
   const teams = [...new Set(ps0.map(p => p.team))].sort(), countries = [...new Set(ps0.map(p => p.country))].sort();
@@ -1015,7 +1015,7 @@ function vPortfolio(u) {
   const sentence = ps.length ? `We have ${ps.length} active project${ps.length > 1 ? "s" : ""} in ${new Set(ps.map(p => p.country)).size} countr${new Set(ps.map(p => p.country)).size > 1 ? "ies" : "y"}. ${st.good} ${st.good === 1 ? "is" : "are"} on track, ${st.warn} behind and ${st.crit} off track. ${pct(ts / (tb || 1))} of the ${money(tb)} budget is spent, and ${openRisks.filter(r => riskRating(r) === "High").length} high risk${openRisks.filter(r => riskRating(r) === "High").length === 1 ? " is" : "s are"} open.` : "";
   after.push(() => { const s = document.getElementById("pf-q"); if (s && f.q) { s.focus(); s.setSelectionRange(s.value.length, s.value.length); } });
   const d = dashSettings(), viewers = dashViewers();
-  return `<div class="row between"><div><h1>Overall dashboard</h1><p class="small">Every team's projects in one place. Only approved figures appear here.</p></div><div class="row"><button class="btn ghost small" data-act="dash-link">Copy link to this dashboard</button>${u.role === "lead" ? `<button class="btn ghost small" data-act="dash-manage">${V.dashManage ? "Close" : "Who can see this"}${d.requests.length ? ` <span class="count">${d.requests.length}</span>` : ""}</button>` : ""}</div></div>
+  return `<div class="row between"><div><h1>Project dashboard</h1><p class="small">Every team's projects in one place. Only approved figures appear here.</p></div><div class="row"><button class="btn ghost small" data-act="dash-link">Copy link to this dashboard</button>${u.role === "lead" ? `<button class="btn ghost small" data-act="dash-manage">${V.dashManage ? "Close" : "Who can see this"}${d.requests.length ? ` <span class="count">${d.requests.length}</span>` : ""}</button>` : ""}</div></div>
     <p class="note">👁 ${d.mode === "everyone" ? `Open to everyone in the organisation (${viewers.length} people).` : `Shared with ${viewers.length} chosen people.`} External funders, clients and partners never see this page.</p>
     ${u.role === "lead" && V.dashManage ? dashAccessPanel() : ""}
     ${!ps0.length ? `<div class="empty">No approved projects yet. Once a line manager approves a project, it appears here for everyone.</div>` : `
@@ -1047,7 +1047,7 @@ function vPortfolio(u) {
 }
 function dashAccessPanel() {
   const d = dashSettings(), people = PEOPLE.filter(x => INTERNAL.includes(x.role) && x.role !== "lead");
-  return `<div class="panel stack" style="border-color:var(--brand)"><h2>Who can see the overall dashboard</h2>
+  return `<div class="panel stack" style="border-color:var(--brand)"><h2>Who can see the project dashboard</h2>
     ${d.requests.length ? `<div class="stack" style="gap:6px"><div class="eyebrow">Asking for access</div>${d.requests.map(r => `<div class="row between" style="padding:6px 0;border-top:1px solid var(--line)"><span class="small"><b style="color:var(--ink)">${esc(person(r.id).name)}</b> · ${esc(person(r.id).title)} · asked ${shortDate(r.at)}</span><span class="row"><button class="btn small" data-act="dash-allow" data-id="${r.id}">Give access</button><button class="btn ghost small" data-act="dash-decline" data-id="${r.id}">Decline</button></span></div>`).join("")}</div>` : ""}
     <label class="check"><input type="radio" name="dmode" data-dash-mode="everyone" ${d.mode === "everyone" ? "checked" : ""}> <span><b>Everyone in the organisation</b><br><span class="note">All staff, line managers, finance and business development.</span></span></label>
     <label class="check"><input type="radio" name="dmode" data-dash-mode="chosen" ${d.mode === "chosen" ? "checked" : ""}> <span><b>Only the people I choose</b></span></label>
@@ -1162,8 +1162,8 @@ app.addEventListener("click", async e => {
   if (act === "access-ok" || act === "access-deny") { const x = { ...S.data.access[id], status:act === "access-ok" ? "active" : "revoked", approvedBy:me().id }; if (await put("access", x)) { await log(`${act === "access-ok" ? "Approved" : "Declined"} external access for ${person(x.org).name}`, x.projectIds.join(",")); render(); } return; }
   if (act === "escalate") { const r = { ...S.data.risks[id], status:"Escalated", escalatedBy:me().id, escalatedAt:new Date().toISOString() }; if (await put("risks", r)) { await log(`Escalated a risk to leadership: ${r.title}`, r.projectId); toast("Escalated. Leadership will see it in their approvals."); render(); } return; }
   if (act === "dash-manage") { V.dashManage = !V.dashManage; return render(); }
-  if (act === "dash-request") { const d = dashSettings(); return saveDash({ requests:[...d.requests.filter(r => r.id !== me().id), { id:me().id, at:new Date().toISOString() }] }, "Asked for access to the overall dashboard"); }
-  if (act === "dash-allow") { const d = dashSettings(); toast(`${person(id).name} can now see the overall dashboard.`); return saveDash({ allowed:[...new Set([...d.allowed, id])], requests:d.requests.filter(r => r.id !== id) }, `Gave ${person(id).name} access to the overall dashboard`); }
+  if (act === "dash-request") { const d = dashSettings(); return saveDash({ requests:[...d.requests.filter(r => r.id !== me().id), { id:me().id, at:new Date().toISOString() }] }, "Asked for access to the project dashboard"); }
+  if (act === "dash-allow") { const d = dashSettings(); toast(`${person(id).name} can now see the project dashboard.`); return saveDash({ allowed:[...new Set([...d.allowed, id])], requests:d.requests.filter(r => r.id !== id) }, `Gave ${person(id).name} access to the project dashboard`); }
   if (act === "dash-decline") { const d = dashSettings(); return saveDash({ requests:d.requests.filter(r => r.id !== id) }, `Declined ${person(id).name}'s dashboard request`); }
   if (act === "dash-link") { const url = location.href.split("#")[0] + "#dashboard"; navigator.clipboard.writeText(url).then(() => toast("Link copied. Anyone with access opens the dashboard straight away after signing in.")).catch(() => toast("Link: " + url)); return; }
   if (act === "email-team") { const p = S.data.projects[id], r = recipients(p), reasons = alertReasons(p); V.cmp = { pid:id, ...r, ...draftEmail(p, reasons.length ? reasons : ["Please check the plan and send your latest figures."], me().id), reasons }; if (V.view !== "project" || V.params.id !== id) go("project", { id }); else render(); return; }
@@ -1222,8 +1222,8 @@ app.addEventListener("change", async e => {
   const t = e.target, w = V.wiz, c = V.ci;
   if (t.dataset.w === "sector" && w) { if (!w.metrics.some(m => m.name.trim() && m.history?.length)) w.metrics = (TEMPLATES[t.value] || []).map(([n, mode, unit, b, tg], k) => ({ id:"k" + (k + 1), name:n, mode, unit, baseline:b, target:tg, frequency:"Monthly", history:[] })); return; }
   for (const key of ["to", "cc"]) if (t.dataset["cmp" + key[0].toUpperCase() + key[1]] && V.cmp) { const pid = t.dataset["cmp" + key[0].toUpperCase() + key[1]]; V.cmp[key] = t.checked ? [...new Set([...V.cmp[key], pid])] : V.cmp[key].filter(x => x !== pid); return render(); }
-  if (t.dataset.dashMode) { const d = dashSettings(), mode = t.dataset.dashMode; return saveDash({ mode, allowed:mode === "chosen" && !d.allowed.length ? dashViewers().filter(x => x.role !== "lead").map(x => x.id) : d.allowed }, mode === "everyone" ? "Opened the overall dashboard to everyone" : "Limited the overall dashboard to chosen people"); }
-  if (t.dataset.dashPerson) { const d = dashSettings(), id = t.dataset.dashPerson; return saveDash({ allowed:t.checked ? [...new Set([...d.allowed, id])] : d.allowed.filter(x => x !== id) }, `${t.checked ? "Gave" : "Removed"} ${person(id).name} ${t.checked ? "access to" : "from"} the overall dashboard`); }
+  if (t.dataset.dashMode) { const d = dashSettings(), mode = t.dataset.dashMode; return saveDash({ mode, allowed:mode === "chosen" && !d.allowed.length ? dashViewers().filter(x => x.role !== "lead").map(x => x.id) : d.allowed }, mode === "everyone" ? "Opened the project dashboard to everyone" : "Limited the project dashboard to chosen people"); }
+  if (t.dataset.dashPerson) { const d = dashSettings(), id = t.dataset.dashPerson; return saveDash({ allowed:t.checked ? [...new Set([...d.allowed, id])] : d.allowed.filter(x => x !== id) }, `${t.checked ? "Gave" : "Removed"} ${person(id).name} ${t.checked ? "access to" : "from"} the project dashboard`); }
   if (t.dataset.alert) { const p = S.data.projects[t.dataset.id], k = t.dataset.alert, alerts = { ...alertSettings(p), [k]:k === "frequency" ? t.value : t.checked }; if (await put("projects", { ...p, alerts })) { await log(`Changed automatic alert settings (${k})`, p.id); render(); } return; }
   if (t.dataset.member && w) { w.members = t.checked ? [...w.members, t.dataset.member] : w.members.filter(x => x !== t.dataset.member); return; }
   if (c && t.dataset.ciMs) { c.milestonesDone = t.checked ? [...c.milestonesDone, t.dataset.ciMs] : c.milestonesDone.filter(x => x !== t.dataset.ciMs); ciSaveDraft(); return; }
